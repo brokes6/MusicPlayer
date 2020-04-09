@@ -1,0 +1,10 @@
+com.kaopiz.kprogresshud
+color kprogresshud_default_color
+color kprogresshud_grey_color
+drawable kprogresshud_spinner
+drawable voice_progress
+id background
+id container
+id details_label
+id label
+layout kprogresshud_hud

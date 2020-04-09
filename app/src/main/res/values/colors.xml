@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#299EE3</color>
+    <color name="colorPrimaryDark">#299EE3</color>
+    <color name="colorAccent">#299EE3</color>
+
+    <color name="colorAccent_select">#65b0dc</color>
+
+
+    <color name="gray_btn">#9E9E9E</color>
+
+    <color name="gray_icon">#99A0AA</color>
+    <color name="picture_tab_color_false">#9b9b9b</color>
+    <color name="green_btn_color_normal">#2BCFB8</color>
+    <color name="green_btn_color_disable">#CCCCCC</color>
+    <color name="green_btn_color_pressed">#05bca2</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="menu_white_normal">#FFFFFF</color>
+    <color name="menu_white_pressed">#CFCFCF</color>
+    <color name="menu_red_normal">#FF0000</color>
+    <color name="menu_red_pressed">#FF6666</color>
+    <color name="menu_green_normal">#37C000</color>
+    <color name="menu_green_pressed">#30A070</color>
+    <color name="menu_purple_normal">#9932CC</color>
+    <color name="menu_purple_pressed">#9F79EE</color>
+
+    <color name="tint">#f44336</color>
+    <color name="tint_background">#42f44336</color>
+
+    <color name="cyan_500">#00bcd4</color>
+
+    <!-- Components 组件 -->
+    <color name="radiusImageView_border_color">#EF5362</color>
+    <color name="radiusImageView_selected_border_color">#FE6D4B</color>
+    <color name="radiusImageView_selected_mask_color">#7FEF5362</color>
+
+    <color name="color_bg_loading">#dc858585</color>
+    <color name="color_bg_success">#dc82ce32</color>
+    <color name="color_bg_error">#dcd84315</color>
+
+    <color name="scan_corner_color">#0effc2</color>
+
+    <color name="color_f4">#F4F4F4</color>
+
+    <!-- Expands 系列界面 -->
+
+    <color name="color_red">#FD2E4A</color>
+    <color name="color_green">#13D1BE</color>
+
+
+    <color name="app_color_theme_1">#EF5362</color> <!-- Grapefruit -->
+    <color name="app_color_theme_2">#FE6D4B</color> <!-- Bittersweet -->
+    <color name="app_color_theme_3">#FFCF47</color> <!-- Sunflower -->
+    <color name="app_color_theme_4">#9FD661</color> <!-- Grass -->
+    <color name="app_color_theme_5">#3FD0AD</color> <!-- Mint -->
+    <color name="app_color_theme_6">#2BBDF3</color> <!-- Aqua -->
+    <color name="app_color_theme_7">#5A9AEF</color> <!-- Blue Jeans -->
+    <color name="app_color_theme_8">#AC8FEF</color> <!-- Lavender -->
+    <color name="app_color_theme_9">#EE85C1</color> <!-- Pink Rose -->
+
+
+    <color name="web_colorPrimary">#393a3f</color>
+    <color name="web_colorPrimaryDark">#303135</color>
+    <color name="web_colorAccent">#1aad19</color>
+
+
+    <color name="light_orange">#FFC2aa</color>
+    <color name="dark_orange">#ee8a3a</color>
+    <color name="purple_start">#7117ea</color>
+    <color name="purple_end">#ea6060</color>
+    <color name="green_start">#42e695</color>
+    <color name="green_end">#3bb2b8</color>
+    <color name="blue_start">#879af2</color>
+    <color name="blue_end">#fda000</color>
+    <color name="purple_light">#e488ff</color>
+    <color name="red_start">#EE3455</color>
+    <color name="red_end">#FFaa89</color>
+
+    <color name="drop_down_selected">#7B1FA2</color>
+    <color name="drop_down_unselected">#111111</color>
+    <color name="check_bg">#f2f2f2</color>
+    <color name="un_press_color">#9C27B0</color>
+
+</resources>
