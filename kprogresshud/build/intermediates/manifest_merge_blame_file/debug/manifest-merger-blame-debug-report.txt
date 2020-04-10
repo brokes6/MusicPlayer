@@ -6,15 +6,15 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="16"
-8-->D:\Android\ServicDome\kprogresshud\src\main\AndroidManifest.xml
+8-->D:\Android\MusicPlayerDome\kprogresshud\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="27" />
-9-->D:\Android\ServicDome\kprogresshud\src\main\AndroidManifest.xml
+9-->D:\Android\MusicPlayerDome\kprogresshud\src\main\AndroidManifest.xml
 10
 11    <application
-11-->D:\Android\ServicDome\kprogresshud\src\main\AndroidManifest.xml:4:5-6:38
+11-->D:\Android\MusicPlayerDome\kprogresshud\src\main\AndroidManifest.xml:4:5-6:38
 12        android:allowBackup="true"
-12-->D:\Android\ServicDome\kprogresshud\src\main\AndroidManifest.xml:5:9-35
+12-->D:\Android\MusicPlayerDome\kprogresshud\src\main\AndroidManifest.xml:5:9-35
 13        android:supportsRtl="true" />
-13-->D:\Android\ServicDome\kprogresshud\src\main\AndroidManifest.xml:6:9-35
+13-->D:\Android\MusicPlayerDome\kprogresshud\src\main\AndroidManifest.xml:6:9-35
 14
 15</manifest>
