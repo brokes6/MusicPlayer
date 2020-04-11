@@ -14,7 +14,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.blankj.utilcode.util.NetworkUtils;
@@ -43,6 +45,7 @@ import static com.example.musicplayerdome.util.AudioPlayerConstant.playerState;
 public class MusicActivity extends BaseActivity implements View.OnClickListener {
     ActivityMusicBinding binding;
     private static final String TAG = "MusicActivity";
+    int lp;
     MusicList myDialog;
     //用于判断是否绑定成功
     private boolean connect;
@@ -92,6 +95,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         binding.play.setOnClickListener(this);
         binding.musicList.setOnClickListener(this);
         binding.button.setOnClickListener(this);
+        WindowManager windowManager = getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        lp = (int)(display.getHeight()*0.5);
     }
 
     @Override
@@ -107,8 +113,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                 }
                 break;
             case R.id.music_list:
-                myDialog = new MusicList(this);
+                myDialog = new MusicList(this,lp);
                 myDialog.setDialogClickCallBack(new DialogClickListener());
+                myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 myDialog.show();
                 break;
             case R.id.button:

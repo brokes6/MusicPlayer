@@ -7,16 +7,16 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         tools:context=".activity.MusicActivity">
 
         //播放按钮和列表按钮
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:orientation="horizontal">
             <LinearLayout
                 android:padding="@dimen/afc_10dp"
@@ -62,5 +62,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="111"/>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

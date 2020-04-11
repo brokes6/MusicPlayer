@@ -2,7 +2,8 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ms_main"
-    android:layout_marginTop="@dimen/afc_10dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="@dimen/afc_10dp"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -13,6 +14,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="19sp"
+        android:textColor="#000"
+        android:textStyle="bold"
         android:text="1."/>
     <TextView
         android:id="@+id/ms_title"
@@ -21,5 +24,6 @@
         android:layout_height="wrap_content"
         android:textSize="19sp"
         android:gravity="center|left"
+        android:textColor="#000"
         android:text="歌曲名称"/>
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,10 +30,12 @@ public class MusicList extends Dialog {
     private TextView tvTest;
     /**dialog点击回调*/
     private DialogClickCallBack dialogClickCallBacks;
+    int height;
     private MusicAdapter musicAdapter;
-    public MusicList(Context context){
+    public MusicList(Context context,int height){
         super(context, R.style.MyDialog);
         mContext = context;
+        this.height = height;
     }
 
     @Override
@@ -57,11 +60,15 @@ public class MusicList extends Dialog {
         WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
         layoutParams.gravity= Gravity.BOTTOM;
         layoutParams.width= WindowManager.LayoutParams.MATCH_PARENT;
-        layoutParams.height= WindowManager.LayoutParams.WRAP_CONTENT;
-        getWindow().getDecorView().setPadding(0, 0, 0, 0);
+        layoutParams.height= height;
+        layoutParams.dimAmount =0f;
+        getWindow().getDecorView().setPadding(25, 0, 25, 30);
         getWindow().setAttributes(layoutParams);
 
+
     }
+
+
     //绑定回调
     public void setDialogClickCallBack(DialogClickCallBack callBack){
         dialogClickCallBacks = callBack;

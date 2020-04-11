@@ -2,10 +2,19 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_margin="@dimen/afc_10dp"
     android:background="@drawable/file_background_radius_10"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/afc_5dp"
+    android:paddingBottom="@dimen/afc_5dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/afc_10dp"
+        android:text="音乐列表:"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:textColor="#000"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/music_list"
         android:padding="@dimen/afc_10dp"
