@@ -11,7 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activity.MusicActivity">
-
+        <!--音量控制-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:orientation="horizontal">
+            <SeekBar
+                android:id="@+id/act_audio_VolumeControl"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/c28"
+                android:focusable="false"
+                android:max="100"
+                android:maxHeight="2dp"
+                android:minHeight="2dp"
+                android:progress="0"
+                android:progressDrawable="@drawable/po_seekbar"
+                android:splitTrack="false"
+                android:thumb="@mipmap/audio_skbar_icon" />
+        </LinearLayout>
         <!--进度-->
         <LinearLayout
             android:id="@+id/seek_bar_layId"

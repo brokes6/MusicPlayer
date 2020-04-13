@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -51,6 +52,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     ActivityMusicBinding binding;
     private static final String TAG = "MusicActivity";
     int lp;
+    AudioManager mAudioManager;
     MusicList myDialog;
     //用于判断是否绑定成功
     private boolean connect;
@@ -122,17 +124,26 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_music);
         initView();
         setMusicList();
+        initAudioManager();
     }
     private void initView(){
         binding.play.setOnClickListener(this);
         binding.musicList.setOnClickListener(this);
         binding.button.setOnClickListener(this);
         binding.actAudioPlayerAudioProgressId.setOnSeekBarChangeListener(new SeekBarChangeEvent());
+        binding.actAudioVolumeControl.setOnSeekBarChangeListener(new SeekBarChangeVolumeControl());
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         lp = (int)(display.getHeight()*0.5);
     }
+    private void initAudioManager(){
+        //音量控制,初始化定义
+        if (mAudioManager==null){
+            mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        }
+        binding.actAudioVolumeControl.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
 
+    }
     private void onPrepare() {
         if (musicController != null) {
             speed = musicController.getTemp();
@@ -306,6 +317,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.d(TAG, "onNewIntent正在回调");
+        initAudioManager();
         if (intent != null) {
             Audio audio = (Audio) intent.getSerializableExtra("audio");
             boolean play = intent.getBooleanExtra("play", false);
@@ -650,6 +662,29 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                     musicController.seekTo(progress);
                 }
             }
+        }
+    }
+    /**
+     *音量控制器
+     * 滑动监听
+     */
+    class SeekBarChangeVolumeControl implements SeekBar.OnSeekBarChangeListener {
+
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+            //当前音量
+            int currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
         }
     }
 
