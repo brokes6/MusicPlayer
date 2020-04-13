@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
@@ -16,6 +17,7 @@ import android.widget.RemoteViews;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.MusicController;
 import com.example.musicplayerdome.activity.MusicActivity;
+import com.example.musicplayerdome.util.BitMapUtil;
 
 
 /**
@@ -197,6 +199,9 @@ public class MusicNotification {
         }
         if (faceUrl==null){
             remoteViews.setImageViewResource(R.id.Music_logo,R.mipmap.logo);
+        }else{
+            BitMapUtil bitMapUtil = new BitMapUtil();
+            remoteViews.setImageViewBitmap(R.id.Music_logo,bitMapUtil.getBitmaps(faceUrl));
         }
         if (isPlaying) {
             remoteViews.setImageViewResource(R.id.btn_custom_play, android.R.drawable.ic_media_pause);

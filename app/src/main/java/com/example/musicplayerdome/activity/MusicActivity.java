@@ -27,14 +27,17 @@ import com.blankj.utilcode.util.NetworkUtils;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.DialogClickCallBack;
 import com.example.musicplayerdome.abstractclass.MusicController;
+import com.example.musicplayerdome.audio.RatateImage;
 import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.databinding.ActivityMusicBinding;
 import com.example.musicplayerdome.dialog.MusicList;
 import com.example.musicplayerdome.object.BaseActivity;
+import com.example.musicplayerdome.resources.MusicImg;
 import com.example.musicplayerdome.resources.MusicURL;
 import com.example.musicplayerdome.servlce.MusicServlce;
 import com.example.musicplayerdome.util.AudioFlag;
 import com.example.musicplayerdome.util.AudioPlayerConstant;
+import com.example.musicplayerdome.util.BitMapUtil;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.smp.soundtouchandroid.AudioSpeed;
@@ -52,6 +55,8 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     ActivityMusicBinding binding;
     private static final String TAG = "MusicActivity";
     int lp;
+    //旋转图片动画控件
+    private RatateImage ratateImage;
     AudioManager mAudioManager;
     MusicList myDialog;
     //用于判断是否绑定成功
@@ -63,6 +68,8 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     private float speed = AudioSpeed.SPEED_NORMAL;
     //显示UI
     private final int MSG_SHOW_UI = 1;
+    //
+    private final int MSG_Img = 77;
     //准备播放
     private final int MSG_AUDIO_PREPARE = MSG_SHOW_UI + 1;
     //自动播放
@@ -72,12 +79,15 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                //目前这个MSG_SHOW_UI还没有用处
-//                case MSG_SHOW_UI:
-//                    update();
-//                    break;
+                //更新数据（音乐名称和别的）
+                case MSG_SHOW_UI:
+                    update();
+                    break;
                 case MSG_AUTO_PLAY:
                     autoPlay(needPlay);
+                    break;
+                case MSG_Img:
+
                     break;
             }
         }
@@ -124,12 +134,14 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_music);
         initView();
         setMusicList();
-        initAudioManager();
+        initResources();
     }
     private void initView(){
         binding.play.setOnClickListener(this);
         binding.musicList.setOnClickListener(this);
         binding.button.setOnClickListener(this);
+        binding.actAudioPlayerButtonPrebuttonId.setOnClickListener(this);
+        binding.actAudioPlayerButtonNextId.setOnClickListener(this);
         binding.actAudioPlayerAudioProgressId.setOnSeekBarChangeListener(new SeekBarChangeEvent());
         binding.actAudioVolumeControl.setOnSeekBarChangeListener(new SeekBarChangeVolumeControl());
         WindowManager windowManager = getWindowManager();
@@ -142,8 +154,14 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         }
         binding.actAudioVolumeControl.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
-
     }
+
+    private void initResources(){
+        handler.sendEmptyMessage(MSG_SHOW_UI);
+        initAudioManager();
+        ratateImage = new RatateImage(this, binding.playAlbumIs);
+    }
+
     private void onPrepare() {
         if (musicController != null) {
             speed = musicController.getTemp();
@@ -173,6 +191,22 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.button:
                 Stop();
+                break;
+            case R.id.act_audio_player_button_nextId:
+                if (musicController != null) {
+                    musicController.next();
+                }
+                if (ratateImage != null) {
+                    ratateImage.initSpin();
+                }
+                break;
+            case R.id.act_audio_player_button_prebuttonId:
+                if (musicController != null) {
+                    musicController.pre();
+                }
+                if (ratateImage != null) {
+                    ratateImage.stopSpin();
+                }
                 break;
         }
     }
@@ -241,17 +275,30 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             return;
         }
     }
+    /**
+     * 显示音频标题
+     */
+    private void addAudioTitle() {
+        if (this.audio == null) return;
+        MyUtil.setText(binding.actBookDetailTitleId, audio.getName());
+        binding.playAlbumIs.setImageURL(audio.getFaceUrl());
+    }
+
 
     /**
      * 这个方法用来对网络音乐资源进行封装，加上名字和id
      */
     private List<String> fileArr = new ArrayList<>();
+    private List<String> fileArrimg = new ArrayList<>();
     private void setMusicList() {
         MusicURL musicURL = new MusicURL();
+        MusicImg musicImg = new MusicImg();
         fileArr = musicURL.getMusicURL();
+        fileArrimg = musicImg.getMusicIMG();
         for (int i = 0; i < fileArr.size(); i++) {
             Audio audio = new Audio();
             audio.setFileUrl(fileArr.get(i));
+            audio.setFaceUrl(fileArrimg.get(i));
             audio.setId(i + 1);
             audio.setType(1);
             audio.setName("音乐" + (i + 1));
@@ -428,14 +475,23 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             //正在播放
             case AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY:
                 setImg(binding.play, R.mipmap.audio_state_play);
+                if (ratateImage != null) {
+                    ratateImage.startSpin();
+                }
                 break;
             //暂停/未播放
             case AudioPlayerConstant.ACITION_AUDIO_PLAYER_PAUSE:
                 setImg(binding.play, R.mipmap.audio_state_pause);
+                if (ratateImage != null) {
+                    ratateImage.stopSpin();
+                }
                 break;
             //播放完成
             case AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY_COMPLETE:
                 setImg(binding.play, R.mipmap.audio_state_pause);
+                if (ratateImage != null) {
+                    ratateImage.stopSpin();
+                }
                 //更新进度
                 if (binding.actAudioPlayerAudioProgressId != null && binding.actAudioPlayerAudioProgressId.getProgress() != binding.actAudioPlayerAudioProgressId.getMax()) {
                     binding.actAudioPlayerAudioProgressId.setProgress(binding.actAudioPlayerAudioProgressId.getMax());
@@ -444,6 +500,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             //未播放/播放错误
             default:
                 setImg(binding.play, R.mipmap.audio_state_pause);
+                if (ratateImage != null) {
+                    ratateImage.stopSpin();
+                }
                 //更新进度
                 if (binding.actAudioPlayerAudioProgressId != null) {
                     binding.actAudioPlayerAudioProgressId.setProgress(0);
@@ -515,6 +574,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         if (imageView == null) return;
         imageView.setImageResource(imgRes);
     }
+
     private boolean isSame(Audio audio) {
         if (audio == null) return false;
         return this.audio != null && audio.getId() == this.audio.getId();
@@ -524,6 +584,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     }
     private void changeToCurrent(boolean needPlay) {
         //显示音频标题
+        addAudioTitle();
         if (needPlay) {
             play(audio);
         } else if (musicController != null) {
@@ -537,6 +598,8 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
      */
     private void update() {
         changePlayUI();
+        addAudioTitle();
+        binding.playAlbumIs.setImageURL(audio.getFaceUrl());
     }
 
     public void initSharedPreferences(boolean k){
@@ -565,6 +628,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                 if (musicController != null) {
                     setAudio(musicController.getAudio());
                     setCurrentProgress(0);
+                    addAudioTitle();
                 }
             } else {
                 playerState = state;
@@ -672,9 +736,8 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            Log.e(TAG, "onProgressChanged: 当前音量为:"+progress);
             mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
-            //当前音量
-            int currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         }
 
         @Override

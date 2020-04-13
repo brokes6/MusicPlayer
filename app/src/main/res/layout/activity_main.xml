@@ -22,6 +22,11 @@
             android:text="欢迎来到我的音乐播放器!"
             android:textSize="24sp"
             android:gravity="center"/>
-
+        <TextView
+            android:paddingTop="@dimen/afc_15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="点击上方进入播放界面"
+            android:gravity="center"/>
     </LinearLayout>
 </layout>
