@@ -11,13 +11,16 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.example.musicplayerdome.R;
@@ -33,7 +36,9 @@ import com.example.musicplayerdome.util.AudioFlag;
 import com.example.musicplayerdome.util.AudioPlayerConstant;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.XToastUtils;
+import com.smp.soundtouchandroid.AudioSpeed;
 import com.smp.soundtouchandroid.MediaCallBack;
+import com.smp.soundtouchandroid.OnProgressChangedListener;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
 
 import java.util.ArrayList;
@@ -53,6 +58,29 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     private Audio audio;
     //音乐列表
     private List<Audio> audioList = new ArrayList<>();
+    private float speed = AudioSpeed.SPEED_NORMAL;
+    //显示UI
+    private final int MSG_SHOW_UI = 1;
+    //准备播放
+    private final int MSG_AUDIO_PREPARE = MSG_SHOW_UI + 1;
+    //自动播放
+    private final int MSG_AUTO_PLAY = MSG_AUDIO_PREPARE + 1;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                //目前这个MSG_SHOW_UI还没有用处
+//                case MSG_SHOW_UI:
+//                    update();
+//                    break;
+                case MSG_AUTO_PLAY:
+                    autoPlay(needPlay);
+                    break;
+            }
+        }
+    };
+
     private MusicController musicController;
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
@@ -75,6 +103,10 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                 }
                 //这里我为了监听播放状态而改变界面ui，所以添加监听接口
                 musicController.setMediaCallBack(mediaCallBack);
+                //实时更新进度条监听
+                musicController.setOnProgressChangedListener(progressChangedListener);
+                //这个方法目前也不知道什么用
+//                onPrepare();
             }
         }
 
@@ -95,9 +127,19 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         binding.play.setOnClickListener(this);
         binding.musicList.setOnClickListener(this);
         binding.button.setOnClickListener(this);
+        binding.actAudioPlayerAudioProgressId.setOnSeekBarChangeListener(new SeekBarChangeEvent());
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         lp = (int)(display.getHeight()*0.5);
+    }
+
+    private void onPrepare() {
+        if (musicController != null) {
+            speed = musicController.getTemp();
+        }
+        judgeState();
+        changePlayUI();
+        handler.sendEmptyMessage(MSG_AUTO_PLAY);
     }
 
     @Override
@@ -283,11 +325,60 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                 } else {
                     judgeState();
                     changePlayUI();
+                    if (playerState == AudioPlayerConstant.ACITION_AUDIO_PLAYER_PAUSE) {
+                        if (musicController != null && musicController.isPause()) {
+                            setCurrentProgress(musicController.getPlayedDuration());
+                        }
+                    }
                 }
             }
         }
     }
 
+    /**
+     * 播放进度条的初始化
+     */
+    private void setCurrentProgress(long position) {
+        if (binding.actAudioPlayerAudioProgressId != null) {
+            binding.actAudioPlayerAudioProgressId.setProgress((int) position);
+        }
+        if (binding.actAudioPlayerCurrentPlayTimeId != null) {
+            binding.actAudioPlayerCurrentPlayTimeId.setText(getTimeStr((int) position));
+        }
+    }
+
+    private void setInitDate(long duration) {
+        Log.d(TAG, "duration=" + duration);
+        if (musicController == null) return;
+        if (binding.actAudioPlayerAudioProgressId != null) {
+            binding.actAudioPlayerAudioProgressId.setMax((int) duration);
+        }
+        if (binding.actAudioPlayerTotalTimeId != null) {
+            binding.actAudioPlayerTotalTimeId.setText(getTimeStr((int) duration));
+        }
+    }
+
+    /**
+     * 获取总时长
+     */
+    private String getTimeStr(int time) {
+        time = time / 1000000;
+        int min = time / 60;//分
+        int second = time % 60;
+        String min1 = "";
+        if (min < 10) {
+            min1 = "0" + min;
+        } else {
+            min1 = min + "";
+        }
+        String second1 = "";
+        if (second < 10) {
+            second1 = "0" + second;
+        } else {
+            second1 = second + "";
+        }
+        return min1 + ":" + second1;
+    }
     /**
      * 判断状态
      */
@@ -333,10 +424,52 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             //播放完成
             case AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY_COMPLETE:
                 setImg(binding.play, R.mipmap.audio_state_pause);
+                //更新进度
+                if (binding.actAudioPlayerAudioProgressId != null && binding.actAudioPlayerAudioProgressId.getProgress() != binding.actAudioPlayerAudioProgressId.getMax()) {
+                    binding.actAudioPlayerAudioProgressId.setProgress(binding.actAudioPlayerAudioProgressId.getMax());
+                }
+                break;
+            //未播放/播放错误
+            default:
+                setImg(binding.play, R.mipmap.audio_state_pause);
+                //更新进度
+                if (binding.actAudioPlayerAudioProgressId != null) {
+                    binding.actAudioPlayerAudioProgressId.setProgress(0);
+                }
+                break;
+        }
+    }
+    /**
+     * 自动播放
+     */
+    private void autoPlay(boolean needPlay) {
+        Log.e(TAG, "autoPlay:playerState=" + playerState);
+        switch (playerState) {
+            //正在播放，更新播放ui
+            case AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY:
+                if (musicController != null && musicController.isPlaying()) {
+                    setInitDate(musicController.getDuration());
+                }
+                break;
+            //暂停状态，更新ui
+            case AudioPlayerConstant.ACITION_AUDIO_PLAYER_PAUSE:
+                if (musicController != null && musicController.isPause()) {
+                    setInitDate(musicController.getDuration());
+                    setCurrentProgress(musicController.getPlayedDuration());
+                }
+                break;
+            //未播放，执行播放
+            default:
+                if (needPlay) {
+                    play();
+                }
                 break;
         }
     }
 
+    /**
+     * 检测是否为wifi播放
+     */
     private void setWifiplay(){
         DialogLoader.getInstance().showConfirmDialog(this,
                 getString(R.string.tip_bluetooth_permission),
@@ -383,10 +516,16 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             play(audio);
         } else if (musicController != null) {
             judgeState();
+            autoPlay(false);
             changePlayUI();
         }
     }
-
+    /**
+     * 更新页面数据
+     */
+    private void update() {
+        changePlayUI();
+    }
 
     public void initSharedPreferences(boolean k){
         SharedPreferences sharedPreferences= getSharedPreferences("key", Context.MODE_PRIVATE);
@@ -413,6 +552,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                 playerState = 0;
                 if (musicController != null) {
                     setAudio(musicController.getAudio());
+                    setCurrentProgress(0);
                 }
             } else {
                 playerState = state;
@@ -431,7 +571,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         }
 
         @Override
-        public void onPrepared(long duration) { }
+        public void onPrepared(long duration) {
+            setInitDate(duration);
+        }
 
         @Override
         public void onPlay() {
@@ -452,16 +594,74 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         @Override
         public void onComplete() { }
     };
+
+    /**
+     * 实时更新进度条
+     */
+    private OnProgressChangedListener progressChangedListener = new OnProgressChangedListener() {
+        @Override
+        public void onProgressChanged(int track, double currentPercentage, long position) {
+            setCurrentProgress(position);
+        }
+
+        @Override
+        public void onTrackEnd(int track) {
+
+        }
+
+        @Override
+        public void onExceptionThrown(String string) {
+
+        }
+    };
+
+    /**
+     *skbProgress监听事件
+     * 滑动监听
+     */
+    class SeekBarChangeEvent implements SeekBar.OnSeekBarChangeListener {
+        //单位:s
+        long progress;
+        long total_time;
+        boolean fromUser;
+
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if (musicController != null) {
+                total_time = musicController.getDuration();
+                if (seekBar.getMax() != 0) {
+                    this.progress = progress * total_time / seekBar.getMax();
+                }
+            }
+            this.fromUser = fromUser;
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            if (fromUser) {
+                Log.e("debug", "  fromUser:" + fromUser + "  progress=" + progress);
+                //s—>ms
+                if (musicController != null) {
+                    musicController.seekTo(progress);
+                }
+            }
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy:正在注销 ");
         Stop();
-        finish();
     }
     @Override
     public void onBackPressed() {
         //这里的（添加到后台，下次进入不用重新生成该页面）应该和（android:launchMode="singleInstance"）一起才能生效
-        moveTaskToBack(true);
+        moveTaskToBack(false);
     }
 }

@@ -20,7 +20,6 @@
 
         <activity android:name=".activity.MusicActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
-            android:excludeFromRecents="true"
             android:hardwareAccelerated="true"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"/>

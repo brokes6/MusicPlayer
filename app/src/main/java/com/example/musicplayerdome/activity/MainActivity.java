@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -17,6 +18,7 @@ import com.xuexiang.xui.utils.SnackbarUtils;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     ActivityMainBinding binding;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +52,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private long firstTime = 0;
-    @Override
-    public void onBackPressed() {
-        long secondTime = System.currentTimeMillis();
-        if (secondTime - firstTime > 2000) {
-            SnackbarUtils.Short(binding.mainL, "再按一次退出").info().show();
-            firstTime = secondTime;
-        } else{
-            ActivityUtils.finishAllActivities();
-        }
-    }
+
+
+//    @Override
+//    public void onBackPressed() {
+//        long secondTime = System.currentTimeMillis();
+//        if (secondTime - firstTime > 2000) {
+//            SnackbarUtils.Short(binding.mainL, "再按一次退出").info().show();
+//            firstTime = secondTime;
+//        } else{
+//            ActivityUtils.finishAllActivities();
+//        }
+//    }
 }

@@ -81,5 +81,16 @@
     <color name="drop_down_unselected">#111111</color>
     <color name="check_bg">#f2f2f2</color>
     <color name="un_press_color">#9C27B0</color>
+    //播放进度条颜色
+    <color name="color_33">#333333</color>
+    <color name="colo_6666">#666666</color>
+    <color name="eee">#EEEEEE</color>
+    <color name="c28">#3C82D3</color>
+    <color name="ccc">#cccccc</color>
+    <color name="f5f5f5">#f5f5f5</color>
+    <color name="fbfbfb">#fbfbfb</color>
+    <color name="efefef">#efefef</color>
+    <color name="fafafa">#fafafa</color>
+    //结束
 
 </resources>

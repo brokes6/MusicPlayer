@@ -12,8 +12,57 @@
         android:layout_height="match_parent"
         tools:context=".activity.MusicActivity">
 
+        <!--进度-->
+        <LinearLayout
+            android:id="@+id/seek_bar_layId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/xpaly"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="45dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/act_audio_player_current_play_timeId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/afc_10dp"
+                android:layout_marginRight="@dimen/afc_5dp"
+                android:text="00:00"
+                android:textColor="@color/color_33"
+                android:textSize="10sp" />
+
+            <SeekBar
+                android:id="@+id/act_audio_player_audio_progressId"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/c28"
+                android:focusable="false"
+                android:max="100"
+                android:maxHeight="2dp"
+                android:minHeight="2dp"
+                android:progress="0"
+                android:progressDrawable="@drawable/po_seekbar"
+                android:splitTrack="false"
+                android:thumb="@mipmap/audio_skbar_icon" />
+
+            <TextView
+                android:id="@+id/act_audio_player_total_timeId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/afc_10dp"
+                android:text="00:00"
+                android:textColor="@color/color_33"
+                android:textSize="10sp" />
+        </LinearLayout>
+
         //播放按钮和列表按钮
         <LinearLayout
+            android:id="@+id/xpaly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
