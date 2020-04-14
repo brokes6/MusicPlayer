@@ -53,6 +53,8 @@ public class MusicControllerImp implements MusicController {
         }
         return musicController;
     }
+
+
     @Override
     public void play() {
         try {
@@ -634,10 +636,10 @@ public class MusicControllerImp implements MusicController {
             }
             Log.d(TAG, "release: 音乐正在播放，准备停止");
             cancelDelay();
-            player.release();
+//            player.release();
             sessionManager.release();
             status = 0;
-            audio = null;
+//            audio = null;
             musicController = null;
         }
     }

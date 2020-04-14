@@ -100,7 +100,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             if (service!=null) {
                 initSharedPreferences(true);
                 Log.d(TAG, "onServiceConnected: 服务以启动");
-                Log.d(TAG, "onServiceConnected: 当前connect的值为:"+getSharedPreferences());
                 MusicServlce.MediaplayerBinder binder =(MusicServlce.MediaplayerBinder)service;
                 musicController = binder.getService();
                 if (musicController.getPlayList() == null || musicController.getPlayList().isEmpty()) {
@@ -109,7 +108,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                     }
                 }
                 if (musicController != null) {
-                    Log.d(TAG, "play: 调用播放");
                     musicController.stop();
                     musicController.play(audio);
                 }
@@ -241,14 +239,15 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         Log.d(TAG, "开始解绑:"+connect+"---"+serviceConnection);
         if (connect ==true) {
             if (musicController != null) {
-                musicController.removeCallBack();
-                musicController.resume();
+                musicController.release();
                 unbindService(serviceConnection);
-                musicController = null;
             }
             Intent intent = new Intent(this, MusicServlce.class);
             //停止服务和解绑服务
             stopService(intent);
+        }
+        if (ratateImage != null) {
+            ratateImage.initSpin();
         }
         setImg(binding.play, R.mipmap.audio_state_pause);
         initSharedPreferences(false);

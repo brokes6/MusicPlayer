@@ -132,4 +132,5 @@ public interface MusicController {
     OnProgressChangedListener getProgressListener();
 
     boolean isSame(Audio audio);
+
 }

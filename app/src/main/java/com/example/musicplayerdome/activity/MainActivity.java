@@ -54,14 +54,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private long firstTime = 0;
 
 
-//    @Override
-//    public void onBackPressed() {
-//        long secondTime = System.currentTimeMillis();
-//        if (secondTime - firstTime > 2000) {
-//            SnackbarUtils.Short(binding.mainL, "再按一次退出").info().show();
-//            firstTime = secondTime;
-//        } else{
-//            ActivityUtils.finishAllActivities();
-//        }
-//    }
+    @Override
+    public void onBackPressed() {
+        long secondTime = System.currentTimeMillis();
+        if (secondTime - firstTime > 2000) {
+            SnackbarUtils.Short(binding.mainL, "再按一次退出").info().show();
+            firstTime = secondTime;
+        } else{
+            ActivityUtils.finishAllActivities();
+        }
+    }
 }

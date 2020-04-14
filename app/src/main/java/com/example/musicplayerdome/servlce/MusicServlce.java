@@ -59,8 +59,7 @@ public class MusicServlce extends Service {
         public void onDestroy() {
             super.onDestroy();
             Log.e(TAG, "MusicServlce成功解绑");
-            MusicNotification
-                    .getMusicNotification(this, MusicControllerImp.getInstance(this))
+            MusicNotification.getMusicNotification(this, MusicControllerImp.getInstance(this))
                     .onCancelMusicNotifi();
         }
     }

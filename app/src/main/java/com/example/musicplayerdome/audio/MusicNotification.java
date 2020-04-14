@@ -96,7 +96,6 @@ public class MusicNotification {
      * @return
      */
     public static MusicNotification getMusicNotification(Context context, MusicController musicController) {
-        Log.e(TAG, "返回MusicNotification的实列");
         if (notifyInstance == null) {
             synchronized (MusicNotification.class) {
                 if (notifyInstance == null) {
@@ -179,13 +178,13 @@ public class MusicNotification {
         context.unregisterReceiver(bReceiver);
         if (musicController !=null){
             musicController.stop();
+            musicController=null;
         }
         isShowing = false;
     }
 
 
     private boolean isPlaying = false;
-
     /**
      * 更新通知
      */
