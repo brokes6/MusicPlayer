@@ -46,7 +46,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         binding.recyclerView.setLayoutManager(lm);
         binding.recyclerView.setAdapter(mainMusicAdapter = new MainMusicAdapter(this));
         /**
-         * 这里虽然完成了点击事件监听回调，发送的是startActivityForResult，但是MusicActivity的回调没有反应，而且moveTaskToBack也失效
+         * 回调监听也行，但没必要，只需要在加个参数用来判断就行了
+         * 通过抽象类来回调监听
+         * 这边才是真正的方法
          */
         mainMusicAdapter.setOnItemClickListener(new OnItemListenter() {
             @Override

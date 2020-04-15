@@ -58,7 +58,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     ActivityMusicBinding binding;
     private static final String TAG = "MusicActivity";
     int lp;
-    int ids;
+    int sid;
     //旋转图片动画控件
     private RatateImage ratateImage;
     AudioManager mAudioManager;
@@ -96,7 +96,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             }
         }
     };
-
+    /**
+     * servlce绑定监听
+     */
     private MusicController musicController;
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
@@ -113,7 +115,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                 }
                 if (musicController != null) {
                     musicController.stop();
-                    musicController.Choice(ids-1);
+                    musicController.Choice(sid-1);
 //                    musicController.play(audio);
                 }
                 //这里我为了监听播放状态而改变界面ui，所以添加监听接口
@@ -139,6 +141,10 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         setMusicList();
         initResources();
     }
+
+    /**
+     * 初始化资源
+     */
     private void initView(){
         goPlay();
         binding.play.setOnClickListener(this);
@@ -152,18 +158,26 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         Display display = windowManager.getDefaultDisplay();
         lp = (int)(display.getHeight()*0.5);
     }
+
+    /**
+     * 这里需要改进，第一次传入id成功，但是ui并不会刷新
+     */
     private void goPlay(){
         Bundle bundle = getIntent().getExtras();
-        ids = bundle.getInt("sid");
-        Log.e(TAG, "goPlayTo: 接收到的id为："+ids);
+        sid = bundle.getInt("sid");
+        Log.e(TAG, "goPlayTo: 接收到的id为："+sid);
         if (musicController==null){
             Log.e(TAG, "goPlay: 开始注册绑定服务");
             stratSerlvce();
             return;
         }
-        musicController.Choice(ids-1);
+        musicController.Choice(sid-1);
 
     }
+
+    /**
+     * 初始化音量控制器
+     */
     private void initAudioManager(){
         //音量控制,初始化定义
         if (mAudioManager==null){
@@ -172,12 +186,18 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         binding.actAudioVolumeControl.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
     }
 
+    /**
+     * 初始化音乐封面和调用初始化音量控制器
+     */
     private void initResources(){
         handler.sendEmptyMessage(MSG_SHOW_UI);
         initAudioManager();
         ratateImage = new RatateImage(this, binding.playAlbumIs);
     }
 
+    /**
+     * 没发现什么用
+     */
     private void onPrepare() {
         if (musicController != null) {
             speed = musicController.getTemp();
@@ -200,7 +220,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                 }
                 break;
             case R.id.music_list:
-                myDialog = new MusicList(this,lp);
+                myDialog = new MusicList(this,lp,sid);
                 myDialog.setDialogClickCallBack(new DialogClickListener());
                 myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 myDialog.show();
@@ -271,13 +291,14 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         initSharedPreferences(false);
     }
     /**
-     * Dialog点击回调事件
+     * Dialog点击回调事件（音乐内部列表选择监听）
      */
     private class DialogClickListener implements DialogClickCallBack {
         @Override
         public void viewClick(int viewId) {
             // TODO Auto-generated method stub 做一些你需要做的事情
             myDialog.cancel();
+            sid = viewId+1;
             musicController.Choice(viewId);
             XToastUtils.info("正在播放第"+(viewId+1)+"首");
         }
@@ -298,12 +319,14 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     private void addAudioTitle() {
         if (this.audio == null) return;
         MyUtil.setText(binding.actBookDetailTitleId, audio.getName());
+        //设置音乐封面
         binding.playAlbumIs.setImageURL(audio.getFaceUrl());
     }
 
 
     /**
      * 这个方法用来对网络音乐资源进行封装，加上名字和id
+     * 正常情况是不需要这一步的，只需要服务器返回json，我们解析为Audio对象就ok了
      */
     private List<String> fileArr = new ArrayList<>();
     private List<String> fileArrimg = new ArrayList<>();
@@ -374,7 +397,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     }
     boolean skey = false;
     /**
-     * 再次进入activity的时候回调
+     * 再次进入activity的时候回调（包括从桌面返回，别的activity返回）
      */
     @Override
     protected void onNewIntent(Intent intent) {
@@ -385,7 +408,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             Audio audio = (Audio) intent.getSerializableExtra("audio");
             boolean play = intent.getBooleanExtra("play", false);
             boolean isHead = intent.getBooleanExtra("isHead", false);
-            int sid = intent.getIntExtra("sid",0);
+            //sid是主页传来点击item的id（也就是选择音乐的id（下标要减1））
+            sid = intent.getIntExtra("sid",0);
+            //skey就是来判断是否是从主页传来的intent（有许多intent，所以要来判断）
             skey = intent.getBooleanExtra("skey",false);
             Log.e(TAG, "onNewIntent: skey为："+skey);
             Log.e(TAG, "onNewIntent: sid为："+sid);
@@ -394,6 +419,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                     audio = musicController.getAudio();
                 }
             }
+            //为true就是主页传来的id
             if (skey ==true){
                 musicController.Choice(sid-1);
                 skey=false;
@@ -419,7 +445,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     }
 
     /**
-     * 播放进度条的初始化
+     * 播放进度条的初始化（总时间）
      */
     private void setCurrentProgress(long position) {
         if (binding.actAudioPlayerAudioProgressId != null) {
@@ -429,7 +455,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             binding.actAudioPlayerCurrentPlayTimeId.setText(getTimeStr((int) position));
         }
     }
-
     private void setInitDate(long duration) {
         Log.d(TAG, "duration=" + duration);
         if (musicController == null) return;
@@ -598,7 +623,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         if (imageView == null) return;
         imageView.setImageResource(imgRes);
     }
-
     private boolean isSame(Audio audio) {
         if (audio == null) return false;
         return this.audio != null && audio.getId() == this.audio.getId();
@@ -626,6 +650,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         binding.playAlbumIs.setImageURL(audio.getFaceUrl());
     }
 
+    /**
+     *SharedPreferences写入和读取
+     */
     public void initSharedPreferences(boolean k){
         SharedPreferences sharedPreferences= getSharedPreferences("key", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

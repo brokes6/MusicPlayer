@@ -19,12 +19,15 @@ import java.util.List;
 public class MusicAdapter extends BaseRecyclerAdapter<Audio> {
     private List<Audio> test1s=new ArrayList<>();
     private DialogClickCallBack dialogClickCallBack;
+    private int sid;
     private static final String TAG = "MusicAdapter";
 
     public MusicAdapter(DialogClickCallBack callBack){
         this.dialogClickCallBack = callBack;
     }
-
+    public void setCurrentIDS(int id){
+        sid = id;
+    }
     @Override
     protected int getItemLayoutId(int viewType) {
         return R.layout.music_item;
@@ -37,6 +40,10 @@ public class MusicAdapter extends BaseRecyclerAdapter<Audio> {
             holder.text(R.id.ms_id, (int) item.getId()+".");
             holder.text(R.id.ms_title,item.getName());
             holder.click(R.id.ms_main,new OnTvClickListener((int)item.getId()));
+            if (sid == position){
+                holder.textColorId(R.id.ms_id,R.color.red_start);
+                holder.textColorId(R.id.ms_title,R.color.red_start);
+            }
         }
     }
 

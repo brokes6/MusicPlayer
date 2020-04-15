@@ -26,6 +26,10 @@ public class MainMusicAdapter extends BaseRecyclerAdapter<Audio> {
     protected int getItemLayoutId(int viewType) {
         return R.layout.music_item;
     }
+
+    /**
+     *通过activity那边设置监听（获取实例）来回调
+     */
     public void setOnItemClickListener(OnItemListenter mItemClickListener){
         this.mItemClickListener = mItemClickListener;
     }

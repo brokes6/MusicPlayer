@@ -32,10 +32,12 @@ public class MusicList extends Dialog {
     private DialogClickCallBack dialogClickCallBacks;
     int height;
     private MusicAdapter musicAdapter;
-    public MusicList(Context context,int height){
+    private int sid;
+    public MusicList(Context context,int height,int id){
         super(context, R.style.MyDialog);
         mContext = context;
         this.height = height;
+        sid = id;
     }
 
     @Override
@@ -49,6 +51,7 @@ public class MusicList extends Dialog {
         mlist.setLayoutManager(lm);
         mlist.setAdapter(musicAdapter = new MusicAdapter(dialogClickCallBacks));
         musicAdapter.loadMore(audioList);
+        musicAdapter.setCurrentIDS(sid-1);
     }
 
     @Override
@@ -64,7 +67,6 @@ public class MusicList extends Dialog {
         layoutParams.dimAmount =0f;
         getWindow().getDecorView().setPadding(25, 0, 25, 30);
         getWindow().setAttributes(layoutParams);
-
 
     }
 
