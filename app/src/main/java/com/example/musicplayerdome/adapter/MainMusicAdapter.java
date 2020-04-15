@@ -1,0 +1,55 @@
+package com.example.musicplayerdome.adapter;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+
+import com.example.musicplayerdome.R;
+import com.example.musicplayerdome.abstractclass.OnItemListenter;
+import com.example.musicplayerdome.activity.MusicActivity;
+import com.example.musicplayerdome.bean.Audio;
+import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
+import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
+
+public class MainMusicAdapter extends BaseRecyclerAdapter<Audio> {
+    private static final String TAG = "MainMusicAdapter";
+    private Context context;
+    private OnItemListenter mItemClickListener;
+    public MainMusicAdapter(Context context){
+        this.context = context;
+    }
+    @Override
+    protected int getItemLayoutId(int viewType) {
+        return R.layout.music_item;
+    }
+    public void setOnItemClickListener(OnItemListenter mItemClickListener){
+        this.mItemClickListener = mItemClickListener;
+    }
+
+    @Override
+    protected void bindData(@NonNull RecyclerViewHolder holder, int position, final Audio item) {
+        if (item!=null){
+            holder.text(R.id.ms_id, (int) item.getId()+".");
+            holder.text(R.id.ms_title,item.getName());
+            holder.click(R.id.ms_main, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Intent intent = new Intent(context, MusicActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putInt("sid",(int) item.getId());
+//                    intent.putExtras(bundle);
+//                    Log.e(TAG, "onClick: 传入id为"+(int) item.getId());
+//                    context.startActivity(intent);
+                    /**
+                     * 回调
+                     */
+                    mItemClickListener.onItemClick (v,(int) item.getId());
+                }
+            });
+        }
+    }
+}

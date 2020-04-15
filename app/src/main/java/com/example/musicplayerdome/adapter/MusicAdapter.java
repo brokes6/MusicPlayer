@@ -37,7 +37,6 @@ public class MusicAdapter extends BaseRecyclerAdapter<Audio> {
             holder.text(R.id.ms_id, (int) item.getId()+".");
             holder.text(R.id.ms_title,item.getName());
             holder.click(R.id.ms_main,new OnTvClickListener((int)item.getId()));
-
         }
     }
 

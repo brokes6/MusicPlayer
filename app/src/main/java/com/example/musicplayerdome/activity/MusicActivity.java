@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,6 +19,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -52,9 +54,11 @@ import static com.blankj.utilcode.util.NetworkUtils.getWifiEnabled;
 import static com.example.musicplayerdome.util.AudioPlayerConstant.playerState;
 
 public class MusicActivity extends BaseActivity implements View.OnClickListener {
+    private static final int MUSIC_LIST_ITEM = 77;
     ActivityMusicBinding binding;
     private static final String TAG = "MusicActivity";
     int lp;
+    int ids;
     //旋转图片动画控件
     private RatateImage ratateImage;
     AudioManager mAudioManager;
@@ -109,7 +113,8 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                 }
                 if (musicController != null) {
                     musicController.stop();
-                    musicController.play(audio);
+                    musicController.Choice(ids-1);
+//                    musicController.play(audio);
                 }
                 //这里我为了监听播放状态而改变界面ui，所以添加监听接口
                 musicController.setMediaCallBack(mediaCallBack);
@@ -135,6 +140,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         initResources();
     }
     private void initView(){
+        goPlay();
         binding.play.setOnClickListener(this);
         binding.musicList.setOnClickListener(this);
         binding.button.setOnClickListener(this);
@@ -145,6 +151,18 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         lp = (int)(display.getHeight()*0.5);
+    }
+    private void goPlay(){
+        Bundle bundle = getIntent().getExtras();
+        ids = bundle.getInt("sid");
+        Log.e(TAG, "goPlayTo: 接收到的id为："+ids);
+        if (musicController==null){
+            Log.e(TAG, "goPlay: 开始注册绑定服务");
+            stratSerlvce();
+            return;
+        }
+        musicController.Choice(ids-1);
+
     }
     private void initAudioManager(){
         //音量控制,初始化定义
@@ -354,10 +372,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                 break;
         }
     }
-
+    boolean skey = false;
     /**
-     * 再次进入的时候回调
-     * 和回调差不多，这个是指从桌面，或者别的activity页面返回回来调用的方法
+     * 再次进入activity的时候回调
      */
     @Override
     protected void onNewIntent(Intent intent) {
@@ -368,10 +385,18 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             Audio audio = (Audio) intent.getSerializableExtra("audio");
             boolean play = intent.getBooleanExtra("play", false);
             boolean isHead = intent.getBooleanExtra("isHead", false);
+            int sid = intent.getIntExtra("sid",0);
+            skey = intent.getBooleanExtra("skey",false);
+            Log.e(TAG, "onNewIntent: skey为："+skey);
+            Log.e(TAG, "onNewIntent: sid为："+sid);
             if (isHead && audio == null) {
                 if (musicController != null) {
                     audio = musicController.getAudio();
                 }
+            }
+            if (skey ==true){
+                musicController.Choice(sid-1);
+                skey=false;
             }
             if (audio != null) {
                 Log.d(TAG, "audio=" + audio.toString());
@@ -756,9 +781,19 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         Log.e(TAG, "onDestroy:正在注销 ");
         Stop();
     }
+//    @Override
+//    public void onBackPressed() {
+//        Log.e(TAG, "onBackPressed: 按下返回键");
+//        //这里的（添加到后台，下次进入不用重新生成该页面）应该和（android:launchMode="singleInstance"）一起才能生效
+//        moveTaskToBack(false);
+//    }
     @Override
-    public void onBackPressed() {
-        //这里的（添加到后台，下次进入不用重新生成该页面）应该和（android:launchMode="singleInstance"）一起才能生效
-        moveTaskToBack(false);
+    public boolean onKeyDown(
+        int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
