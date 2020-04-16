@@ -19,10 +19,6 @@ import java.net.URL;
 
 public class BitMapUtil {
     private static final String TAG = "BitMapUtil";
-    public static final int GET_DATA_SUCCESS = 1;
-    public static final int NETWORK_ERROR = 2;
-    public static final int SERVER_ERROR = 3;
-    public ImageView imageViews;
 
     public Bitmap getBitmap(ImageView imageView) {
         return ((BitmapDrawable) imageView.getDrawable()).getBitmap();

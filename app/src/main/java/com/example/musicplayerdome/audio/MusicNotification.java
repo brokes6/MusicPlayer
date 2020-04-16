@@ -205,6 +205,7 @@ public class MusicNotification {
         }else{
             BitMapUtil bitMapUtil = new BitMapUtil();
             remoteViews.setImageViewBitmap(R.id.Music_logo,bitMapUtil.getBitmaps(faceUrl));
+//            remoteViews.setImageViewUri(R.id.Music_logo,Uri.parse(faceUrl));
         }
         if (isPlaying) {
             remoteViews.setImageViewResource(R.id.btn_custom_play, android.R.drawable.ic_media_pause);

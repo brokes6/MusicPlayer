@@ -160,7 +160,8 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     }
 
     /**
-     * 这里需要改进，第一次传入id成功，但是ui并不会刷新
+     * 用来第一次传入选择歌曲id（仅限于第一次）
+     * 都加入了wifi判断
      */
     private void goPlay(){
         Bundle bundle = getIntent().getExtras();
@@ -190,6 +191,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         if (mAudioManager==null){
             mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         }
+        //设置音量控制器的进度为当前音量
         binding.actAudioVolumeControl.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
     }
 
@@ -199,11 +201,12 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     private void initResources(){
         handler.sendEmptyMessage(MSG_SHOW_UI);
         initAudioManager();
+        //将图片封面加载为RatateImage（旋转动画）
         ratateImage = new RatateImage(this, binding.playAlbumIs);
     }
 
     /**
-     * 没发现什么用
+     * 没发现什么用（暂时没用）
      */
     private void onPrepare() {
         if (musicController != null) {
@@ -248,7 +251,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                     musicController.pre();
                 }
                 if (ratateImage != null) {
-                    ratateImage.stopSpin();
+                    ratateImage.initSpin();
                 }
                 break;
         }

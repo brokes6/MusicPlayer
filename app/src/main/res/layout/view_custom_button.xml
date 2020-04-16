@@ -1,14 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:paddingTop="@dimen/afc_10dp"
-    android:paddingBottom="@dimen/afc_10dp"
     android:background="@color/white">
 
     <LinearLayout
+        android:layout_toLeftOf="@+id/why"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
+        android:paddingTop="@dimen/afc_10dp"
+        android:paddingBottom="@dimen/afc_10dp"
         android:orientation="horizontal">
     <TextView
         android:id="@+id/tv_custom_song_singer"
@@ -25,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:layout_marginRight="70dp"
+        android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -78,13 +79,14 @@
         android:visibility="gone" />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/why"
+        android:layout_width="80dp"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:gravity="right|center">
+        android:layout_alignParentRight="true">
         <ImageView
             android:id="@+id/Music_logo"
-            android:layout_width="70dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
 
