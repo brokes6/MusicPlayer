@@ -168,7 +168,14 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         Log.e(TAG, "goPlayTo: 接收到的id为："+sid);
         if (musicController==null){
             Log.e(TAG, "goPlay: 开始注册绑定服务");
-            stratSerlvce();
+//            stratSerlvce();
+            Wifipaly=WifiMusic();
+            if (Wifipaly==false){
+                setWifiplay();
+                return;
+            }else{
+                stratSerlvce();
+            }
             return;
         }
         musicController.Choice(sid-1);
@@ -349,7 +356,8 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             }
             audioList.add(audio);
         }
-        this.audio = audioList.get(0);
+        Log.e(TAG, "setMusicList: 当前id为："+sid);
+        this.audio = audioList.get(sid-1);
     }
     /**
      * 执行播放点击事件
@@ -815,8 +823,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
 //        moveTaskToBack(false);
 //    }
     @Override
-    public boolean onKeyDown(
-        int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             moveTaskToBack(false);
             return true;

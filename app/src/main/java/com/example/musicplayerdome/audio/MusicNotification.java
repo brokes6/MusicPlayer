@@ -19,6 +19,10 @@ import com.example.musicplayerdome.abstractclass.MusicController;
 import com.example.musicplayerdome.activity.MusicActivity;
 import com.example.musicplayerdome.util.BitMapUtil;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URL;
+
 
 /**
  * Created by ding on 2016/12/3.

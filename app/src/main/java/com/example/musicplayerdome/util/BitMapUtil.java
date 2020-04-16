@@ -34,7 +34,6 @@ public class BitMapUtil {
             @Override
             public void run() {
                 URL imageurl = null;
-
                 try {
                     imageurl = new URL(url);
                 } catch (MalformedURLException e) {
@@ -52,7 +51,6 @@ public class BitMapUtil {
                 }
             }
         }).start();
-
         return bitmap;
     }
 }

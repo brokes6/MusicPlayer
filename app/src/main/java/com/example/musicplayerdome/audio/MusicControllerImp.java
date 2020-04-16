@@ -138,7 +138,6 @@ public class MusicControllerImp implements MusicController {
         if (list == null || list.isEmpty()) return;
         int temp = this.currentPosition;
         List<Audio> audioList = list;
-        Log.e(TAG, "audioList数组为:"+audioList);
         //判断audioList不能为空且长度大于0，传入的下标不能比audioList的长度大
         if (audioList != null && audioList.size() > 0 && num<audioList.size()) {
             if (action == AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY_SELECT_AUDIO) {
