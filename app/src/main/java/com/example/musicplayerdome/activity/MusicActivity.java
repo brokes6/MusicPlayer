@@ -32,6 +32,7 @@ import com.example.musicplayerdome.abstractclass.MusicController;
 import com.example.musicplayerdome.audio.RatateImage;
 import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.databinding.ActivityMusicBinding;
+import com.example.musicplayerdome.dialog.AudioTimerDialog;
 import com.example.musicplayerdome.dialog.MusicList;
 import com.example.musicplayerdome.object.BaseActivity;
 import com.example.musicplayerdome.resources.MusicImg;
@@ -41,6 +42,8 @@ import com.example.musicplayerdome.util.AudioFlag;
 import com.example.musicplayerdome.util.AudioPlayerConstant;
 import com.example.musicplayerdome.util.BitMapUtil;
 import com.example.musicplayerdome.util.MyUtil;
+import com.example.musicplayerdome.util.SPManager;
+import com.example.musicplayerdome.util.TimerFlag;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.smp.soundtouchandroid.AudioSpeed;
 import com.smp.soundtouchandroid.MediaCallBack;
@@ -150,6 +153,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         binding.play.setOnClickListener(this);
         binding.musicList.setOnClickListener(this);
         binding.button.setOnClickListener(this);
+        binding.audioTiming.setOnClickListener(this);
         binding.actAudioPlayerButtonPrebuttonId.setOnClickListener(this);
         binding.actAudioPlayerButtonNextId.setOnClickListener(this);
         binding.actAudioPlayerAudioProgressId.setOnSeekBarChangeListener(new SeekBarChangeEvent());
@@ -254,6 +258,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
                     ratateImage.initSpin();
                 }
                 break;
+            case R.id.audio_timing:
+                showTimingPop();
+                break;
         }
     }
     /**
@@ -266,6 +273,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     }
     /**
      * 绑定服务，进行注册服务和绑定服务
+     * 采用双服务
      */
     boolean needPlay;
     private void initMusicService(boolean needPlay) {
@@ -301,6 +309,37 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         initSharedPreferences(false);
     }
     /**
+     * 显示定时弹窗
+     */
+    private AudioTimerDialog timerDialog;
+    private void showTimingPop() {
+        if (timerDialog == null) {
+            timerDialog = new AudioTimerDialog(this, R.style.my_dialog);
+            timerDialog.setOnChangeListener(new AudioTimerDialog.OnTimerListener() {
+                @Override
+                public void OnChange() {
+                    int timerState = SPManager.getTimerState(MusicActivity.this);
+                    switch (timerState) {
+                        case TimerFlag.CLOSE:
+                        case TimerFlag.CURRENT:
+                            //取消定时功能
+                            if (connect && musicController != null) {
+                                musicController.cancelDelay();
+                            }
+                            break;
+                        default:
+                            //定时关闭功能
+                            if (connect && musicController != null) {
+                                musicController.delayClose(timerState);
+                            }
+                            break;
+                    }
+                }
+            });
+        }
+        timerDialog.show();
+    }
+    /**
      * Dialog点击回调事件（音乐内部列表选择监听）
      */
     private class DialogClickListener implements DialogClickCallBack {
@@ -328,9 +367,13 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
      */
     private void addAudioTitle() {
         if (this.audio == null) return;
+        //设置音乐名称
         MyUtil.setText(binding.actBookDetailTitleId, audio.getName());
         //设置音乐封面
         binding.playAlbumIs.setImageURL(audio.getFaceUrl());
+        //设置音乐id
+        sid = ((int)audio.getId());
+        Log.e(TAG, "onChange: 状态发生改变，当前音乐id为:"+sid);
     }
 
 

@@ -80,7 +80,7 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/why"
-        android:layout_width="80dp"
+        android:layout_width="75dp"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_alignParentRight="true">
