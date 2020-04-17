@@ -65,7 +65,7 @@ public class MusicList extends Dialog {
         layoutParams.width= WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height= height;
         layoutParams.dimAmount =0f;
-        getWindow().getDecorView().setPadding(25, 0, 25, 30);
+        getWindow().getDecorView().setPadding(25, 0, 25, 20);
         getWindow().setAttributes(layoutParams);
 
     }

@@ -53,10 +53,12 @@ import com.xuexiang.xui.widget.dialog.DialogLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.jessyan.autosize.internal.CustomAdapt;
+
 import static com.blankj.utilcode.util.NetworkUtils.getWifiEnabled;
 import static com.example.musicplayerdome.util.AudioPlayerConstant.playerState;
 
-public class MusicActivity extends BaseActivity implements View.OnClickListener {
+public class MusicActivity extends BaseActivity implements View.OnClickListener, CustomAdapt {
     private static final int MUSIC_LIST_ITEM = 77;
     ActivityMusicBinding binding;
     private static final String TAG = "MusicActivity";
@@ -349,6 +351,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             myDialog.cancel();
             sid = viewId+1;
             musicController.Choice(viewId);
+            if (ratateImage != null) {
+                ratateImage.initSpin();
+            }
             XToastUtils.info("正在播放第"+(viewId+1)+"首");
         }
     }
@@ -875,5 +880,15 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    //需要改变适配尺寸的时候，在重写这两个方法
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+    @Override
+    public float getSizeInDp() {
+        return 640;
     }
 }
