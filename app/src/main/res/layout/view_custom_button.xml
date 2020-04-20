@@ -68,15 +68,6 @@
 <!--            android:contentDescription="清除"-->
 <!--            android:src="@mipmap/ic_list_close" />-->
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_custom_song_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/afc_10dp"
-        android:text="content"
-        android:textSize="12sp"
-        android:visibility="gone" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/why"

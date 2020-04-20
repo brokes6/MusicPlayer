@@ -14,14 +14,14 @@ public class MusicURL {
     private List<String> musicurl = new ArrayList<>();
     public MusicURL(){
         //这里的资源得定时更换
-        musicurl.add("http://m10.music.126.net/20200417102508/336735ca2b5d29f38900ebfd63d12334/ymusic/7d5f/b794/a968/e9501313519f37eff41409a9ddb62f04.mp3");
-        musicurl.add("http://m701.music.126.net/20200417102445/2f18063b62a74a2c00b6a03d6855a2e4/jdymusic/obj/w5zDlMODwrDDiGjCn8Ky/1669400994/cc9c/0bde/52c2/daf709e38cfbcc3c55dc90e42a731174.mp3");
-        musicurl.add("http://m10.music.126.net/20200417102508/336735ca2b5d29f38900ebfd63d12334/ymusic/7d5f/b794/a968/e9501313519f37eff41409a9ddb62f04.mp3");
-        musicurl.add("http://m701.music.126.net/20200417102445/2f18063b62a74a2c00b6a03d6855a2e4/jdymusic/obj/w5zDlMODwrDDiGjCn8Ky/1669400994/cc9c/0bde/52c2/daf709e38cfbcc3c55dc90e42a731174.mp3");
-        musicurl.add("http://m10.music.126.net/20200417102508/336735ca2b5d29f38900ebfd63d12334/ymusic/7d5f/b794/a968/e9501313519f37eff41409a9ddb62f04.mp3");
-        musicurl.add("http://m701.music.126.net/20200417102445/2f18063b62a74a2c00b6a03d6855a2e4/jdymusic/obj/w5zDlMODwrDDiGjCn8Ky/1669400994/cc9c/0bde/52c2/daf709e38cfbcc3c55dc90e42a731174.mp3");
-        musicurl.add("http://m10.music.126.net/20200417102508/336735ca2b5d29f38900ebfd63d12334/ymusic/7d5f/b794/a968/e9501313519f37eff41409a9ddb62f04.mp3");
-        musicurl.add("http://m701.music.126.net/20200417102445/2f18063b62a74a2c00b6a03d6855a2e4/jdymusic/obj/w5zDlMODwrDDiGjCn8Ky/1669400994/cc9c/0bde/52c2/daf709e38cfbcc3c55dc90e42a731174.mp3");
+        musicurl.add("http://m10.music.126.net/20200420112403/3edc73cab41195ffe3e661c5cd92a341/ymusic/87db/0a3f/8176/314d2d050f7e05564bb7eaa9aeb69ef1.mp3");
+        musicurl.add("http://m10.music.126.net/20200420112319/2c7e3531fa82fe66b29d3580b7f07555/ymusic/a0bb/0881/037f/85945d812405ab5677195f518a1607de.mp3");
+        musicurl.add("http://m10.music.126.net/20200420112403/3edc73cab41195ffe3e661c5cd92a341/ymusic/87db/0a3f/8176/314d2d050f7e05564bb7eaa9aeb69ef1.mp3");
+        musicurl.add("http://m10.music.126.net/20200420112319/2c7e3531fa82fe66b29d3580b7f07555/ymusic/a0bb/0881/037f/85945d812405ab5677195f518a1607de.mp3");
+        musicurl.add("http://m10.music.126.net/20200420112403/3edc73cab41195ffe3e661c5cd92a341/ymusic/87db/0a3f/8176/314d2d050f7e05564bb7eaa9aeb69ef1.mp3");
+        musicurl.add("http://m10.music.126.net/20200420112319/2c7e3531fa82fe66b29d3580b7f07555/ymusic/a0bb/0881/037f/85945d812405ab5677195f518a1607de.mp3");
+        musicurl.add("http://m10.music.126.net/20200420112403/3edc73cab41195ffe3e661c5cd92a341/ymusic/87db/0a3f/8176/314d2d050f7e05564bb7eaa9aeb69ef1.mp3");
+        musicurl.add("http://m10.music.126.net/20200420112319/2c7e3531fa82fe66b29d3580b7f07555/ymusic/a0bb/0881/037f/85945d812405ab5677195f518a1607de.mp3");
     }
     //算是增删改查
     public List<String> getMusicURL(){

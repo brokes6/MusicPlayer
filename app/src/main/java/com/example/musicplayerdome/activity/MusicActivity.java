@@ -468,11 +468,11 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
             boolean play = intent.getBooleanExtra("play", false);
             boolean isHead = intent.getBooleanExtra("isHead", false);
             //sid是主页传来点击item的id（也就是选择音乐的id（下标要减1））
-            sid = intent.getIntExtra("sid",0);
+            sid = (int)this.audio.getId();
             //skey就是来判断是否是从主页传来的intent（有许多intent，所以要来判断）
             skey = intent.getBooleanExtra("skey",false);
             Log.e(TAG, "onNewIntent: skey为："+skey);
-            Log.e(TAG, "onNewIntent: sid为："+sid);
+            Log.e(TAG, "onNewIntent: sid为："+sid+" ;getid的值为"+this.audio.getId());
             if (isHead && audio == null) {
                 if (musicController != null) {
                     audio = musicController.getAudio();

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.musicplayerdome">
+
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -15,25 +16,32 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemes"
         android:usesCleartextTraffic="true">
-        <!--android:networkSecurityConfig="@xml/network_security_config"很重要，要加上去-->
-        <activity android:name=".activity.LoginActivity"></activity>
+        <!-- android:networkSecurityConfig="@xml/network_security_config"很重要，要加上去 -->
+        <activity android:name=".activity.HomeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".activity.MusicActivity"
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.LoginActivity" />
+        <activity
+            android:name=".activity.MusicActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
             android:hardwareAccelerated="true"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+
         <service
             android:name=".servlce.MusicServlce"
             android:enabled="true"
             android:exported="true" />
 
         <activity android:name=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
