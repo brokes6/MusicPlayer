@@ -29,6 +29,7 @@ import com.example.musicplayerdome.fragment.SongSheetFragment;
 import com.example.musicplayerdome.object.BaseActivity;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
+import com.google.android.material.tabs.TabLayout;
 import com.xuexiang.xui.utils.SnackbarUtils;
 
 import java.util.ArrayList;
@@ -86,6 +87,30 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         binding.viewpager.setCurrentItem(1);
         binding.viewpager.setOffscreenPageLimit(fragmentList.size()-1);
         binding.tablayoutReal.setupWithViewPager(binding.viewpager);
+        binding.tablayoutReal.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getText().equals("歌 单")){
+                    binding.tabBackground.setBackgroundResource(R.color.white);
+                }
+                if (tab.getText().equals("主 页")){
+                    binding.tabBackground.setBackgroundResource(R.color.d8d8);
+                }
+                if (tab.getText().equals("我 的")){
+                    binding.tabBackground.setBackgroundResource(R.color.BCD4);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
     private void initBroadcastReceiver(){
         bReceiver = new HomeBroadcastReceiver();
@@ -162,6 +187,18 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
         @Override
         public Fragment getItem(int position) {
+//            switch (position){
+//                case 0:
+//                    Log.e(TAG, "getItem: 现在是0000000000000");
+//                    break;
+//                case 1:
+//                    Log.e(TAG, "getItem: 现在是1111111111111");
+//                    break;
+//                case 2:
+//                    Log.e(TAG, "getItem: 现在是2222222222222");
+//                    break;
+//            }
+//                binding.tabBackground.setBackground();
             return fragmentList.get(position);
         }
 
@@ -187,6 +224,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
                 switch (buttonId) {
                     case 1:
                     case 4:
+                    case 5:
                         addAudioTitle(intent.getStringExtra("name"));
                         break;
                     case 2://播放或暂停

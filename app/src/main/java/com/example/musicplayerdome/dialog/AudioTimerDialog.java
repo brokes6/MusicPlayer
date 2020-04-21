@@ -172,7 +172,6 @@ public class AudioTimerDialog extends Dialog implements View.OnClickListener {
                     entity.setSelect(true);
                     SPManager.write(context, SP.TIMER_STATE, entity.getTimeState());
                     updateTimer();
-                    XToastUtils.info("开始定时");
                     notifyDataSetChanged();
                 }
             });

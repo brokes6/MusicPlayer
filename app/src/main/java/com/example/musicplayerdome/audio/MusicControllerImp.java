@@ -146,6 +146,12 @@ public class MusicControllerImp implements MusicController {
     @Override
     public void Choice(int i) {
         ChoicePosition(AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY_SELECT_AUDIO,i);
+
+        Intent intent = new Intent();
+        intent.setAction(ACTIONS);
+        intent.putExtra(INTENT_BUTTONID_TAG, 5);
+        intent.putExtra("name",audio.getName());
+        context.sendBroadcast(intent);
     }
 
     @Override
