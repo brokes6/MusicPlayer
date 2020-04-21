@@ -35,6 +35,8 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
         <LinearLayout
+            android:id="@+id/Playback_controller"
+            android:visibility="gone"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/afc_10dp"
                         android:layout_weight="1"
-                        android:src="@android:drawable/ic_media_previous" />
+                        android:src="@mipmap/audio_pre_btn" />
 
                     <ImageView
                         android:id="@+id/btn_custom_play"
@@ -82,7 +84,7 @@
                         android:layout_marginLeft="@dimen/afc_10dp"
                         android:layout_weight="1"
                         android:contentDescription="播放"
-                        android:src="@android:drawable/ic_media_play" />
+                        android:src="@mipmap/audio_state_play" />
 
                     <ImageView
                         android:id="@+id/btn_custom_next"
@@ -91,7 +93,7 @@
                         android:layout_marginLeft="@dimen/afc_10dp"
                         android:layout_weight="1"
                         android:contentDescription="下一首"
-                        android:src="@android:drawable/ic_media_next" />
+                        android:src="@mipmap/audio_next_btn" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

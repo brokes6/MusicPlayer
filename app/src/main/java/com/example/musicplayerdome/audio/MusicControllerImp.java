@@ -1,6 +1,7 @@
 package com.example.musicplayerdome.audio;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -21,6 +22,8 @@ import com.smp.soundtouchandroid.SoundStreamAudioPlayer;
 import java.io.IOException;
 import java.util.List;
 
+import static com.example.musicplayerdome.util.AudioPlayerConstant.playerState;
+
 
 public class MusicControllerImp implements MusicController {
     private SoundStreamAudioPlayer player;
@@ -33,7 +36,10 @@ public class MusicControllerImp implements MusicController {
     private final MediaSessionManager sessionManager;
     private MusicNotification notification;
     private static final String TAG = "MusicControllerImp";
-
+    //以下属于广播需要
+    private final static String ACTIONS = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClickS";
+    private final static String INTENT_BUTTONID_TAG = "ButtonId";
+    //广播需要结束
     private MusicControllerImp(Context context) {
         this.context = context;
         this.sessionManager = new MediaSessionManager(context, this);
@@ -60,6 +66,13 @@ public class MusicControllerImp implements MusicController {
         try {
             if (player != null && player.isPause()) {
                 player.start();
+                Log.e(TAG, "play: 播放？");
+
+                Intent intent = new Intent();
+                intent.setAction(ACTIONS);
+                intent.putExtra(INTENT_BUTTONID_TAG, 2);
+                context.sendBroadcast(intent);
+
                 sessionManager.updatePlaybackState();
             } else if (player != null && status == AudioPlayerConstant.ACITION_AUDIO_PLAYER_PREPARE) {
                 Log.d(TAG, "正在加载中..." );
@@ -120,7 +133,14 @@ public class MusicControllerImp implements MusicController {
 
     @Override
     public void next() {
+        Log.e(TAG, "play: 下一首？");
         initPosition(AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY_NEXT_AUDIO);
+
+        Intent intent = new Intent();
+        intent.setAction(ACTIONS);
+        intent.putExtra(INTENT_BUTTONID_TAG, 4);
+        intent.putExtra("name",audio.getName());
+        context.sendBroadcast(intent);
     }
     //输入音乐资源下标，来进行播放
     @Override
@@ -131,6 +151,12 @@ public class MusicControllerImp implements MusicController {
     @Override
     public void pre() {
         initPosition(AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY_PRE_AUDIO);
+
+        Intent intent = new Intent();
+        intent.setAction(ACTIONS);
+        intent.putExtra(INTENT_BUTTONID_TAG, 1);
+        intent.putExtra("name",audio.getName());
+        context.sendBroadcast(intent);
     }
     //更具传入的下标来创建Audio
     private void ChoicePosition(int action,int num){
@@ -254,9 +280,16 @@ public class MusicControllerImp implements MusicController {
 
     @Override
     public void pause() {
+        Log.e(TAG, "pause: 暂停？？？");
         if (player != null) {
             if (!player.isPaused()) {
                 player.pause();
+
+                Intent intent = new Intent();
+                intent.setAction(ACTIONS);
+                intent.putExtra(INTENT_BUTTONID_TAG, 3);
+                context.sendBroadcast(intent);
+
                 sessionManager.updatePlaybackState();
             }
         }

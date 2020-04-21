@@ -260,7 +260,6 @@ public class MusicNotification {
                             }
                         }
                         break;
-
                     case BUTTON_NEXT_ID://下一首
                         if (musicController != null) {
                             musicController.next();

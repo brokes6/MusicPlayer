@@ -1,27 +1,34 @@
 package com.example.musicplayerdome.activity;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
-import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.View;
-import android.widget.RemoteViews;
+import android.widget.ImageView;
+
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.musicplayerdome.R;
+import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.databinding.ActivityHomeBinding;
 import com.example.musicplayerdome.fragment.HomeFragment;
 import com.example.musicplayerdome.fragment.MyFragment;
 import com.example.musicplayerdome.fragment.SongSheetFragment;
 import com.example.musicplayerdome.object.BaseActivity;
+import com.example.musicplayerdome.util.MyUtil;
+import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.xuexiang.xui.utils.SnackbarUtils;
 
 import java.util.ArrayList;
@@ -33,6 +40,28 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     private String[] strings = new String[]{"歌 单","主 页","我 的"};
     private List<Fragment> fragmentList = new ArrayList<Fragment>();
     private long firstTime = 0;
+    private int Sid;
+    //音频播放类
+    private Audio audio;
+    private boolean go = false;
+    private Intent intent;
+    private HomeBroadcastReceiver bReceiver;
+    /**
+     * 上一首 按钮点击 ID
+     */
+    private final static int BUTTON_PREV_ID = 1;
+    /**
+     * 播放/暂停 按钮点击 ID
+     */
+    private final static int BUTTON_PALY_ID = 2;
+    /**
+     * 下一首 按钮点击 ID
+     */
+    private final static int BUTTON_NEXT_ID = 3;
+    private final static String INTENT_BUTTONID_TAG = "ButtonId";
+    private final static String ACTION_BUTTON = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClick";
+    private final static String ACTIONS = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClickS";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +72,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         fragmentList.add(new MyFragment());
         initView();
         initApadter();
+        initBroadcastReceiver();
     }
     private void initView(){
         binding.btnCustomPlay.setOnClickListener(this);
         binding.btnCustomNext.setOnClickListener(this);
         binding.btnCustomPrev.setOnClickListener(this);
+        binding.PlaybackController.setOnClickListener(this);
     }
     private void initApadter(){
         MyAdapter fragmentAdater = new MyAdapter(getSupportFragmentManager());
@@ -56,26 +87,69 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         binding.viewpager.setOffscreenPageLimit(fragmentList.size()-1);
         binding.tablayoutReal.setupWithViewPager(binding.viewpager);
     }
+    private void initBroadcastReceiver(){
+        bReceiver = new HomeBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ACTIONS);
+        registerReceiver(bReceiver, intentFilter);
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_custom_prev:
                 //上一首
-
+                intent = new Intent();
+                intent.setAction(ACTION_BUTTON);
+                intent.putExtra(INTENT_BUTTONID_TAG, BUTTON_PREV_ID);
+                sendBroadcast(intent);
                 break;
             case R.id.btn_custom_play:
                 //播放
-
+                intent = new Intent();
+                intent.setAction(ACTION_BUTTON);
+                intent.putExtra(INTENT_BUTTONID_TAG, BUTTON_PALY_ID);
+                sendBroadcast(intent);
                 break;
             case R.id.btn_custom_next:
                 //下一首
-
+                intent = new Intent();
+                intent.setAction(ACTION_BUTTON);
+                intent.putExtra(INTENT_BUTTONID_TAG, BUTTON_NEXT_ID);
+                sendBroadcast(intent);
+                break;
+            case R.id.Playback_controller:
+                ActivityUtils.startActivity(MusicActivity.class);
                 break;
         }
     }
 
+    /**
+     * 显示音频标题
+     */
+    private void addAudioTitle(String name) {
+        if (name == null) return;
+        //设置音乐名称
+        MyUtil.setText(binding.tvCustomSongSinger, name);
+    }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (go == true)return;
+        go = (boolean)SharedPreferencesUtil.getData("go",false);
+        Log.e(TAG, "获取成功"+go);
+        if (go ==true){
+            addAudioTitle((String)SharedPreferencesUtil.getData("name",""));
+            binding.PlaybackController.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    /**
+     * 主页Tab列表适配器
+     */
     private class MyAdapter extends FragmentPagerAdapter {
         public MyAdapter(FragmentManager fm) {
             super(fm);
@@ -95,6 +169,35 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public CharSequence getPageTitle(int position) {
             return strings[position];
+        }
+    }
+    //对设置图片进行方便的封装
+    private void setImg(ImageView imageView, int imgRes) {
+        if (imageView == null) return;
+        imageView.setImageResource(imgRes);
+    }
+    public class HomeBroadcastReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(ACTIONS)) {
+                int buttonId = intent.getIntExtra(INTENT_BUTTONID_TAG, 0);
+                Sid = intent.getIntExtra("sid",0);
+                switch (buttonId) {
+                    case 1:
+                    case 4:
+                        addAudioTitle(intent.getStringExtra("name"));
+                        break;
+                    case 2://播放或暂停
+                        Log.e(TAG, "------接受到的值为：播放");
+                        setImg(binding.btnCustomPlay,R.mipmap.audio_state_play);
+                        break;
+                    case 3:
+                        setImg(binding.btnCustomPlay,R.mipmap.audio_state_pause);
+                        break;
+                }
+            }
         }
     }
     @Override

@@ -2,6 +2,7 @@ package com.example.musicplayerdome.object;
 
 import android.app.Application;
 
+import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.xuexiang.xui.BuildConfig;
 import com.xuexiang.xui.XUI;
 
@@ -22,6 +23,7 @@ public class MyApplication extends Application {
         super.onCreate();
         XUI.init(this);
         XUI.debug(MyApplication.isDebug());
+        SharedPreferencesUtil.getInstance(this,"SPy");
     }
 
     public static boolean isDebug() {

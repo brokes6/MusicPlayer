@@ -43,6 +43,7 @@ import com.example.musicplayerdome.util.AudioPlayerConstant;
 import com.example.musicplayerdome.util.BitMapUtil;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.SPManager;
+import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.example.musicplayerdome.util.TimerFlag;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.smp.soundtouchandroid.AudioSpeed;
@@ -83,6 +84,12 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
     private final int MSG_AUDIO_PREPARE = MSG_SHOW_UI + 1;
     //自动播放
     private final int MSG_AUTO_PLAY = MSG_AUDIO_PREPARE + 1;
+    private final static String ACTIONS = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClickS";
+    private final static String INTENT_BUTTONID_TAG = "ButtonId";
+    /**
+     * 播放/暂停 按钮点击 ID
+     */
+    private final static int BUTTON_PALY_ID = 2;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -109,10 +116,11 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             if (service!=null) {
-                initSharedPreferences(true);
+                SharedPreferencesUtil.putData("key",true);
                 Log.d(TAG, "onServiceConnected: 服务以启动");
                 MusicServlce.MediaplayerBinder binder =(MusicServlce.MediaplayerBinder)service;
                 musicController = binder.getService();
+                SharedPreferencesUtil.putData("go",true);
                 if (musicController.getPlayList() == null || musicController.getPlayList().isEmpty()) {
                     if (audioList != null) {
                         musicController.setPlayList(audioList);
@@ -175,7 +183,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         Log.e(TAG, "goPlayTo: 接收到的id为："+sid);
         if (musicController==null){
             Log.e(TAG, "goPlay: 开始注册绑定服务");
-//            stratSerlvce();
             Wifipaly=WifiMusic();
             if (Wifipaly==false){
                 setWifiplay();
@@ -291,7 +298,8 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
      * 用来进行立马解绑的
      */
     private void Stop() {
-        connect = getSharedPreferences();
+        connect = (boolean)SharedPreferencesUtil.getData("key",false);
+        SharedPreferencesUtil.putData("go",false);
         //一开始是为false，当绑定服务绑定成功时，就会成为true
         //所以这就是为什么要在注销时，要进行判断connect的值
         Log.d(TAG, "开始解绑:"+connect+"---"+serviceConnection);
@@ -308,7 +316,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
             ratateImage.initSpin();
         }
         setImg(binding.play, R.mipmap.audio_state_pause);
-        initSharedPreferences(false);
+        SharedPreferencesUtil.putData("key",false);
     }
     /**
      * 显示定时弹窗
@@ -342,7 +350,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         timerDialog.show();
     }
     /**
-     * Dialog点击回调事件（音乐内部列表选择监听）
+     * Dialog点击回调事件（音乐内部列表选择列表监听）
      */
     private class DialogClickListener implements DialogClickCallBack {
         @Override
@@ -361,7 +369,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
      * 注意两个play是不一样的，这个是用来初始化服务的
      */
     private void play() {
-        connect = getSharedPreferences();
+        connect = (boolean)SharedPreferencesUtil.getData("key",false);
         if (connect==false) {
             initMusicService(true);
             return;
@@ -409,6 +417,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         }
         Log.e(TAG, "setMusicList: 当前id为："+sid);
         this.audio = audioList.get(sid-1);
+        SharedPreferencesUtil.putData("name",audio.getName());
     }
     /**
      * 执行播放点击事件
@@ -442,6 +451,12 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
                 if (musicController!=null){
                     musicController.play(audio);
                 }
+                Intent intent = new Intent();
+                intent.setAction(ACTIONS);
+                intent.putExtra(INTENT_BUTTONID_TAG, BUTTON_PALY_ID);
+                intent.putExtra("sid",playerState);
+                Log.e(TAG, "play: 传递sid："+playerState);
+                sendBroadcast(intent);
                 break;
             /**
              * 不是播放的一个
@@ -710,20 +725,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
     }
 
     /**
-     *SharedPreferences写入和读取
-     */
-    public void initSharedPreferences(boolean k){
-        SharedPreferences sharedPreferences= getSharedPreferences("key", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("connect",k);
-        editor.commit();
-    }
-    public boolean getSharedPreferences(){
-        SharedPreferences sharedPreferences= getSharedPreferences("key", Context .MODE_PRIVATE);
-        Boolean connect = sharedPreferences.getBoolean("connect",false);
-        return connect;
-    }
-    /**
      * 创建的MediaCallBack音频监听器，监听播放状态而改变界面ui
      */
     MediaCallBack mediaCallBack = new MediaCallBack() {
@@ -867,12 +868,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         Log.e(TAG, "onDestroy:正在注销 ");
         Stop();
     }
-//    @Override
-//    public void onBackPressed() {
-//        Log.e(TAG, "onBackPressed: 按下返回键");
-//        //这里的（添加到后台，下次进入不用重新生成该页面）应该和（android:launchMode="singleInstance"）一起才能生效
-//        moveTaskToBack(false);
-//    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
