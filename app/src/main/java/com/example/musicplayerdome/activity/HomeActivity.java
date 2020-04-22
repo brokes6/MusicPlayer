@@ -187,18 +187,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
 
         @Override
         public Fragment getItem(int position) {
-//            switch (position){
-//                case 0:
-//                    Log.e(TAG, "getItem: 现在是0000000000000");
-//                    break;
-//                case 1:
-//                    Log.e(TAG, "getItem: 现在是1111111111111");
-//                    break;
-//                case 2:
-//                    Log.e(TAG, "getItem: 现在是2222222222222");
-//                    break;
-//            }
-//                binding.tabBackground.setBackground();
             return fragmentList.get(position);
         }
 

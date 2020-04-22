@@ -129,6 +129,8 @@ public interface MusicController {
 
     int getCurrentPosition();
 
+    int getTime(Audio audio);
+
     OnProgressChangedListener getProgressListener();
 
     boolean isSame(Audio audio);

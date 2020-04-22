@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,16 +42,21 @@ import com.example.musicplayerdome.servlce.MusicServlce;
 import com.example.musicplayerdome.util.AudioFlag;
 import com.example.musicplayerdome.util.AudioPlayerConstant;
 import com.example.musicplayerdome.util.BitMapUtil;
+import com.example.musicplayerdome.util.DisplayUtil;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.SPManager;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.example.musicplayerdome.util.TimerFlag;
 import com.example.musicplayerdome.util.XToastUtils;
+import com.lauzy.freedom.library.Lrc;
+import com.lauzy.freedom.library.LrcHelper;
+import com.lauzy.freedom.library.LrcView;
 import com.smp.soundtouchandroid.AudioSpeed;
 import com.smp.soundtouchandroid.MediaCallBack;
 import com.smp.soundtouchandroid.OnProgressChangedListener;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -164,6 +170,8 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         binding.musicList.setOnClickListener(this);
         binding.button.setOnClickListener(this);
         binding.audioTiming.setOnClickListener(this);
+        binding.playAlbumIs.setOnClickListener(this);
+        binding.mLrcView.setOnClickListener(this);
         binding.actAudioPlayerButtonPrebuttonId.setOnClickListener(this);
         binding.actAudioPlayerButtonNextId.setOnClickListener(this);
         binding.actAudioPlayerAudioProgressId.setOnSeekBarChangeListener(new SeekBarChangeEvent());
@@ -171,6 +179,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         lp = (int)(display.getHeight()*0.5);
+        //歌词拖动监听
     }
 
     /**
@@ -259,6 +268,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
                     ratateImage.initSpin();
                 }
                 break;
+                //上一首
             case R.id.act_audio_player_button_prebuttonId:
                 if (musicController != null) {
                     musicController.pre();
@@ -267,8 +277,18 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
                     ratateImage.initSpin();
                 }
                 break;
+                //定时
             case R.id.audio_timing:
                 showTimingPop();
+                break;
+                //音频歌词
+            case R.id.play_album_is:
+                binding.playAlbumIs.setVisibility(View.GONE);
+                binding.lrcViews.setVisibility(View.VISIBLE);
+                break;
+            case R.id.mLrcView:
+                binding.playAlbumIs.setVisibility(View.VISIBLE);
+                binding.lrcViews.setVisibility(View.GONE);
                 break;
         }
     }
@@ -350,6 +370,22 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         timerDialog.show();
     }
     /**
+     * 音乐歌曲初始化
+     */
+    private void setMusicLrcView(){
+        List<Lrc> Lyric = LrcHelper.parseLrcFromAssets(MusicActivity.this, "神秘嘉宾-林宥嘉.lrc");
+        //设置歌词数据：
+        binding.mLrcView.setLrcData(Lyric);
+        binding.mLrcView.setEmptyContent("暂时没有歌词~");
+        binding.mLrcView.setOnPlayIndicatorLineListener(new LrcView.OnPlayIndicatorLineListener() {
+            @Override
+            public void onPlay(long time, String content) {
+                musicController.seekTo(((int) time * 1000));
+                Log.e(TAG, "onPlay: ？？？？"+time);
+            }
+        });
+    }
+    /**
      * Dialog点击回调事件（音乐内部列表选择列表监听）
      */
     private class DialogClickListener implements DialogClickCallBack {
@@ -387,6 +423,8 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         //设置音乐id
         sid = ((int)audio.getId());
         Log.e(TAG, "onChange: 状态发生改变，当前音乐id为:"+sid);
+        //初始化歌曲
+        setMusicLrcView();
     }
 
 
@@ -528,6 +566,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         if (binding.actAudioPlayerCurrentPlayTimeId != null) {
             binding.actAudioPlayerCurrentPlayTimeId.setText(getTimeStr((int) position));
         }
+        binding.mLrcView.updateTime(musicController.getPlayedDuration() / 1000);
     }
     private void setInitDate(long duration) {
         Log.d(TAG, "duration=" + duration);
@@ -800,7 +839,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
 
         }
     };
-
     /**
      *skbProgress监听事件
      * 滑动监听

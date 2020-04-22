@@ -14,7 +14,7 @@ public class MusicURL {
     private List<String> musicurl = new ArrayList<>();
     public MusicURL(){
         //这里的资源得定时更换
-        musicurl.add("http://m10.music.126.net/20200421155346/7e785119836651fde8c4c8b821e40a00/ymusic/f998/bb37/c1e0/83be80389ba1192e3536b23fe5e27c03.mp3");
+        musicurl.add("http://m10.music.126.net/20200422204121/fa7cfd20d54795558f1711f45fb25098/ymusic/4f6f/a946/6b6e/c84f65560562aab698c824eaf5a1ff76.mp3");
         musicurl.add("http://m10.music.126.net/20200421155402/1c29d1728785e65289f5d1e96eea7e83/ymusic/4f6f/a946/6b6e/c84f65560562aab698c824eaf5a1ff76.mp3");
         musicurl.add("http://m10.music.126.net/20200421155346/7e785119836651fde8c4c8b821e40a00/ymusic/f998/bb37/c1e0/83be80389ba1192e3536b23fe5e27c03.mp3");
         musicurl.add("http://m10.music.126.net/20200421155402/1c29d1728785e65289f5d1e96eea7e83/ymusic/4f6f/a946/6b6e/c84f65560562aab698c824eaf5a1ff76.mp3");

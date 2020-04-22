@@ -107,6 +107,12 @@ public class MusicControllerImp implements MusicController {
     }
 
     @Override
+    public int getTime(Audio audio) {
+
+        return 0;
+    }
+
+    @Override
     public void play(Audio audio) {
         try {
             if (isSame(audio)) {
