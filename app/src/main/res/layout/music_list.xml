@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:background="@drawable/file_background_radius_10"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:paddingTop="@dimen/afc_5dp"
     android:paddingBottom="@dimen/afc_5dp">
     <TextView

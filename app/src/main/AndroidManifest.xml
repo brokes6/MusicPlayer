@@ -16,16 +16,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemes"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.SongSheetActivity"></activity>
         <!-- android:networkSecurityConfig="@xml/network_security_config"很重要，要加上去 -->
-        <activity android:name=".activity.HomeActivity"
+        <activity
+            android:name=".activity.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activity.LoginActivity" />
         <activity
             android:name=".activity.MusicActivity"
@@ -39,9 +41,7 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.MainActivity">
-
-        </activity>
+        <activity android:name=".activity.MainActivity"></activity>
 
         <meta-data
             android:name="design_width_in_dp"

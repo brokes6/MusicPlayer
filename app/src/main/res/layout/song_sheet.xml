@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.SongSheetActivity">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:background="#3A3A3A"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                app:layout_scrollFlags="scroll|snap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/topLayout"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left|center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/Pback"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@mipmap/back_while" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.example.musicplayerdome.util.RoundImageView
+                        android:id="@+id/XLogin"
+                        android:layout_margin="17dp"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:src="@mipmap/song_sheet"
+                        app:type="round" />
+
+                    <TextView
+                        android:id="@+id/XTitle"
+                        android:layout_marginTop="17dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:text="我的歌单"
+                        android:layout_toRightOf="@id/XLogin"
+                        android:letterSpacing="0.05"
+                        android:textColor="#fff"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:padding="3dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:background="@drawable/fillet_back_gray"
+                        android:text="来自于：付鑫博 "
+                        android:layout_below="@id/XTitle"
+                        android:layout_toRightOf="@id/XLogin"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/texttext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="歌单介绍：没啥的 没啥的 没啥的"
+                        android:layout_below="@id/XLogin"
+                        android:padding="17dp"
+                        android:textSize="16sp"
+                        android:lineSpacingExtra="20dp"
+                        android:textColor="#FFFFFF"
+                        android:maxLines="5" />
+                </RelativeLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/file_back_shape"
+                android:gravity="left|center">
+                <TextView
+                    android:paddingTop="5dp"
+                    android:layout_marginLeft="@dimen/afc_10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textSize="20sp"
+                    android:text="所有歌曲:"/>
+            </LinearLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_marginTop="@dimen/afc_5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white" />
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <LinearLayout
+            android:id="@+id/Playback_controller"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bt_top"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingTop="@dimen/afc_10dp"
+                android:paddingBottom="@dimen/afc_10dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/afc_20dp"
+                    android:layout_marginLeft="@dimen/afc_10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_custom_song_singer"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="音乐名称"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:id="@+id/tv_custom_song_author"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="音乐作者"
+                        android:textColor="@color/color_bg_loading"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/btn_custom_prev"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/afc_10dp"
+                        android:layout_weight="1"
+                        android:src="@mipmap/audio_pre_btn" />
+
+                    <ImageView
+                        android:id="@+id/btn_custom_play"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/afc_10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="播放"
+                        android:src="@mipmap/audio_state_play" />
+
+                    <ImageView
+                        android:id="@+id/btn_custom_next"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/afc_10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="下一首"
+                        android:src="@mipmap/audio_next_btn" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

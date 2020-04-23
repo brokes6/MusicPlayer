@@ -6,7 +6,7 @@
             <solid android:color="#595959"/>
         </shape>
     </item>
-    <item android:top="2px">
+    <item android:top="1px">
         <shape>
             <!--内容颜色-->
             <solid android:color="#fff"/>

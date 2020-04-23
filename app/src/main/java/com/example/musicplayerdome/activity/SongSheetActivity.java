@@ -1,52 +1,43 @@
 package com.example.musicplayerdome.activity;
 
-import androidx.annotation.Nullable;
-
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.musicplayerdome.R;
+import com.example.musicplayerdome.abstractclass.OnItemListenter;
+import com.example.musicplayerdome.adapter.MainMusicAdapter;
 import com.example.musicplayerdome.bean.Audio;
-import com.example.musicplayerdome.databinding.ActivityHomeBinding;
-import com.example.musicplayerdome.fragment.HomeFragment;
-import com.example.musicplayerdome.fragment.MyFragment;
-import com.example.musicplayerdome.fragment.SongSheetFragment;
+import com.example.musicplayerdome.databinding.SongSheetBinding;
 import com.example.musicplayerdome.object.BaseActivity;
+import com.example.musicplayerdome.resources.MusicURL;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
-import com.google.android.material.tabs.TabLayout;
-import com.xuexiang.xui.utils.SnackbarUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends BaseActivity implements View.OnClickListener{
-    private static final String TAG = "HomeActivity";
-    ActivityHomeBinding binding;
-    private String[] strings = new String[]{"歌 单","主 页","我 的"};
-    private List<Fragment> fragmentList = new ArrayList<Fragment>();
+public class SongSheetActivity extends BaseActivity implements View.OnClickListener{
+    SongSheetBinding binding;
+    private static final String TAG = "SongSheetActivity";
+    private MainMusicAdapter mainMusicAdapter;
     private long firstTime = 0;
-    private int Sid;
-    //音频播放类
-    private Audio audio;
-    private boolean go = false;
+    private List<Audio> audioList = new ArrayList<>();
+    private List<String> fileArr = new ArrayList<>();
     private Intent intent;
-    private HomeBroadcastReceiver bReceiver;
+    private SomeBroadcastReceiver bReceiver;
+    private int Sid;
+    private boolean go = false;
     /**
      * 上一首 按钮点击 ID
      */
@@ -62,66 +53,62 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     private final static String INTENT_BUTTONID_TAG = "ButtonId";
     private final static String ACTION_BUTTON = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClick";
     private final static String ACTIONS = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClickS";
-
-
+    
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_home);
-        fragmentList.add(new SongSheetFragment());
-        fragmentList.add(new HomeFragment());
-        fragmentList.add(new MyFragment());
+        binding = DataBindingUtil.setContentView(this,R.layout.song_sheet);
+        setMusicList();
         initView();
-        initApadter();
         initBroadcastReceiver();
     }
+    private void setMusicList(){
+        MusicURL musicURL = new MusicURL();
+        fileArr = musicURL.getMusicURL();
+        for (int i = 0; i < fileArr.size(); i++) {
+            Audio audio = new Audio();
+            audio.setFileUrl(fileArr.get(i));
+            audio.setId(i + 1);
+            audio.setType(1);
+            audio.setName("音乐" + (i + 1));
+            audioList.add(audio);
+        }
+    }
     private void initView(){
+        LinearLayoutManager lm = new LinearLayoutManager(SongSheetActivity.this);
+        lm.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.recyclerView.setLayoutManager(lm);
+        binding.recyclerView.setAdapter(mainMusicAdapter = new MainMusicAdapter(SongSheetActivity.this));
+        /**
+         * 回调监听也行，但没必要，只需要在加个参数用来判断就行了
+         * 通过抽象类来回调监听
+         * 这边才是真正的方法
+         */
+        mainMusicAdapter.setOnItemClickListener(new OnItemListenter() {
+            @Override
+            public void onItemClick(View view, int postionid) {
+                Intent intent = new Intent(SongSheetActivity.this, MusicActivity.class);
+                intent.putExtra ("sid",postionid);
+                intent.putExtra ("skey",true);
+                startActivity(intent);
+            }
+        });
+        mainMusicAdapter.loadMore(audioList);
+
+        binding.Pback.setOnClickListener(this);
         binding.btnCustomPlay.setOnClickListener(this);
         binding.btnCustomNext.setOnClickListener(this);
         binding.btnCustomPrev.setOnClickListener(this);
         binding.PlaybackController.setOnClickListener(this);
     }
-    private void initApadter(){
-        MyAdapter fragmentAdater = new MyAdapter(getSupportFragmentManager());
-        binding.viewpager.setAdapter(fragmentAdater);
-        binding.viewpager.setCurrentItem(1);
-        binding.viewpager.setOffscreenPageLimit(fragmentList.size()-1);
-        binding.tablayoutReal.setupWithViewPager(binding.viewpager);
-        binding.tablayoutReal.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getText().equals("歌 单")){
-                    binding.tabBackground.setBackgroundResource(R.color.A3A3);
-                }
-                if (tab.getText().equals("主 页")){
-                    binding.tabBackground.setBackgroundResource(R.color.d8d8);
-                }
-                if (tab.getText().equals("我 的")){
-                    binding.tabBackground.setBackgroundResource(R.color.BCD4);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-    }
-    private void initBroadcastReceiver(){
-        bReceiver = new HomeBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ACTIONS);
-        registerReceiver(bReceiver, intentFilter);
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.Pback:
+                finish();
+                break;
             case R.id.btn_custom_prev:
                 //上一首
                 intent = new Intent();
@@ -149,6 +136,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
+    private void initBroadcastReceiver(){
+        bReceiver = new SomeBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ACTIONS);
+        registerReceiver(bReceiver, intentFilter);
+    }
+
     /**
      * 显示音频标题
      */
@@ -158,13 +152,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         MyUtil.setText(binding.tvCustomSongSinger, name);
         MyUtil.setText(binding.tvCustomSongAuthor,author);
     }
-
-
+    private void setImg(ImageView imageView, int imgRes) {
+        if (imageView == null) return;
+        imageView.setImageResource(imgRes);
+    }
+    
     @Override
     protected void onResume() {
         super.onResume();
         if (go == true)return;
-        go = (boolean)SharedPreferencesUtil.getData("go",false);
+        go = (boolean) SharedPreferencesUtil.getData("go",false);
         Log.e(TAG, "获取成功"+go);
         if (go ==true){
             String name = (String)SharedPreferencesUtil.getData("name","");
@@ -173,38 +170,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
             binding.PlaybackController.setVisibility(View.VISIBLE);
         }
     }
-
-
-    /**
-     * 主页Tab列表适配器
-     */
-    private class MyAdapter extends FragmentPagerAdapter {
-        public MyAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return strings[position];
-        }
-    }
-    //对设置图片进行方便的封装
-    private void setImg(ImageView imageView, int imgRes) {
-        if (imageView == null) return;
-        imageView.setImageResource(imgRes);
-    }
-    public class HomeBroadcastReceiver extends BroadcastReceiver{
+    public class SomeBroadcastReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -229,23 +195,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
                         break;
                 }
             }
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        unregisterReceiver(bReceiver);
-        super.onDestroy();
-    }
-
-    @Override
-    public void onBackPressed() {
-        long secondTime = System.currentTimeMillis();
-        if (secondTime - firstTime > 2000) {
-            SnackbarUtils.Short(binding.mainL, "再按一次退出").info().show();
-            firstTime = secondTime;
-        } else{
-            ActivityUtils.finishAllActivities();
         }
     }
 }

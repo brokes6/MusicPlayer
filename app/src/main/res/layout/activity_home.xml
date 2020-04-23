@@ -38,8 +38,8 @@
     </LinearLayout>
         <LinearLayout
             android:id="@+id/Playback_controller"
-            android:visibility="gone"
             android:layout_alignParentBottom="true"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bt_top"
@@ -51,16 +51,32 @@
                 android:paddingTop="@dimen/afc_10dp"
                 android:paddingBottom="@dimen/afc_10dp"
                 android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/tv_custom_song_singer"
+                <LinearLayout
+                    android:layout_weight="1"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/afc_20dp"
                     android:layout_marginLeft="@dimen/afc_10dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="音乐名称"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_custom_song_singer"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="音乐名称"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:id="@+id/tv_custom_song_author"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:text="音乐作者"
+                        android:textColor="@color/color_bg_loading"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

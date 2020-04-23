@@ -17,7 +17,7 @@
             android:id="@+id/volume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button"
+            android:layout_below="@+id/top"
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp"
             android:orientation="horizontal">
@@ -79,18 +79,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/seek_bar_layId"
-            android:layout_marginTop="91dp"
+            android:layout_marginTop="80dp"
             android:orientation="vertical">
-
             <TextView
                 android:id="@+id/act_book_detail_titleId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/afc_12dp"
+                android:layout_marginBottom="@dimen/afc_5dp"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="2"
-                android:text="未知"
+                android:text="未知名称"
                 android:textColor="@color/color_33"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -100,7 +99,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal" />
+                android:orientation="horizontal" >
+                <TextView
+                    android:id="@+id/act_book_detail_author"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="未知作者"
+                    android:textColor="@color/color_bg_loading"
+                    android:textSize="15sp"
+                    />
+            </LinearLayout>
             <!--其他作者-->
             <LinearLayout
                 android:id="@+id/othor_author_layId"
@@ -210,10 +221,37 @@
             </LinearLayout>
         </LinearLayout>
         //播放按钮和列表按钮--结束
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/top"
+            android:layout_marginTop="@dimen/afc_5dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="-解绑服务-"/>
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_marginLeft="@dimen/afc_10dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@mipmap/other_back"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="right|center">
+                <Button
+                    android:id="@+id/button"
+                    android:layout_marginRight="@dimen/afc_10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-解绑服务-"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
     </RelativeLayout>
 </layout>

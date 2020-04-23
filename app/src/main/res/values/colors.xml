@@ -15,6 +15,7 @@
     <color name="green_btn_color_disable">#CCCCCC</color>
     <color name="green_btn_color_pressed">#05bca2</color>
     <color name="white">#FFFFFF</color>
+    <color name="A3A3">#3A3A3A</color>
     <color name="black">#000000</color>
     <color name="menu_white_normal">#FFFFFF</color>
     <color name="menu_white_pressed">#CFCFCF</color>

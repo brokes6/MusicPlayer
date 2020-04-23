@@ -139,13 +139,13 @@ public class MusicControllerImp implements MusicController {
 
     @Override
     public void next() {
-        Log.e(TAG, "play: 下一首？");
         initPosition(AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY_NEXT_AUDIO);
 
         Intent intent = new Intent();
         intent.setAction(ACTIONS);
         intent.putExtra(INTENT_BUTTONID_TAG, 4);
         intent.putExtra("name",audio.getName());
+        intent.putExtra("author",audio.getAuthor());
         context.sendBroadcast(intent);
     }
     //输入音乐资源下标，来进行播放
@@ -157,6 +157,7 @@ public class MusicControllerImp implements MusicController {
         intent.setAction(ACTIONS);
         intent.putExtra(INTENT_BUTTONID_TAG, 5);
         intent.putExtra("name",audio.getName());
+        intent.putExtra("author",audio.getAuthor());
         context.sendBroadcast(intent);
     }
 
@@ -168,6 +169,7 @@ public class MusicControllerImp implements MusicController {
         intent.setAction(ACTIONS);
         intent.putExtra(INTENT_BUTTONID_TAG, 1);
         intent.putExtra("name",audio.getName());
+        intent.putExtra("author",audio.getAuthor());
         context.sendBroadcast(intent);
     }
     //更具传入的下标来创建Audio
