@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -60,13 +61,14 @@ public class MusicList extends Dialog {
         /**
          * 设置宽度全屏，要设置在show的后面
          */
-        WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
-        layoutParams.gravity= Gravity.BOTTOM;
+        Window dialogWindow = getWindow();
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        WindowManager.LayoutParams layoutParams = dialogWindow.getAttributes();
         layoutParams.width= WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height= height;
         layoutParams.dimAmount =0f;
-        getWindow().getDecorView().setPadding(25, 0, 25, 25);
-        getWindow().setAttributes(layoutParams);
+        dialogWindow.getDecorView().setPadding(25, 0, 25, 25);
+        dialogWindow.setAttributes(layoutParams);
 
     }
 

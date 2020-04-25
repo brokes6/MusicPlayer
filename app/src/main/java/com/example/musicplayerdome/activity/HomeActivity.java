@@ -94,7 +94,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
                     binding.tabBackground.setBackgroundResource(R.color.A3A3);
                 }
                 if (tab.getText().equals("主 页")){
-                    binding.tabBackground.setBackgroundResource(R.color.d8d8);
+                    binding.tabBackground.setBackgroundResource(R.color.white);
                 }
                 if (tab.getText().equals("我 的")){
                     binding.tabBackground.setBackgroundResource(R.color.BCD4);
@@ -221,7 +221,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
                         addAudioTitle(name,author);
                         break;
                     case 2://播放或暂停
-                        Log.e(TAG, "------接受到的值为：播放");
                         setImg(binding.btnCustomPlay,R.mipmap.audio_state_play);
                         break;
                     case 3:

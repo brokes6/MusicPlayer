@@ -7,11 +7,38 @@
 
     </data>
     <RelativeLayout
+        android:id="@+id/gao"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activity.SongSheetActivity">
+        <LinearLayout
+            android:id="@+id/topLayout"
+            android:background="#3A3A3A"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="10dp"
+                android:gravity="left|center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/Pback"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@mipmap/back_while" />
+            </LinearLayout>
+
+        </LinearLayout>
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/layout_top"
+        android:layout_below="@+id/topLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <com.google.android.material.appbar.AppBarLayout
@@ -25,31 +52,6 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="15dp"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/topLayout"
-                    android:layout_alignParentTop="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="15dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="left|center"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/Pback"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@mipmap/back_while" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
 
                 <RelativeLayout
                     android:layout_width="match_parent"

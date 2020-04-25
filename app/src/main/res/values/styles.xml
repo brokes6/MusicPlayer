@@ -28,14 +28,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@style/popupAnimation</item>
     </style>
 
-    <style name="mystyle" parent="android:Animation">
-<!--        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>  //进入时的动画-->
-<!--        <item name="android:windowExitAnimation">@anim/dialog_exit</item>    //退出时的动画-->
-        <item name="android:windowEnterAnimation">@anim/timepicker_anim_enter_bottom</item>
-        <item name="android:windowExitAnimation">@anim/timepicker_anim_out_bottom</item>
-    </style>
+
     <style name="MyDialog" parent="@android:style/Theme.Holo.Dialog">
         <!-- 是否有边框 -->
         <item name="android:windowFrame">@null</item>
@@ -50,6 +46,11 @@
 
         <!-- 点外边可以消失  -->
         <item name="android:windowCloseOnTouchOutside">true</item>
-
     </style>
+    <style name="mystyle" parent="android:Animation">
+    <!--        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>  //进入时的动画-->
+    <!--        <item name="android:windowExitAnimation">@anim/dialog_exit</item>    //退出时的动画-->
+    <item name="android:windowEnterAnimation">@anim/timepicker_anim_enter_bottom</item>
+    <item name="android:windowExitAnimation">@anim/timepicker_anim_out_bottom</item>
+</style>
 </resources>

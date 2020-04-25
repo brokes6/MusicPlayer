@@ -19,6 +19,9 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
@@ -280,10 +283,14 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
             case R.id.play_album_is:
                 binding.playAlbumIs.setVisibility(View.GONE);
                 binding.lrcViews.setVisibility(View.VISIBLE);
+                binding.PropsColumnS.setVisibility(View.GONE);
+                binding.actAudioVolumeControl.setVisibility(View.VISIBLE);
                 break;
             case R.id.mLrcView:
                 binding.playAlbumIs.setVisibility(View.VISIBLE);
                 binding.lrcViews.setVisibility(View.GONE);
+                binding.PropsColumnS.setVisibility(View.VISIBLE);
+                binding.actAudioVolumeControl.setVisibility(View.GONE);
                 break;
             case R.id.back:
                 ActivityUtils.startActivity(SongSheetActivity.class);

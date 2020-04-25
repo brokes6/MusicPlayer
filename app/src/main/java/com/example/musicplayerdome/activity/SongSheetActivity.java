@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -23,6 +24,7 @@ import com.example.musicplayerdome.object.BaseActivity;
 import com.example.musicplayerdome.resources.MusicURL;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
+import com.xuexiang.xui.utils.StatusBarUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +55,13 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
     private final static String INTENT_BUTTONID_TAG = "ButtonId";
     private final static String ACTION_BUTTON = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClick";
     private final static String ACTIONS = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClickS";
+    int gao;
     
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtils.translucent(this,getResources().getColor(R.color.A3A3));
         binding = DataBindingUtil.setContentView(this,R.layout.song_sheet);
         setMusicList();
         initView();
@@ -159,6 +163,7 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
     
     @Override
     protected void onResume() {
+        Log.e(TAG, "onResume: 运行？"+go);
         super.onResume();
         if (go == true)return;
         go = (boolean) SharedPreferencesUtil.getData("go",false);
@@ -187,7 +192,6 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
                         addAudioTitle(name,author);
                         break;
                     case 2://播放或暂停
-                        Log.e(TAG, "------接受到的值为：播放");
                         setImg(binding.btnCustomPlay,R.mipmap.audio_state_play);
                         break;
                     case 3:
@@ -196,5 +200,19 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
                 }
             }
         }
+    }
+    @Override
+    protected void onDestroy() {
+        Log.e(TAG, "onDestroy: 歌单页面广播已注销");
+        unregisterReceiver(bReceiver);
+        super.onDestroy();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

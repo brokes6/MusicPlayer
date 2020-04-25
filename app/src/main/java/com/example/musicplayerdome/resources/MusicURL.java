@@ -14,8 +14,8 @@ public class MusicURL {
     private List<String> musicurl = new ArrayList<>();
     public MusicURL(){
         //这里的资源得定时更换
-        musicurl.add("http://m10.music.126.net/20200423111549/7f79c74cd43db58b8412b065ab038173/ymusic/f998/bb37/c1e0/83be80389ba1192e3536b23fe5e27c03.mp3");
-        musicurl.add("http://m10.music.126.net/20200423111534/c6c901a0a058f6b660fc8218fbcd705a/ymusic/074d/441c/231f/01e429488489e14edbaa78f8888e896b.mp3");
+        musicurl.add("http://m10.music.126.net/20200425165321/18a714a8d124fa57bb07a0e607d6e795/ymusic/f998/bb37/c1e0/83be80389ba1192e3536b23fe5e27c03.mp3");
+        musicurl.add("http://m10.music.126.net/20200425165336/1cbb626d9fa5d2721de7029b7e21dbb1/ymusic/074d/441c/231f/01e429488489e14edbaa78f8888e896b.mp3");
     }
     //算是增删改查
     public List<String> getMusicURL(){

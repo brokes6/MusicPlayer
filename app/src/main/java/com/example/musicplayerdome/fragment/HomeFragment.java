@@ -12,7 +12,11 @@ import android.view.ViewGroup;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.adapter.RecyclerViewBannerAdapter;
 import com.example.musicplayerdome.databinding.FragmentHomeBinding;
-import com.xuexiang.xui.widget.banner.recycler.BannerLayout;
+import com.youth.banner.indicator.CircleIndicator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
@@ -39,7 +43,11 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
     private void initView(){
-
+//        urlList = new ArrayList<>();
+//        dataBean = new DataBean();
+//        dataBean.setUrl("http://photocdn.sohu.com/tvmobilemvms/20150907/144160323071011277.jpg");
+//        dataBean.setUrl("http://photocdn.sohu.com/tvmobilemvms/20150907/144158380433341332.jpg");
+//        urlList.add(dataBean);
     }
     private void initBanner(){
         binding.blHorizontal.setAdapter(mAdapterHorizontal = new RecyclerViewBannerAdapter(urls));

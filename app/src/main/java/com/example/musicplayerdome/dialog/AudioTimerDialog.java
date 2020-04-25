@@ -61,7 +61,6 @@ public class AudioTimerDialog extends Dialog implements View.OnClickListener {
         //设置弹窗宽度
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         //为弹窗绑定效果
-        dialogWindow.setWindowAnimations(R.style.popupAnimation);
         dialogWindow.setAttributes(lp);
         //dissmiss
         view.findViewById(R.id.cancel_action).setOnClickListener(this);

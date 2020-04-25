@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="#D8D8D8"
+        android:background="#FFFFFF"
         android:orientation="vertical">
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayoutReal"

@@ -15,14 +15,17 @@
         <!--音量控制-->
         <LinearLayout
             android:id="@+id/volume"
+            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/top"
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp"
+            android:layout_marginTop="@dimen/afc_15dp"
             android:orientation="horizontal">
             <SeekBar
                 android:id="@+id/act_audio_VolumeControl"
+                android:visibility="gone"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,21 +41,19 @@
         </LinearLayout>
         <!--进度-->
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_margin="40dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:layout_below="@+id/volume"
-            android:layout_above="@+id/author_layId"
+            android:layout_above="@+id/Props_column"
             android:orientation="vertical">
             <com.example.musicplayerdome.util.RoundImageViewBT
                 android:id="@+id/play_album_is"
                 android:layout_marginTop="40dp"
-                android:layout_centerInParent="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
                 android:scaleType="fitXY" />
             <LinearLayout
                 android:id="@+id/lrcViews"
@@ -71,58 +72,40 @@
             </LinearLayout>
 
         </LinearLayout>
-
-
-        <!--标题，作者-->
         <LinearLayout
-            android:id="@+id/author_layId"
+            android:id="@+id/Props_column"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
             android:layout_above="@+id/seek_bar_layId"
-            android:layout_marginTop="80dp"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/act_book_detail_titleId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/afc_5dp"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="2"
-                android:text="未知名称"
-                android:textColor="@color/color_33"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <!--主作者-->
             <LinearLayout
-                android:id="@+id/main_author_layId"
+                android:id="@+id/Props_columnS"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal" >
-                <TextView
-                    android:id="@+id/act_book_detail_author"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:maxLines="2"
-                    android:text="未知作者"
-                    android:textColor="@color/color_bg_loading"
-                    android:textSize="15sp"
-                    />
-            </LinearLayout>
-            <!--其他作者-->
-            <LinearLayout
-                android:id="@+id/othor_author_layId"
-                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center">
+            <ImageView
+                android:layout_width="24dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="@dimen/afc_5dp"
-                android:gravity="center"
-                android:orientation="horizontal" />
+                android:layout_marginRight="50dp"
+                android:src="@mipmap/like"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
+                android:src="@mipmap/comment"/>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
+                android:src="@mipmap/more"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/download"/>
         </LinearLayout>
-
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/seek_bar_layId"
@@ -134,7 +117,6 @@
             android:layout_marginRight="45dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
-
             <TextView
                 android:id="@+id/act_audio_player_current_play_timeId"
                 android:layout_width="wrap_content"
@@ -144,7 +126,6 @@
                 android:text="00:00"
                 android:textColor="@color/color_33"
                 android:textSize="10sp" />
-
             <SeekBar
                 android:id="@+id/act_audio_player_audio_progressId"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -192,7 +173,7 @@
                     android:id="@+id/audio_timing"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@mipmap/audio_timing" />
+                    android:src="@mipmap/timing" />
                 <ImageView
                     android:id="@+id/act_audio_player_button_prebuttonId"
                     android:layout_width="0dp"
@@ -205,6 +186,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:padding="@dimen/afc_5dp"
                     android:src="@mipmap/audio_state_pause"/>
                 <ImageView
                     android:id="@+id/act_audio_player_button_nextId"
@@ -217,7 +199,7 @@
                     android:id="@+id/music_list"
                     android:layout_width="@dimen/afc_25dp"
                     android:layout_height="@dimen/afc_25dp"
-                    android:src="@mipmap/audio_list"/>
+                    android:src="@mipmap/list"/>
             </LinearLayout>
         </LinearLayout>
         //播放按钮和列表按钮--结束
@@ -234,13 +216,41 @@
                 <ImageView
                     android:id="@+id/back"
                     android:layout_marginLeft="@dimen/afc_10dp"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@mipmap/other_back"/>
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/back_gray"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/afc_10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/act_book_detail_titleId"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="未知名称"
+                        android:textColor="@color/color_33"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/act_book_detail_author"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="未知作者"
+                        android:textColor="@color/color_bg_loading"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:layout_height="match_parent"
                 android:gravity="right|center">
                 <Button

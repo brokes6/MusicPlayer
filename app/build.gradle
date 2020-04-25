@@ -79,4 +79,7 @@ dependencies {
 //    implementation 'me.wcy:lrcview:2.1.3'
 //    implementation 'com.github.bifan-wei:LrcView:V1.3'
     implementation 'com.github.Lauzy:LyricView:1.0.4'
+
+    //轮播图
+    implementation 'com.youth.banner:banner:2.0.8'
 }
