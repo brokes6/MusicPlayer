@@ -1,26 +1,19 @@
 package com.example.musicplayerdome.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.musicplayerdome.R;
-import com.example.musicplayerdome.abstractclass.OnItemListenter;
-import com.example.musicplayerdome.activity.MainActivity;
-import com.example.musicplayerdome.activity.MusicActivity;
 import com.example.musicplayerdome.activity.SongSheetActivity;
 import com.example.musicplayerdome.adapter.MainMusicAdapter;
 import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.databinding.SongsheetfragmentBinding;
-import com.example.musicplayerdome.resources.MusicURL;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.example.musicplayerdome.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -24,7 +23,7 @@ import com.example.musicplayerdome.object.BaseActivity;
 import com.example.musicplayerdome.resources.MusicURL;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
-import com.xuexiang.xui.utils.StatusBarUtils;
+import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +60,11 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtils.translucent(this,getResources().getColor(R.color.A3A3));
+        ImmersionBar.with(this)
+                .statusBarDarkFont(false)
+                .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
+                .statusBarColor(R.color.A3A3)
+                .init();
         binding = DataBindingUtil.setContentView(this,R.layout.song_sheet);
         setMusicList();
         initView();
@@ -111,7 +114,8 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.Pback:
-                finish();
+//                finish();
+                moveTaskToBack(false);
                 break;
             case R.id.btn_custom_prev:
                 //上一首

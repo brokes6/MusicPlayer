@@ -4,23 +4,32 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.musicplayerdome.R;
+import com.gyf.immersionbar.ImmersionBar;
 import com.kaopiz.kprogresshud.KProgressHUD;
-import com.xuexiang.xui.utils.StatusBarUtils;
+
 /**
  * Created by dingxingxiang
  * 基本Activity 继承类
  * 所有的activity都应继承它，方便管理
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity{
+    private static final String TAG = "BaseActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtils.setStatusBarLightMode(this);
+        ImmersionBar.with(this)
+                .statusBarDarkFont(true)
+                .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
+                .statusBarColor(R.color.white)
+                .init();
     }
+
 
     private KProgressHUD dialog;
     //页面是否处于前台
     boolean isFront = false;
+    int Rid;
 
     @Override
     protected void onResume() {

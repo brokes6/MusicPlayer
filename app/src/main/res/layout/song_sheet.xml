@@ -24,7 +24,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingTop="10dp"
                 android:gravity="left|center"
                 android:orientation="horizontal">
 
@@ -88,18 +87,86 @@
                         android:layout_below="@id/XTitle"
                         android:layout_toRightOf="@id/XLogin"
                         android:textColor="#FFFFFF" />
-
-                    <TextView
-                        android:id="@+id/texttext"
+                    <LinearLayout
+                        android:id="@+id/Props_column"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="歌单介绍：没啥的 没啥的 没啥的"
-                        android:layout_below="@id/XLogin"
-                        android:padding="17dp"
-                        android:textSize="16sp"
-                        android:lineSpacingExtra="20dp"
-                        android:textColor="#FFFFFF"
-                        android:maxLines="5" />
+                        android:animateLayoutChanges="true"
+                        android:layout_below="@+id/XLogin"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:id="@+id/Props_columnS"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="60dp"
+                                android:orientation="vertical"
+                                android:gravity="center">
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/comment_while"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#fff"
+                                    android:text="1"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="60dp"
+                                android:orientation="vertical"
+                                android:gravity="center">
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/share_while"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#fff"
+                                    android:text="分享"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="60dp"
+                                android:orientation="vertical"
+                                android:gravity="center">
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/download_while"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#fff"
+                                    android:text="下载"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center">
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/morechoice_while"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#fff"
+                                    android:text="多选"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
                 </RelativeLayout>
 
             </LinearLayout>

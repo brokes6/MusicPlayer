@@ -30,6 +30,7 @@ import com.example.musicplayerdome.object.BaseActivity;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.google.android.material.tabs.TabLayout;
+import com.gyf.immersionbar.ImmersionBar;
 import com.xuexiang.xui.utils.SnackbarUtils;
 
 import java.util.ArrayList;
@@ -92,9 +93,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getText().equals("歌 单")){
                     binding.tabBackground.setBackgroundResource(R.color.A3A3);
+                    ImmersionBar.with(HomeActivity.this)
+                            .statusBarDarkFont(false)
+                            .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
+                            .statusBarColor(R.color.A3A3)
+                            .init();
                 }
                 if (tab.getText().equals("主 页")){
                     binding.tabBackground.setBackgroundResource(R.color.white);
+                    ImmersionBar.with(HomeActivity.this)
+                            .statusBarDarkFont(true)
+                            .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
+                            .statusBarColor(R.color.white)
+                            .init();
                 }
                 if (tab.getText().equals("我 的")){
                     binding.tabBackground.setBackgroundResource(R.color.BCD4);
