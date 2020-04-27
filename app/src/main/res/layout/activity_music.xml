@@ -239,7 +239,7 @@
                         android:id="@+id/act_book_detail_author"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
+                        android:layout_weight="1"
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:text="未知作者"

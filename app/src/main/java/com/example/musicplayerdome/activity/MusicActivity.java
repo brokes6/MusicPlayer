@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -38,6 +39,7 @@ import com.example.musicplayerdome.resources.MusicURL;
 import com.example.musicplayerdome.servlce.MusicServlce;
 import com.example.musicplayerdome.util.AudioFlag;
 import com.example.musicplayerdome.util.AudioPlayerConstant;
+import com.example.musicplayerdome.util.FilesUtil;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.SPManager;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
@@ -51,6 +53,7 @@ import com.smp.soundtouchandroid.MediaCallBack;
 import com.smp.soundtouchandroid.OnProgressChangedListener;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -376,10 +379,18 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
      */
     private void setMusicLrcView(Audio audio){
         String name = audio.getName();
-        List<Lrc> Lyric = LrcHelper.parseLrcFromAssets(MusicActivity.this, name+".lrc");
+        File file = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC)+"/"+name+".lrc");
+        if(FilesUtil.fileIsExists(file)==false){
+            Log.e(TAG, "音乐歌曲初始化: 未发现lrc文件");
+            String url = audio.getLrcurl();
+            binding.mLrcView.setEmptyContent("暂时没有歌词~");
+            FilesUtil.downloadFile(file,url);
+            return;
+        }
+//        List<Lrc> Lyric = LrcHelper.parseLrcFromAssets(MusicActivity.this, name+".lrc");
+        List<Lrc> Lyric = LrcHelper.parseLrcFromFile(file);
         //设置歌词数据：
         binding.mLrcView.setLrcData(Lyric);
-        binding.mLrcView.setEmptyContent("暂时没有歌词~");
         binding.mLrcView.setOnPlayIndicatorLineListener(new LrcView.OnPlayIndicatorLineListener() {
             @Override
             public void onPlay(long time, String content) {

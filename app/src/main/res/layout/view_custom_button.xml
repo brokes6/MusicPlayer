@@ -1,12 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
+    android:layout_height="wrap_content"
     android:background="@color/white">
 
     <LinearLayout
         android:layout_toLeftOf="@+id/why"
+        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingTop="@dimen/afc_10dp"
         android:paddingBottom="@dimen/afc_10dp"
@@ -71,8 +72,8 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/why"
-        android:layout_width="75dp"
-        android:layout_height="match_parent"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:orientation="horizontal"
         android:layout_alignParentRight="true">
         <ImageView

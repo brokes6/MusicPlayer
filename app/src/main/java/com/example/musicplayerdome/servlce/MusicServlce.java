@@ -6,9 +6,12 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.example.musicplayerdome.abstractclass.MusicController;
+import com.example.musicplayerdome.activity.MusicActivity;
 import com.example.musicplayerdome.audio.MusicControllerImp;
 import com.example.musicplayerdome.audio.MusicNotification;
+import com.example.musicplayerdome.util.SharedPreferencesUtil;
 
 /**
  * 音乐servlce
@@ -62,5 +65,11 @@ public class MusicServlce extends Service {
             MusicNotification.getMusicNotification(this, MusicControllerImp.getInstance(this))
                     .onCancelMusicNotifi();
         }
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        SharedPreferencesUtil.putData("key",false);
+        SharedPreferencesUtil.putData("go",false);
+        Log.e(TAG, "onTaskRemoved: 正在全部销毁");
     }
+}
 

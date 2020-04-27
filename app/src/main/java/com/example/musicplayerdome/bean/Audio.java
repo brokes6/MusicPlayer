@@ -47,6 +47,16 @@ public class Audio implements Serializable {
     //是否可播放
     private boolean lock;
 
+    private String lrcurl;
+
+    public String getLrcurl() {
+        return lrcurl;
+    }
+
+    public void setLrcurl(String lrcurl) {
+        this.lrcurl = lrcurl;
+    }
+
     public String getBookName() {
         return bookName;
     }
