@@ -85,11 +85,15 @@ dependencies {
     implementation 'com.github.Lauzy:LyricView:1.0.4'
 
     //轮播图
-    implementation 'com.youth.banner:banner:2.0.8'
+//    implementation 'com.youth.banner:banner:2.0.8'
+    implementation 'com.youth.banner:banner:1.4.10'  //最新版本
 
     //沉浸栏
     // 基础依赖包，必须要依赖
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     // fragment快速实现（可选）
     implementation 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+
+    //圆角图片
+    implementation 'com.liuzhuang.opensource:rcimageview:0.0.2'
 }

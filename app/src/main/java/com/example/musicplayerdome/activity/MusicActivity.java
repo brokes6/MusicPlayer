@@ -63,7 +63,6 @@ import static com.blankj.utilcode.util.NetworkUtils.getWifiEnabled;
 import static com.example.musicplayerdome.util.AudioPlayerConstant.playerState;
 
 public class MusicActivity extends BaseActivity implements View.OnClickListener, CustomAdapt {
-    private static final int MUSIC_LIST_ITEM = 77;
     ActivityMusicBinding binding;
     private static final String TAG = "MusicActivity";
     int lp;
@@ -132,7 +131,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
                 if (musicController != null) {
                     musicController.stop();
                     musicController.Choice(sid-1);
-//                    musicController.play(audio);
                 }
                 //这里我为了监听播放状态而改变界面ui，所以添加监听接口
                 musicController.setMediaCallBack(mediaCallBack);
@@ -177,7 +175,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         lp = (int)(display.getHeight()*0.5);
-        //歌词拖动监听
     }
 
     /**
@@ -387,7 +384,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
             FilesUtil.downloadFile(file,url);
             return;
         }
-//        List<Lrc> Lyric = LrcHelper.parseLrcFromAssets(MusicActivity.this, name+".lrc");
         List<Lrc> Lyric = LrcHelper.parseLrcFromFile(file);
         //设置歌词数据：
         binding.mLrcView.setLrcData(Lyric);

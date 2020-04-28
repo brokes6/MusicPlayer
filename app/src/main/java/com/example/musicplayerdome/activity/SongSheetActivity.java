@@ -32,7 +32,6 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
     SongSheetBinding binding;
     private static final String TAG = "SongSheetActivity";
     private MainMusicAdapter mainMusicAdapter;
-    private long firstTime = 0;
     private List<Audio> audioList = new ArrayList<>();
     private List<String> fileArr = new ArrayList<>();
     private Intent intent;
@@ -54,7 +53,6 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
     private final static String INTENT_BUTTONID_TAG = "ButtonId";
     private final static String ACTION_BUTTON = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClick";
     private final static String ACTIONS = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClickS";
-    int gao;
     
     
     @Override

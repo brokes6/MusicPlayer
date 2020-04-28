@@ -1,34 +1,28 @@
 package com.example.musicplayerdome.fragment;
 
+import android.graphics.Outline;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 
+import com.example.musicplayerdome.ImageLoader.GlideImageLoader;
 import com.example.musicplayerdome.R;
-import com.example.musicplayerdome.adapter.RecyclerViewBannerAdapter;
+import com.example.musicplayerdome.adapter.SongListAdapter;
 import com.example.musicplayerdome.databinding.FragmentHomeBinding;
-import com.youth.banner.indicator.CircleIndicator;
+import com.example.musicplayerdome.resources.DomeData;
+import com.youth.banner.BannerConfig;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
-    private RecyclerViewBannerAdapter mAdapterHorizontal;
-    public static String[] urls = new String[]{
-            "http://photocdn.sohu.com/tvmobilemvms/20150907/144160323071011277.jpg",//伪装者:胡歌演绎"痞子特工"
-            "http://photocdn.sohu.com/tvmobilemvms/20150907/144158380433341332.jpg",//无心法师:生死离别!月牙遭虐杀
-            "http://photocdn.sohu.com/tvmobilemvms/20150907/144160286644953923.jpg",//花千骨:尊上沦为花千骨
-            "http://photocdn.sohu.com/tvmobilemvms/20150902/144115156939164801.jpg",//综艺饭:胖轩偷看夏天洗澡掀波澜
-            "http://photocdn.sohu.com/tvmobilemvms/20150907/144159406950245847.jpg",//碟中谍4:阿汤哥高塔命悬一线,超越不可能
-    };
-
+    SongListAdapter songListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,13 +37,25 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
     private void initView(){
-//        urlList = new ArrayList<>();
-//        dataBean = new DataBean();
-//        dataBean.setUrl("http://photocdn.sohu.com/tvmobilemvms/20150907/144160323071011277.jpg");
-//        dataBean.setUrl("http://photocdn.sohu.com/tvmobilemvms/20150907/144158380433341332.jpg");
-//        urlList.add(dataBean);
+        songListAdapter = new SongListAdapter();
+        LinearLayoutManager i = new LinearLayoutManager(getContext());
+        i.setOrientation(LinearLayoutManager.HORIZONTAL);
+        binding.songList.setLayoutManager(i);
+        binding.songList.setAdapter(songListAdapter);
+        songListAdapter.loadMore(DomeData.getSongRecommendation());
+
     }
     private void initBanner(){
-        binding.blHorizontal.setAdapter(mAdapterHorizontal = new RecyclerViewBannerAdapter(urls));
+        binding.banner.setImageLoader(new GlideImageLoader());
+        binding.banner.setImages(DomeData.getBanner());
+        binding.banner.setIndicatorGravity(BannerConfig.CENTER);
+        binding.banner.setOutlineProvider(new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), 30);
+            }
+        });
+        binding.banner.setClipToOutline(true);
+        binding.banner.start();
     }
 }

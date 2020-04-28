@@ -1,22 +1,16 @@
 package com.example.musicplayerdome.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.AppUtils;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.OnItemListenter;
 import com.example.musicplayerdome.adapter.MainMusicAdapter;
-import com.example.musicplayerdome.adapter.MusicAdapter;
 import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.databinding.ActivityMainBinding;
 import com.example.musicplayerdome.object.BaseActivity;
@@ -38,7 +32,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setMusicList();
         initView();
     }
-    private static final int MUSIC_LIST_ITEM = 77;
     private void initView(){
         binding.musicLogotext.setOnClickListener(this);
         LinearLayoutManager lm = new LinearLayoutManager(this);
@@ -56,7 +49,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Intent intent = new Intent(MainActivity.this, MusicActivity.class);
                 intent.putExtra ("sid",postionid);
                 intent.putExtra ("skey",true);
-//                startActivityForResult(intent,MUSIC_LIST_ITEM);
                 startActivity(intent);
             }
         });
@@ -70,18 +62,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 ActivityUtils.startActivity(MusicActivity.class);
                 break;
         }
-    }
-
-    public void initSharedPreferences(boolean k){
-        SharedPreferences sharedPreferences= getSharedPreferences("key", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("connect",k);
-        editor.commit();
-    }
-    public boolean getSharedPreferences(){
-        SharedPreferences sharedPreferences= getSharedPreferences("key", Context .MODE_PRIVATE);
-        Boolean connect = sharedPreferences.getBoolean("connect",false);
-        return connect;
     }
 
     private long firstTime = 0;
