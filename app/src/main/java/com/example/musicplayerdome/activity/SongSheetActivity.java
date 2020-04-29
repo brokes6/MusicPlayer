@@ -20,7 +20,7 @@ import com.example.musicplayerdome.adapter.MainMusicAdapter;
 import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.databinding.SongSheetBinding;
 import com.example.musicplayerdome.object.BaseActivity;
-import com.example.musicplayerdome.resources.MusicURL;
+import com.example.musicplayerdome.resources.DomeData;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.gyf.immersionbar.ImmersionBar;
@@ -32,8 +32,6 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
     SongSheetBinding binding;
     private static final String TAG = "SongSheetActivity";
     private MainMusicAdapter mainMusicAdapter;
-    private List<Audio> audioList = new ArrayList<>();
-    private List<String> fileArr = new ArrayList<>();
     private Intent intent;
     private SomeBroadcastReceiver bReceiver;
     private int Sid;
@@ -64,21 +62,8 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
                 .statusBarColor(R.color.A3A3)
                 .init();
         binding = DataBindingUtil.setContentView(this,R.layout.song_sheet);
-        setMusicList();
         initView();
         initBroadcastReceiver();
-    }
-    private void setMusicList(){
-        MusicURL musicURL = new MusicURL();
-        fileArr = musicURL.getMusicURL();
-        for (int i = 0; i < fileArr.size(); i++) {
-            Audio audio = new Audio();
-            audio.setFileUrl(fileArr.get(i));
-            audio.setId(i + 1);
-            audio.setType(1);
-            audio.setName("音乐" + (i + 1));
-            audioList.add(audio);
-        }
     }
     private void initView(){
         LinearLayoutManager lm = new LinearLayoutManager(SongSheetActivity.this);
@@ -99,7 +84,7 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
                 startActivity(intent);
             }
         });
-        mainMusicAdapter.loadMore(audioList);
+        mainMusicAdapter.loadMore(DomeData.getAudioMusic());
 
         binding.Pback.setOnClickListener(this);
         binding.btnCustomPlay.setOnClickListener(this);

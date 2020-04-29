@@ -34,8 +34,7 @@ import com.example.musicplayerdome.databinding.ActivityMusicBinding;
 import com.example.musicplayerdome.dialog.AudioTimerDialog;
 import com.example.musicplayerdome.dialog.MusicList;
 import com.example.musicplayerdome.object.BaseActivity;
-import com.example.musicplayerdome.resources.MusicImg;
-import com.example.musicplayerdome.resources.MusicURL;
+import com.example.musicplayerdome.resources.DomeData;
 import com.example.musicplayerdome.servlce.MusicServlce;
 import com.example.musicplayerdome.util.AudioFlag;
 import com.example.musicplayerdome.util.AudioPlayerConstant;
@@ -125,7 +124,12 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
                 SharedPreferencesUtil.putData("go",true);
                 if (musicController.getPlayList() == null || musicController.getPlayList().isEmpty()) {
                     if (audioList != null) {
-                        musicController.setPlayList(audioList);
+                        if (rkey ==true){
+                            musicController.setPlayList(DomeData.getRecommendMusic());
+                            rkey=false;
+                        }else{
+                            musicController.setPlayList(DomeData.getAudioMusic());
+                        }
                     }
                 }
                 if (musicController != null) {
@@ -152,7 +156,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_music);
         initView();
-        setMusicList();
         initResources();
     }
 
@@ -183,8 +186,11 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
      */
     private void goPlay(){
         Bundle bundle = getIntent().getExtras();
+        rkey = bundle.getBoolean("rkey",false);
+        Log.e(TAG, "goPlay: rkey为"+rkey);
+        rid = bundle.getInt("rid");
         sid = bundle.getInt("sid");
-        Log.e(TAG, "goPlayTo: 接收到的id为："+sid);
+        Log.e(TAG, "goPlayTo: 接收到的id为："+sid+"和"+rid);
         if (musicController==null){
             Log.e(TAG, "goPlay: 开始注册绑定服务");
             Wifipaly=WifiMusic();
@@ -220,6 +226,15 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         initAudioManager();
         //将图片封面加载为RatateImage（旋转动画）
         ratateImage = new RatateImage(this, binding.playAlbumIs);
+        if (rkey==true){
+            audioList = DomeData.getRecommendMusic();
+            audio = audioList.get(rid - 1);
+        }else{
+            audioList = DomeData.getAudioMusic();
+            audio = audioList.get(sid-1);
+        }
+        SharedPreferencesUtil.putData("name",audio.getName());
+        SharedPreferencesUtil.putData("author",audio.getAuthor());
     }
 
     /**
@@ -247,7 +262,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
                 }
                 break;
             case R.id.music_list:
-                myDialog = new MusicList(this,lp,(int)audio.getId());
+                myDialog = new MusicList(this,lp,(int)audio.getId(),musicController.getPlayList());
                 myDialog.setDialogClickCallBack(new DialogClickListener());
                 myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 myDialog.show();
@@ -381,7 +396,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
             Log.e(TAG, "音乐歌曲初始化: 未发现lrc文件");
             String url = audio.getLrcurl();
             binding.mLrcView.setEmptyContent("暂时没有歌词~");
-            FilesUtil.downloadFile(file,url);
+//            FilesUtil.downloadFile(file,url);
             return;
         }
         List<Lrc> Lyric = LrcHelper.parseLrcFromFile(file);
@@ -435,39 +450,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         //初始化歌曲
         setMusicLrcView(audio);
     }
-
-
-    /**
-     * 这个方法用来对网络音乐资源进行封装，加上名字和id
-     * 正常情况是不需要这一步的，只需要服务器返回json，我们解析为Audio对象就ok了
-     */
-    private List<String> fileArr = new ArrayList<>();
-    private List<String> fileArrimg = new ArrayList<>();
-    private void setMusicList() {
-        MusicURL musicURL = new MusicURL();
-        MusicImg musicImg = new MusicImg();
-        fileArr = musicURL.getMusicURL();
-        fileArrimg = musicImg.getMusicIMG();
-        for (int i = 0; i < fileArr.size(); i++) {
-            Audio audio = new Audio();
-            audio.setFileUrl(fileArr.get(i));
-            audio.setFaceUrl(fileArrimg.get(i));
-            audio.setId(i + 1);
-            audio.setType(1);
-            audio.setName("音频" + (i + 1));
-            audio.setAuthor("作者"+ (i + 1));
-            Log.e(TAG, "setUrl: 新创建一个Audio"+audio);
-            //原本是 if (i == fileArr.size()-1) { 在设置音乐锁的
-            if (i == fileArr.size()) {
-                audio.setLock(true);
-            }
-            audioList.add(audio);
-        }
-        Log.e(TAG, "setMusicList: 当前id为："+sid);
-        this.audio = audioList.get(sid-1);
-        SharedPreferencesUtil.putData("name",audio.getName());
-        SharedPreferencesUtil.putData("author",audio.getAuthor());
-    }
     /**
      * 执行播放点击事件
      */
@@ -519,6 +501,8 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         }
     }
     boolean skey = false;
+    boolean rkey = false;
+    int rid;
     /**
      * 再次进入activity的时候回调（包括从桌面返回，别的activity返回）
      */
@@ -531,19 +515,33 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
             Audio audio = (Audio) intent.getSerializableExtra("audio");
             boolean play = intent.getBooleanExtra("play", false);
             boolean isHead = intent.getBooleanExtra("isHead", false);
-            //sid是主页传来点击item的id（也就是选择音乐的id（下标要减1））
-            sid = intent.getIntExtra("sid",0);
             //skey就是来判断是否是从主页传来的intent（有许多intent，所以要来判断）
             skey = intent.getBooleanExtra("skey",false);
-            Log.e(TAG, "onNewIntent: skey为："+skey);
-            Log.e(TAG, "onNewIntent: sid为："+sid+" ;getid的值为"+this.audio.getId());
+            rkey = intent.getBooleanExtra("rkey",false);
+            //sid是主页传来点击item的id（也就是选择音乐的id（下标要减1））
+            sid = intent.getIntExtra("sid",0);
+            rid = intent.getIntExtra("rid",0);
+            Log.e(TAG, "skey为："+skey+";rkey为是:"+rkey);
             if (isHead && audio == null) {
                 if (musicController != null) {
                     audio = musicController.getAudio();
                 }
             }
-            //为true就是主页传来的id
+            //为true就是主页推荐歌单传来的id
+            if (rkey==true){
+                if (musicController.getPlayList()!=DomeData.getRecommendMusic()){
+                    musicController.cleanPlayList();
+                    musicController.setPlayList(DomeData.getRecommendMusic());
+                }
+                musicController.Choice(rid-1);
+                rkey=false;
+            }
+            //为true就是主页歌单传来的id
             if (skey ==true){
+                if (musicController.getPlayList()!=DomeData.getAudioMusic()){
+                    musicController.cleanPlayList();
+                    musicController.setPlayList(DomeData.getAudioMusic());
+                }
                 musicController.Choice(sid-1);
                 skey=false;
             }

@@ -23,12 +23,6 @@ public class SongListAdapter extends BaseRecyclerAdapter<SongRecommendation> {
         if (item!=null){
             holder.text(R.id.song_text,item.getSongText());
             holder.image(R.id.song_img,item.getSongUrl());
-            holder.click(R.id.song_img, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    XToastUtils.info("您点击了第"+(position+1)+"个歌单");
-                }
-            });
         }
     }
 }

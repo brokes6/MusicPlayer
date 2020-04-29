@@ -14,6 +14,7 @@ import android.view.ViewOutlineProvider;
 
 import com.example.musicplayerdome.ImageLoader.GlideImageLoader;
 import com.example.musicplayerdome.R;
+import com.example.musicplayerdome.adapter.RecommendMusicAdapter;
 import com.example.musicplayerdome.adapter.SongListAdapter;
 import com.example.musicplayerdome.databinding.FragmentHomeBinding;
 import com.example.musicplayerdome.resources.DomeData;
@@ -23,6 +24,7 @@ import com.youth.banner.BannerConfig;
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     SongListAdapter songListAdapter;
+    RecommendMusicAdapter recommendMusicAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,12 @@ public class HomeFragment extends Fragment {
         binding.songList.setAdapter(songListAdapter);
         songListAdapter.loadMore(DomeData.getSongRecommendation());
 
+        recommendMusicAdapter = new RecommendMusicAdapter(getContext());
+        LinearLayoutManager i1 = new LinearLayoutManager(getContext());
+        i1.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.recommendMusic.setLayoutManager(i1);
+        binding.recommendMusic.setAdapter(recommendMusicAdapter);
+        recommendMusicAdapter.loadMore(DomeData.getRecommendMusic());
     }
     private void initBanner(){
         binding.banner.setImageLoader(new GlideImageLoader());

@@ -70,6 +70,7 @@
                         android:layout_weight="1"
                         android:gravity="left"
                         android:text="音乐名称"
+                        android:maxLines="1"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
                     <TextView
@@ -78,6 +79,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:gravity="left"
+                        android:maxLines="1"
                         android:text="音乐作者"
                         android:textColor="@color/color_bg_loading"
                         android:textSize="14sp" />

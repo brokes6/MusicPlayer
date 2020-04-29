@@ -20,6 +20,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="音乐名称"
+        android:maxLines="1"
         android:textColor="@color/black"
         android:textSize="18sp" />
 

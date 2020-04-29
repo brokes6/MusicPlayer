@@ -2,9 +2,8 @@ package com.example.musicplayerdome.activity;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import com.blankj.utilcode.util.ActivityUtils;
@@ -14,7 +13,7 @@ import com.example.musicplayerdome.adapter.MainMusicAdapter;
 import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.databinding.ActivityMainBinding;
 import com.example.musicplayerdome.object.BaseActivity;
-import com.example.musicplayerdome.resources.MusicURL;
+import com.example.musicplayerdome.resources.DomeData;
 import com.xuexiang.xui.utils.SnackbarUtils;
 
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-        setMusicList();
         initView();
     }
     private void initView(){
@@ -52,7 +50,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(intent);
             }
         });
-        mainMusicAdapter.loadMore(audioList);
+        mainMusicAdapter.loadMore(DomeData.getAudioMusic());
     }
 
     @Override
@@ -65,20 +63,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private long firstTime = 0;
-    private List<Audio> audioList = new ArrayList<>();
-    private List<String> fileArr = new ArrayList<>();
-    private void setMusicList() {
-        MusicURL musicURL = new MusicURL();
-        fileArr = musicURL.getMusicURL();
-        for (int i = 0; i < fileArr.size(); i++) {
-            Audio audio = new Audio();
-            audio.setFileUrl(fileArr.get(i));
-            audio.setId(i + 1);
-            audio.setType(1);
-            audio.setName("音乐" + (i + 1));
-            audioList.add(audio);
-        }
-    }
 
     @Override
     public void onBackPressed() {

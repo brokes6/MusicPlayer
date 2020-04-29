@@ -1,5 +1,7 @@
 package com.example.musicplayerdome.resources;
 
+import com.example.musicplayerdome.bean.Audio;
+import com.example.musicplayerdome.bean.RecommendMusicBean;
 import com.example.musicplayerdome.bean.SongRecommendation;
 
 import java.util.ArrayList;
@@ -55,5 +57,51 @@ public class DomeData {
                 "http://photocdn.sohu.com/tvmobilemvms/20150907/144159406950245847.jpg",//碟中谍4:阿汤哥高塔命悬一线,超越不可能
         };
         return Arrays.asList(urls);
+    }
+    public static List<Audio> getRecommendMusic(){
+        List<Audio> list = new ArrayList<>();
+        list.add(new Audio()
+                .setText("告白气球")
+                .setimgUrl("https://y.gtimg.cn/music/photo_new/T002R300x300M000003RMaRI1iFoYd_1.jpg?max_age=2592000")
+                .setUrl("https://sharefs.yun.kugou.com/202004291452/8ce56d199956056d0465787ffa3ad22d/G114/M01/1F/10/sg0DAFnWF0mAWSkzADPphbA0r2s996.mp3")
+                .setauthor("周杰伦")
+                .setintroduce("描述遇上爱情的悸动；但是非常特别的是副歌")
+                .setid(1)
+        );
+        list.add(new Audio()
+                .setText("Maps")
+                .setimgUrl("https://y.gtimg.cn/music/photo_new/T002R300x300M000003qgLUt07WXVS_1.jpg?max_age=2592000")
+                .setUrl("https://sharefs.yun.kugou.com/202004291453/5c42472d4d065ae5f5207cf3f0454018/G196/M09/1D/10/pJQEAF5Q7_-AK5BUAC5sFI5LTMc356.mp3")
+                .setauthor("Maroon 5")
+                .setintroduce("《Maps》是一首失恋的歌曲吧")
+                .setid(2)
+        );
+        list.add(new Audio()
+                .setText("我是如此相信")
+                .setimgUrl("https://y.gtimg.cn/music/photo_new/T002R300x300M000001hGx1Z0so1YX_1.jpg?max_age=2592000")
+                .setUrl("https://sharefs.yun.kugou.com/202004291453/6305727e1eb30958dc0c994c087481e9/G179/M08/1D/0F/8w0DAF3zZCaATgO6AEENs8ADOpM292.mp3")
+                .setauthor("周杰伦")
+                .setintroduce("《我是如此相信》歌词饱含满满深意，引人遐思。")
+                .setid(3)
+        );
+        return list;
+    }
+    public static List<Audio> getAudioMusic(){
+        List<Audio> list = new ArrayList<>();
+        list.add(new Audio()
+                .setText("突然想起你")
+                .setimgUrl("https://p3fx.kgimg.com/stdmusic/20150718/20150718073742794801.jpg")
+                .setUrl("http://m10.music.126.net/20200429155355/17c77d7e8d75f71c43e97c992b19c7ba/ymusic/f998/bb37/c1e0/83be80389ba1192e3536b23fe5e27c03.mp3")
+                .setauthor("林宥嘉")
+                .setid(1)
+        );
+        list.add(new Audio()
+                .setText("ツギハギスタッカート")
+                .setimgUrl("https://p3fx.kgimg.com/stdmusic/20170803/20170803105723296968.jpg")
+                .setUrl("http://m10.music.126.net/20200429155437/59f3af36296d1009e83bd725a958a1b2/ymusic/074d/441c/231f/01e429488489e14edbaa78f8888e896b.mp3")
+                .setauthor("初音未来")
+                .setid(2)
+        );
+        return list;
     }
 }

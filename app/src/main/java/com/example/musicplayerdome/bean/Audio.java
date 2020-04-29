@@ -226,4 +226,28 @@ public class Audio implements Serializable {
     public String getAlbum() {
         return "";
     }
+    public Audio setUrl(String url){
+        fileUrl = url;
+        return this;
+    }
+    public Audio setimgUrl(String url){
+        faceUrl = url;
+        return this;
+    }
+    public Audio setText(String text){
+        name = text;
+        return this;
+    }
+    public Audio setauthor(String author){
+        this.author = author;
+        return this;
+    }
+    public Audio setintroduce(String introduce){
+        abstractInfo = introduce;
+        return this;
+    }
+    public Audio setid(int id){
+        this.id = id;
+        return this;
+    }
 }

@@ -182,6 +182,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
             String author = (String)SharedPreferencesUtil.getData("author","");
             addAudioTitle(name,author);
             binding.PlaybackController.setVisibility(View.VISIBLE);
+            binding.viewpager.setPadding(0,0,0,120);
         }
     }
 

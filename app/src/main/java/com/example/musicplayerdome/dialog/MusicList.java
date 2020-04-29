@@ -3,10 +3,7 @@ package com.example.musicplayerdome.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -18,7 +15,7 @@ import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.DialogClickCallBack;
 import com.example.musicplayerdome.adapter.MusicAdapter;
 import com.example.musicplayerdome.bean.Audio;
-import com.example.musicplayerdome.resources.MusicURL;
+import com.example.musicplayerdome.resources.DomeData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,24 +31,25 @@ public class MusicList extends Dialog {
     int height;
     private MusicAdapter musicAdapter;
     private int sid;
-    public MusicList(Context context,int height,int id){
+    private List<Audio> PlayList;
+    public MusicList(Context context,int height,int id,List<Audio> PlayList){
         super(context, R.style.MyDialog);
         mContext = context;
         this.height = height;
         sid = id;
+        this.PlayList = PlayList;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.music_list);
-        setMusicList();
         mlist = findViewById(R.id.music_list);
         LinearLayoutManager lm = new LinearLayoutManager(mContext);
         lm.setOrientation(LinearLayoutManager.VERTICAL);
         mlist.setLayoutManager(lm);
         mlist.setAdapter(musicAdapter = new MusicAdapter(dialogClickCallBacks));
-        musicAdapter.loadMore(audioList);
+        musicAdapter.loadMore(PlayList);
         musicAdapter.setCurrentIDS(sid-1);
     }
 
@@ -76,19 +74,5 @@ public class MusicList extends Dialog {
     //绑定回调
     public void setDialogClickCallBack(DialogClickCallBack callBack){
         dialogClickCallBacks = callBack;
-    }
-    private List<Audio> audioList = new ArrayList<>();
-    private List<String> fileArr = new ArrayList<>();
-    private void setMusicList() {
-        MusicURL musicURL = new MusicURL();
-        fileArr = musicURL.getMusicURL();
-        for (int i = 0; i < fileArr.size(); i++) {
-            Audio audio = new Audio();
-            audio.setFileUrl(fileArr.get(i));
-            audio.setId(i + 1);
-            audio.setType(1);
-            audio.setName("音乐" + (i + 1));
-            audioList.add(audio);
-        }
     }
 }
