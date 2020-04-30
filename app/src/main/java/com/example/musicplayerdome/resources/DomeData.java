@@ -91,14 +91,14 @@ public class DomeData {
         list.add(new Audio()
                 .setText("突然想起你")
                 .setimgUrl("https://p3fx.kgimg.com/stdmusic/20150718/20150718073742794801.jpg")
-                .setUrl("http://m10.music.126.net/20200429155355/17c77d7e8d75f71c43e97c992b19c7ba/ymusic/f998/bb37/c1e0/83be80389ba1192e3536b23fe5e27c03.mp3")
+                .setUrl("https://sharefs.yun.kugou.com/202004300923/77d55e679e22d89e66850b5da265a954/G078/M02/0D/18/jg0DAFhwj_iAMlxkADJKTpoJJ6g903.mp3")
                 .setauthor("林宥嘉")
                 .setid(1)
         );
         list.add(new Audio()
                 .setText("ツギハギスタッカート")
                 .setimgUrl("https://p3fx.kgimg.com/stdmusic/20170803/20170803105723296968.jpg")
-                .setUrl("http://m10.music.126.net/20200429155437/59f3af36296d1009e83bd725a958a1b2/ymusic/074d/441c/231f/01e429488489e14edbaa78f8888e896b.mp3")
+                .setUrl("https://sharefs.yun.kugou.com/202004291607/a05afdde06019f27f8226e48f2948eec/G109/M05/14/05/DYcBAFmChraAWB69ADycuwiDeCs643.mp3")
                 .setauthor("初音未来")
                 .setid(2)
         );

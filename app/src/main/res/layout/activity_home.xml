@@ -10,11 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activity.HomeActivity">
-        <View
-            android:id="@+id/sview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/colorPrimary" />
     <LinearLayout
         android:id="@+id/mainL"
         android:layout_width="match_parent"

@@ -65,7 +65,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
     ActivityMusicBinding binding;
     private static final String TAG = "MusicActivity";
     int lp;
-    int sid;
     //旋转图片动画控件
     private RatateImage ratateImage;
     AudioManager mAudioManager;
@@ -129,12 +128,13 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
                             rkey=false;
                         }else{
                             musicController.setPlayList(DomeData.getAudioMusic());
+                            skey=false;
                         }
                     }
                 }
                 if (musicController != null) {
                     musicController.stop();
-                    musicController.Choice(sid-1);
+                    musicController.Choice(id-1);
                 }
                 //这里我为了监听播放状态而改变界面ui，所以添加监听接口
                 musicController.setMediaCallBack(mediaCallBack);
@@ -184,13 +184,19 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
      * 用来第一次传入选择歌曲id（仅限于第一次）
      * 都加入了wifi判断
      */
+    private int key;
+    private int id;
     private void goPlay(){
         Bundle bundle = getIntent().getExtras();
-        rkey = bundle.getBoolean("rkey",false);
-        Log.e(TAG, "goPlay: rkey为"+rkey);
-        rid = bundle.getInt("rid");
-        sid = bundle.getInt("sid");
-        Log.e(TAG, "goPlayTo: 接收到的id为："+sid+"和"+rid);
+        key = bundle.getInt("key",0);
+        id = bundle.getInt("id",0);
+        Log.e(TAG, "goPlay: key值为："+key+";id为："+id);
+        switch (key){
+            case 1:skey=true;
+                break;
+            case 2:rkey=true;
+                break;
+        }
         if (musicController==null){
             Log.e(TAG, "goPlay: 开始注册绑定服务");
             Wifipaly=WifiMusic();
@@ -202,7 +208,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
             }
             return;
         }
-        musicController.Choice(sid-1);
+        musicController.Choice(id-1);
 
     }
 
@@ -228,10 +234,10 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         ratateImage = new RatateImage(this, binding.playAlbumIs);
         if (rkey==true){
             audioList = DomeData.getRecommendMusic();
-            audio = audioList.get(rid - 1);
+            audio = audioList.get(id-1);
         }else{
             audioList = DomeData.getAudioMusic();
-            audio = audioList.get(sid-1);
+            audio = audioList.get(id-1);
         }
         SharedPreferencesUtil.putData("name",audio.getName());
         SharedPreferencesUtil.putData("author",audio.getAuthor());
@@ -416,7 +422,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         @Override
         public void viewClick(int viewId) {
             myDialog.cancel();
-            sid = viewId+1;
+            id = viewId+1;
             musicController.Choice(viewId);
             if (ratateImage != null) {
                 ratateImage.initSpin();
@@ -445,8 +451,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
         //设置音乐封面
         binding.playAlbumIs.setImageURL(audio.getFaceUrl());
         //设置音乐id
-        sid = ((int)audio.getId());
-        Log.e(TAG, "onChange: 状态发生改变，当前音乐id为:"+sid);
+        id = ((int)audio.getId());
         //初始化歌曲
         setMusicLrcView(audio);
     }
@@ -486,7 +491,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
                 intent.setAction(ACTIONS);
                 intent.putExtra(INTENT_BUTTONID_TAG, BUTTON_PALY_ID);
                 intent.putExtra("sid",playerState);
-                Log.e(TAG, "play: 传递sid："+playerState);
                 sendBroadcast(intent);
                 break;
             /**
@@ -502,7 +506,7 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
     }
     boolean skey = false;
     boolean rkey = false;
-    int rid;
+//    int rid;
     /**
      * 再次进入activity的时候回调（包括从桌面返回，别的activity返回）
      */
@@ -515,12 +519,15 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
             Audio audio = (Audio) intent.getSerializableExtra("audio");
             boolean play = intent.getBooleanExtra("play", false);
             boolean isHead = intent.getBooleanExtra("isHead", false);
-            //skey就是来判断是否是从主页传来的intent（有许多intent，所以要来判断）
-            skey = intent.getBooleanExtra("skey",false);
-            rkey = intent.getBooleanExtra("rkey",false);
-            //sid是主页传来点击item的id（也就是选择音乐的id（下标要减1））
-            sid = intent.getIntExtra("sid",0);
-            rid = intent.getIntExtra("rid",0);
+            key = intent.getIntExtra("key",0);
+            id = intent.getIntExtra("id",0);
+            Log.e(TAG, "goPlay: key值为："+key+";id为："+id);
+            switch (key){
+                case 1:skey=true;
+                    break;
+                case 2:rkey=true;
+                    break;
+            }
             Log.e(TAG, "skey为："+skey+";rkey为是:"+rkey);
             if (isHead && audio == null) {
                 if (musicController != null) {
@@ -533,8 +540,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
                     musicController.cleanPlayList();
                     musicController.setPlayList(DomeData.getRecommendMusic());
                 }
-                musicController.Choice(rid-1);
+                musicController.Choice(id-1);
                 rkey=false;
+                Log.e(TAG, "rkey以为:"+rkey);
             }
             //为true就是主页歌单传来的id
             if (skey ==true){
@@ -542,8 +550,9 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
                     musicController.cleanPlayList();
                     musicController.setPlayList(DomeData.getAudioMusic());
                 }
-                musicController.Choice(sid-1);
+                musicController.Choice(id-1);
                 skey=false;
+                Log.e(TAG, "skey以为:"+skey);
             }
             if (audio != null) {
                 Log.d(TAG, "audio=" + audio.toString());

@@ -36,8 +36,8 @@ public class RecommendMusicAdapter extends BaseRecyclerAdapter<Audio> {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, MusicActivity.class);
-                    intent.putExtra ("rid",(position+1));
-                    intent.putExtra ("rkey",true);
+                    intent.putExtra("key",2);
+                    intent.putExtra("id",(position+1));
                     context.startActivity(intent);
                 }
             });

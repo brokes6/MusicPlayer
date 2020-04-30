@@ -107,9 +107,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
                             .statusBarColor(R.color.white)
                             .init();
                 }
-                if (tab.getText().equals("我 的")){
-                    binding.tabBackground.setBackgroundResource(R.color.BCD4);
-                }
+//                if (tab.getText().equals("我 的")){
+//                    binding.tabBackground.setBackgroundResource(R.color.BCD4);
+//                }
             }
 
             @Override

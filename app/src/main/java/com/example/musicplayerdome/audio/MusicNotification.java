@@ -205,7 +205,9 @@ public class MusicNotification {
         }else{
             BitMapUtil bitMapUtil = new BitMapUtil();
             remoteViews.setImageViewBitmap(R.id.Music_logo,bitMapUtil.getBitmaps(faceUrl));
-//            remoteViews.setImageViewUri(R.id.Music_logo,Uri.parse(faceUrl));
+//            Uri uri = Uri.parse(faceUrl);
+//            Log.e(TAG, "upDataNotifacation: 转换之后的url为:"+uri);
+//            remoteViews.setImageViewUri(R.id.Music_logo,uri);
         }
         if (isPlaying) {
             remoteViews.setImageViewResource(R.id.btn_custom_play, android.R.drawable.ic_media_pause);

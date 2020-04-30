@@ -8,6 +8,7 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.MusicController;
@@ -102,8 +103,8 @@ public class MediaSessionManager {
                 .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, info.getArtist())
                 .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, info.getAlbum())
                 .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, info.getArtist())
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, control.getDuration())
-                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, getCoverBitmap(info));
+                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, control.getDuration());
+//                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, getCoverBitmap(info))
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             metaData.putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, getCount());

@@ -79,8 +79,8 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onItemClick(View view, int postionid) {
                 Intent intent = new Intent(SongSheetActivity.this, MusicActivity.class);
-                intent.putExtra ("sid",postionid);
-                intent.putExtra ("skey",true);
+                intent.putExtra ("id",postionid);
+                intent.putExtra ("key",1);
                 startActivity(intent);
             }
         });

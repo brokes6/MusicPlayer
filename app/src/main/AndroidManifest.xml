@@ -28,13 +28,20 @@
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".activity.SplashActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation|keyboard"
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.LoginActivity" >
+
+        </activity>
+        <activity android:name=".util.UserGuideActivity" />
         <activity
             android:name=".activity.MusicActivity"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
@@ -46,8 +53,6 @@
             android:name=".servlce.MusicServlce"
             android:enabled="true"
             android:exported="true" />
-
-        <activity android:name=".activity.MainActivity"></activity>
 
         <meta-data
             android:name="design_width_in_dp"
