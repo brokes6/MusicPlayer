@@ -42,7 +42,7 @@ public class Audio implements Serializable {
     private String abstractInfo;
     //文稿内容
     private String wengao;
-    //文件地址
+    //播放地址
     private String fileUrl;
     //是否可播放
     private boolean lock;

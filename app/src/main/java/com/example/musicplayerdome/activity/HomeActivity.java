@@ -29,11 +29,13 @@ import com.example.musicplayerdome.fragment.SongSheetFragment;
 import com.example.musicplayerdome.object.BaseActivity;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
+import com.example.musicplayerdome.util.StinrgMain;
 import com.google.android.material.tabs.TabLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import com.xuexiang.xui.utils.SnackbarUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener{
@@ -163,11 +165,13 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     /**
      * 显示音频标题
      */
-    private void addAudioTitle(String name,String author) {
+    private void addAudioTitle(String name,String author,String img) {
         if (name == null) return;
         //设置音乐名称
-        MyUtil.setText(binding.tvCustomSongSinger, name);
+//        binding.tvCustomSongSinger.startSimpleRoll(Collections.singletonList(name));
+        MyUtil.setText(binding.tvCustomSongSinger,name);
         MyUtil.setText(binding.tvCustomSongAuthor,author);
+        binding.Mimg.setImageURL(img);
     }
 
 
@@ -178,9 +182,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
         go = (boolean)SharedPreferencesUtil.getData("go",false);
         Log.e(TAG, "获取成功"+go);
         if (go ==true){
-            String name = (String)SharedPreferencesUtil.getData("name","");
-            String author = (String)SharedPreferencesUtil.getData("author","");
-            addAudioTitle(name,author);
+            String name = (String)SharedPreferencesUtil.getData("Mname","");
+            String author = (String)SharedPreferencesUtil.getData("Mauthor","");
+            String img = (String)SharedPreferencesUtil.getData("Mimg","");
+            addAudioTitle(name,author,img);
             binding.PlaybackController.setVisibility(View.VISIBLE);
             binding.viewpager.setPadding(0,0,0,120);
         }
@@ -228,9 +233,10 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
                     case 1:
                     case 4:
                     case 5:
-                        String name = intent.getStringExtra("name");
-                        String author = intent.getStringExtra("author");
-                        addAudioTitle(name,author);
+                        String name = (String)SharedPreferencesUtil.getData("Mname","");
+                        String author = (String)SharedPreferencesUtil.getData("Mauthor","");
+                        String img = (String)SharedPreferencesUtil.getData("Mimg","");
+                        addAudioTitle(name,author,img);
                         break;
                     case 2://播放或暂停
                         setImg(binding.btnCustomPlay,R.mipmap.audio_state_play);

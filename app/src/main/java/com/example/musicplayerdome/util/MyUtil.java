@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class MyUtil {
         if (TextUtils.isEmpty(content)) return;
         textView.setText(content);
     }
+
 
     /**
      * 吐司

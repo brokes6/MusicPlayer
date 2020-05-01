@@ -11,6 +11,7 @@ import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.util.AudioPlayerConstant;
 import com.example.musicplayerdome.util.SP;
 import com.example.musicplayerdome.util.SPManager;
+import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.example.musicplayerdome.util.TimerFlag;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.smp.soundtouchandroid.AudioSpeed;
@@ -140,37 +141,16 @@ public class MusicControllerImp implements MusicController {
     @Override
     public void next() {
         initPosition(AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY_NEXT_AUDIO);
-
-        Intent intent = new Intent();
-        intent.setAction(ACTIONS);
-        intent.putExtra(INTENT_BUTTONID_TAG, 4);
-        intent.putExtra("name",audio.getName());
-        intent.putExtra("author",audio.getAuthor());
-        context.sendBroadcast(intent);
     }
     //输入音乐资源下标，来进行播放
     @Override
     public void Choice(int i) {
         ChoicePosition(AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY_SELECT_AUDIO,i);
-
-        Intent intent = new Intent();
-        intent.setAction(ACTIONS);
-        intent.putExtra(INTENT_BUTTONID_TAG, 5);
-        intent.putExtra("name",audio.getName());
-        intent.putExtra("author",audio.getAuthor());
-        context.sendBroadcast(intent);
     }
 
     @Override
     public void pre() {
         initPosition(AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY_PRE_AUDIO);
-
-        Intent intent = new Intent();
-        intent.setAction(ACTIONS);
-        intent.putExtra(INTENT_BUTTONID_TAG, 1);
-        intent.putExtra("name",audio.getName());
-        intent.putExtra("author",audio.getAuthor());
-        context.sendBroadcast(intent);
     }
     //更具传入的下标来创建Audio
     private void ChoicePosition(int action,int num){
@@ -476,8 +456,15 @@ public class MusicControllerImp implements MusicController {
         public void onPlay() {
             if (notification != null) {
                 notification.upDataNotifacation(false, getAudio().getName(), getAudio().getFaceUrl(), true);
+                SharedPreferencesUtil.putData("Mname",getAudio().getName());
+                SharedPreferencesUtil.putData("Mimg",getAudio().getFaceUrl());
+                SharedPreferencesUtil.putData("Mauthor",getAudio().getAuthor());
             }
             status = AudioPlayerConstant.ACITION_AUDIO_PLAYER_PLAY;
+            Intent intent = new Intent();
+            intent.setAction(ACTIONS);
+            intent.putExtra(INTENT_BUTTONID_TAG, 1);
+            context.sendBroadcast(intent);
             onChange(status);
             onState(status);
         }
