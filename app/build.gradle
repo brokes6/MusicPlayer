@@ -97,4 +97,6 @@ dependencies {
     //圆角图片
     implementation 'com.liuzhuang.opensource:rcimageview:0.0.2'
 
+    //文字滚动
+    implementation 'anylife.scrolltextview:ScrollTextviewLib:1.4.6'
 }

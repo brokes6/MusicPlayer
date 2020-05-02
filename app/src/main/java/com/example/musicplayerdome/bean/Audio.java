@@ -40,6 +40,8 @@ public class Audio implements Serializable {
     private String source;
     //简介
     private String abstractInfo;
+    //副标题
+    private String Subtitle;
     //文稿内容
     private String wengao;
     //播放地址
@@ -48,6 +50,14 @@ public class Audio implements Serializable {
     private boolean lock;
 
     private String lrcurl;
+
+    public String getSubtitle() {
+        return Subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        Subtitle = subtitle;
+    }
 
     public String getLrcurl() {
         return lrcurl;

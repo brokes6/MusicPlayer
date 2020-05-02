@@ -133,7 +133,7 @@ public class MusicNotification {
                 .setOngoing(true)
                 .setSmallIcon(R.mipmap.ic_launcher);
         //Android 8.0以后,需要对Notification进行通知管理（这里应该加入判断sdk是否大于24）
-            NotificationChannel channel = new NotificationChannel(context.getPackageName(), "音乐播放器", NotificationManager.IMPORTANCE_HIGH);
+            NotificationChannel channel = new NotificationChannel(context.getPackageName(), "音乐播放器", NotificationManager.IMPORTANCE_LOW);
             channel.enableLights(false);
             channel.enableVibration(false);
             channel.setVibrationPattern(new long[]{0});

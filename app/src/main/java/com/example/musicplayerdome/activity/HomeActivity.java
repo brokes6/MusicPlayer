@@ -14,6 +14,7 @@ import android.content.IntentFilter;
 
 import android.os.Bundle;
 
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -168,8 +169,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
     private void addAudioTitle(String name,String author,String img) {
         if (name == null) return;
         //设置音乐名称
-//        binding.tvCustomSongSinger.startSimpleRoll(Collections.singletonList(name));
-        MyUtil.setText(binding.tvCustomSongSinger,name);
+//        MyUtil.setText(binding.tvCustomSongSinger,name);
+        binding.tvCustomSongSinger.setText(name);
         MyUtil.setText(binding.tvCustomSongAuthor,author);
         binding.Mimg.setImageURL(img);
     }
@@ -187,7 +188,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener{
             String img = (String)SharedPreferencesUtil.getData("Mimg","");
             addAudioTitle(name,author,img);
             binding.PlaybackController.setVisibility(View.VISIBLE);
-            binding.viewpager.setPadding(0,0,0,120);
+            binding.viewpager.setPadding(0,0,0,140);
         }
     }
 

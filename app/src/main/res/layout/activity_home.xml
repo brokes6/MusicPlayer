@@ -68,27 +68,29 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="15dp"
                     android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/tv_custom_song_singer"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="left"
-                        android:text="音乐名称"
-                        android:maxLines="1"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-<!--                    <com.xuexiang.xui.widget.textview.MarqueeTextView-->
+<!--                    <TextView-->
 <!--                        android:id="@+id/tv_custom_song_singer"-->
 <!--                        android:layout_width="match_parent"-->
 <!--                        android:layout_height="0dp"-->
 <!--                        android:layout_weight="1"-->
 <!--                        android:gravity="left"-->
-<!--                        android:background="#fff"-->
-<!--                        android:textSize="18sp"-->
+<!--                        android:text="音乐名称"-->
+<!--                        android:maxLines="1"-->
 <!--                        android:textColor="@color/black"-->
-<!--                        app:mtv_isAutoFit="true"-->
-<!--                        app:mtv_isAutoDisplay="true"/>-->
+<!--                        android:textSize="18sp" />-->
+                    <com.example.musicplayerdome.object.RollTextView
+                        android:id="@+id/tv_custom_song_singer"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:text="音乐名称"
+                        android:gravity="left"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:ellipsize="marquee"
+                        android:scrollHorizontally="true"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"/>
                     <TextView
                         android:id="@+id/tv_custom_song_author"
                         android:layout_width="match_parent"

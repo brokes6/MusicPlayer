@@ -141,8 +141,7 @@ public class SongSheetActivity extends BaseActivity implements View.OnClickListe
     private void addAudioTitle(String name,String author,String img) {
         if (name == null) return;
         //设置音乐名称
-//        binding.tvCustomSongSinger.startSimpleRoll(Collections.singletonList(name));
-        MyUtil.setText(binding.tvCustomSongSinger,name);
+        binding.tvCustomSongSinger.setText(name);
         MyUtil.setText(binding.tvCustomSongAuthor,author);
         binding.Mimg.setImageURL(img);
     }

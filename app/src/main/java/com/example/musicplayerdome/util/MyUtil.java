@@ -40,7 +40,7 @@ public class MyUtil {
     /**
      * 吐司
      *
-     * @param context           ：上下文；
+     * @param context：上下文；
      * @param messageId:吐司内容Id；
      */
     public static void ShowToast(Context context, int messageId) {
