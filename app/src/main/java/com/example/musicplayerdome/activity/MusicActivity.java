@@ -302,13 +302,13 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener,
                 binding.playAlbumIs.setVisibility(View.GONE);
                 binding.lrcViews.setVisibility(View.VISIBLE);
                 binding.PropsColumnS.setVisibility(View.GONE);
-                binding.actAudioVolumeControl.setVisibility(View.VISIBLE);
+                binding.volume.setVisibility(View.VISIBLE);
                 break;
             case R.id.mLrcView:
                 binding.playAlbumIs.setVisibility(View.VISIBLE);
                 binding.lrcViews.setVisibility(View.GONE);
                 binding.PropsColumnS.setVisibility(View.VISIBLE);
-                binding.actAudioVolumeControl.setVisibility(View.GONE);
+                binding.volume.setVisibility(View.GONE);
                 break;
             case R.id.back:
                 ActivityUtils.startActivity(SongSheetActivity.class);

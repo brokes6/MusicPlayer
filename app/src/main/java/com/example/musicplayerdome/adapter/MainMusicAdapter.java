@@ -37,17 +37,12 @@ public class MainMusicAdapter extends BaseRecyclerAdapter<Audio> {
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, final Audio item) {
         if (item!=null){
-            holder.text(R.id.ms_id, (int) item.getId()+".");
+            holder.text(R.id.ms_id, (int) item.getId()+"");
             holder.text(R.id.ms_title,item.getName());
+            holder.text(R.id.ms_author,item.getAuthor());
             holder.click(R.id.ms_main, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent intent = new Intent(context, MusicActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("sid",(int) item.getId());
-//                    intent.putExtras(bundle);
-//                    Log.e(TAG, "onClick: 传入id为"+(int) item.getId());
-//                    context.startActivity(intent);
                     /**
                      * 回调
                      */

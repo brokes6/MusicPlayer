@@ -15,17 +15,22 @@
         <!--音量控制-->
         <LinearLayout
             android:id="@+id/volume"
-            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_below="@+id/top"
             android:layout_marginLeft="45dp"
             android:layout_marginRight="45dp"
             android:layout_marginTop="@dimen/afc_15dp"
+            android:gravity="center"
             android:orientation="horizontal">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@mipmap/volume"
+                android:layout_marginRight="5dp"/>
             <SeekBar
                 android:id="@+id/act_audio_VolumeControl"
-                android:visibility="gone"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

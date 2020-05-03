@@ -39,10 +39,12 @@ public class MusicAdapter extends BaseRecyclerAdapter<Audio> {
         if (item!=null){
             holder.text(R.id.ms_id, (int) item.getId()+".");
             holder.text(R.id.ms_title,item.getName());
+            holder.text(R.id.ms_author,item.getAuthor());
             holder.click(R.id.ms_main,new OnTvClickListener((int)item.getId()));
             if (sid == position){
                 holder.textColorId(R.id.ms_id,R.color.red_start);
                 holder.textColorId(R.id.ms_title,R.color.red_start);
+                holder.textColorId(R.id.ms_author,R.color.red_start);
             }
         }
     }

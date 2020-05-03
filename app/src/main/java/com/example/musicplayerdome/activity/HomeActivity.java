@@ -14,7 +14,6 @@ import android.content.IntentFilter;
 
 import android.os.Bundle;
 
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,13 +29,11 @@ import com.example.musicplayerdome.fragment.SongSheetFragment;
 import com.example.musicplayerdome.object.BaseActivity;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
-import com.example.musicplayerdome.util.StinrgMain;
 import com.google.android.material.tabs.TabLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import com.xuexiang.xui.utils.SnackbarUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener{
