@@ -6,9 +6,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.example.musicplayerdome.abstractclass.MusicController;
-import com.example.musicplayerdome.activity.MusicActivity;
 import com.example.musicplayerdome.audio.MusicControllerImp;
 import com.example.musicplayerdome.audio.MusicNotification;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;

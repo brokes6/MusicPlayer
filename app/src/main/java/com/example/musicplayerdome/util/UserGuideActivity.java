@@ -3,7 +3,7 @@ package com.example.musicplayerdome.util;
 import android.app.Activity;
 
 import com.example.musicplayerdome.R;
-import com.example.musicplayerdome.activity.LoginActivity;
+import com.example.musicplayerdome.login.view.LoginActivity;
 import com.xuexiang.xui.widget.activity.BaseGuideActivity;
 
 import java.util.ArrayList;

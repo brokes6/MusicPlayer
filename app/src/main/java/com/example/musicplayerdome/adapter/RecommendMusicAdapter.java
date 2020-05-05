@@ -7,10 +7,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.example.musicplayerdome.R;
-import com.example.musicplayerdome.activity.MusicActivity;
-import com.example.musicplayerdome.activity.SongSheetActivity;
+import com.example.musicplayerdome.activity.MusicActivityMusic;
 import com.example.musicplayerdome.bean.Audio;
-import com.example.musicplayerdome.bean.RecommendMusicBean;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
@@ -35,7 +33,7 @@ public class RecommendMusicAdapter extends BaseRecyclerAdapter<Audio> {
             holder.click(R.id.rplay, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, MusicActivity.class);
+                    Intent intent = new Intent(context, MusicActivityMusic.class);
                     intent.putExtra("key",2);
                     intent.putExtra("id",(position+1));
                     context.startActivity(intent);

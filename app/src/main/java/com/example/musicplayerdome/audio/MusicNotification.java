@@ -9,19 +9,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.MusicController;
-import com.example.musicplayerdome.activity.MusicActivity;
+import com.example.musicplayerdome.activity.MusicActivityMusic;
 import com.example.musicplayerdome.util.BitMapUtil;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.net.URL;
 
 
 /**
@@ -122,7 +117,7 @@ public class MusicNotification {
         manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 //        manager = NotificationManagerCompat.from(context);
         registerClick();
-        Intent intent1 = new Intent(context, MusicActivity.class);
+        Intent intent1 = new Intent(context, MusicActivityMusic.class);
         intent1.putExtra("isHead", true);
         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);//关键的一步，设置启动模式
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -201,7 +196,7 @@ public class MusicNotification {
             remoteViews.setTextViewText(R.id.tv_custom_song_singer, name);
         }
         if (faceUrl==null){
-            remoteViews.setImageViewResource(R.id.Music_logo,R.mipmap.logo);
+
         }else{
             BitMapUtil bitMapUtil = new BitMapUtil();
             remoteViews.setImageViewBitmap(R.id.Music_logo,bitMapUtil.getBitmaps(faceUrl));

@@ -11,7 +11,7 @@
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.SongSheetActivity">
+        tools:context=".activity.SongSheetActivityMusic">
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:background="#3A3A3A"
@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.example.musicplayerdome.util.RoundImageView
+                    <com.example.musicplayerdome.rewrite.RoundImageView
                         android:id="@+id/XLogin"
                         android:layout_margin="17dp"
                         android:layout_width="110dp"

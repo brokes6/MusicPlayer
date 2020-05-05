@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
-import com.example.musicplayerdome.ImageLoader.GlideImageLoader;
+import com.example.musicplayerdome.rewrite.GlideImageLoader;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.adapter.RecommendMusicAdapter;
 import com.example.musicplayerdome.adapter.SongListAdapter;

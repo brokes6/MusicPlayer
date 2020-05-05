@@ -53,4 +53,12 @@
     <item name="android:windowEnterAnimation">@anim/timepicker_anim_enter_bottom</item>
     <item name="android:windowExitAnimation">@anim/timepicker_anim_out_bottom</item>
 </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ThemeSplash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@mipmap/splash_view</item>
+        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
+        <item name="android:statusBarColor">#00000000</item>
+    </style>
 </resources>

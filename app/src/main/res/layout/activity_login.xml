@@ -7,46 +7,79 @@
 
     </data>
 
-    <com.xuexiang.xui.widget.layout.XUILinearLayout
-        android:orientation="vertical"
-        android:gravity="center"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        tools:context=".login.view.LoginActivity">
 
-        <FrameLayout
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
+        <include
+            android:id="@+id/title"
+            layout="@layout/common_title"></include>
+
+        <EditText
+            android:id="@+id/et_phone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:hint="@string/input_phone"
+            android:maxLength="11"
+            android:inputType="number"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColorHint="#c9c9c9"
+            android:textColor="#333333" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:tint="?attr/colorAccent"
-                app:srcCompat="@drawable/ic_phone" />
+        <EditText
+            android:id="@+id/et_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_phone"
+            android:layout_marginStart="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_30"
+            android:ellipsize="end"
+            android:hint="@string/input_pwd"
+            android:inputType="textPassword"
+            android:maxLength="30"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColorHint="#c9c9c9"
+            android:textColor="#333333" />
 
-            <com.xuexiang.xui.widget.edittext.materialedittext.MaterialEditText
-                android:id="@+id/et_phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="36dp"
-                android:hint="请输入手机号码"
-                android:inputType="number"
-                app:met_clearButton="true"
-                app:met_errorMessage="无效的手机号!"
-                app:met_floatingLabel="normal"
-                app:met_floatingLabelText="手机号码"
-                app:met_regexp="^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(16[6])|(17[0,1,3,5-8])|(18[0-9])|(19[8,9]))\\d{8}$" />
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:layout_below="@id/et_pwd"
+            android:layout_marginTop="@dimen/dp_30"
+            android:text="@string/login"
+            android:background="@drawable/shape_btn_login_confirm"
+            android:textColor="#ffffff"
+            android:layout_marginStart="@dimen/dp_60"
+            android:layout_marginEnd="@dimen/dp_60" />
 
-        </FrameLayout>
-        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
-            android:id="@+id/login"
-            style="@style/RoundButton.Auto"
-            android:layout_marginTop="20dp"
-            android:text="登录"
-            android:textColor="@color/xui_default_round_btn_white_text"
-            app:rb_backgroundColor="@color/xui_round_btn_green_bg"
-            app:rb_borderColor="@color/xui_round_btn_green_bg" />
-    </com.xuexiang.xui.widget.layout.XUILinearLayout>
+        <TextView
+            android:id="@+id/forget_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_login"
+            android:layout_marginStart="@dimen/dp_30"
+            android:text="@string/forget_pwd"
+            android:layout_marginTop="@dimen/dp_30" />
+
+        <TextView
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_login"
+            android:text="@string/register"
+            android:layout_marginTop="@dimen/dp_30"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/dp_30" />
+    </RelativeLayout>
 </layout>

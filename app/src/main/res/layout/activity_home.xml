@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.HomeActivity">
+        tools:context=".activity.HomeActivityMusic">
     <LinearLayout
         android:id="@+id/mainL"
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_marginLeft="5dp">
-                    <com.example.musicplayerdome.util.RoundImageView
+                    <com.example.musicplayerdome.rewrite.RoundImageView
                         android:id="@+id/Mimg"
                         android:layout_width="45dp"
                         android:layout_height="45dp"
@@ -78,7 +78,7 @@
 <!--                        android:maxLines="1"-->
 <!--                        android:textColor="@color/black"-->
 <!--                        android:textSize="18sp" />-->
-                    <com.example.musicplayerdome.object.RollTextView
+                    <com.example.musicplayerdome.rewrite.RollTextView
                         android:id="@+id/tv_custom_song_singer"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"

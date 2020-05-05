@@ -18,7 +18,6 @@ android {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
         }
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -66,8 +65,18 @@ dependencies {
     implementation project(':soundtouch')
     implementation project(':kprogresshud')
 
-    //Gson
+    // 网络请求框架
+    // OkHttp + Retrofit + RxJava + RxAndroid + Gson
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     implementation 'com.google.code.gson:gson:2.7'
+    // CookieJar
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
     //Apputils
     implementation 'com.blankj:utilcode:1.22.0'
@@ -99,4 +108,13 @@ dependencies {
 
     //文字滚动
     implementation 'anylife.scrolltextview:ScrollTextviewLib:1.4.6'
+
+//    //图片模糊
+    implementation 'jp.wasabeef:glide-transformations:3.0.1'
+
+    // 音视频请求框架:StarrySkyJava
+    implementation 'com.lzx:StarrySkyJava:2.1.9'
+
+    // greendao
+    implementation 'org.greenrobot:greendao:3.2.2'
 }

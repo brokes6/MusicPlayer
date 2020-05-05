@@ -9,41 +9,52 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".object.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:icon="@drawable/shape_icon"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/shape_icon"
         android:supportsRtl="true"
         android:theme="@style/AppThemes"
         android:resizeableActivity="true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.SongSheetActivity"
+        <!-- android:networkSecurityConfig="@xml/network_security_config"很重要，要加上去 -->
+
+        <activity android:name=".login.view.LoginActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:launchMode="singleTop"/>
+        <activity
+            android:name=".login.view.SelectLoginActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".login.view.SplashActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:launchMode="singleTop"
+            android:theme="@style/ThemeSplash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.SongSheetActivityMusic"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"/>
-        <!-- android:networkSecurityConfig="@xml/network_security_config"很重要，要加上去 -->
+
         <activity
-            android:name=".activity.HomeActivity"
+            android:name=".activity.HomeActivityMusic"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".activity.SplashActivity"
-            android:configChanges="screenSize|keyboardHidden|orientation|keyboard"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activity.LoginActivity" >
-
-        </activity>
         <activity android:name=".util.UserGuideActivity" />
         <activity
-            android:name=".activity.MusicActivity"
+            android:name=".activity.MusicActivityMusic"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
             android:hardwareAccelerated="true"
             android:launchMode="singleInstance"

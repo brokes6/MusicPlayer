@@ -11,7 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#fff"
-        tools:context=".activity.MusicActivity">
+        tools:context=".activity.MusicActivityMusic">
+        <ImageView
+            android:id="@+id/iv_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
+            android:alpha="0.5"/>
         <!--音量控制-->
         <LinearLayout
             android:id="@+id/volume"
@@ -19,14 +27,14 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:layout_below="@+id/top"
-            android:layout_marginLeft="45dp"
-            android:layout_marginRight="45dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
             android:layout_marginTop="@dimen/afc_15dp"
             android:gravity="center"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@mipmap/volume"
                 android:layout_marginRight="5dp"/>
             <SeekBar
@@ -53,7 +61,7 @@
             android:layout_below="@+id/volume"
             android:layout_above="@+id/Props_column"
             android:orientation="vertical">
-            <com.example.musicplayerdome.util.RoundImageViewBT
+            <com.example.musicplayerdome.rewrite.RoundImageViewBT
                 android:id="@+id/play_album_is"
                 android:layout_marginTop="40dp"
                 android:layout_width="match_parent"
@@ -267,6 +275,5 @@
             </LinearLayout>
 
         </LinearLayout>
-
     </RelativeLayout>
 </layout>
