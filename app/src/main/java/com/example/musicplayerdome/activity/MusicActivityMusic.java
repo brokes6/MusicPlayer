@@ -70,6 +70,7 @@ import static com.example.musicplayerdome.util.AudioPlayerConstant.playerState;
 public class MusicActivityMusic extends MusicBaseActivity implements View.OnClickListener, CustomAdapt {
     ActivityMusicBinding binding;
     private static final String TAG = "MusicActivity";
+    public static final String SONG_INFO = "songInfo";
     int lp;
     //旋转图片动画控件
     private RatateImage ratateImage;

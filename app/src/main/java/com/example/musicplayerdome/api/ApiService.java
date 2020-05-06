@@ -1,6 +1,7 @@
 package com.example.musicplayerdome.api;
 
 
+import com.example.musicplayerdome.bean.BannerBean;
 import com.example.musicplayerdome.bean.DjCategoryRecommendBean;
 import com.example.musicplayerdome.bean.DjCatelistBean;
 import com.example.musicplayerdome.bean.DjDetailBean;
@@ -68,7 +69,7 @@ public interface ApiService {
     Observable<LogoutBean> logout();
 
     @GET("banner")
-    Observable<BannerBeanText> getBanner(@Query("type") String type);
+    Observable<BannerBean> getBanner(@Query("type") String type);
 
     @GET("recommend/resource")
     Observable<MainRecommendPlayListBean> getRecommendPlayList();

@@ -100,11 +100,11 @@ public class HomeActivityMusic extends MusicBaseActivity implements View.OnClick
                             .init();
                 }
                 if (tab.getText().equals("主 页")){
-                    binding.tabBackground.setBackgroundResource(R.color.white);
+                    binding.tabBackground.setBackgroundResource(R.color.red);
                     ImmersionBar.with(HomeActivityMusic.this)
-                            .statusBarDarkFont(true)
+                            .statusBarDarkFont(false)
                             .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
-                            .statusBarColor(R.color.white)
+                            .statusBarColor(R.color.red)
                             .init();
                 }
 //                if (tab.getText().equals("我 的")){

@@ -96,7 +96,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 password = binding.etPwd.getText().toString().trim();
                 if (InputUtil.checkMobileLegal(phoneNumber) && InputUtil.checkPasswordLegal(password)) {
                     showDialog();
-                    Log.d(TAG, "login : " + phoneNumber + " ," + password);
+                    Log.d(TAG, "login账号密码 : " + phoneNumber + " ," + password);
                     mPresenter.login(phoneNumber, password);
                 }
                 break;

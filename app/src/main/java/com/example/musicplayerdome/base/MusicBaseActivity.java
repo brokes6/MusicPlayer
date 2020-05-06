@@ -19,9 +19,9 @@ public abstract class MusicBaseActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ImmersionBar.with(this)
-                .statusBarDarkFont(true)
+                .statusBarDarkFont(false)
                 .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
-                .statusBarColor(R.color.white)
+                .statusBarColor(R.color.red)
                 .init();
     }
 

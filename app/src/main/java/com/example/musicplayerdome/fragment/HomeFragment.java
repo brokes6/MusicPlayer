@@ -25,6 +25,11 @@ public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     SongListAdapter songListAdapter;
     RecommendMusicAdapter recommendMusicAdapter;
+    public static final String PLAYLIST_NAME = "playlistName";
+    public static final String PLAYLIST_PICURL = "playlistPicUrl";
+    public static final String PLAYLIST_CREATOR_NICKNAME = "playlistCreatorNickname";
+    public static final String PLAYLIST_CREATOR_AVATARURL = "playlistCreatorAvatarUrl";
+    public static final String PLAYLIST_ID = "playlistId";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

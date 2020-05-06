@@ -20,15 +20,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="#FFFFFF"
+        android:background="#db2b1c"
         android:orientation="vertical">
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayoutReal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="#FF5722"
-            app:tabSelectedTextColor="#000000"
-            app:tabTextColor="#A3A3A3"
+            app:tabIndicatorColor="#FFFFFF"
+            app:tabSelectedTextColor="#FFFFFF"
+            app:tabTextColor="#0C0C0C"
             app:tabIndicatorFullWidth="false" />
     </LinearLayout>
         <androidx.viewpager.widget.ViewPager
@@ -68,16 +68,6 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="15dp"
                     android:orientation="vertical">
-<!--                    <TextView-->
-<!--                        android:id="@+id/tv_custom_song_singer"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="0dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:gravity="left"-->
-<!--                        android:text="音乐名称"-->
-<!--                        android:maxLines="1"-->
-<!--                        android:textColor="@color/black"-->
-<!--                        android:textSize="18sp" />-->
                     <com.example.musicplayerdome.rewrite.RollTextView
                         android:id="@+id/tv_custom_song_singer"
                         android:layout_width="match_parent"

@@ -22,7 +22,6 @@ public class LoginPresenter extends LoginContract.Presenter {
 
     @Override
     public void login(String phone, String password) {
-        Log.d(TAG, "login");
         mModel.login(phone, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

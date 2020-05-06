@@ -30,6 +30,12 @@
             android:launchMode="singleTop" />
 
         <activity
+            android:name=".song.view.SongDetailActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:launchMode="singleTop"
+            android:theme="@style/SongDetailTheme"/>
+
+        <activity
             android:name=".login.view.SplashActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:launchMode="singleTop"

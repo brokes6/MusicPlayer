@@ -147,6 +147,18 @@
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="#171717"
+                android:layout_margin="@dimen/dp_10"
+                android:text="我的歌单"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mine_playlist"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
