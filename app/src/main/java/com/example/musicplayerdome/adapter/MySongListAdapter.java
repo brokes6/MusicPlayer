@@ -20,6 +20,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.activity.MusicActivityMusic;
+import com.example.musicplayerdome.song.SongPlayManager;
+import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.song.view.SongDetailActivity;
 import com.lzx.starrysky.model.SongInfo;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
@@ -64,6 +66,9 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
     public void setKeywords(String keywords) {
         this.keywords = keywords;
     }
+    public void setList(List<SongInfo> dataList){
+        list = dataList;
+    }
 
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, SongInfo item) {
@@ -80,7 +85,7 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
             setSongInfo(mContext, item, keywords);
         } else {
             setSongInfo(mContext, item, position, type);
-        }
+        };
         setSongClick(item, position);
     }
     public void setSongInfo(Context context, SongInfo bean, int position, int type) {
@@ -123,18 +128,18 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
     public void setSongClick(SongInfo songInfo, int position) {
         rlSong.setOnClickListener(v -> {
             if (type == 3) {
-//                SongPlayManager.getInstance().clickASong(songInfo);
+                SongPlayManager.getInstance().clickASong(songInfo);
             } else {
-//                SongPlayManager.getInstance().clickPlayAll(list, position);
+                SongPlayManager.getInstance().clickPlayAll(list, position);
             }
-            Intent intent = new Intent(mContext, MusicActivityMusic.class);
-            intent.putExtra(MusicActivityMusic.SONG_INFO, songInfo);
+            Intent intent = new Intent(mContext, SongActivity.class);
+            intent.putExtra(SongActivity.SONG_INFO, songInfo);
             mContext.startActivity(intent);
         });
 
         ivSongDetail.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, SongDetailActivity.class);
-            intent.putExtra(MusicActivityMusic.SONG_INFO, songInfo);
+            intent.putExtra(SongActivity.SONG_INFO, songInfo);
             mContext.startActivity(intent);
             ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);
         });

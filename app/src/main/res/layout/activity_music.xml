@@ -101,17 +101,17 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="50dp"
+                android:layout_marginRight="55dp"
                 android:src="@mipmap/like"/>
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="50dp"
+                android:layout_marginRight="55dp"
                 android:src="@mipmap/comment"/>
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="50dp"
+                android:layout_marginRight="55dp"
                 android:src="@mipmap/more"/>
             <ImageView
                 android:layout_width="30dp"
@@ -125,9 +125,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/xpaly"
-            android:layout_marginLeft="45dp"
+            android:layout_marginLeft="35dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="45dp"
+            android:layout_marginRight="35dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
             <TextView
@@ -265,6 +265,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 android:gravity="right|center">
                 <Button
                     android:id="@+id/button"

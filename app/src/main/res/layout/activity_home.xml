@@ -12,6 +12,7 @@
         tools:context=".activity.HomeActivityMusic">
     <LinearLayout
         android:id="@+id/mainL"
+        android:layout_above="@+id/bottom_controller"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -36,99 +37,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
-        <LinearLayout
-            android:id="@+id/Playback_controller"
-            android:layout_alignParentBottom="true"
+
+        <com.example.musicplayerdome.rewrite.BottomSongPlayBar
+            android:id="@+id/bottom_controller"
             android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bt_top"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingTop="@dimen/afc_10dp"
-                android:paddingBottom="@dimen/afc_10dp"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_marginLeft="5dp">
-                    <com.example.musicplayerdome.rewrite.RoundImageView
-                        android:id="@+id/Mimg"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-                        app:type="circle"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="15dp"
-                    android:orientation="vertical">
-                    <com.example.musicplayerdome.rewrite.RollTextView
-                        android:id="@+id/tv_custom_song_singer"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:singleLine="true"
-                        android:text="音乐名称"
-                        android:gravity="left"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:ellipsize="marquee"
-                        android:scrollHorizontally="true"
-                        android:textSize="18sp"
-                        android:textColor="@color/black"/>
-                    <TextView
-                        android:id="@+id/tv_custom_song_author"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="left"
-                        android:maxLines="1"
-                        android:text="音乐作者"
-                        android:textColor="@color/color_bg_loading"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="0.7"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/btn_custom_prev"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/afc_10dp"
-                        android:layout_weight="1"
-                        android:src="@mipmap/audio_pre_btn" />
-
-                    <ImageView
-                        android:id="@+id/btn_custom_play"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/afc_10dp"
-                        android:layout_weight="1"
-                        android:contentDescription="播放"
-                        android:src="@mipmap/audio_state_play" />
-
-                    <ImageView
-                        android:id="@+id/btn_custom_next"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/afc_10dp"
-                        android:layout_weight="1"
-                        android:contentDescription="下一首"
-                        android:src="@mipmap/audio_next_btn" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_height="@dimen/dp_55"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            app:layout_behavior="@string/bottom_sheet_behavior" />
     </RelativeLayout>
 </layout>

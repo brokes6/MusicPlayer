@@ -7,11 +7,23 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import com.example.musicplayerdome.abstractclass.WowContract;
+import com.example.musicplayerdome.base.BaseFragment;
+import com.example.musicplayerdome.bean.BannerBean;
+import com.example.musicplayerdome.bean.MusicCanPlayBean;
+import com.example.musicplayerdome.main.bean.DailyRecommendBean;
+import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
+import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
+import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
+import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
+import com.example.musicplayerdome.main.bean.TopListBean;
+import com.example.musicplayerdome.main.presenter.WowPresenter;
 import com.example.musicplayerdome.rewrite.GlideImageLoader;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.adapter.RecommendMusicAdapter;
@@ -20,8 +32,14 @@ import com.example.musicplayerdome.databinding.FragmentHomeBinding;
 import com.example.musicplayerdome.resources.DomeData;
 import com.youth.banner.BannerConfig;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-public class HomeFragment extends Fragment {
+
+public class HomeFragment extends BaseFragment<WowPresenter> implements WowContract.View{
+    private static final String TAG = "HomeFragment";
     FragmentHomeBinding binding;
     SongListAdapter songListAdapter;
     RecommendMusicAdapter recommendMusicAdapter;
@@ -30,6 +48,8 @@ public class HomeFragment extends Fragment {
     public static final String PLAYLIST_CREATOR_NICKNAME = "playlistCreatorNickname";
     public static final String PLAYLIST_CREATOR_AVATARURL = "playlistCreatorAvatarUrl";
     public static final String PLAYLIST_ID = "playlistId";
+    List<BannerBean.BannersBean> banners = new ArrayList<>();
+    List<URL> bannerImageList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,13 +57,16 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false);
         initView();
-        initBanner();
         return binding.getRoot();
     }
-    private void initView(){
+
+    @Override
+    protected void initData() {
+        mPresenter.getBanner();
+
         songListAdapter = new SongListAdapter();
         LinearLayoutManager i = new LinearLayoutManager(getContext());
         i.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -58,9 +81,23 @@ public class HomeFragment extends Fragment {
         binding.recommendMusic.setAdapter(recommendMusicAdapter);
         recommendMusicAdapter.loadMore(DomeData.getRecommendMusic());
     }
-    private void initBanner(){
+
+    @Override
+    public WowPresenter onCreatePresenter() {
+        return new WowPresenter(this);
+    }
+
+    @Override
+    protected void initVariables(Bundle bundle) {
+
+    }
+
+    private void initView(){
+
+    }
+    private void initBanner(List<?> imageUrls){
         binding.banner.setImageLoader(new GlideImageLoader());
-        binding.banner.setImages(DomeData.getBanner());
+        binding.banner.setImages(imageUrls);
         binding.banner.setIndicatorGravity(BannerConfig.CENTER);
         binding.banner.setOutlineProvider(new ViewOutlineProvider() {
             @Override
@@ -70,5 +107,104 @@ public class HomeFragment extends Fragment {
         });
         binding.banner.setClipToOutline(true);
         binding.banner.start();
+    }
+
+    @Override
+    public void onGetBannerSuccess(BannerBean bean) {
+        banners.addAll(bean.getBanners());
+        loadImageToList();
+        initBanner(bannerImageList);
+    }
+
+    //将图片装到BannerList中
+    private void loadImageToList() {
+        for (int i = 0; i < banners.size(); i++) {
+            try {
+                URL url = new URL(banners.get(i).getPic());
+                bannerImageList.add(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onGetBannerFail(String e) {
+
+    }
+
+    @Override
+    public void onGetRecommendPlayListSuccess(MainRecommendPlayListBean bean) {
+
+    }
+
+    @Override
+    public void onGetRecommendPlayListFail(String e) {
+
+    }
+
+    @Override
+    public void onGetDailyRecommendSuccess(DailyRecommendBean bean) {
+
+    }
+
+    @Override
+    public void onGetDailyRecommendFail(String e) {
+
+    }
+
+    @Override
+    public void onGetTopListSuccess(TopListBean bean) {
+
+    }
+
+    @Override
+    public void onGetTopListFail(String e) {
+
+    }
+
+    @Override
+    public void onGetPlayListSuccess(RecommendPlayListBean bean) {
+
+    }
+
+    @Override
+    public void onGetPlayListFail(String e) {
+
+    }
+
+    @Override
+    public void onGetPlaylistDetailSuccess(PlaylistDetailBean bean) {
+
+    }
+
+    @Override
+    public void onGetPlaylistDetailFail(String e) {
+
+    }
+
+    @Override
+    public void onGetMusicCanPlaySuccess(MusicCanPlayBean bean) {
+
+    }
+
+    @Override
+    public void onGetMusicCanPlayFail(String e) {
+
+    }
+
+    @Override
+    public void onGetHighQualitySuccess(HighQualityPlayListBean bean) {
+
+    }
+
+    @Override
+    public void onGetHighQualityFail(String e) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

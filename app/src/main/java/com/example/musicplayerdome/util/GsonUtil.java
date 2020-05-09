@@ -13,7 +13,6 @@ public class GsonUtil {
 
     public static String toJson(Object obj) {
         String result = createGson().toJson(obj);
-        Log.d(TAG, "toJson : " + result);
         return result;
     }
 

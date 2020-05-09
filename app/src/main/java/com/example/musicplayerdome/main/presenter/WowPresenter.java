@@ -40,7 +40,6 @@ public class WowPresenter extends WowContract.Presenter {
 
                     @Override
                     public void onNext(BannerBean bean) {
-                        Log.d(TAG, "BannerBean : " + bean);
                         mView.onGetBannerSuccess(bean);
                     }
 

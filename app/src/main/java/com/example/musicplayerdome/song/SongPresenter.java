@@ -38,7 +38,7 @@ public class SongPresenter extends SongContract.Presenter {
 
                     @Override
                     public void onNext(SongDetailBean bean) {
-                        Log.d(TAG, "onNext :" + bean);
+                        Log.e(TAG, "onNext :" + bean);
                         mView.onGetSongDetailSuccess(bean);
                     }
 
@@ -183,7 +183,7 @@ public class SongPresenter extends SongContract.Presenter {
 
                     @Override
                     public void onNext(LyricBean bean) {
-                        Log.d(TAG, "getLyric onNext" + bean);
+                        Log.e(TAG, "getLyric onNext" + bean);
                         mView.onGetLyricSuccess(bean);
                     }
 

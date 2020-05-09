@@ -43,20 +43,13 @@ import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 import com.example.musicplayerdome.main.presenter.WowPresenter;
+import com.example.musicplayerdome.song.SongPlayManager;
 import com.example.musicplayerdome.util.MyUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.model.SongInfo;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.example.musicplayerdome.fragment.HomeFragment.PLAYLIST_CREATOR_AVATARURL;
 import static com.example.musicplayerdome.fragment.HomeFragment.PLAYLIST_CREATOR_NICKNAME;
@@ -70,11 +63,9 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     private MainMusicAdapter mainMusicAdapter;
     private MySongListAdapter adapter;
     private Intent intent;
-    private SomeBroadcastReceiver bReceiver;
     private List<PlaylistDetailBean.PlaylistBean.TracksBean> beanList = new ArrayList<>();
     private List<SongInfo> songInfos = new ArrayList<>();
     private long playlistId;
-    private int Sid;
     private boolean go = false;
     /**
      * 上一首 按钮点击 ID
@@ -115,10 +106,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 
     private void initView(){
         binding.Pback.setOnClickListener(this);
-        binding.btnCustomPlay.setOnClickListener(this);
-        binding.btnCustomNext.setOnClickListener(this);
-        binding.btnCustomPrev.setOnClickListener(this);
-        binding.PlaybackController.setOnClickListener(this);
+
     }
 
     @Override
@@ -127,69 +115,15 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             case R.id.Pback:
                 finish();
                 break;
-            case R.id.btn_custom_prev:
-                //上一首
-                intent = new Intent();
-                intent.setAction(ACTION_BUTTON);
-                intent.putExtra(INTENT_BUTTONID_TAG, BUTTON_PREV_ID);
-                sendBroadcast(intent);
-                break;
-            case R.id.btn_custom_play:
-                //播放
-                intent = new Intent();
-                intent.setAction(ACTION_BUTTON);
-                intent.putExtra(INTENT_BUTTONID_TAG, BUTTON_PALY_ID);
-                sendBroadcast(intent);
-                break;
-            case R.id.btn_custom_next:
-                //下一首
-                intent = new Intent();
-                intent.setAction(ACTION_BUTTON);
-                intent.putExtra(INTENT_BUTTONID_TAG, BUTTON_NEXT_ID);
-                sendBroadcast(intent);
-                break;
-            case R.id.Playback_controller:
-                ActivityUtils.startActivity(MusicActivityMusic.class);
-                break;
         }
     }
-
-    private void initBroadcastReceiver(){
-        bReceiver = new SomeBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ACTIONS);
-        registerReceiver(bReceiver, intentFilter);
-    }
-
-    /**
-     * 显示音频标题
-     */
-    private void addAudioTitle(String name,String author,String img) {
-        if (name == null) return;
-        //设置音乐名称
-        binding.tvCustomSongSinger.setText(name);
-        MyUtil.setText(binding.tvCustomSongAuthor,author);
-        binding.Mimg.setImageURL(img);
-    }
-    private void setImg(ImageView imageView, int imgRes) {
-        if (imageView == null) return;
-        imageView.setImageResource(imgRes);
-    }
-
-    
     @Override
     protected void onResume() {
-        Log.e(TAG, "onResume: 运行？"+go);
         super.onResume();
-        if (go == true)return;
-        go = (boolean) SharedPreferencesUtil.getData("go",false);
-        Log.e(TAG, "获取成功"+go);
-        if (go ==true){
-            String name = (String)SharedPreferencesUtil.getData("Mname","");
-            String author = (String)SharedPreferencesUtil.getData("Mauthor","");
-            String img = (String)SharedPreferencesUtil.getData("Mimg","");
-            addAudioTitle(name,author,img);
-            binding.PlaybackController.setVisibility(View.VISIBLE);
+        if (SongPlayManager.getInstance().isPlaying()) {
+            binding.bottomController.setVisibility(View.VISIBLE);
+        } else {
+            binding.bottomController.setVisibility(View.GONE);
         }
     }
 
@@ -265,6 +199,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             beanInfo.setArtistKey(beanList.get(i).getAl().getPicUrl());
             songInfos.add(beanInfo);
         }
+        adapter.setList(songInfos);
         adapter.loadMore(songInfos);
 
     }
@@ -294,41 +229,6 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 
     }
 
-    public class SomeBroadcastReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(ACTIONS)) {
-                int buttonId = intent.getIntExtra(INTENT_BUTTONID_TAG, 0);
-                Sid = intent.getIntExtra("sid",0);
-                switch (buttonId) {
-                    case 1:
-                    case 4:
-                    case 5:
-                        String name = (String)SharedPreferencesUtil.getData("Mname","");
-                        String author = (String)SharedPreferencesUtil.getData("Mauthor","");
-                        String img = (String)SharedPreferencesUtil.getData("Mimg","");
-                        addAudioTitle(name,author,img);
-                        break;
-                    case 2://播放或暂停
-                        setImg(binding.btnCustomPlay,R.mipmap.audio_state_play);
-                        break;
-                    case 3:
-                        setImg(binding.btnCustomPlay,R.mipmap.audio_state_pause);
-                        break;
-                }
-            }
-        }
-    }
-    @Override
-    protected void onDestroy() {
-        Log.e(TAG, "onDestroy: 歌单页面广播已注销");
-        unregisterReceiver(bReceiver);
-        super.onDestroy();
-    }
-
-
     @Override
     protected WowPresenter onCreatePresenter() {
         return new WowPresenter(this);
@@ -342,26 +242,9 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     @Override
     protected void initData() {
         initView();
-        initBroadcastReceiver();
         LinearLayoutManager lm = new LinearLayoutManager(SongSheetActivityMusic.this);
         lm.setOrientation(LinearLayoutManager.VERTICAL);
 
-//        binding.recyclerView.setAdapter(mainMusicAdapter = new MainMusicAdapter(SongSheetActivityMusic.this));
-//        /**
-//         * 回调监听也行，但没必要，只需要在加个参数用来判断就行了
-//         * 通过抽象类来回调监听
-//         * 这边才是真正的方法
-//         */
-//        mainMusicAdapter.setOnItemClickListener(new OnItemListenter() {
-//            @Override
-//            public void onItemClick(View view, int postionid) {
-//                Intent intent = new Intent(SongSheetActivityMusic.this, MusicActivityMusic.class);
-//                intent.putExtra ("id",postionid);
-//                intent.putExtra ("key",1);
-//                startActivity(intent);
-//            }
-//        });
-//        mainMusicAdapter.loadMore(DomeData.getAudioMusic());
         adapter = new MySongListAdapter(this);
         adapter.setType(2);
         binding.recyclerView.setLayoutManager(lm);
@@ -378,7 +261,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             Glide.with(this).load(creatorUrl).into(binding.userImg);
             playlistId = getIntent().getLongExtra(PLAYLIST_ID, 0);
             showDialog();
-            Log.d(TAG, "playlistId : " + playlistId);
+
             mPresenter.getPlaylistDetail(playlistId);
         }
     }

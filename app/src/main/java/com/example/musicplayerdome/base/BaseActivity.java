@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -71,13 +72,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         if (mPresenter != null) {
             mPresenter = null;
         }
-//        MediaSessionConnection.getInstance().disconnect();
         super.onDestroy();
     }
 
     public void createDialog() {
         if (mDialog == null) {
-//            mDialog = new LoadingDialog(this, "loading...");
         }
     }
 
@@ -108,10 +107,12 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     public void connectMusicService() {
+        //到时候这里绑定服务，创建通知栏
         MediaSessionConnection.getInstance().connect();
     }
 
     public void disconnectMusicService() {
+        //这里解绑
         MediaSessionConnection.getInstance().disconnect();
     }
 

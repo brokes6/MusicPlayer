@@ -33,14 +33,24 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.DialogClickCallBack;
 import com.example.musicplayerdome.abstractclass.MusicController;
+import com.example.musicplayerdome.abstractclass.SongContract;
 import com.example.musicplayerdome.audio.RatateImage;
+import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.databinding.ActivityMusicBinding;
 import com.example.musicplayerdome.dialog.AudioTimerDialog;
 import com.example.musicplayerdome.dialog.MusicList;
 import com.example.musicplayerdome.base.MusicBaseActivity;
+import com.example.musicplayerdome.main.bean.LikeListBean;
 import com.example.musicplayerdome.resources.DomeData;
 import com.example.musicplayerdome.servlce.MusicServlce;
+import com.example.musicplayerdome.song.SongPresenter;
+import com.example.musicplayerdome.song.bean.CommentLikeBean;
+import com.example.musicplayerdome.song.bean.LikeMusicBean;
+import com.example.musicplayerdome.song.bean.LyricBean;
+import com.example.musicplayerdome.song.bean.MusicCommentBean;
+import com.example.musicplayerdome.song.bean.PlayListCommentBean;
+import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.util.AudioFlag;
 import com.example.musicplayerdome.util.AudioPlayerConstant;
 import com.example.musicplayerdome.util.FilesUtil;
@@ -49,9 +59,11 @@ import com.example.musicplayerdome.util.SPManager;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.example.musicplayerdome.util.TimerFlag;
 import com.example.musicplayerdome.util.XToastUtils;
+import com.gyf.immersionbar.ImmersionBar;
 import com.lauzy.freedom.library.Lrc;
 import com.lauzy.freedom.library.LrcHelper;
 import com.lauzy.freedom.library.LrcView;
+import com.lzx.starrysky.model.SongInfo;
 import com.smp.soundtouchandroid.AudioSpeed;
 import com.smp.soundtouchandroid.MediaCallBack;
 import com.smp.soundtouchandroid.OnProgressChangedListener;
@@ -67,7 +79,7 @@ import me.jessyan.autosize.internal.CustomAdapt;
 import static com.blankj.utilcode.util.NetworkUtils.getWifiEnabled;
 import static com.example.musicplayerdome.util.AudioPlayerConstant.playerState;
 
-public class MusicActivityMusic extends MusicBaseActivity implements View.OnClickListener, CustomAdapt {
+public class MusicActivityMusic extends BaseActivity<SongPresenter> implements View.OnClickListener, CustomAdapt, SongContract.View {
     ActivityMusicBinding binding;
     private static final String TAG = "MusicActivity";
     public static final String SONG_INFO = "songInfo";
@@ -93,6 +105,9 @@ public class MusicActivityMusic extends MusicBaseActivity implements View.OnClic
     private final int MSG_AUTO_PLAY = MSG_AUDIO_PREPARE + 1;
     private final static String ACTIONS = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClickS";
     private final static String INTENT_BUTTONID_TAG = "ButtonId";
+    //传递进来的数据
+    private SongDetailBean songDetail;
+    //结束
     /**
      * 播放/暂停 按钮点击 ID
      */
@@ -131,13 +146,7 @@ public class MusicActivityMusic extends MusicBaseActivity implements View.OnClic
                 SharedPreferencesUtil.putData("go",true);
                 if (musicController.getPlayList() == null || musicController.getPlayList().isEmpty()) {
                     if (audioList != null) {
-                        if (rkey ==true){
-                            musicController.setPlayList(DomeData.getRecommendMusic());
-                            rkey=false;
-                        }else{
-                            musicController.setPlayList(DomeData.getAudioMusic());
-                            skey=false;
-                        }
+                        musicController.setPlayList(audioList);
                     }
                 }
                 if (musicController != null) {
@@ -160,18 +169,24 @@ public class MusicActivityMusic extends MusicBaseActivity implements View.OnClic
         }
     };
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreateView(Bundle savedInstanceState) {
+        ImmersionBar.with(MusicActivityMusic.this)
+                .statusBarDarkFont(true)
+                .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
+                .statusBarColor(R.color.white)
+                .init();
         binding = DataBindingUtil.setContentView(this,R.layout.activity_music);
         initView();
-        initResources();
     }
-
+    @Override
+    protected void initData() {
+        getIntentData();
+        goPlay();
+    }
     /**
      * 初始化资源
      */
     private void initView(){
-        goPlay();
         binding.play.setOnClickListener(this);
         binding.musicList.setOnClickListener(this);
         binding.button.setOnClickListener(this);
@@ -192,19 +207,11 @@ public class MusicActivityMusic extends MusicBaseActivity implements View.OnClic
      * 用来第一次传入选择歌曲id（仅限于第一次）
      * 都加入了wifi判断
      */
+    private SongInfo currentSongInfo;
     private int key;
     private int id;
     private void goPlay(){
-        Bundle bundle = getIntent().getExtras();
-        key = bundle.getInt("key",0);
-        id = bundle.getInt("id",0);
-        Log.e(TAG, "goPlay: key值为："+key+";id为："+id);
-        switch (key){
-            case 1:skey=true;
-                break;
-            case 2:rkey=true;
-                break;
-        }
+
         if (musicController==null){
             Log.e(TAG, "goPlay: 开始注册绑定服务");
             Wifipaly=WifiMusic();
@@ -216,10 +223,13 @@ public class MusicActivityMusic extends MusicBaseActivity implements View.OnClic
             }
             return;
         }
-        musicController.Choice(id-1);
 
     }
 
+    private void getIntentData() {
+        Intent intent = getIntent();
+        currentSongInfo = intent.getParcelableExtra(SONG_INFO);
+    }
     /**
      * 初始化音量控制器
      */
@@ -235,20 +245,21 @@ public class MusicActivityMusic extends MusicBaseActivity implements View.OnClic
     /**
      * 初始化音乐封面和调用初始化音量控制器
      */
-    private void initResources(){
+    private void initResources(SongDetailBean songDetail){
         handler.sendEmptyMessage(MSG_SHOW_UI);
         initAudioManager();
+        String coverUrl = songDetail.getSongs().get(0).getAl().getPicUrl();
+        Glide.with(this)
+                .load(coverUrl)
+                .placeholder(R.drawable.shape_record)
+                .into(binding.playAlbumIs);
+        Glide.with(this)
+                .load(coverUrl)
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 12)))
+                .transition(new DrawableTransitionOptions().crossFade(1500))
+                .into(binding.ivBg);
         //将图片封面加载为RatateImage（旋转动画）
         ratateImage = new RatateImage(this, binding.playAlbumIs);
-        if (rkey==true){
-            audioList = DomeData.getRecommendMusic();
-            audio = audioList.get(id-1);
-            setSongDetailBean(audio);
-        }else{
-            audioList = DomeData.getAudioMusic();
-            audio = audioList.get(id-1);
-            setSongDetailBean(audio);
-        }
         SharedPreferencesUtil.putData("name",audio.getName());
         SharedPreferencesUtil.putData("author",audio.getAuthor());
     }
@@ -425,6 +436,77 @@ public class MusicActivityMusic extends MusicBaseActivity implements View.OnClic
             }
         });
     }
+    @Override
+    public void onGetSongDetailSuccess(SongDetailBean bean) {
+        songDetail = bean;
+        initResources(songDetail);
+    }
+
+    @Override
+    public void onGetSongDetailFail(String e) {
+
+    }
+
+    @Override
+    public void onLikeMusicSuccess(LikeMusicBean bean) {
+
+    }
+
+    @Override
+    public void onLikeMusicFail(String e) {
+
+    }
+
+    @Override
+    public void onGetLikeListSuccess(LikeListBean bean) {
+
+    }
+
+    @Override
+    public void onGetLikeListFail(String e) {
+
+    }
+
+    @Override
+    public void onGetMusicCommentSuccess(MusicCommentBean bean) {
+
+    }
+
+    @Override
+    public void onGetMusicCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onLikeCommentSuccess(CommentLikeBean bean) {
+
+    }
+
+    @Override
+    public void onLikeCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onGetLyricSuccess(LyricBean bean) {
+
+    }
+
+    @Override
+    public void onGetLyricFail(String e) {
+
+    }
+
+    @Override
+    public void onGetPlaylistCommentSuccess(PlayListCommentBean bean) {
+
+    }
+
+    @Override
+    public void onGetPlaylistCommentFail(String e) {
+
+    }
+
     /**
      * Dialog点击回调事件（音乐内部列表选择列表监听）
      */
@@ -790,15 +872,6 @@ public class MusicActivityMusic extends MusicBaseActivity implements View.OnClic
         binding.playAlbumIs.setImageURL(audio.getFaceUrl());
     }
 
-    private void setSongDetailBean(Audio audio) {
-        String coverUrl = audio.getFaceUrl();
-        Glide.with(this)
-                .load(coverUrl)
-                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 12)))
-                .transition(new DrawableTransitionOptions().crossFade(1500))
-                .into(binding.ivBg);
-    }
-
     private ObjectAnimator rotateAnimator;
     private ObjectAnimator alphaAnimator;
     private ObjectAnimator getAlphaAnimator() {
@@ -825,7 +898,6 @@ public class MusicActivityMusic extends MusicBaseActivity implements View.OnClic
                     setAudio(musicController.getAudio());
                     setCurrentProgress(0);
                     addAudioTitle();
-                    setSongDetailBean(audio);
                 }
             } else {
                 playerState = state;
@@ -853,7 +925,6 @@ public class MusicActivityMusic extends MusicBaseActivity implements View.OnClic
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    dismissDialog();
                 }
             });
         }
@@ -953,6 +1024,19 @@ public class MusicActivityMusic extends MusicBaseActivity implements View.OnClic
         Log.e(TAG, "onDestroy:正在注销 ");
         Stop();
     }
+
+
+    @Override
+    protected SongPresenter onCreatePresenter() {
+        return new SongPresenter(this);
+    }
+
+    @Override
+    protected void initModule() {
+
+    }
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

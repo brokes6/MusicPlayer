@@ -13,9 +13,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         //开启dataBinding
         dataBinding.enabled = true
-        //算是更换内核吧
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+            // 设置支持的SO库架构，第三方给的so库哪几种架构，就配置这几种架构
+            abiFilters 'armeabi-v7a'
         }
     }
     buildTypes {
@@ -75,15 +75,15 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     implementation 'com.google.code.gson:gson:2.7'
-    // CookieJar
+    //CookieJar
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
     //Apputils
     implementation 'com.blankj:utilcode:1.22.0'
 
     //图片上传
-    implementation group: 'com.nostra13.universalimageloader', name: 'universal-image-loader', version: '1.9.5'
-    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+//    implementation group: 'com.nostra13.universalimageloader', name: 'universal-image-loader', version: '1.9.5'
+//    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 
     //屏幕适配
     implementation 'me.jessyan:autosize:1.1.2'
@@ -109,12 +109,15 @@ dependencies {
     //文字滚动
     implementation 'anylife.scrolltextview:ScrollTextviewLib:1.4.6'
 
-//    //图片模糊
-    implementation 'jp.wasabeef:glide-transformations:3.0.1'
+    //图片模糊
+    implementation 'jp.wasabeef:glide-transformations:4.1.0'
 
     // 音视频请求框架:StarrySkyJava
     implementation 'com.lzx:StarrySkyJava:2.1.9'
 
     // greendao
     implementation 'org.greenrobot:greendao:3.2.2'
+
+    // EventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

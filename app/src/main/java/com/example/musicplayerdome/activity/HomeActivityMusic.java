@@ -21,13 +21,23 @@ import android.widget.ImageView;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.musicplayerdome.R;
+import com.example.musicplayerdome.abstractclass.Constants;
+import com.example.musicplayerdome.abstractclass.MainContract;
+import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.databinding.ActivityHomeBinding;
 import com.example.musicplayerdome.fragment.HomeFragment;
 import com.example.musicplayerdome.fragment.MyFragment;
 import com.example.musicplayerdome.fragment.SongSheetFragment;
 import com.example.musicplayerdome.base.MusicBaseActivity;
+import com.example.musicplayerdome.login.bean.LoginBean;
+import com.example.musicplayerdome.main.bean.LikeListBean;
+import com.example.musicplayerdome.main.presenter.MainPresenter;
+import com.example.musicplayerdome.song.SongPlayManager;
+import com.example.musicplayerdome.util.ActivityStarter;
+import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.MyUtil;
+import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.google.android.material.tabs.TabLayout;
 import com.gyf.immersionbar.ImmersionBar;
@@ -36,7 +46,7 @@ import com.xuexiang.xui.utils.SnackbarUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivityMusic extends MusicBaseActivity implements View.OnClickListener{
+public class HomeActivityMusic extends BaseActivity<MainPresenter> implements View.OnClickListener, MainContract.View{
     private static final String TAG = "HomeActivity";
     ActivityHomeBinding binding;
     private String[] strings = new String[]{"歌 单","主 页","我 的"};
@@ -47,7 +57,7 @@ public class HomeActivityMusic extends MusicBaseActivity implements View.OnClick
     private Audio audio;
     private boolean go = false;
     private Intent intent;
-    private HomeBroadcastReceiver bReceiver;
+    private LoginBean loginBean;
     /**
      * 上一首 按钮点击 ID
      */
@@ -64,23 +74,32 @@ public class HomeActivityMusic extends MusicBaseActivity implements View.OnClick
     private final static String ACTION_BUTTON = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClick";
     private final static String ACTIONS = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClickS";
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreateView(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_home);
+
+        ImmersionBar.with(this)
+                .statusBarDarkFont(false)
+                .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
+                .statusBarColor(R.color.red)
+                .init();
+        connectMusicService();
+
         fragmentList.add(new SongSheetFragment());
         fragmentList.add(new HomeFragment());
         fragmentList.add(new MyFragment());
         initView();
+    }
+    @Override
+    protected void initData() {
+        String userLoginInfo = SharePreferenceUtil.getInstance(this).getUserInfo("");
+        loginBean = GsonUtil.fromJSON(userLoginInfo, LoginBean.class);
+
         initApadter();
-        initBroadcastReceiver();
+        mPresenter.getLikeList(loginBean.getAccount().getId());
     }
     private void initView(){
-        binding.btnCustomPlay.setOnClickListener(this);
-        binding.btnCustomNext.setOnClickListener(this);
-        binding.btnCustomPrev.setOnClickListener(this);
-        binding.PlaybackController.setOnClickListener(this);
+
     }
     private void initApadter(){
         MyAdapter fragmentAdater = new MyAdapter(getSupportFragmentManager());
@@ -123,70 +142,51 @@ public class HomeActivityMusic extends MusicBaseActivity implements View.OnClick
             }
         });
     }
-    private void initBroadcastReceiver(){
-        bReceiver = new HomeBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ACTIONS);
-        registerReceiver(bReceiver, intentFilter);
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_custom_prev:
-                //上一首
-                intent = new Intent();
-                intent.setAction(ACTION_BUTTON);
-                intent.putExtra(INTENT_BUTTONID_TAG, BUTTON_PREV_ID);
-                sendBroadcast(intent);
-                break;
-            case R.id.btn_custom_play:
-                //播放
-                intent = new Intent();
-                intent.setAction(ACTION_BUTTON);
-                intent.putExtra(INTENT_BUTTONID_TAG, BUTTON_PALY_ID);
-                sendBroadcast(intent);
-                break;
-            case R.id.btn_custom_next:
-                //下一首
-                intent = new Intent();
-                intent.setAction(ACTION_BUTTON);
-                intent.putExtra(INTENT_BUTTONID_TAG, BUTTON_NEXT_ID);
-                sendBroadcast(intent);
-                break;
-            case R.id.Playback_controller:
-                ActivityUtils.startActivity(MusicActivityMusic.class);
-                break;
+
         }
     }
-
-    /**
-     * 显示音频标题
-     */
-    private void addAudioTitle(String name,String author,String img) {
-        if (name == null) return;
-        //设置音乐名称
-//        MyUtil.setText(binding.tvCustomSongSinger,name);
-        binding.tvCustomSongSinger.setText(name);
-        MyUtil.setText(binding.tvCustomSongAuthor,author);
-        binding.Mimg.setImageURL(img);
-    }
-
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (go == true)return;
-        go = (boolean)SharedPreferencesUtil.getData("go",false);
-        Log.e(TAG, "获取成功"+go);
-        if (go ==true){
-            String name = (String)SharedPreferencesUtil.getData("Mname","");
-            String author = (String)SharedPreferencesUtil.getData("Mauthor","");
-            String img = (String)SharedPreferencesUtil.getData("Mimg","");
-            addAudioTitle(name,author,img);
-            binding.PlaybackController.setVisibility(View.VISIBLE);
-            binding.viewpager.setPadding(0,0,0,140);
+        if (SongPlayManager.getInstance().isPlaying()) {
+            binding.bottomController.setVisibility(View.VISIBLE);
+        } else {
+            binding.bottomController.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onLogoutSuccess() {
+        hideDialog();
+        SharePreferenceUtil.getInstance(this).remove(Constants.SpKey.AUTH_TOKEN);
+        ActivityStarter.getInstance().startLoginActivity(this);
+        this.finish();
+    }
+
+    @Override
+    public void onLogoutFail(String e) {
+        hideDialog();
+    }
+
+    @Override
+    public void onGetLikeListSuccess(LikeListBean bean) {
+        List<Long> idsList = bean.getIds();
+        List<String> likeList = new ArrayList<>();
+        for (int i = 0; i < idsList.size(); i++) {
+            String ids = String.valueOf(idsList.get(i));
+            likeList.add(ids);
+        }
+        SharePreferenceUtil.getInstance(this).saveLikeList(likeList);
+    }
+
+    @Override
+    public void onGetLikeListFail(String e) {
+
     }
 
 
@@ -214,44 +214,23 @@ public class HomeActivityMusic extends MusicBaseActivity implements View.OnClick
             return strings[position];
         }
     }
-    //对设置图片进行方便的封装
-    private void setImg(ImageView imageView, int imgRes) {
-        if (imageView == null) return;
-        imageView.setImageResource(imgRes);
-    }
-    public class HomeBroadcastReceiver extends BroadcastReceiver{
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(ACTIONS)) {
-                int buttonId = intent.getIntExtra(INTENT_BUTTONID_TAG, 0);
-                Sid = intent.getIntExtra("sid",0);
-                switch (buttonId) {
-                    case 1:
-                    case 4:
-                    case 5:
-                        String name = (String)SharedPreferencesUtil.getData("Mname","");
-                        String author = (String)SharedPreferencesUtil.getData("Mauthor","");
-                        String img = (String)SharedPreferencesUtil.getData("Mimg","");
-                        addAudioTitle(name,author,img);
-                        break;
-                    case 2://播放或暂停
-                        setImg(binding.btnCustomPlay,R.mipmap.audio_state_play);
-                        break;
-                    case 3:
-                        setImg(binding.btnCustomPlay,R.mipmap.audio_state_pause);
-                        break;
-                }
-            }
-        }
-    }
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(bReceiver);
+        disconnectMusicService();
         super.onDestroy();
     }
+
+    @Override
+    protected MainPresenter onCreatePresenter() {
+        return new MainPresenter(this);
+    }
+
+    @Override
+    protected void initModule() {
+
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -260,7 +239,8 @@ public class HomeActivityMusic extends MusicBaseActivity implements View.OnClick
             SnackbarUtils.Short(binding.mainL, "再按一次退出").info().show();
             firstTime = secondTime;
         } else{
-            ActivityUtils.finishAllActivities();
+//            ActivityUtils.finishAllActivities();
+            System.exit(0);// 完全退出应用
         }
     }
 }
