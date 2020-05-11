@@ -59,9 +59,10 @@ import retrofit2.http.Query;
  * Created By Rikka on 2019/7/12
  */
 public interface ApiService {
-
+    //电脑ip
     String BASE_URL = "http:///192.168.0.150:3000";
-
+    //小米8手机ip
+//    String BASE_URL = "http:///192.168.43.96:3000";
     @GET("login/cellphone")
     Observable<LoginBean> login(@Query("phone") String phone, @Query("password") String password);
 

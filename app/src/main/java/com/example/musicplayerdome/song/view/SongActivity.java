@@ -62,7 +62,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 import static com.example.musicplayerdome.activity.SongSheetActivityMusic.COMPLETED;
 
 
-public class SongActivity extends BaseActivity<SongPresenter> implements SongContract.View {
+public class SongActivity extends BaseActivity<SongPresenter> implements SongContract.View{
     private static final String TAG = "SongActivity";
 
     public static final String SONG_INFO = "songInfo";
