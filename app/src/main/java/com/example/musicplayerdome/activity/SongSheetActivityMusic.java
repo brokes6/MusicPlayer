@@ -35,7 +35,6 @@ import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.bean.BannerBean;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
 import com.example.musicplayerdome.databinding.SongSheetBinding;
-import com.example.musicplayerdome.base.MusicBaseActivity;
 import com.example.musicplayerdome.main.bean.DailyRecommendBean;
 import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
@@ -244,7 +243,6 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         initView();
         LinearLayoutManager lm = new LinearLayoutManager(SongSheetActivityMusic.this);
         lm.setOrientation(LinearLayoutManager.VERTICAL);
-
         adapter = new MySongListAdapter(this);
         adapter.setType(2);
         binding.recyclerView.setLayoutManager(lm);

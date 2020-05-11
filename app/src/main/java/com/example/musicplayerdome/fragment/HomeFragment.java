@@ -1,10 +1,12 @@
 package com.example.musicplayerdome.fragment;
 
+import android.content.Intent;
 import android.graphics.Outline;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -14,12 +16,14 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
 import com.example.musicplayerdome.abstractclass.WowContract;
+import com.example.musicplayerdome.activity.SongSheetActivityMusic;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.bean.BannerBean;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
 import com.example.musicplayerdome.main.bean.DailyRecommendBean;
 import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
+import com.example.musicplayerdome.main.bean.PlaylistBean;
 import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
@@ -48,8 +52,16 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     public static final String PLAYLIST_CREATOR_NICKNAME = "playlistCreatorNickname";
     public static final String PLAYLIST_CREATOR_AVATARURL = "playlistCreatorAvatarUrl";
     public static final String PLAYLIST_ID = "playlistId";
+    //轮播图
     List<BannerBean.BannersBean> banners = new ArrayList<>();
     List<URL> bannerImageList = new ArrayList<>();
+    //推荐歌单集合
+    List<MainRecommendPlayListBean.RecommendBean> recommends = new ArrayList<>();
+    List<PlaylistBean> list = new ArrayList<>();
+
+    public HomeFragment() {
+        setFragmentTitle("主 页");
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,14 +77,17 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
 
     @Override
     protected void initData() {
+        recommends.clear();
         mPresenter.getBanner();
+        mPresenter.getRecommendPlayList();
 
-        songListAdapter = new SongListAdapter();
+        songListAdapter = new SongListAdapter(getContext());
+        songListAdapter.setType(1);
         LinearLayoutManager i = new LinearLayoutManager(getContext());
         i.setOrientation(LinearLayoutManager.HORIZONTAL);
         binding.songList.setLayoutManager(i);
+        binding.songList.setHasFixedSize(true);
         binding.songList.setAdapter(songListAdapter);
-        songListAdapter.loadMore(DomeData.getSongRecommendation());
 
         recommendMusicAdapter = new RecommendMusicAdapter(getContext());
         LinearLayoutManager i1 = new LinearLayoutManager(getContext());
@@ -80,6 +95,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
         binding.recommendMusic.setLayoutManager(i1);
         binding.recommendMusic.setAdapter(recommendMusicAdapter);
         recommendMusicAdapter.loadMore(DomeData.getRecommendMusic());
+        showDialog();
     }
 
     @Override
@@ -135,12 +151,39 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
 
     @Override
     public void onGetRecommendPlayListSuccess(MainRecommendPlayListBean bean) {
-
+        hideDialog();
+        recommends.addAll(bean.getRecommend());
+        for (int i = 0; i < recommends.size(); i++) {
+            PlaylistBean beanInfo = new PlaylistBean();
+            beanInfo.setPlaylistName(recommends.get(i).getName());
+            beanInfo.setPlaylistCoverUrl(recommends.get(i).getPicUrl());
+            list.add(beanInfo);
+        }
+        songListAdapter.setListener(listClickListener);
+        songListAdapter.loadMore(list);
     }
+    private SongListAdapter.OnPlayListClickListener listClickListener = position -> {
+        if (recommends != null && !recommends.isEmpty()) {
+            //进入歌单详情页面
+            Intent intent = new Intent(getActivity(), SongSheetActivityMusic.class);
+            MainRecommendPlayListBean.RecommendBean bean = recommends.get(position);
+            String playlistName = bean.getName();
+            intent.putExtra(PLAYLIST_NAME, playlistName);
+            String playlistPicUrl = bean.getPicUrl();
+            intent.putExtra(PLAYLIST_PICURL, playlistPicUrl);
+            String playlistCreatorNickname = bean.getCreator().getNickname();
+            intent.putExtra(PLAYLIST_CREATOR_NICKNAME, playlistCreatorNickname);
+            String playlistCreatorAvatarUrl = bean.getCreator().getAvatarUrl();
+            intent.putExtra(PLAYLIST_CREATOR_AVATARURL, playlistCreatorAvatarUrl);
+            long playlistId = bean.getId();
+            intent.putExtra(PLAYLIST_ID, playlistId);
+            startActivity(intent);
+        }
+    };
 
     @Override
     public void onGetRecommendPlayListFail(String e) {
-
+        hideDialog();
     }
 
     @Override

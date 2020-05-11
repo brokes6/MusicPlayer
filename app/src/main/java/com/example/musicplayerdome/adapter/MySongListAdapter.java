@@ -89,13 +89,11 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
         setSongClick(item, position);
     }
     public void setSongInfo(Context context, SongInfo bean, int position, int type) {
-        Log.d(TAG, "setSongBean : " + tvName + " ," + tvSinger);
         tvName.setText(bean.getSongName());
         tvSinger.setText(bean.getArtist());
         if (type == 1) {
         } else if (type == 2) {
             tvSongNumber.setVisibility(View.VISIBLE);
-            Log.d(TAG, "position : " + position);
             tvSongNumber.setText((position + 1) + "");
         } else if (type == 4) {
             ivPhone.setVisibility(View.VISIBLE);
@@ -103,7 +101,6 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
         }
     }
     public void setSongInfo(Context context, SongInfo bean, String keywords) {
-        Log.d(TAG, "setSongBean : " + tvName + " ," + tvSinger);
         if (bean.getSongName().contains(keywords)) {
             int start = bean.getSongName().indexOf(keywords);
             int end = start + keywords.length();

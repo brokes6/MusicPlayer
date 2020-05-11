@@ -40,7 +40,6 @@ import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.databinding.ActivityMusicBinding;
 import com.example.musicplayerdome.dialog.AudioTimerDialog;
 import com.example.musicplayerdome.dialog.MusicList;
-import com.example.musicplayerdome.base.MusicBaseActivity;
 import com.example.musicplayerdome.main.bean.LikeListBean;
 import com.example.musicplayerdome.resources.DomeData;
 import com.example.musicplayerdome.servlce.MusicServlce;

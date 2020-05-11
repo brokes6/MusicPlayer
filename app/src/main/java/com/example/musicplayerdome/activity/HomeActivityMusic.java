@@ -23,13 +23,14 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.Constants;
 import com.example.musicplayerdome.abstractclass.MainContract;
+import com.example.musicplayerdome.adapter.MultiFragmentPagerAdapter;
 import com.example.musicplayerdome.base.BaseActivity;
+import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.databinding.ActivityHomeBinding;
 import com.example.musicplayerdome.fragment.HomeFragment;
 import com.example.musicplayerdome.fragment.MyFragment;
 import com.example.musicplayerdome.fragment.SongSheetFragment;
-import com.example.musicplayerdome.base.MusicBaseActivity;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
 import com.example.musicplayerdome.main.presenter.MainPresenter;
@@ -49,30 +50,11 @@ import java.util.List;
 public class HomeActivityMusic extends BaseActivity<MainPresenter> implements View.OnClickListener, MainContract.View{
     private static final String TAG = "HomeActivity";
     ActivityHomeBinding binding;
-    private String[] strings = new String[]{"歌 单","主 页","我 的"};
-    private List<Fragment> fragmentList = new ArrayList<Fragment>();
+    private List<BaseFragment> fragmentList = new ArrayList<>();
+    private MultiFragmentPagerAdapter mPagerAdapter;
     private long firstTime = 0;
-    private int Sid;
-    //音频播放类
-    private Audio audio;
-    private boolean go = false;
-    private Intent intent;
+    //用户信息
     private LoginBean loginBean;
-    /**
-     * 上一首 按钮点击 ID
-     */
-    private final static int BUTTON_PREV_ID = 1;
-    /**
-     * 播放/暂停 按钮点击 ID
-     */
-    private final static int BUTTON_PALY_ID = 2;
-    /**
-     * 下一首 按钮点击 ID
-     */
-    private final static int BUTTON_NEXT_ID = 3;
-    private final static String INTENT_BUTTONID_TAG = "ButtonId";
-    private final static String ACTION_BUTTON = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClick";
-    private final static String ACTIONS = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClickS";
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -84,10 +66,11 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
                 .statusBarColor(R.color.red)
                 .init();
         connectMusicService();
-
+        mPagerAdapter = new MultiFragmentPagerAdapter(getSupportFragmentManager());
         fragmentList.add(new SongSheetFragment());
         fragmentList.add(new HomeFragment());
         fragmentList.add(new MyFragment());
+        mPagerAdapter.init(fragmentList);
         initView();
     }
     @Override
@@ -102,10 +85,10 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
 
     }
     private void initApadter(){
-        MyAdapter fragmentAdater = new MyAdapter(getSupportFragmentManager());
-        binding.viewpager.setAdapter(fragmentAdater);
+        binding.viewpager.setAdapter(mPagerAdapter);
         binding.viewpager.setCurrentItem(1);
         binding.viewpager.setOffscreenPageLimit(fragmentList.size()-1);
+        mPagerAdapter.getItem(1).setUserVisibleHint(true);
         binding.tablayoutReal.setupWithViewPager(binding.viewpager);
         binding.tablayoutReal.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -187,32 +170,6 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
     @Override
     public void onGetLikeListFail(String e) {
 
-    }
-
-
-    /**
-     * 主页Tab列表适配器
-     */
-    private class MyAdapter extends FragmentPagerAdapter {
-        public MyAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return strings[position];
-        }
     }
 
     @Override

@@ -29,6 +29,8 @@ import com.example.musicplayerdome.main.presenter.MinePresenter;
 import com.example.musicplayerdome.personal.bean.PlayListItemBean;
 import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
 import com.example.musicplayerdome.resources.DomeData;
+import com.example.musicplayerdome.song.SongPlayManager;
+import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.lzx.starrysky.model.SongInfo;
@@ -45,12 +47,15 @@ import static com.example.musicplayerdome.fragment.HomeFragment.PLAYLIST_PICURL;
 public class SongSheetFragment extends BaseFragment<MinePresenter> implements View.OnClickListener, MineContract.View{
     SongsheetfragmentBinding binding;
     private static final String TAG = "SongSheetFragment";
-    MySongAdapter mySongAdapter;
     private UserPlaylistAdapter adapter;
     private LoginBean loginBean;
     private long uid;
     private List<UserPlaylistBean.PlaylistBean> playlistBeans = new ArrayList<>();
     private List<PlayListItemBean> adapterList = new ArrayList<>();
+
+    public SongSheetFragment() {
+        setFragmentTitle("歌 单");
+    }
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,12 +115,6 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
 
     private void initView(){
-        mySongAdapter = new MySongAdapter();
-        LinearLayoutManager i = new LinearLayoutManager(getContext());
-        i.setOrientation(LinearLayoutManager.HORIZONTAL);
-        binding.mySong.setLayoutManager(i);
-        binding.mySong.setAdapter(mySongAdapter);
-        mySongAdapter.loadMore(DomeData.getMySong());
     }
 
     @Override
@@ -130,9 +129,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
         hideDialog();
         Log.d(TAG, "onGetUserPlaylistSuccess :" + bean);
         playlistBeans.clear();
-
         playlistBeans.addAll(bean.getPlaylist());
-
         for (int i = 0; i < playlistBeans.size(); i++) {
             PlayListItemBean beanInfo = new PlayListItemBean();
             beanInfo.setCoverUrl(playlistBeans.get(i).getCoverImgUrl());
@@ -143,7 +140,6 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
             beanInfo.setPlaylistCreator(playlistBeans.get(i).getCreator().getNickname());
             adapterList.add(beanInfo);
         }
-//        adapter.notifyDataSetChanged(adapterList);
         adapter.loadMore(adapterList);
     }
 
@@ -194,27 +190,26 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
     @Override
     public void onGetMyFMSuccess(MyFmBean bean) {
-        hideDialog();
-        Log.d(TAG, "onGetMyFMSuccess：" + bean);
-        List<MyFmBean.DataBean> fmList = bean.getData();
-        List<SongInfo> songList = new ArrayList<>();
-        for (int i = 0; i < fmList.size(); i++) {
-            SongInfo songInfo = new SongInfo();
-            songInfo.setSongName(fmList.get(i).getName());
-            songInfo.setSongUrl(SONG_URL + fmList.get(i).getId() + ".mp3");
-            songInfo.setSongCover(fmList.get(i).getAlbum().getBlurPicUrl());
-            songInfo.setArtist(fmList.get(i).getArtists().get(0).getName());
-            songInfo.setSongId(String.valueOf(fmList.get(i).getId()));
-            songInfo.setDuration(fmList.get(i).getDuration());
-            songInfo.setArtistId(String.valueOf(fmList.get(i).getArtists().get(0).getId()));
-            songInfo.setArtistKey(fmList.get(i).getArtists().get(0).getPicUrl());
-            songList.add(songInfo);
-        }
+//        hideDialog();
+//        Log.d(TAG, "onGetMyFMSuccess：" + bean);
+//        List<MyFmBean.DataBean> fmList = bean.getData();
+//        List<SongInfo> songList = new ArrayList<>();
+//        for (int i = 0; i < fmList.size(); i++) {
+//            SongInfo songInfo = new SongInfo();
+//            songInfo.setSongName(fmList.get(i).getName());
+//            songInfo.setSongUrl(SONG_URL + fmList.get(i).getId() + ".mp3");
+//            songInfo.setSongCover(fmList.get(i).getAlbum().getBlurPicUrl());
+//            songInfo.setArtist(fmList.get(i).getArtists().get(0).getName());
+//            songInfo.setSongId(String.valueOf(fmList.get(i).getId()));
+//            songInfo.setDuration(fmList.get(i).getDuration());
+//            songInfo.setArtistId(String.valueOf(fmList.get(i).getArtists().get(0).getId()));
+//            songInfo.setArtistKey(fmList.get(i).getArtists().get(0).getPicUrl());
+//            songList.add(songInfo);
+//        }
 //        SongPlayManager.getInstance().clickPlayAll(songList, 0);
-        SongInfo songInfo = songList.get(0);
-        Intent intent = new Intent(getContext(), MusicActivityMusic.class);
-//        intent.putExtra(MusicActivityMusic.SONG_INFO, songInfo);
-        startActivity(intent);
+//        SongInfo songInfo = songList.get(0);
+//        Intent intent = new Intent(getContext(), SongActivity.class);
+//        startActivity(intent);
     }
 
     @Override
