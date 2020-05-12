@@ -1,0 +1,233 @@
+package com.example.musicplayerdome.song.view;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+
+import com.example.musicplayerdome.R;
+import com.example.musicplayerdome.abstractclass.SongContract;
+import com.example.musicplayerdome.adapter.MusicListAdapter;
+import com.example.musicplayerdome.main.bean.LikeListBean;
+import com.example.musicplayerdome.rewrite.MaxHeightRecyclerView;
+import com.example.musicplayerdome.song.SongPlayManager;
+import com.example.musicplayerdome.song.bean.CommentLikeBean;
+import com.example.musicplayerdome.song.bean.LikeMusicBean;
+import com.example.musicplayerdome.song.bean.LyricBean;
+import com.example.musicplayerdome.song.bean.MusicCommentBean;
+import com.example.musicplayerdome.song.bean.PlayListCommentBean;
+import com.example.musicplayerdome.song.bean.SongDetailBean;
+import com.example.musicplayerdome.util.XToastUtils;
+import com.lzx.starrysky.model.SongInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by dingxingxing on 2019.4.4
+ * 音频播放定时器弹窗
+ */
+public class SongListDialog extends Dialog implements SongContract.View,View.OnClickListener{
+    private Activity mContext;
+    private Context scontext;
+    private String TAG = "--ErrorCorrectionDialog--";
+    private MusicListAdapter adapter;
+    private List<SongInfo> songList = new ArrayList<>();
+    MaxHeightRecyclerView recyclerView;
+    TextView tvPlayMode;
+    ImageView ivPlayMode,iv_trash_can;
+    RelativeLayout rl_play_mode;
+
+    public SongListDialog(Context context) {
+        super(context, R.style.my_dialog);
+        this.scontext = context;
+        init(context);
+    }
+    /**
+     * 初始化
+     */
+    private void init(Context context) {
+        mContext = (Activity) context;
+        //为弹窗绑定视图
+        View view = mContext.getLayoutInflater().inflate(R.layout.activity_song_list, null);
+        recyclerView = view.findViewById(R.id.rv_playlist);
+        tvPlayMode = view.findViewById(R.id.tv_play_mode);
+        ivPlayMode = view.findViewById(R.id.iv_play_mode);
+        iv_trash_can = view.findViewById(R.id.iv_trash_can);
+        rl_play_mode = view.findViewById(R.id.rl_play_mode);
+        iv_trash_can.setOnClickListener(this);
+        rl_play_mode.setOnClickListener(this);
+        setContentView(view);
+        Window dialogWindow = getWindow();
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        //设置弹窗宽度
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        //为弹窗绑定效果
+        dialogWindow.setAttributes(lp);
+
+        //绑定适配器
+        LinearLayoutManager lin = new LinearLayoutManager(scontext);
+        lin.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(lin);
+        adapter = new MusicListAdapter(scontext);
+        adapter.setListener(listener);
+        recyclerView.setAdapter(adapter);
+        songList = SongPlayManager.getInstance().getSongList();
+        adapter.loadMore(songList);
+
+        if (SongPlayManager.getInstance().isPlaying() || SongPlayManager.getInstance().isPaused()) {
+            recyclerView.scrollToPosition(SongPlayManager.getInstance().getCurrentSongIndex());
+        }
+        setPlayMode(SongPlayManager.getInstance().getMode());
+    }
+
+    private void setPlayMode(int playMode) {
+        switch (playMode) {
+            case SongPlayManager.MODE_LIST_LOOP_PLAY:
+                tvPlayMode.setText("列表循环");
+                setPlayModeImageColor(R.drawable.shape_list_cycle_grey);
+                break;
+            case SongPlayManager.MODE_SINGLE_LOOP_PLAY:
+                tvPlayMode.setText("单曲循环");
+                setPlayModeImageColor(R.drawable.shape_single_cycle_grey);
+                break;
+            case SongPlayManager.MODE_RANDOM:
+                tvPlayMode.setText("随机播放");
+                setPlayModeImageColor(R.drawable.shape_list_random_grey);
+                break;
+        }
+    }
+    private void setPlayModeImageColor(int resId) {
+        VectorDrawableCompat vectorDrawableCompat = VectorDrawableCompat.create(scontext.getResources(), resId, scontext.getTheme());
+        vectorDrawableCompat.setTint(Color.parseColor("#999999"));
+        ivPlayMode.setImageDrawable(vectorDrawableCompat);
+    }
+
+    MusicListAdapter.OnSongClickListener listener = new MusicListAdapter.OnSongClickListener() {
+        @Override
+        public void onMusicClick(int position) {
+            SongPlayManager.getInstance().switchMusic(position);
+            songList = SongPlayManager.getInstance().getSongList();
+            adapter.refresh(songList);
+        }
+
+        @Override
+        public void onDelClick(int position) {
+            SongPlayManager.getInstance().deleteSong(position);
+            songList = SongPlayManager.getInstance().getSongList();
+            adapter.refresh(songList);
+        }
+    };
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rl_play_mode:
+                if (SongPlayManager.getInstance().getMode() == SongPlayManager.MODE_LIST_LOOP_PLAY) {
+                    XToastUtils.info("已切换到单曲循环");
+                    SongPlayManager.getInstance().setMode(SongPlayManager.MODE_SINGLE_LOOP_PLAY);
+                } else if (SongPlayManager.getInstance().getMode() == SongPlayManager.MODE_SINGLE_LOOP_PLAY) {
+                    XToastUtils.info("已切换到列表随机");
+                    SongPlayManager.getInstance().setMode(SongPlayManager.MODE_RANDOM);
+                } else if (SongPlayManager.getInstance().getMode() == SongPlayManager.MODE_RANDOM) {
+                    XToastUtils.info("已切换到列表循环");
+                    SongPlayManager.getInstance().setMode(SongPlayManager.MODE_LIST_LOOP_PLAY);
+                }
+                setPlayMode(SongPlayManager.getInstance().getMode());
+                break;
+            case R.id.iv_trash_can:
+                SongPlayManager.getInstance().clearSongList();
+                songList = SongPlayManager.getInstance().getSongList();
+                adapter.refresh(songList);
+                break;
+        }
+    }
+
+    @Override
+    public void onGetSongDetailSuccess(SongDetailBean bean) {
+
+    }
+
+    @Override
+    public void onGetSongDetailFail(String e) {
+
+    }
+
+    @Override
+    public void onLikeMusicSuccess(LikeMusicBean bean) {
+
+    }
+
+    @Override
+    public void onNoLikeMusicSuccess(LikeMusicBean bean) {
+
+    }
+
+    @Override
+    public void onLikeMusicFail(String e) {
+
+    }
+
+    @Override
+    public void onGetLikeListSuccess(LikeListBean bean) {
+
+    }
+
+    @Override
+    public void onGetLikeListFail(String e) {
+
+    }
+
+    @Override
+    public void onGetMusicCommentSuccess(MusicCommentBean bean) {
+
+    }
+
+    @Override
+    public void onGetMusicCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onLikeCommentSuccess(CommentLikeBean bean) {
+
+    }
+
+    @Override
+    public void onLikeCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onGetLyricSuccess(LyricBean bean) {
+
+    }
+
+    @Override
+    public void onGetLyricFail(String e) {
+
+    }
+
+    @Override
+    public void onGetPlaylistCommentSuccess(PlayListCommentBean bean) {
+
+    }
+
+    @Override
+    public void onGetPlaylistCommentFail(String e) {
+
+    }
+}

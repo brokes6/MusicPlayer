@@ -27,6 +27,7 @@ import com.example.musicplayerdome.abstractclass.SongContract;
 import com.example.musicplayerdome.activity.MusicActivityMusic;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.databinding.ActivitySongBinding;
+import com.example.musicplayerdome.dialog.AudioTimerDialog;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
 import com.example.musicplayerdome.song.SongPlayManager;
@@ -81,6 +82,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     private LyricBean lyricBean;
     ActivitySongBinding binding;
     private VolumeChangeObserver mVolumeChangeObserver;
+    private SongListDialog songListDialog;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMusicStartEvent(MusicStartEvent event) {
@@ -397,6 +399,9 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 //                intent.setClass(SongActivity.this, SongListActivity.class);
 //                startActivity(intent);
 //                overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);
+                songListDialog = new SongListDialog(this);
+                songListDialog.setCanceledOnTouchOutside(true);
+                songListDialog.show();
                 break;
         }
     }
