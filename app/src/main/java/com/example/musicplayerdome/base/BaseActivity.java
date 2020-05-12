@@ -107,12 +107,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     public void connectMusicService() {
-        //到时候这里绑定服务，创建通知栏
         MediaSessionConnection.getInstance().connect();
     }
 
     public void disconnectMusicService() {
-        //这里解绑
         MediaSessionConnection.getInstance().disconnect();
     }
 

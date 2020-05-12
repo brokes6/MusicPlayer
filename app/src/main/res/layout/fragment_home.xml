@@ -17,17 +17,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".fragment.HomeFragment">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_95"
+                android:background="#D33A31" />
             <com.youth.banner.Banner
                 android:id="@+id/banner"
                 android:layout_margin="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 app:banner_layout="@layout/banner"/>
-        </LinearLayout>
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
@@ -41,6 +42,7 @@ import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.TimeUtil;
+import com.example.musicplayerdome.util.VolumeChangeObserver;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.manager.MusicManager;
@@ -62,7 +64,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 import static com.example.musicplayerdome.activity.SongSheetActivityMusic.COMPLETED;
 
 
-public class SongActivity extends BaseActivity<SongPresenter> implements SongContract.View{
+public class SongActivity extends BaseActivity<SongPresenter> implements SongContract.View, VolumeChangeObserver.VolumeChangeListener{
     private static final String TAG = "SongActivity";
 
     public static final String SONG_INFO = "songInfo";
@@ -78,6 +80,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     private boolean isShowLyrics = false;
     private LyricBean lyricBean;
     ActivitySongBinding binding;
+    private VolumeChangeObserver mVolumeChangeObserver;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMusicStartEvent(MusicStartEvent event) {
@@ -146,9 +149,28 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         binding.ivNext.setOnClickListener(this);
         binding.ivList.setOnClickListener(this);
         binding.actAudioVolumeControl.setOnSeekBarChangeListener(new SeekBarChangeVolumeControl());
+        setMargins(binding.rlTitle,0,ImmersionBar.getNavigationBarWidth(this),0,0);
     }
 
+    /**
+     * 用来防止状态栏和控件重叠在一起（设置控件的Margins值）
+     * @param v 传递进来最上方的控件
+     * @param l 左
+     * @param t 上
+     * @param r 右
+     * @param b 下
+     */
+    public static void setMargins (View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
+        }
+    }
 
+    /**
+     * 初始化音乐进度条
+     */
     private void initTimerTaskWork() {
         mTimerTask.setUpdateProgressTask(() -> {
             long position = MusicManager.getInstance().getPlayingPosition();
@@ -178,12 +200,17 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         });
     }
 
-
+    /**
+     * 接收从音乐列表界面传递进来的音乐数据（接收对象）
+     */
     private void getIntentData() {
         Intent intent = getIntent();
         currentSongInfo = intent.getParcelableExtra(SONG_INFO);
     }
 
+    /**
+     * 初始化歌词，是否喜欢，音乐进度条最大值，当前播放模式
+     */
     private void checkMusicState() {
         setSongInfo(currentSongInfo.getSongName(), currentSongInfo.getArtist());
         if (judgeContainsStr(currentSongInfo.getSongId())) {
@@ -233,7 +260,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     private void checkMusicPlaying() {
         mTimerTask.startToUpdateProgress();
         if (SongPlayManager.getInstance().isPlaying()) {
-            Log.e(TAG, "music is Playing");
+            Log.e(TAG, "--music正在播放--");
             if (getRotateAnimator().isPaused()) {
                 getRotateAnimator().resume();
             } else if (getRotateAnimator().isRunning()) {
@@ -242,12 +269,11 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
             }
             binding.ivPlay.setImageResource(R.drawable.shape_pause);
         } else {
-            Log.e(TAG, "music is Not playing");
+            Log.e(TAG, "--music没有播放--");
             getRotateAnimator().pause();
             binding.ivPlay.setImageResource(R.drawable.shape_play_white);
         }
     }
-
 
     /**
      * 该方法主要使用正则表达式来判断字符串中是否包含字母
@@ -258,6 +284,10 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         return m.matches();
     }
 
+    /**
+     * 控制封面旋转
+     * @return
+     */
     private ObjectAnimator getRotateAnimator() {
         if (rotateAnimator == null) {
             rotateAnimator = ObjectAnimator.ofFloat(binding.ivRecord, "rotation", 360f);
@@ -374,12 +404,36 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
      * 初始化音量控制器
      */
     private void initAudioManager(){
+        //实例化对象并设置监听器
+        mVolumeChangeObserver = new VolumeChangeObserver(this);
+        mVolumeChangeObserver.setVolumeChangeListener(this);
+        int initVolume = mVolumeChangeObserver.getCurrentMusicVolume();
+        Log.e(TAG, "initVolume = " + initVolume);
         //音量控制,初始化定义
         if (mAudioManager==null){
             mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         }
         //设置音量控制器的进度为当前音量
+        binding.actAudioVolumeControl.setMax(mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
         binding.actAudioVolumeControl.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+    }
+
+    @Override
+    public void onVolumeChanged(int volume) {
+        Log.e(TAG, "onVolumeChanged: 当前音量为"+volume);
+        binding.actAudioVolumeControl.setProgress(volume);
+    }
+
+    @Override
+    protected void onResume() {
+        mVolumeChangeObserver.registerReceiver();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        mVolumeChangeObserver.unregisterReceiver();
+        super.onPause();
     }
 
     /**
@@ -390,7 +444,9 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+            if(fromUser){
+                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+            }
         }
 
         @Override

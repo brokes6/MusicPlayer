@@ -22,8 +22,8 @@
 
         <com.example.musicplayerdome.rewrite.RoundImageView
             android:id="@+id/iv_cover"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_5"
