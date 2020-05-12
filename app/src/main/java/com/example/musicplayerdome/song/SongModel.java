@@ -26,6 +26,11 @@ public class SongModel implements SongContract.Model {
     }
 
     @Override
+    public Observable<LikeMusicBean> NolikeMusic(boolean f,long id) {
+        return ApiEngine.getInstance().getApiService().NolikeMusic(f,id);
+    }
+
+    @Override
     public Observable<LikeListBean> getLikeList(long uid) {
         return ApiEngine.getInstance().getApiService().getLikeList(uid);
     }

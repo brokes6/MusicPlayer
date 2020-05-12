@@ -452,6 +452,11 @@ public class MusicActivityMusic extends BaseActivity<SongPresenter> implements V
     }
 
     @Override
+    public void onNoLikeMusicSuccess(LikeMusicBean bean) {
+
+    }
+
+    @Override
     public void onLikeMusicFail(String e) {
 
     }

@@ -342,7 +342,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                 break;
             case R.id.iv_like:
                 if (isLike) {
-                    XToastUtils.info("Sorry啊，我没有找到取消喜欢的接口");
+                    mPresenter.NolikeMusic(ids);
                 } else {
                     mPresenter.likeMusic(ids);
                 }
@@ -531,6 +531,19 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
             mPresenter.getLikeList(loginBean.getAccount().getId());
         } else {
             XToastUtils.info("喜欢失败TAT ErrorCode = " + bean.getCode());
+        }
+    }
+
+    @Override
+    public void onNoLikeMusicSuccess(LikeMusicBean bean) {
+        if (bean.getCode() == 200) {
+            XToastUtils.info("取消喜欢成功");
+            binding.ivLike.setImageResource(R.drawable.shape_not_like);
+            isLike = true;
+            LoginBean loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(this).getUserInfo(""), LoginBean.class);
+            mPresenter.getLikeList(loginBean.getAccount().getId());
+        } else {
+            XToastUtils.info("取消喜欢失败TAT ErrorCode = " + bean.getCode());
         }
     }
 

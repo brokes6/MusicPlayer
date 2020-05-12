@@ -67,7 +67,6 @@ public class SongPresenter extends SongContract.Presenter {
 
                     @Override
                     public void onNext(LikeMusicBean bean) {
-                        Log.d(TAG, "onNext :" + bean);
                         mView.onLikeMusicSuccess(bean);
                     }
 
@@ -85,6 +84,33 @@ public class SongPresenter extends SongContract.Presenter {
     }
 
     @Override
+    public void NolikeMusic(long id) {
+        mModel.NolikeMusic(false,id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<LikeMusicBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(TAG, "onSubscribe");
+                    }
+
+                    @Override
+                    public void onNext(LikeMusicBean bean) {
+                        mView.onNoLikeMusicSuccess(bean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError :" + e.getLocalizedMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
     public void getLikeList(long uid) {
         mModel.getLikeList(uid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -96,7 +122,6 @@ public class SongPresenter extends SongContract.Presenter {
 
                     @Override
                     public void onNext(LikeListBean bean) {
-                        Log.d(TAG, "onNext :" + bean);
                         mView.onGetLikeListSuccess(bean);
                     }
 

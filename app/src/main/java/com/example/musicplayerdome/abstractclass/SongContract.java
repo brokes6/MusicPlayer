@@ -20,6 +20,8 @@ public interface SongContract {
 
         void onLikeMusicSuccess(LikeMusicBean bean);
 
+        void onNoLikeMusicSuccess(LikeMusicBean bean);
+
         void onLikeMusicFail(String e);
 
         void onGetLikeListSuccess(LikeListBean bean);
@@ -48,6 +50,8 @@ public interface SongContract {
 
         Observable<LikeMusicBean> likeMusic(long id);
 
+        Observable<LikeMusicBean> NolikeMusic(boolean f,long id);
+
         Observable<LikeListBean> getLikeList(long uid);
 
         Observable<MusicCommentBean> getMusicComment(long id);
@@ -65,6 +69,8 @@ public interface SongContract {
         public abstract void likeMusic(long id);
 
         public abstract void getLikeList(long uid);
+
+        public abstract void NolikeMusic(long id);
 
         public abstract void getMusicComment(long id);
 

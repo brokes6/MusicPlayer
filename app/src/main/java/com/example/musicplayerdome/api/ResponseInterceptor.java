@@ -52,8 +52,8 @@ class ResponseInterceptor implements Interceptor {
 
             if (contentLength != 0) {
                 String result = buffer.clone().readString(charset);
-                Log.d(TAG, " response.url():" + response.request().url());
-                Log.d(TAG, " response.body():" + result);
+//                Log.d(TAG, " response.url():" + response.request().url());
+//                Log.d(TAG, " response.body():" + result);
             }
         }
 
