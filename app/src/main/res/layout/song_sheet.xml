@@ -36,11 +36,16 @@
             </LinearLayout>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topLayout"
+            android:orientation="vertical">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/layout_top"
-        android:layout_below="@+id/topLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:background="#3A3A3A"
@@ -217,5 +222,6 @@
             android:layout_alignParentBottom="true"
             android:background="#ffffff"
             app:layout_behavior="@string/bottom_sheet_behavior" />
+        </LinearLayout>
     </RelativeLayout>
 </layout>
