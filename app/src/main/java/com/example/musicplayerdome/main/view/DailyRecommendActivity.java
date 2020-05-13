@@ -1,5 +1,7 @@
 package com.example.musicplayerdome.main.view;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -72,7 +74,18 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
     @Override
     protected void initModule() {
         binding.rlPlayall.setOnClickListener(this);
-        setMargins(binding.toolbar,0,ImmersionBar.getNavigationBarWidth(this),0,0);
+        setMargins(binding.toolbar,0,getStatusBarHeight(this),0,0);
+    }
+    /**
+     * 获取状态栏高度
+     * @param context
+     * @return
+     */
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
     }
 
     @Override

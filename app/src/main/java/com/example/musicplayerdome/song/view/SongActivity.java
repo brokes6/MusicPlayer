@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -151,7 +152,19 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         binding.ivNext.setOnClickListener(this);
         binding.ivList.setOnClickListener(this);
         binding.actAudioVolumeControl.setOnSeekBarChangeListener(new SeekBarChangeVolumeControl());
-        setMargins(binding.rlTitle,0,ImmersionBar.getNavigationBarWidth(this),0,0);
+        Log.e(TAG, "-------: 当前状态栏的高度:"+ getStatusBarHeight(this));
+        setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
+    }
+    /**
+     * 获取状态栏高度
+     * @param context
+     * @return
+     */
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
     }
 
     /**
