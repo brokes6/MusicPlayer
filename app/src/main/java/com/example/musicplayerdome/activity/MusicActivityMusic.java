@@ -85,7 +85,6 @@ public class MusicActivityMusic extends BaseActivity<SongPresenter> implements V
     //旋转图片动画控件
     private RatateImage ratateImage;
     AudioManager mAudioManager;
-    MusicList myDialog;
     //用于判断是否绑定成功
     private boolean connect;
     //音频播放类
@@ -287,10 +286,6 @@ public class MusicActivityMusic extends BaseActivity<SongPresenter> implements V
                 }
                 break;
             case R.id.music_list:
-                myDialog = new MusicList(this,lp,(int)audio.getId(),musicController.getPlayList());
-                myDialog.setDialogClickCallBack(new DialogClickListener());
-                myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                myDialog.show();
                 break;
             case R.id.button:
                 Stop();
@@ -510,21 +505,6 @@ public class MusicActivityMusic extends BaseActivity<SongPresenter> implements V
 
     }
 
-    /**
-     * Dialog点击回调事件（音乐内部列表选择列表监听）
-     */
-    private class DialogClickListener implements DialogClickCallBack {
-        @Override
-        public void viewClick(int viewId) {
-            myDialog.cancel();
-            id = viewId+1;
-            musicController.Choice(viewId);
-            if (ratateImage != null) {
-                ratateImage.initSpin();
-            }
-            XToastUtils.info("正在播放第"+(viewId+1)+"首");
-        }
-    }
     /**
      * 注意两个play是不一样的，这个是用来初始化服务的
      */
