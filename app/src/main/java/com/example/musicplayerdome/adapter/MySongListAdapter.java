@@ -1,13 +1,11 @@
 package com.example.musicplayerdome.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,15 +14,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
-import com.example.musicplayerdome.activity.MusicActivityMusic;
 import com.example.musicplayerdome.song.SongPlayManager;
 import com.example.musicplayerdome.song.dialog.SongDetailDialog;
-import com.example.musicplayerdome.song.dialog.SongListDialog;
 import com.example.musicplayerdome.song.view.SongActivity;
-import com.example.musicplayerdome.song.view.SongDetailActivity;
 import com.lzx.starrysky.model.SongInfo;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
@@ -137,10 +130,6 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
         });
 
         ivSongDetail.setOnClickListener(v -> {
-//            Intent intent = new Intent(mContext, SongDetailActivity.class);
-//            intent.putExtra(SongActivity.SONG_INFO, songInfo);
-//            mContext.startActivity(intent);
-//            ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);
             SongDetailDialog songDetailDialog = new SongDetailDialog(mContext,songInfo);
             songDetailDialog.setCanceledOnTouchOutside(true);
             songDetailDialog.show();

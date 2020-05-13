@@ -38,6 +38,7 @@ import com.example.musicplayerdome.song.bean.LyricBean;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.bean.PlayListCommentBean;
 import com.example.musicplayerdome.song.bean.SongDetailBean;
+import com.example.musicplayerdome.song.dialog.SongDetailDialog;
 import com.example.musicplayerdome.song.dialog.SongListDialog;
 import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
@@ -365,10 +366,9 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 //                startActivity(intent);
                 break;
             case R.id.iv_info:
-                intent.setClass(SongActivity.this, SongDetailActivity.class);
-                intent.putExtra(SONG_INFO, currentSongInfo);
-                startActivity(intent);
-                overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);
+                SongDetailDialog songDetailDialog = new SongDetailDialog(mContext,currentSongInfo);
+                songDetailDialog.setCanceledOnTouchOutside(true);
+                songDetailDialog.show();
                 break;
             case R.id.iv_play_mode:
                 if (playMode == SongPlayManager.MODE_LIST_LOOP_PLAY) {
@@ -395,9 +395,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                 SongPlayManager.getInstance().playNextMusic();
                 break;
             case R.id.iv_list:
-//                intent.setClass(SongActivity.this, SongListActivity.class);
-//                startActivity(intent);
-//                overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);
                 songListDialog = new SongListDialog(this);
                 songListDialog.setCanceledOnTouchOutside(true);
                 songListDialog.show();

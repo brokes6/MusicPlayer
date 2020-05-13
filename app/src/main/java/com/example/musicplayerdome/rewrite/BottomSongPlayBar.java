@@ -136,7 +136,7 @@ public class BottomSongPlayBar extends RelativeLayout {
             setSongBean(currentSongInfo);
             Log.d(TAG, "isPlaying " + SongPlayManager.getInstance().isPlaying());
             if (SongPlayManager.getInstance().isPlaying()) {
-                ivPlay.setImageResource(R.mipmap.audio_state_play);
+                ivPlay.setImageResource(R.drawable.shape_pause_black);
             }
         }
     }
