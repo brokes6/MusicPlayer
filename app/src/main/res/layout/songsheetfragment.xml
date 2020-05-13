@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="20sp"
-                    android:text="我的音乐"/>
+                    android:text="我的歌单"/>
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
         <LinearLayout
@@ -139,13 +139,6 @@
             android:orientation="vertical"
             android:background="#fff"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="#171717"
-                android:layout_margin="@dimen/dp_10"
-                android:text="我的歌单"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mine_playlist"
                 android:layout_margin="10dp"

@@ -12,11 +12,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -90,9 +94,11 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         binding.viewpager.setOffscreenPageLimit(fragmentList.size()-1);
         mPagerAdapter.getItem(1).setUserVisibleHint(true);
         binding.tablayoutReal.setupWithViewPager(binding.viewpager);
+        binding.tablayoutReal.setTabTextColors(Color.parseColor("#C6B3B3"), Color.parseColor("#FFFDFD"));
         binding.tablayoutReal.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                setSelectTextBoldAndBig(tab);
                 if (tab.getText().equals("歌 单")){
                     binding.tabBackground.setBackgroundResource(R.color.A3A3);
                     ImmersionBar.with(HomeActivityMusic.this)
@@ -116,7 +122,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                tab.setCustomView(null);
             }
 
             @Override
@@ -124,6 +130,15 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
 
             }
         });
+    }
+    private void setSelectTextBoldAndBig(TabLayout.Tab tab) {
+        TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.design_layout_tab_text, null);
+        textView.setText(tab.getText());
+        textView.setScaleY(1.5f);
+        textView.setScaleX(1.5f);
+        textView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        textView.setTextColor(Color.parseColor("#FFFDFD"));
+        tab.setCustomView(textView);
     }
 
     @Override

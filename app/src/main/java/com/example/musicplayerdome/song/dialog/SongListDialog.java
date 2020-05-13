@@ -123,6 +123,7 @@ public class SongListDialog extends Dialog implements SongContract.View,View.OnC
             SongPlayManager.getInstance().switchMusic(position);
             songList = SongPlayManager.getInstance().getSongList();
             adapter.refresh(songList);
+            dismiss();
         }
 
         @Override
@@ -130,6 +131,7 @@ public class SongListDialog extends Dialog implements SongContract.View,View.OnC
             SongPlayManager.getInstance().deleteSong(position);
             songList = SongPlayManager.getInstance().getSongList();
             adapter.refresh(songList);
+            dismiss();
         }
     };
 

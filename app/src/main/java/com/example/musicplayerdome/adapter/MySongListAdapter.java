@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,7 +15,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
+import com.example.musicplayerdome.rewrite.RoundImageView;
 import com.example.musicplayerdome.song.SongPlayManager;
 import com.example.musicplayerdome.song.dialog.SongDetailDialog;
 import com.example.musicplayerdome.song.view.SongActivity;
@@ -23,6 +27,8 @@ import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 import java.util.List;
+
+import javax.security.auth.login.LoginException;
 
 public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
     private static final String TAG = "MySongListAdapter";
@@ -37,6 +43,7 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
     LinearLayout llSong;
     ImageView ivPhone;
     RelativeLayout rlSong;
+    RoundImageView ivCover;
 
     public MySongListAdapter(Context context) {
         mContext = context;
@@ -71,6 +78,7 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
             tvName = holder.findViewById(R.id.tv_songname);
             tvSinger = holder.findViewById(R.id.tv_singer);
             tvSongNumber = holder.findViewById(R.id.iv_songnumber);
+            ivCover = holder.findViewById(R.id.iv_songcover);
             ivSongDetail = holder.findViewById(R.id.iv_songdetail);
             llSong = holder.findViewById(R.id.ll_song);
             ivPhone = holder.findViewById(R.id.iv_phone);
@@ -80,13 +88,15 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
             setSongInfo(mContext, item, keywords);
         } else {
             setSongInfo(mContext, item, position, type);
-        };
+        }
         setSongClick(item, position);
     }
     public void setSongInfo(Context context, SongInfo bean, int position, int type) {
         tvName.setText(bean.getSongName());
         tvSinger.setText(bean.getArtist());
         if (type == 1) {
+            ivCover.setVisibility(View.VISIBLE);
+            Glide.with(context).load(bean.getSongCover()).transition(new DrawableTransitionOptions().crossFade()).into(ivCover);
         } else if (type == 2) {
             tvSongNumber.setVisibility(View.VISIBLE);
             tvSongNumber.setText((position + 1) + "");

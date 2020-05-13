@@ -44,6 +44,7 @@
                 android:orientation="horizontal"
                 android:gravity="center">
                 <LinearLayout
+                    android:id="@+id/h_daily_recommend"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
@@ -54,6 +55,7 @@
                         android:layout_height="45dp"
                         android:src="@mipmap/ic_daily_recommend"/>
                     <TextView
+                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#373737"
@@ -71,6 +73,7 @@
                         android:layout_height="45dp"
                         android:src="@mipmap/ic_playlist"/>
                     <TextView
+                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#373737"
@@ -87,6 +90,7 @@
                         android:layout_height="45dp"
                         android:src="@mipmap/ic_rank"/>
                     <TextView
+                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#373737"
@@ -103,6 +107,7 @@
                         android:layout_height="45dp"
                         android:src="@mipmap/ic_radio"/>
                     <TextView
+                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#373737"
@@ -119,6 +124,7 @@
                         android:layout_height="45dp"
                         android:src="@mipmap/ic_live"/>
                     <TextView
+                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#373737"

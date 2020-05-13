@@ -30,6 +30,7 @@ import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 import com.example.musicplayerdome.main.presenter.WowPresenter;
+import com.example.musicplayerdome.main.view.DailyRecommendActivity;
 import com.example.musicplayerdome.rewrite.GlideImageLoader;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.adapter.RecommendMusicAdapter;
@@ -113,7 +114,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     }
 
     private void initView(){
-
+        binding.hDailyRecommend.setOnClickListener(this);
     }
     private void initBanner(List<?> imageUrls){
         binding.banner.setImageLoader(new GlideImageLoader());
@@ -252,6 +253,10 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.h_daily_recommend:
+                startActivity(new Intent(activity, DailyRecommendActivity.class));
+                break;
+        }
     }
 }

@@ -24,6 +24,15 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true">
 
+            <com.example.musicplayerdome.rewrite.RoundImageView
+                android:id="@+id/iv_songcover"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/dp_5"
+                android:scaleType="fitXY"
+                app:type="round"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/iv_songnumber"

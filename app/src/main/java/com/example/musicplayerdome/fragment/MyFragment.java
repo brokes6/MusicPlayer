@@ -20,7 +20,7 @@ public class MyFragment extends BaseFragment<WowPresenter> {
     MyfragmentBinding binding;
 
     public MyFragment() {
-        setFragmentTitle("我 的");
+        setFragmentTitle("更 多");
     }
 
     @Override

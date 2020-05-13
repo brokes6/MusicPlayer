@@ -25,12 +25,9 @@
         android:orientation="vertical">
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayoutReal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="#FFFFFF"
-            app:tabSelectedTextColor="#FFFFFF"
-            app:tabTextColor="#0C0C0C"
-            app:tabIndicatorFullWidth="false" />
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            app:tabIndicatorHeight="0dp" />
     </LinearLayout>
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
