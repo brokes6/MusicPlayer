@@ -21,6 +21,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.activity.MusicActivityMusic;
 import com.example.musicplayerdome.song.SongPlayManager;
+import com.example.musicplayerdome.song.dialog.SongDetailDialog;
+import com.example.musicplayerdome.song.dialog.SongListDialog;
 import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.song.view.SongDetailActivity;
 import com.lzx.starrysky.model.SongInfo;
@@ -135,10 +137,13 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
         });
 
         ivSongDetail.setOnClickListener(v -> {
-            Intent intent = new Intent(mContext, SongDetailActivity.class);
-            intent.putExtra(SongActivity.SONG_INFO, songInfo);
-            mContext.startActivity(intent);
-            ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);
+//            Intent intent = new Intent(mContext, SongDetailActivity.class);
+//            intent.putExtra(SongActivity.SONG_INFO, songInfo);
+//            mContext.startActivity(intent);
+//            ((Activity) mContext).overridePendingTransition(R.anim.bottom_in, R.anim.bottom_silent);
+            SongDetailDialog songDetailDialog = new SongDetailDialog(mContext,songInfo);
+            songDetailDialog.setCanceledOnTouchOutside(true);
+            songDetailDialog.show();
         });
     }
 }

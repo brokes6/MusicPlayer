@@ -1,4 +1,4 @@
-package com.example.musicplayerdome.song.view;
+package com.example.musicplayerdome.song.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -73,6 +73,7 @@ public class SongListDialog extends Dialog implements SongContract.View,View.OnC
         Window dialogWindow = getWindow();
         dialogWindow.setGravity(Gravity.BOTTOM);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.height = 1200;
         //设置弹窗宽度
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         //为弹窗绑定效果

@@ -15,11 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.abstractclass.WowContract;
 import com.example.musicplayerdome.activity.SongSheetActivityMusic;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.bean.BannerBean;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
+import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.DailyRecommendBean;
 import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
@@ -34,6 +36,8 @@ import com.example.musicplayerdome.adapter.RecommendMusicAdapter;
 import com.example.musicplayerdome.adapter.SongListAdapter;
 import com.example.musicplayerdome.databinding.FragmentHomeBinding;
 import com.example.musicplayerdome.resources.DomeData;
+import com.example.musicplayerdome.util.GsonUtil;
+import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.youth.banner.BannerConfig;
 
 import java.net.MalformedURLException;

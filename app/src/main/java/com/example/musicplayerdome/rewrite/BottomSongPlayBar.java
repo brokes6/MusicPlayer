@@ -1,6 +1,5 @@
 package com.example.musicplayerdome.rewrite;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -20,14 +19,13 @@ import com.example.musicplayerdome.song.MusicStartEvent;
 import com.example.musicplayerdome.song.SongPlayManager;
 import com.example.musicplayerdome.song.StopMusicEvent;
 import com.example.musicplayerdome.song.view.SongActivity;
+import com.example.musicplayerdome.song.dialog.SongListDialog;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.lzx.starrysky.model.SongInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * 界面底部的歌曲遥控器
@@ -41,31 +39,31 @@ public class BottomSongPlayBar extends RelativeLayout {
 
     private RelativeLayout rlSongController;
     private RoundImageView ivCover;
-    private ImageView ivPlay, ivController,next,pre;
+    private ImageView ivPlay, ivController,songlsit;
     private RollTextView tvSongName;
     private TextView tvSongSinger;
     private LinearLayout llSongInfo;
-
+    private SongListDialog songListDialog;
     private SongInfo currentSongInfo;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPlayMusicEvent(MusicStartEvent event) {
         Log.d(TAG, "MusicStartEvent :" + event);
         setSongBean(event.getSongInfo());
-        ivPlay.setImageResource(R.mipmap.audio_state_play);
+        ivPlay.setImageResource(R.drawable.shape_pause_black);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStopMusicEvent(StopMusicEvent event) {
         Log.d(TAG, "onStopMusicEvent");
         setSongBean(event.getSongInfo());
-        ivPlay.setImageResource(R.mipmap.audio_state_pause);
+        ivPlay.setImageResource(R.drawable.shape_play_black);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPauseMusicEvent(MusicPauseEvent event) {
         Log.d(TAG, "onPauseMusicEvent");
-        ivPlay.setImageResource(R.mipmap.audio_state_pause);
+        ivPlay.setImageResource(R.drawable.shape_play_black);
     }
 
     public BottomSongPlayBar(Context context) {
@@ -93,8 +91,7 @@ public class BottomSongPlayBar extends RelativeLayout {
         tvSongName = rlSongController.findViewById(R.id.tv_songname);
         tvSongSinger = rlSongController.findViewById(R.id.tv_singer);
         llSongInfo = rlSongController.findViewById(R.id.ll_songinfo);
-        next = rlSongController.findViewById(R.id.btn_custom_next);
-        pre = rlSongController.findViewById(R.id.btn_custom_prev);
+        songlsit = rlSongController.findViewById(R.id.btn_custom_list);
     }
 
     private void initListener() {
@@ -103,12 +100,10 @@ public class BottomSongPlayBar extends RelativeLayout {
             intent.putExtra(SongActivity.SONG_INFO, currentSongInfo);
             mContext.startActivity(intent);
         });
-        next.setOnClickListener(v -> {
-            SongPlayManager.getInstance().playNextMusic();
-        });
-        pre.setOnClickListener(v -> {
-            SongPlayManager.getInstance().playPreMusic();
-
+        songlsit.setOnClickListener(v -> {
+            songListDialog = new SongListDialog(mContext);
+            songListDialog.setCanceledOnTouchOutside(true);
+            songListDialog.show();
         });
         llSongInfo.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, SongActivity.class);

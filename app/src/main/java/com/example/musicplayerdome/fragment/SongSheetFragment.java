@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.MineContract;
 import com.example.musicplayerdome.activity.MusicActivityMusic;
@@ -67,6 +68,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     protected void initData() {
         initView();
         loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
+        initUser(loginBean);
         uid = loginBean.getAccount().getId();
         Log.e(TAG, "initData: id为"+uid );
         adapter = new UserPlaylistAdapter(getContext());
@@ -81,6 +83,16 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
         showDialog();
         mPresenter.getUserPlaylist(uid);
+    }
+
+    private void initUser(LoginBean bean){
+        if (bean.getProfile().getAvatarUrl() != null) {
+            String avatarUrl = bean.getProfile().getAvatarUrl();
+            Glide.with(this).load(avatarUrl).into(binding.Suserimg);
+        }
+        if (bean.getProfile().getNickname() != null) {
+            binding.Susername.setText(bean.getProfile().getNickname());
+        }
     }
 
     UserPlaylistAdapter.OnPlayListItemClickListener listener = new UserPlaylistAdapter.OnPlayListItemClickListener() {

@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".song.view.SongDetailActivity">
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/sview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#636363" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/rl_bottom" />
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
         <RelativeLayout
             android:id="@+id/rl_bottom"
@@ -151,5 +143,4 @@
                     app:item_name="@string/watch_video" />
             </RelativeLayout>
         </RelativeLayout>
-    </RelativeLayout>
-</FrameLayout>
+</LinearLayout>

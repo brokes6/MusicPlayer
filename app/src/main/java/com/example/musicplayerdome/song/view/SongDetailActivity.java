@@ -49,8 +49,6 @@ public class SongDetailActivity extends BaseActivity<SongPresenter> implements S
     TextView tvSinger;
     @BindView(R.id.md_singer)
     MusicDrawerItemView mdSinger;
-    @BindView(R.id.view)
-    View view;
     @BindView(R.id.fl_view)
     FrameLayout flView;
 
@@ -96,7 +94,6 @@ public class SongDetailActivity extends BaseActivity<SongPresenter> implements S
     @Override
     protected void onStart() {
         super.onStart();
-        view.startAnimation(toTranslateIn);
     }
 
     @Override
@@ -123,7 +120,7 @@ public class SongDetailActivity extends BaseActivity<SongPresenter> implements S
     }
 
     @Override
-    @OnClick({R.id.view, R.id.md_nextplay, R.id.md_collect, R.id.md_download,
+    @OnClick({ R.id.md_nextplay, R.id.md_collect, R.id.md_download,
             R.id.md_commend, R.id.md_share, R.id.md_singer, R.id.md_video})
     public void onClick(View v) {
         if (ClickUtil.isFastClick(1000, v)) {
@@ -131,9 +128,6 @@ public class SongDetailActivity extends BaseActivity<SongPresenter> implements S
         }
         Intent intent = new Intent();
         switch (v.getId()) {
-            case R.id.view:
-                finish();
-                break;
             case R.id.md_nextplay:
                 XToastUtils.info("下一首播放咯");
                 break;
@@ -164,7 +158,6 @@ public class SongDetailActivity extends BaseActivity<SongPresenter> implements S
     @Override
     public void finish() {
         super.finish();
-        view.startAnimation(toTranslateOut);
         overridePendingTransition(R.anim.bottom_silent, R.anim.bottom_out);
     }
 

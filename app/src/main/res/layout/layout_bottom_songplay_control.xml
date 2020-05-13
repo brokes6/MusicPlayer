@@ -71,39 +71,27 @@
         </LinearLayout>
         <LinearLayout
             android:layout_toRightOf="@+id/ll_songinfo"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
-            android:layout_weight="0.8"
-            android:gravity="center"
+            android:gravity="center|right"
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/btn_custom_prev"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/afc_10dp"
-                android:layout_weight="1"
-                android:src="@mipmap/audio_pre_btn" />
-
-            <ImageView
                 android:id="@+id/btn_custom_play"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/afc_10dp"
-                android:layout_weight="1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:contentDescription="播放"
-                android:src="@mipmap/audio_state_pause" />
+                android:src="@drawable/shape_play_black" />
 
             <ImageView
-                android:id="@+id/btn_custom_next"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/afc_10dp"
-                android:layout_weight="1"
-                android:contentDescription="下一首"
-                android:src="@mipmap/audio_next_btn" />
+                android:id="@+id/btn_custom_list"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/list_black" />
         </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

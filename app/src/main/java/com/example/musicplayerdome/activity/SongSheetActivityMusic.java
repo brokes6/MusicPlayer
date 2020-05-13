@@ -59,9 +59,7 @@ import static com.example.musicplayerdome.fragment.HomeFragment.PLAYLIST_PICURL;
 public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implements View.OnClickListener, WowContract.View{
     SongSheetBinding binding;
     private static final String TAG = "SongSheetActivity";
-    private MainMusicAdapter mainMusicAdapter;
     private MySongListAdapter adapter;
-    private Intent intent;
     private List<PlaylistDetailBean.PlaylistBean.TracksBean> beanList = new ArrayList<>();
     private List<SongInfo> songInfos = new ArrayList<>();
     private long playlistId;

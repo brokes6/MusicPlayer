@@ -29,21 +29,19 @@
                     android:layout_height="wrap_content">
 
                     <com.example.musicplayerdome.rewrite.RoundImageView
-                        android:id="@+id/XLogin"
+                        android:id="@+id/Suserimg"
                         android:layout_margin="17dp"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:src="@mipmap/song_sheet"
                         app:type="circle" />
 
                     <TextView
-                        android:id="@+id/XTitle"
+                        android:id="@+id/Susername"
                         android:layout_marginTop="17dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="24sp"
-                        android:text="fuxinbo"
-                        android:layout_toRightOf="@id/XLogin"
+                        android:layout_toRightOf="@id/Suserimg"
                         android:letterSpacing="0.05"
                         android:textColor="#fff"
                         android:textStyle="bold" />
@@ -51,7 +49,7 @@
                         android:id="@+id/Props_columnS"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/XLogin"
+                        android:layout_below="@+id/Suserimg"
                         android:orientation="horizontal"
                         android:gravity="center">
                     <LinearLayout
