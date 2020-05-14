@@ -56,6 +56,34 @@ public class MinePresenter extends MineContract.Presenter {
     }
 
     @Override
+    public void getPlayHistoryList(long id, int type) {
+        mModel.getPlayHistoryList(id,type).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<UserPlaylistBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(UserPlaylistBean userPlaylistBean) {
+                        mView.onGetPlayHistoryListSuccess(userPlaylistBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "播放历史获取错误 : " + e.toString());
+                        mView.onGetPlayHistoryListFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
     public void getIntelligenceList(long id, long pid) {
         mModel.getIntelligenceList(id, pid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

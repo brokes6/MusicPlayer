@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +18,7 @@ import com.example.musicplayerdome.abstractclass.MineContract;
 import com.example.musicplayerdome.activity.MusicActivityMusic;
 import com.example.musicplayerdome.activity.SongSheetActivityMusic;
 import com.example.musicplayerdome.adapter.MySongAdapter;
+import com.example.musicplayerdome.adapter.PlayHistoryAdapter;
 import com.example.musicplayerdome.adapter.UserPlaylistAdapter;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.databinding.SongsheetfragmentBinding;
@@ -49,10 +51,13 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     SongsheetfragmentBinding binding;
     private static final String TAG = "SongSheetFragment";
     private UserPlaylistAdapter adapter;
+    private PlayHistoryAdapter historyadapter;
     private LoginBean loginBean;
     private long uid;
     private List<UserPlaylistBean.PlaylistBean> playlistBeans = new ArrayList<>();
+    private List<UserPlaylistBean.PlaylistBean> playhistorylistBeans = new ArrayList<>();
     private List<PlayListItemBean> adapterList = new ArrayList<>();
+    private List<PlayListItemBean> historyadapterList = new ArrayList<>();
 
     public SongSheetFragment() {
         setFragmentTitle("歌 单");
@@ -72,17 +77,23 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
         uid = loginBean.getAccount().getId();
         Log.e(TAG, "initData: id为"+uid );
         adapter = new UserPlaylistAdapter(getContext());
-        LinearLayoutManager i = new LinearLayoutManager(getContext());
-        i.setOrientation(LinearLayoutManager.VERTICAL);
-        binding.minePlaylist.setLayoutManager(i);
-        binding.minePlaylist.setLayoutManager(new LinearLayoutManager(getContext()));
+        GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
+        binding.minePlaylist.setLayoutManager(manager);
         binding.minePlaylist.setAdapter(adapter);
         adapter.setListener(listener);
         adapter.setShowSmartPlay(true);
         adapter.setName(loginBean.getAccount().getUserName());
 
+        historyadapter = new PlayHistoryAdapter(getContext());
+        GridLayoutManager manager1 = new GridLayoutManager(getContext(), 2);
+        binding.recentlyPlayedList.setLayoutManager(manager1);
+        binding.recentlyPlayedList.setAdapter(adapter);
+        historyadapter.setListener(listener1);
+        historyadapter.setName(loginBean.getAccount().getUserName());
+
         showDialog();
         mPresenter.getUserPlaylist(uid);
+        mPresenter.getPlayHistoryList(uid,1);
     }
 
     private void initUser(LoginBean bean){
@@ -111,6 +122,24 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
         public void onSmartPlayClick(int position) {
             showDialog();
             mPresenter.getIntelligenceList(1, playlistBeans.get(position).getId());
+        }
+    };
+    PlayHistoryAdapter.OnPlayListItemClickListener listener1 = new PlayHistoryAdapter.OnPlayListItemClickListener() {
+        @Override
+        public void onPlayListItemClick(int position) {
+            Intent intent = new Intent(getContext(), SongSheetActivityMusic.class);
+            intent.putExtra(PLAYLIST_PICURL, playhistorylistBeans.get(position).getCoverImgUrl());
+            intent.putExtra(PLAYLIST_NAME, playhistorylistBeans.get(position).getName());
+            intent.putExtra(PLAYLIST_CREATOR_NICKNAME, playhistorylistBeans.get(position).getCreator().getNickname());
+            intent.putExtra(PLAYLIST_CREATOR_AVATARURL, playhistorylistBeans.get(position).getCreator().getAvatarUrl());
+            intent.putExtra(PLAYLIST_ID, playhistorylistBeans.get(position).getId());
+            getContext().startActivity(intent);
+        }
+
+        @Override
+        public void onSmartPlayClick(int position) {
+            showDialog();
+            mPresenter.getIntelligenceList(1, playhistorylistBeans.get(position).getId());
         }
     };
 
@@ -157,6 +186,29 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
     @Override
     public void onGetUserPlaylistFail(String e) {
+        hideDialog();
+    }
+
+    @Override
+    public void onGetPlayHistoryListSuccess(UserPlaylistBean bean) {
+        hideDialog();
+        playhistorylistBeans.clear();
+//        playhistorylistBeans.addAll(bean.getPlaylist());
+//        for (int i = 0; i < playhistorylistBeans.size(); i++) {
+//            PlayListItemBean beanInfo = new PlayListItemBean();
+//            beanInfo.setCoverUrl(playhistorylistBeans.get(i).getCoverImgUrl());
+//            beanInfo.setPlaylistId(playhistorylistBeans.get(i).getId());
+//            beanInfo.setPlayCount(playhistorylistBeans.get(i).getPlayCount());
+//            beanInfo.setPlayListName(playhistorylistBeans.get(i).getName());
+//            beanInfo.setSongNumber(playhistorylistBeans.get(i).getTrackCount());
+//            beanInfo.setPlaylistCreator(playhistorylistBeans.get(i).getCreator().getNickname());
+//            historyadapterList.add(beanInfo);
+//        }
+//        historyadapter.loadMore(historyadapterList);
+    }
+
+    @Override
+    public void onGetPlayHistoryListFail(String e) {
         hideDialog();
     }
 

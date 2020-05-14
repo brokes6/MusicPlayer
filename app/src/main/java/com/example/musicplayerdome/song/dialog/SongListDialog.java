@@ -78,7 +78,6 @@ public class SongListDialog extends Dialog implements SongContract.View,View.OnC
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         //为弹窗绑定效果
         dialogWindow.setAttributes(lp);
-
         //绑定适配器
         LinearLayoutManager lin = new LinearLayoutManager(scontext);
         lin.setOrientation(LinearLayoutManager.VERTICAL);

@@ -111,6 +111,9 @@ public interface ApiService {
     @GET("user/detail")
     Observable<UserDetailBean> getUserDetail(@Query("uid") long uid);
 
+    @GET("user/record")
+    Observable<UserPlaylistBean> getPlayHistoryList(@Query("uid") long uid,@Query("type") int type);
+
     @GET("search/hot/detail")
     Observable<HotSearchDetailBean> getSearchHotDetail();
 

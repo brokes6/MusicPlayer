@@ -17,6 +17,10 @@ public interface MineContract {
 
         void onGetUserPlaylistFail(String e);
 
+        void onGetPlayHistoryListSuccess(UserPlaylistBean bean);
+
+        void onGetPlayHistoryListFail(String e);
+
         void onGetIntelligenceListSuccess(PlayModeIntelligenceBean bean);
 
         void onGetIntelligenceListFail(String e);
@@ -43,6 +47,8 @@ public interface MineContract {
 
         Observable<PlayModeIntelligenceBean> getIntelligenceList(long id, long pid);
 
+        Observable<UserPlaylistBean> getPlayHistoryList(long id,int type);
+
         Observable<MvSublistBean> getMvSublist();
 
         Observable<ArtistSublistBean> getArtistSublist();
@@ -56,6 +62,8 @@ public interface MineContract {
         public abstract void getUserPlaylist(long uid);
 
         public abstract void getIntelligenceList(long id, long pid);
+
+        public abstract void getPlayHistoryList(long id,int type);
 
         public abstract void getMvSublist();
 

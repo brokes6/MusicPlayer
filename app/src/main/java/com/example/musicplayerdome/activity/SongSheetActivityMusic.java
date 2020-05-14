@@ -68,12 +68,13 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
+        binding = DataBindingUtil.setContentView(this,R.layout.song_sheet);
+
         ImmersionBar.with(this)
                 .statusBarDarkFont(false)
                 .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
                 .statusBarColor(R.color.A3A3)
                 .init();
-        binding = DataBindingUtil.setContentView(this,R.layout.song_sheet);
     }
 
 

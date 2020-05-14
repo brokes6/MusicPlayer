@@ -1,14 +1,9 @@
 package com.example.musicplayerdome.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.liuzhuang.rcimageview.RoundCornerImageView;
 import com.bumptech.glide.Glide;
@@ -20,32 +15,24 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 import java.util.List;
 
-public class UserPlaylistAdapter extends BaseRecyclerAdapter<PlayListItemBean> {
-    private static final String TAG = "UserPlaylistAdapter";
+public class PlayHistoryAdapter extends BaseRecyclerAdapter<PlayListItemBean> {
+    private static final String TAG = "playHistoryAdapter";
     private Context mContext;
-    private List<PlayListItemBean> list;
-    private OnPlayListItemClickListener listener;
     private String nickname;
-    private boolean isShowSmartPlay = false;
+    private List<PlayListItemBean> list;
     private RoundCornerImageView ivCover;
-    private RelativeLayout rlSmartPlay;
+    private OnPlayListItemClickListener listener;
     private LinearLayout llItem;
 
-    public UserPlaylistAdapter(Context context) {
+    public PlayHistoryAdapter(Context context) {
         mContext = context;
     }
-
-    public void setShowSmartPlay(boolean showSmartPlay) {
-        isShowSmartPlay = showSmartPlay;
+    public void setName(String nickName) {
+        this.nickname = nickName;
     }
-
     @Override
     protected int getItemLayoutId(int viewType) {
         return R.layout.item_playlist_fragment;
-    }
-
-    public void setName(String nickName) {
-        this.nickname = nickName;
     }
 
     @Override
@@ -64,25 +51,14 @@ public class UserPlaylistAdapter extends BaseRecyclerAdapter<PlayListItemBean> {
                 count = playcount + "次";
             }
             if (nickname.equals(item.getPlaylistCreator())) {
-                holder.text(R.id.tv_playlist_info, item.getSongNumber() + "首，播放" + count);
+                holder.text(R.id.tv_playlist_info, "全部已播放的歌曲");
             } else {
                 holder.text(R.id.tv_playlist_info, item.getSongNumber() + "首");
-                // + item.getPlaylistCreator() + "，播放" + count
             }
-//            if (isShowSmartPlay && position == 0) {
-//                holder.visible(R.id.rl_heart_play, View.VISIBLE);
-//            } else {
-//                holder.visible(R.id.rl_heart_play, View.GONE);
-//            }
         }
         onSetListClickListener(listener,position);
     }
     public void onSetListClickListener(OnPlayListItemClickListener listener, int i) {
-//        rlSmartPlay.setOnClickListener(v -> {
-//            if (listener != null) {
-//                listener.onSmartPlayClick(getSelectPosition());
-//            }
-//        });
 
         llItem.setOnClickListener(v -> {
             if (listener != null) {
