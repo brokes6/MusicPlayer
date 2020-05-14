@@ -3,7 +3,7 @@ package com.example.musicplayerdome.util;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.example.musicplayerdome.activity.HomeActivityMusic;
+import com.example.musicplayerdome.main.view.HomeActivityMusic;
 import com.example.musicplayerdome.login.view.SelectLoginActivity;
 
 

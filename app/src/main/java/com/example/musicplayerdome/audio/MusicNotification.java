@@ -15,7 +15,7 @@ import android.widget.RemoteViews;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.MusicController;
-import com.example.musicplayerdome.activity.MusicActivityMusic;
+import com.example.musicplayerdome.song.view.MusicActivityMusic;
 import com.example.musicplayerdome.util.BitMapUtil;
 
 

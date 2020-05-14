@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,10 +20,10 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SongContract;
-import com.example.musicplayerdome.adapter.MusicListAdapter;
+import com.example.musicplayerdome.song.adapter.MusicListAdapter;
 import com.example.musicplayerdome.main.bean.LikeListBean;
 import com.example.musicplayerdome.rewrite.MaxHeightRecyclerView;
-import com.example.musicplayerdome.song.SongPlayManager;
+import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.bean.CommentLikeBean;
 import com.example.musicplayerdome.song.bean.LikeMusicBean;
 import com.example.musicplayerdome.song.bean.LyricBean;
@@ -45,6 +46,7 @@ public class SongListDialog extends Dialog implements SongContract.View,View.OnC
     private String TAG = "--ErrorCorrectionDialog--";
     private MusicListAdapter adapter;
     private List<SongInfo> songList = new ArrayList<>();
+    private View view;
     MaxHeightRecyclerView recyclerView;
     TextView tvPlayMode;
     ImageView ivPlayMode,iv_trash_can;
@@ -55,13 +57,14 @@ public class SongListDialog extends Dialog implements SongContract.View,View.OnC
         this.scontext = context;
         init(context);
     }
+
     /**
      * 初始化
      */
     private void init(Context context) {
         mContext = (Activity) context;
         //为弹窗绑定视图
-        View view = mContext.getLayoutInflater().inflate(R.layout.activity_song_list, null);
+        view = mContext.getLayoutInflater().inflate(R.layout.activity_song_list, null);
         recyclerView = view.findViewById(R.id.rv_playlist);
         tvPlayMode = view.findViewById(R.id.tv_play_mode);
         ivPlayMode = view.findViewById(R.id.iv_play_mode);
@@ -73,7 +76,9 @@ public class SongListDialog extends Dialog implements SongContract.View,View.OnC
         Window dialogWindow = getWindow();
         dialogWindow.setGravity(Gravity.BOTTOM);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.height = 1200;
+        WindowManager windowManager = mContext.getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        lp.height = (int)(display.getHeight()*0.5);
         //设置弹窗宽度
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         //为弹窗绑定效果
@@ -156,6 +161,32 @@ public class SongListDialog extends Dialog implements SongContract.View,View.OnC
                 adapter.refresh(songList);
                 break;
         }
+    }
+    private float startY;
+    private float moveY = 0;
+    @Override
+    public boolean onTouchEvent(@NonNull MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                startY = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                moveY = ev.getY() - startY;
+                view.scrollBy(0, -(int) moveY);
+                startY = ev.getY();
+                if (view.getScrollY() > 0) {
+                    view.scrollTo(0, 0);
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                if (view.getScrollY() < -this.getWindow().getAttributes().height / 4 && moveY > 0) {
+                    this.dismiss();
+
+                }
+                view.scrollTo(0, 0);
+                break;
+        }
+        return super.onTouchEvent(ev);
     }
 
     @Override

@@ -3,8 +3,8 @@ package com.example.musicplayerdome.song.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SongContract;
-import com.example.musicplayerdome.activity.MusicActivityMusic;
 import com.example.musicplayerdome.main.bean.LikeListBean;
 import com.example.musicplayerdome.rewrite.MusicDrawerItemView;
 import com.example.musicplayerdome.song.bean.CommentLikeBean;
@@ -25,10 +24,7 @@ import com.example.musicplayerdome.song.bean.LyricBean;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.bean.PlayListCommentBean;
 import com.example.musicplayerdome.song.bean.SongDetailBean;
-import com.example.musicplayerdome.song.view.SongActivity;
 import com.lzx.starrysky.model.SongInfo;
-
-import static com.xuexiang.xutil.system.ClipboardUtils.getIntent;
 
 public class SongDetailDialog extends Dialog implements SongContract.View,View.OnClickListener{
     private Context context;
@@ -44,6 +40,7 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
     private String singerName;
     private String singerId;
     private String singerPicUrl;
+    private View view;
 
     public SongDetailDialog(@NonNull Context context,SongInfo songInfo) {
         super(context, R.style.my_dialog);
@@ -55,7 +52,7 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
 
     private void initView(){
         mContext = (Activity) context;
-        View view = mContext.getLayoutInflater().inflate(R.layout.activity_song_detail, null);
+        view = mContext.getLayoutInflater().inflate(R.layout.activity_song_detail, null);
         ivCover = view.findViewById(R.id.iv_cover);
         tvSongName = view.findViewById(R.id.tv_songname);
         tvSinger = view.findViewById(R.id.tv_singer);
@@ -92,6 +89,32 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
                 dismiss();
                 break;
         }
+    }
+    private float startY;
+    private float moveY = 0;
+    @Override
+    public boolean onTouchEvent(@NonNull MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                startY = ev.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                moveY = ev.getY() - startY;
+                view.scrollBy(0, -(int) moveY);
+                startY = ev.getY();
+                if (view.getScrollY() > 0) {
+                    view.scrollTo(0, 0);
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                if (view.getScrollY() < -this.getWindow().getAttributes().height / 4 && moveY > 0) {
+                    this.dismiss();
+
+                }
+                view.scrollTo(0, 0);
+                break;
+        }
+        return super.onTouchEvent(ev);
     }
 
     @Override

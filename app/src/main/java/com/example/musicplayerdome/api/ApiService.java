@@ -11,6 +11,7 @@ import com.example.musicplayerdome.bean.DjRecommendBean;
 import com.example.musicplayerdome.bean.DjRecommendTypeBean;
 import com.example.musicplayerdome.bean.DjSubBean;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
+import com.example.musicplayerdome.history.bean.SonghistoryBean;
 import com.example.musicplayerdome.main.bean.AlbumSublistBean;
 import com.example.musicplayerdome.main.bean.ArtistSublistBean;
 import com.example.musicplayerdome.main.bean.BannerBeanText;
@@ -112,7 +113,7 @@ public interface ApiService {
     Observable<UserDetailBean> getUserDetail(@Query("uid") long uid);
 
     @GET("user/record")
-    Observable<UserPlaylistBean> getPlayHistoryList(@Query("uid") long uid,@Query("type") int type);
+    Observable<SonghistoryBean> getPlayHistoryList(@Query("uid") long uid, @Query("type") int type);
 
     @GET("search/hot/detail")
     Observable<HotSearchDetailBean> getSearchHotDetail();

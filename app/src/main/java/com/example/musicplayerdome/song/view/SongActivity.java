@@ -29,10 +29,10 @@ import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.databinding.ActivitySongBinding;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
-import com.example.musicplayerdome.song.SongPlayManager;
-import com.example.musicplayerdome.song.MusicPauseEvent;
-import com.example.musicplayerdome.song.MusicStartEvent;
-import com.example.musicplayerdome.song.SongPresenter;
+import com.example.musicplayerdome.song.other.SongPlayManager;
+import com.example.musicplayerdome.song.other.MusicPauseEvent;
+import com.example.musicplayerdome.song.other.MusicStartEvent;
+import com.example.musicplayerdome.song.other.SongPresenter;
 import com.example.musicplayerdome.song.bean.CommentLikeBean;
 import com.example.musicplayerdome.song.bean.LikeMusicBean;
 import com.example.musicplayerdome.song.bean.LyricBean;
@@ -63,7 +63,7 @@ import java.util.regex.Pattern;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
-import static com.example.musicplayerdome.activity.SongSheetActivityMusic.COMPLETED;
+import static com.example.musicplayerdome.main.view.SongSheetActivityMusic.COMPLETED;
 
 
 public class SongActivity extends BaseActivity<SongPresenter> implements SongContract.View, VolumeChangeObserver.VolumeChangeListener{

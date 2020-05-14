@@ -11,7 +11,7 @@
         android:id="@+id/gao"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.SongSheetActivityMusic">
+        tools:context=".main.view.SongSheetActivityMusic">
         <LinearLayout
             android:id="@+id/topLayout"
             android:background="#3A3A3A"

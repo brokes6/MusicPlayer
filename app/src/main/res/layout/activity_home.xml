@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.HomeActivityMusic">
+        tools:context=".main.view.HomeActivityMusic">
     <LinearLayout
         android:id="@+id/mainL"
         android:layout_above="@+id/bottom_controller"

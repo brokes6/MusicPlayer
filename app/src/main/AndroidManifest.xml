@@ -44,20 +44,20 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.SongSheetActivityMusic"
+        <activity android:name=".main.view.SongSheetActivityMusic"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".activity.HomeActivityMusic"
+            android:name=".main.view.HomeActivityMusic"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
 
         </activity>
         <activity android:name=".util.UserGuideActivity" />
         <activity
-            android:name=".activity.MusicActivityMusic"
+            android:name=".song.view.MusicActivityMusic"
             android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
             android:hardwareAccelerated="true"
             android:launchMode="singleInstance"

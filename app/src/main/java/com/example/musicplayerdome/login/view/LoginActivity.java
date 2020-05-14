@@ -1,18 +1,14 @@
 package com.example.musicplayerdome.login.view;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
-import com.blankj.utilcode.util.ScreenUtils;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.LoginContract;
-import com.example.musicplayerdome.activity.HomeActivityMusic;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.databinding.ActivityLoginBinding;
 import com.example.musicplayerdome.login.LoginPresenter;
@@ -26,9 +22,7 @@ import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.samlss.broccoli.util.LogUtil;
 
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
     private static final String TAG = "LoginActivity";

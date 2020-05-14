@@ -19,10 +19,25 @@
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/file_back_shape">
 
+                    <LinearLayout
+                        android:id="@+id/top"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/file_over_shape"/>
+                    </LinearLayout>
+
                 <RelativeLayout
                     android:id="@+id/rl_list_title"
+                    android:layout_below="@+id/top"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_35">
+                    android:layout_height="@dimen/dp_35"
+                    android:layout_marginTop="5dp">
 
                     <RelativeLayout
                         android:id="@+id/rl_play_mode"
@@ -34,7 +49,7 @@
                             android:layout_width="@dimen/dp_20"
                             android:layout_height="@dimen/dp_20"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/dp_25"
+                            android:layout_marginStart="@dimen/dp_15"
                             android:src="@drawable/shape_list_cycle_grey" />
 
                         <TextView
@@ -53,7 +68,7 @@
                             android:layout_height="@dimen/dp_23"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginEnd="@dimen/dp_25"
+                            android:layout_marginEnd="@dimen/dp_10"
                             android:src="@drawable/shape_trashcan" />
                     </RelativeLayout>
                 </RelativeLayout>

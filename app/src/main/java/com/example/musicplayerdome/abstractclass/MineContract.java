@@ -2,6 +2,7 @@ package com.example.musicplayerdome.abstractclass;
 
 
 import com.example.musicplayerdome.base.BasePresenter;
+import com.example.musicplayerdome.history.bean.SonghistoryBean;
 import com.example.musicplayerdome.main.bean.AlbumSublistBean;
 import com.example.musicplayerdome.main.bean.ArtistSublistBean;
 import com.example.musicplayerdome.main.bean.MvSublistBean;
@@ -17,7 +18,7 @@ public interface MineContract {
 
         void onGetUserPlaylistFail(String e);
 
-        void onGetPlayHistoryListSuccess(UserPlaylistBean bean);
+        void onGetPlayHistoryListSuccess(SonghistoryBean bean);
 
         void onGetPlayHistoryListFail(String e);
 
@@ -47,7 +48,7 @@ public interface MineContract {
 
         Observable<PlayModeIntelligenceBean> getIntelligenceList(long id, long pid);
 
-        Observable<UserPlaylistBean> getPlayHistoryList(long id,int type);
+        Observable<SonghistoryBean> getPlayHistoryList(long id,int type);
 
         Observable<MvSublistBean> getMvSublist();
 

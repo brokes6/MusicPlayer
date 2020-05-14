@@ -33,7 +33,6 @@ public class LoginPresenter extends LoginContract.Presenter {
 
                     @Override
                     public void onNext(LoginBean bean) {
-                        Log.d(TAG, "onNext : " + bean);
                         mView.onLoginSuccess(bean);
                     }
 
