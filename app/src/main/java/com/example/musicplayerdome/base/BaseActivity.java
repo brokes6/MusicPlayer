@@ -21,6 +21,8 @@ import com.lzx.starrysky.manager.MediaSessionConnection;
 import com.lzx.starrysky.model.SongInfo;
 import com.xuexiang.xui.widget.dialog.LoadingDialog;
 
+import java.util.Objects;
+
 
 /**
  * Created by Rikka on 2019/7/12
@@ -72,11 +74,20 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         if (mPresenter != null) {
             mPresenter = null;
         }
+        mDialog = null;
         super.onDestroy();
     }
 
     public void createDialog() {
         if (mDialog == null) {
+//            mDialog = new LoadingDialog(this, "Loading...");
+        }
+    }
+    public void goDialog(){
+        if (mDialog == null) {
+            mDialog = new LoadingDialog(this, "Loading...");
+        }else{
+            return;
         }
     }
 

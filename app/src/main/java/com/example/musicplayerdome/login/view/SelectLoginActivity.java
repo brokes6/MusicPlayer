@@ -6,24 +6,26 @@ import android.view.KeyEvent;
 import android.view.View;
 
 
+import androidx.databinding.DataBindingUtil;
+
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.base.BasePresenter;
+import com.example.musicplayerdome.databinding.ActivitySelectLoginBinding;
 import com.example.musicplayerdome.util.ClickUtil;
 import com.example.musicplayerdome.util.ScreenUtils;
 import com.example.musicplayerdome.util.XToastUtils;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class SelectLoginActivity extends BaseActivity {
+public class SelectLoginActivity extends BaseActivity implements View.OnClickListener{
     private static final String TAG = "SelectLoginActivity";
+    ActivitySelectLoginBinding binding;
 
     private long firstTime;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_select_login);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_select_login);
     }
 
     @Override
@@ -38,7 +40,7 @@ public class SelectLoginActivity extends BaseActivity {
 
     @Override
     protected void initModule() {
-        ButterKnife.bind(this);
+        binding.btnPhoneLogin.setOnClickListener(this);
     }
 
     @Override
@@ -48,7 +50,6 @@ public class SelectLoginActivity extends BaseActivity {
     }
 
     @Override
-    @OnClick(R.id.btn_phone_login)
     public void onClick(View v) {
         if (ClickUtil.isFastClick(1000, v)) {
             return;

@@ -43,21 +43,6 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     private List<SongInfo> songInfos = new ArrayList<>();
     private long playlistId;
     private boolean go = false;
-    /**
-     * 上一首 按钮点击 ID
-     */
-    private final static int BUTTON_PREV_ID = 1;
-    /**
-     * 播放/暂停 按钮点击 ID
-     */
-    private final static int BUTTON_PALY_ID = 2;
-    /**
-     * 下一首 按钮点击 ID
-     */
-    private final static int BUTTON_NEXT_ID = 3;
-    private final static String INTENT_BUTTONID_TAG = "ButtonId";
-    private final static String ACTION_BUTTON = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClick";
-    private final static String ACTIONS = "xinkunic.aifatushu.customviews.MusicNotification.ButtonClickS";
     private String creatorUrl;
     private String playlistName;
     private String playlistPicUrl;
@@ -74,8 +59,34 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
                 .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
                 .statusBarColor(R.color.A3A3)
                 .init();
+        goDialog();
     }
 
+    @Override
+    protected void initData() {
+        initView();
+        showDialog();
+        LinearLayoutManager lm = new LinearLayoutManager(SongSheetActivityMusic.this);
+        lm.setOrientation(LinearLayoutManager.VERTICAL);
+        adapter = new MySongListAdapter(this);
+        adapter.setType(2);
+        binding.recyclerView.setLayoutManager(lm);
+        binding.recyclerView.setAdapter(adapter);
+
+        if (getIntent() != null) {
+            playlistPicUrl = getIntent().getStringExtra(PLAYLIST_PICURL);
+            Glide.with(this).load(playlistPicUrl).into(binding.XLogin);
+            playlistName = getIntent().getStringExtra(PLAYLIST_NAME);
+            binding.XTitle.setText(playlistName);
+            creatorName = getIntent().getStringExtra(PLAYLIST_CREATOR_NICKNAME);
+            binding.tvPlaylistName.setText(creatorName);
+            creatorUrl = getIntent().getStringExtra(PLAYLIST_CREATOR_AVATARURL);
+            Glide.with(this).load(creatorUrl).into(binding.userImg);
+            playlistId = getIntent().getLongExtra(PLAYLIST_ID, 0);
+
+            mPresenter.getPlaylistDetail(playlistId);
+        }
+    }
 
     private void initView(){
         binding.Pback.setOnClickListener(this);
@@ -154,7 +165,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     @Override
     public void onGetPlaylistDetailSuccess(PlaylistDetailBean bean) {
         hideDialog();
-        Log.d(TAG, "onGetPlaylistDetailSuccess : " + bean);
+        Log.d(TAG, "获取歌单成功 : " + bean);
         if (!TextUtils.isEmpty(creatorUrl)) {
             Glide.with(this).load(bean.getPlaylist().getCreator().getAvatarUrl()).into(binding.userImg);
         }
@@ -213,28 +224,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     }
 
     @Override
-    protected void initData() {
-        initView();
-        LinearLayoutManager lm = new LinearLayoutManager(SongSheetActivityMusic.this);
-        lm.setOrientation(LinearLayoutManager.VERTICAL);
-        adapter = new MySongListAdapter(this);
-        adapter.setType(2);
-        binding.recyclerView.setLayoutManager(lm);
-        binding.recyclerView.setAdapter(adapter);
-
-        if (getIntent() != null) {
-            playlistPicUrl = getIntent().getStringExtra(PLAYLIST_PICURL);
-            Glide.with(this).load(playlistPicUrl).into(binding.XLogin);
-            playlistName = getIntent().getStringExtra(PLAYLIST_NAME);
-            binding.XTitle.setText(playlistName);
-            creatorName = getIntent().getStringExtra(PLAYLIST_CREATOR_NICKNAME);
-            binding.tvPlaylistName.setText(creatorName);
-            creatorUrl = getIntent().getStringExtra(PLAYLIST_CREATOR_AVATARURL);
-            Glide.with(this).load(creatorUrl).into(binding.userImg);
-            playlistId = getIntent().getLongExtra(PLAYLIST_ID, 0);
-            showDialog();
-
-            mPresenter.getPlaylistDetail(playlistId);
-        }
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

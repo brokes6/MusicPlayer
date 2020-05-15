@@ -50,7 +50,8 @@
             android:id="@+id/appbar"
             android:background="#3A3A3A"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:elevation="0dp">
             <LinearLayout
                 app:layout_scrollFlags="scroll|snap"
                 android:layout_width="match_parent"
@@ -76,7 +77,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="24sp"
-                        android:text="我的歌单"
+                        android:text=""
                         android:layout_toRightOf="@id/XLogin"
                         android:letterSpacing="0.05"
                         android:textColor="#fff"
@@ -99,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:layout_toRightOf="@id/user_img"
-                        android:text="来自于：付鑫博 "
+                        android:text=" "
                         android:textColor="#FFFFFF" />
                 </RelativeLayout>
 
@@ -197,7 +198,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="20sp"
-                    android:text="所有歌曲:"/>
+                    android:text="歌单歌曲:"/>
             </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
         <LinearLayout
@@ -207,7 +208,6 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                android:layout_marginTop="@dimen/afc_5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/white" />

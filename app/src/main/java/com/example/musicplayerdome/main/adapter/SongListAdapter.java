@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 
 import com.android.liuzhuang.rcimageview.RoundCornerImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.bean.Audio;

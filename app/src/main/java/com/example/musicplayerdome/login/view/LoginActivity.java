@@ -22,9 +22,7 @@ import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 
-import butterknife.OnClick;
-
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View,View.OnClickListener {
     private static final String TAG = "LoginActivity";
     ActivityLoginBinding binding;
     String phoneNumber;
@@ -65,7 +63,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     protected void initModule() {
-//        ButterKnife.bind(this);
+        binding.btnLogin.setOnClickListener(this);
+        binding.register.setOnClickListener(this);
+        binding.forgetPwd.setOnClickListener(this);
     }
 
     @Override
@@ -79,7 +79,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
-    @OnClick({R.id.btn_login, R.id.register, R.id.forget_pwd})
     public void onClick(View v) {
         if (ClickUtil.isFastClick(1000, v)) {
             return;

@@ -37,7 +37,6 @@ import com.example.musicplayerdome.audio.RatateImage;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.databinding.ActivityMusicBinding;
-import com.example.musicplayerdome.dialog.AudioTimerDialog;
 import com.example.musicplayerdome.main.bean.LikeListBean;
 import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
 import com.example.musicplayerdome.resources.DomeData;
@@ -308,7 +307,7 @@ public class MusicActivityMusic extends BaseActivity<SongPresenter> implements V
                 break;
                 //定时
             case R.id.audio_timing:
-                showTimingPop();
+//                showTimingPop();
                 break;
                 //音频歌词
             case R.id.play_album_is:
@@ -374,37 +373,37 @@ public class MusicActivityMusic extends BaseActivity<SongPresenter> implements V
         setImg(binding.play, R.mipmap.audio_state_pause);
         SharedPreferencesUtil.putData("key",false);
     }
-    /**
-     * 显示定时弹窗
-     */
-    private AudioTimerDialog timerDialog;
-    private void showTimingPop() {
-        if (timerDialog == null) {
-            timerDialog = new AudioTimerDialog(this, R.style.my_dialog);
-            timerDialog.setOnChangeListener(new AudioTimerDialog.OnTimerListener() {
-                @Override
-                public void OnChange() {
-                    int timerState = SPManager.getTimerState(MusicActivityMusic.this);
-                    switch (timerState) {
-                        case TimerFlag.CLOSE:
-                        case TimerFlag.CURRENT:
-                            //取消定时功能
-                            if (connect && musicController != null) {
-                                musicController.cancelDelay();
-                            }
-                            break;
-                        default:
-                            //定时关闭功能
-                            if (connect && musicController != null) {
-                                musicController.delayClose(timerState);
-                            }
-                            break;
-                    }
-                }
-            });
-        }
-        timerDialog.show();
-    }
+//    /**
+//     * 显示定时弹窗
+//     */
+//    private AudioTimerDialog timerDialog;
+//    private void showTimingPop() {
+//        if (timerDialog == null) {
+//            timerDialog = new AudioTimerDialog(this, R.style.my_dialog);
+//            timerDialog.setOnChangeListener(new AudioTimerDialog.OnTimerListener() {
+//                @Override
+//                public void OnChange() {
+//                    int timerState = SPManager.getTimerState(MusicActivityMusic.this);
+//                    switch (timerState) {
+//                        case TimerFlag.CLOSE:
+//                        case TimerFlag.CURRENT:
+//                            //取消定时功能
+//                            if (connect && musicController != null) {
+//                                musicController.cancelDelay();
+//                            }
+//                            break;
+//                        default:
+//                            //定时关闭功能
+//                            if (connect && musicController != null) {
+//                                musicController.delayClose(timerState);
+//                            }
+//                            break;
+//                    }
+//                }
+//            });
+//        }
+//        timerDialog.show();
+//    }
     /**
      * 音乐歌曲初始化
      */

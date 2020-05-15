@@ -60,13 +60,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.example.musicplayerdome.main.view.SongSheetActivityMusic.COMPLETED;
 
 
-public class SongActivity extends BaseActivity<SongPresenter> implements SongContract.View, VolumeChangeObserver.VolumeChangeListener{
+public class SongActivity extends BaseActivity<SongPresenter> implements SongContract.View, VolumeChangeObserver.VolumeChangeListener,View.OnClickListener{
     private static final String TAG = "SongActivity";
 
     public static final String SONG_INFO = "songInfo";
@@ -116,6 +115,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
                 .init();
+        goDialog();
     }
 
     @Override
@@ -130,6 +130,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     @Override
     protected void initData() {
+        showDialog();
         initView();
         getIntentData();
         initAudioManager();
@@ -152,7 +153,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         binding.ivNext.setOnClickListener(this);
         binding.ivList.setOnClickListener(this);
         binding.actAudioVolumeControl.setOnSeekBarChangeListener(new SeekBarChangeVolumeControl());
-        Log.e(TAG, "-------: 当前状态栏的高度:"+ getStatusBarHeight(this));
         setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
     }
     /**
@@ -275,6 +275,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     private void checkMusicPlaying() {
         mTimerTask.startToUpdateProgress();
         if (SongPlayManager.getInstance().isPlaying()) {
+            hideDialog();
             Log.e(TAG, "--music正在播放--");
             if (getRotateAnimator().isPaused()) {
                 getRotateAnimator().resume();
@@ -337,8 +338,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     }
 
     @Override
-    @OnClick({R.id.iv_play, R.id.iv_like, R.id.iv_download, R.id.iv_comment, R.id.iv_info,
-            R.id.iv_play_mode, R.id.iv_pre, R.id.iv_next, R.id.iv_list, R.id.rl_center, R.id.lrc})
     public void onClick(View v) {
         Intent intent = new Intent();
         switch (v.getId()) {
@@ -508,7 +507,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
             }
             alphaAnimator = null;
         }
-        Log.e(TAG, "onDestroy: 已销毁");
     }
 
     @SuppressLint("HandlerLeak")

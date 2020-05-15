@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.liuzhuang.rcimageview.RoundCornerImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.personal.bean.PlayListItemBean;
@@ -53,7 +54,12 @@ public class UserPlaylistAdapter extends BaseRecyclerAdapter<PlayListItemBean> {
         if(item!=null) {
             llItem = holder.findViewById(R.id.ll_item);
             ivCover = holder.findViewById(R.id.iv_cover);
-            Glide.with(mContext).load(item.getCoverUrl()).transition(new DrawableTransitionOptions().crossFade()).into(ivCover);
+            Glide.with(mContext)
+                 .load(item.getCoverUrl())
+                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                 .transition(new DrawableTransitionOptions()
+                 .crossFade())
+                 .into(ivCover);
             holder.text(R.id.tv_playlist_name, item.getPlayListName());
             long playcount = item.getPlayCount();
             String count;
@@ -69,15 +75,11 @@ public class UserPlaylistAdapter extends BaseRecyclerAdapter<PlayListItemBean> {
                 holder.text(R.id.tv_playlist_info, item.getSongNumber() + "首");
                 // + item.getPlaylistCreator() + "，播放" + count
             }
-//            if (isShowSmartPlay && position == 0) {
-//                holder.visible(R.id.rl_heart_play, View.VISIBLE);
-//            } else {
-//                holder.visible(R.id.rl_heart_play, View.GONE);
-//            }
         }
         onSetListClickListener(listener,position);
     }
     public void onSetListClickListener(OnPlayListItemClickListener listener, int i) {
+        //这里本来是第一个我的歌单右边有个心动模式，我取消了
 //        rlSmartPlay.setOnClickListener(v -> {
 //            if (listener != null) {
 //                listener.onSmartPlayClick(getSelectPosition());
