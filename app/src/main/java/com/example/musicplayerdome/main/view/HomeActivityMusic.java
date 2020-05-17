@@ -1,13 +1,19 @@
 package com.example.musicplayerdome.main.view;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.viewpager.widget.ViewPager;
 
+import android.animation.ArgbEvaluator;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 
@@ -49,9 +55,8 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         binding = DataBindingUtil.setContentView(this,R.layout.activity_home);
 
         ImmersionBar.with(this)
+                .transparentStatusBar()
                 .statusBarDarkFont(false)
-                .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
-                .statusBarColor(R.color.red)
                 .init();
         connectMusicService();
         mPagerAdapter = new MultiFragmentPagerAdapter(getSupportFragmentManager());
@@ -70,8 +75,25 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         mPresenter.getLikeList(loginBean.getAccount().getId());
     }
     private void initView(){
-
+        setMargins(binding.tabBackground,0,getStatusBarHeight(this),0,0);
     }
+
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
+    }
+    public static void setMargins (View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
+        }
+    }
+
+    private final int A3A3 = 0xFF3A3A3A, yellow = 0xFFFFBB43, red = 0xFFdb2b1c;
+    private int text;
     private void initApadter(){
         binding.viewpager.setAdapter(mPagerAdapter);
         binding.viewpager.setCurrentItem(1);
@@ -83,25 +105,6 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 setSelectTextBoldAndBig(tab);
-                if (tab.getText().equals("歌 单")){
-                    binding.tabBackground.setBackgroundResource(R.color.A3A3);
-                    ImmersionBar.with(HomeActivityMusic.this)
-                            .statusBarDarkFont(false)
-                            .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
-                            .statusBarColor(R.color.A3A3)
-                            .init();
-                }
-                if (tab.getText().equals("主 页")){
-                    binding.tabBackground.setBackgroundResource(R.color.red);
-                    ImmersionBar.with(HomeActivityMusic.this)
-                            .statusBarDarkFont(false)
-                            .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
-                            .statusBarColor(R.color.red)
-                            .init();
-                }
-//                if (tab.getText().equals("我 的")){
-//                    binding.tabBackground.setBackgroundResource(R.color.BCD4);
-//                }
             }
 
             @Override
@@ -111,6 +114,34 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        binding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                ArgbEvaluator evaluator = new ArgbEvaluator(); // ARGB求值器
+                int evaluate = red; // 初始默认颜色
+                if (position == 0) {
+                    evaluate = (Integer) evaluator.evaluate(positionOffset, A3A3, red); // 根据positionOffset和第0页~第1页的颜色转换范围取颜色值
+                } else if (position == 1) {
+                    evaluate = (Integer) evaluator.evaluate(positionOffset, red, yellow); // 根据positionOffset和第1页~第2页的颜色转换范围取颜色值
+                } else if (position == 2) {
+                    evaluate = (Integer) evaluator.evaluate(positionOffset, yellow, red); // 根据positionOffset和第2页~第3页的颜色转换范围取颜色值
+                } else {
+                    evaluate = red; // 最终第3页的颜色
+                }
+                binding.tablayoutReal.setBackgroundColor(evaluate);// 切换底部导航栏和toolbar的颜色。
+                binding.mtop.setBackgroundColor(evaluate);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
             }
         });

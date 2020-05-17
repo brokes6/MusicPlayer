@@ -7,8 +7,10 @@
 
     </data>
     <RelativeLayout
+        android:id="@+id/mtop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/red"
         tools:context=".main.view.HomeActivityMusic">
     <LinearLayout
         android:id="@+id/mainL"
@@ -25,7 +27,7 @@
         android:orientation="vertical">
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayoutReal"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:tabIndicatorHeight="0dp" />
     </LinearLayout>

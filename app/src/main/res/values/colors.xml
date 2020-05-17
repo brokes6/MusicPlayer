@@ -96,4 +96,6 @@
     <color name="fafafa">#fafafa</color>
     //结束
 
+
+    <color name="text"></color>
 </resources>
