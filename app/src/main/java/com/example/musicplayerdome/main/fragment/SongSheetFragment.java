@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -32,6 +34,10 @@ import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
 import com.example.musicplayerdome.resources.DomeData;
 import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
+import com.example.musicplayerdome.util.XToastUtils;
+import com.xuexiang.xui.widget.popupwindow.easypopup.EasyPopup;
+import com.xuexiang.xui.widget.popupwindow.easypopup.HorizontalGravity;
+import com.xuexiang.xui.widget.popupwindow.easypopup.VerticalGravity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +52,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     private static final String TAG = "SongSheetFragment";
     private UserPlaylistAdapter adapter;
     private MySongAdapter mainMusicAdapter;
+    private EasyPopup mCirclePop;
     private LoginBean loginBean;
     private long uid;
     private List<UserPlaylistBean.PlaylistBean> playlistBeans = new ArrayList<>();
@@ -64,6 +71,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     @Override
     protected void initData() {
         initView();
+        initCirclePop();
         loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
         initUser(loginBean);
         uid = loginBean.getAccount().getId();
@@ -83,6 +91,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
         mainMusicAdapter.loadMore(DomeData.getMySong());
 
         showDialog();
+        mPresenter.getUserDetail(uid);
         mPresenter.getUserPlaylist(uid);
     }
 
@@ -115,6 +124,31 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
         }
     };
 
+    public void initCirclePop() {
+        mCirclePop = new EasyPopup(getContext())
+                .setContentView(R.layout.layout_friend_circle_comment)
+                .setFocusAndOutsideEnable(true)
+                .createPopup();
+
+        TextView tvZan = mCirclePop.getView(R.id.tv_zan);
+        TextView tvComment = mCirclePop.getView(R.id.tv_comment);
+        tvZan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.minePlaylist.setVisibility(View.GONE);
+                mCirclePop.dismiss();
+            }
+        });
+
+        tvComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.minePlaylist.setVisibility(View.VISIBLE);
+                mCirclePop.dismiss();
+            }
+        });
+    }
+
 
     @Override
     public MinePresenter onCreatePresenter() {
@@ -128,12 +162,15 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
 
     private void initView(){
+        binding.minePlaylistMore.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
+            case R.id.mine_playlist_more:
+                mCirclePop.showAtAnchorView(binding.minePlaylistMore, VerticalGravity.CENTER, HorizontalGravity.LEFT, 0, 0);
+                break;
         }
     }
 

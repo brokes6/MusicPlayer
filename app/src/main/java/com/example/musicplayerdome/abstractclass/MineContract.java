@@ -8,6 +8,7 @@ import com.example.musicplayerdome.main.bean.ArtistSublistBean;
 import com.example.musicplayerdome.main.bean.MvSublistBean;
 import com.example.musicplayerdome.main.bean.MyFmBean;
 import com.example.musicplayerdome.main.bean.PlayModeIntelligenceBean;
+import com.example.musicplayerdome.personal.bean.UserDetailBean;
 import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
 
 import io.reactivex.Observable;
@@ -50,6 +51,8 @@ public interface MineContract {
 
         Observable<SonghistoryBean> getPlayHistoryList(long id,int type);
 
+        Observable<UserDetailBean> getUserDetail(long id);
+
         Observable<MvSublistBean> getMvSublist();
 
         Observable<ArtistSublistBean> getArtistSublist();
@@ -63,6 +66,8 @@ public interface MineContract {
         public abstract void getUserPlaylist(long uid);
 
         public abstract void getIntelligenceList(long id, long pid);
+
+        public abstract void getUserDetail(long id);
 
         public abstract void getPlayHistoryList(long id,int type);
 

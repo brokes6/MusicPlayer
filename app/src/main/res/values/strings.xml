@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">网易云音乐</string>
+    <string name="app_name">云音乐</string>
     <string name="tip_bluetooth_permission">检测到正在使用流量，是否继续播放？</string>
     <string name="lab_yes">是</string>
     <string name="lab_no">否</string>

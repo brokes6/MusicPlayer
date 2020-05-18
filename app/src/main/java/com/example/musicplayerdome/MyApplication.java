@@ -38,10 +38,10 @@ public class MyApplication extends Application {
         setNotification();
     }
     private void initDataBase() {
-        DaoMaster.DevOpenHelper openHelper = new DaoMaster.DevOpenHelper(this, DATA_BASE_NAME);
-        Database db = openHelper.getWritableDb();
-        DaoMaster daoMaster = new DaoMaster(db);
-        mDaoSession = daoMaster.newSession();
+//        DaoMaster.DevOpenHelper openHelper = new DaoMaster.DevOpenHelper(this, DATA_BASE_NAME);
+//        Database db = openHelper.getWritableDb();
+//        DaoMaster daoMaster = new DaoMaster(db);
+//        mDaoSession = daoMaster.newSession();
     }
     private void setNotification(){
         MusicManager.getInstance().setNotificationConstructor(

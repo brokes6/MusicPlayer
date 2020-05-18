@@ -72,7 +72,7 @@ public class WowPresenter extends WowContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "onError:" + e);
+                        Log.e(TAG, "推荐歌单onError:" + e);
                         mView.onGetRecommendPlayListFail(e.getMessage());
                     }
 

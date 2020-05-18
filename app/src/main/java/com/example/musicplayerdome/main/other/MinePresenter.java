@@ -10,6 +10,7 @@ import com.example.musicplayerdome.main.bean.ArtistSublistBean;
 import com.example.musicplayerdome.main.bean.MvSublistBean;
 import com.example.musicplayerdome.main.bean.MyFmBean;
 import com.example.musicplayerdome.main.bean.PlayModeIntelligenceBean;
+import com.example.musicplayerdome.personal.bean.UserDetailBean;
 import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
 
 import io.reactivex.Observer;
@@ -55,14 +56,35 @@ public class MinePresenter extends MineContract.Presenter {
     }
 
     @Override
+    public void getUserDetail(long id) {
+        mModel.getUserDetail(id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<UserDetailBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) { }
+
+                    @Override
+                    public void onNext(UserDetailBean userDetailBean) {
+                        Log.e(TAG, "用户信息为"+userDetailBean.getLevel()+userDetailBean.getProfile().getNickname()+userDetailBean.getProfile().getAvatarUrl());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() { }
+                });
+    }
+
+    @Override
     public void getPlayHistoryList(long id, int type) {
         mModel.getPlayHistoryList(id,type).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SonghistoryBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
+                    public void onSubscribe(Disposable d) { }
 
                     @Override
                     public void onNext(SonghistoryBean songhistoryBean) {
@@ -77,9 +99,7 @@ public class MinePresenter extends MineContract.Presenter {
                     }
 
                     @Override
-                    public void onComplete() {
-
-                    }
+                    public void onComplete() { }
                 });
     }
 

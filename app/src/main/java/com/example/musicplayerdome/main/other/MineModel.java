@@ -11,6 +11,7 @@ import com.example.musicplayerdome.main.bean.ArtistSublistBean;
 import com.example.musicplayerdome.main.bean.MvSublistBean;
 import com.example.musicplayerdome.main.bean.MyFmBean;
 import com.example.musicplayerdome.main.bean.PlayModeIntelligenceBean;
+import com.example.musicplayerdome.personal.bean.UserDetailBean;
 import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
 
 import io.reactivex.Observable;
@@ -31,6 +32,11 @@ public class MineModel implements MineContract.Model {
     @Override
     public Observable<SonghistoryBean> getPlayHistoryList(long id, int type) {
         return ApiEngine.getInstance().getApiService().getPlayHistoryList(id,type);
+    }
+
+    @Override
+    public Observable<UserDetailBean> getUserDetail(long id) {
+        return ApiEngine.getInstance().getApiService().getUserDetail(id);
     }
 
     @Override

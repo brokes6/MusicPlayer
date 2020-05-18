@@ -37,7 +37,7 @@ public class MainPresenter extends MainContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "error : " + e.toString());
+                        Log.e(TAG, "退出error : " + e.toString());
                         mView.onLogoutFail(e.getMessage());
                     }
 
@@ -65,7 +65,7 @@ public class MainPresenter extends MainContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "onError : " + e);
+                        Log.e(TAG, "获取喜欢列表onError : " + e);
                         mView.onGetLikeListFail(e.getMessage());
                     }
 

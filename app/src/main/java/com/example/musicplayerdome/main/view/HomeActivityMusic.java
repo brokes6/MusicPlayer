@@ -132,7 +132,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
                     evaluate = red; // 最终第3页的颜色
                 }
                 binding.tablayoutReal.setBackgroundColor(evaluate);// 切换底部导航栏和toolbar的颜色。
-                binding.mtop.setBackgroundColor(evaluate);
+                binding.mtop.setBackgroundColor(evaluate);//整体activity的颜色
             }
 
             @Override
