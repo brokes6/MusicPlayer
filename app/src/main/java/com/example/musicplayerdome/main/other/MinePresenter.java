@@ -66,11 +66,12 @@ public class MinePresenter extends MineContract.Presenter {
                     @Override
                     public void onNext(UserDetailBean userDetailBean) {
                         Log.e(TAG, "用户信息为"+userDetailBean.getLevel()+userDetailBean.getProfile().getNickname()+userDetailBean.getProfile().getAvatarUrl());
+                        mView.onGetUserDetailSuccess(userDetailBean);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        mView.onGetUserDetailFails(e.getMessage());
                     }
 
                     @Override

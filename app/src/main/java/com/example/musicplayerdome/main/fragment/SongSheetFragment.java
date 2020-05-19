@@ -18,6 +18,7 @@ import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.MineContract;
 import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
 import com.example.musicplayerdome.main.adapter.MySongAdapter;
+import com.example.musicplayerdome.personal.bean.UserDetailBean;
 import com.example.musicplayerdome.song.adapter.UserPlaylistAdapter;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.databinding.SongsheetfragmentBinding;
@@ -196,6 +197,17 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     @Override
     public void onGetUserPlaylistFail(String e) {
         hideDialog();
+    }
+
+    @Override
+    public void onGetUserDetailSuccess(UserDetailBean bean) {
+        binding.userGrade.setText("Lv."+bean.getLevel());
+        binding.Suserimg.setImageURL(bean.getProfile().getAvatarUrl());
+    }
+
+    @Override
+    public void onGetUserDetailFails(String e) {
+
     }
 
     @Override

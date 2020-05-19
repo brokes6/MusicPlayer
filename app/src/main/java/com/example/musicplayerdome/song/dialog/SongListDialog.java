@@ -38,7 +38,7 @@ import java.util.List;
 
 /**
  * Created by dingxingxing on 2019.4.4
- * 音频播放定时器弹窗
+ * 音频播列表弹窗
  */
 public class SongListDialog extends Dialog implements SongContract.View,View.OnClickListener{
     private Activity mContext;

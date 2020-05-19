@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -19,6 +20,8 @@ import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -29,6 +32,8 @@ import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.databinding.ActivitySongBinding;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
+import com.example.musicplayerdome.rewrite.MaxHeightRecyclerView;
+import com.example.musicplayerdome.song.adapter.MusicListAdapter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.other.MusicPauseEvent;
 import com.example.musicplayerdome.song.other.MusicStartEvent;
@@ -46,6 +51,7 @@ import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.TimeUtil;
 import com.example.musicplayerdome.util.VolumeChangeObserver;
 import com.example.musicplayerdome.util.XToastUtils;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.manager.MusicManager;
 import com.lzx.starrysky.model.SongInfo;
@@ -83,6 +89,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     ActivitySongBinding binding;
     private VolumeChangeObserver mVolumeChangeObserver;
     private SongListDialog songListDialog;
+    private List<SongInfo> songList = new ArrayList<>();
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMusicStartEvent(MusicStartEvent event) {
@@ -407,11 +414,31 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                 SongPlayManager.getInstance().playNextMusic();
                 break;
             case R.id.iv_list:
-                songListDialog = new SongListDialog(this);
-                songListDialog.setCanceledOnTouchOutside(true);
-                songListDialog.show();
+//                songListDialog = new SongListDialog(this);
+//                songListDialog.setCanceledOnTouchOutside(true);
+//                songListDialog.show();
+                showBottomSheetListDialog();
                 break;
         }
+    }
+    private void showBottomSheetListDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.activity_song_list, null);
+        MaxHeightRecyclerView recyclerView = view.findViewById(R.id.rv_playlist);
+        initDialogList(recyclerView);
+        dialog.setContentView(view);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+    }
+    private void initDialogList(RecyclerView recyclerView) {
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(RecyclerView.VERTICAL);
+        recyclerView.setLayoutManager(manager);
+        MusicListAdapter adapter = new MusicListAdapter(this);
+        recyclerView.setAdapter(adapter);
+        songList = SongPlayManager.getInstance().getSongList();
+        adapter.loadMore(songList);
     }
     /**
      * 初始化音量控制器

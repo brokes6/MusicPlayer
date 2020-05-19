@@ -10,14 +10,15 @@
     <RelativeLayout
         android:id="@+id/fl_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/file_back_shape">
 
             <RelativeLayout
                 android:id="@+id/rl_bottom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/file_back_shape">
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true">
 
                     <LinearLayout
                         android:id="@+id/top"
@@ -83,10 +84,9 @@
                 <com.example.musicplayerdome.rewrite.MaxHeightRecyclerView
                     android:id="@+id/rv_playlist"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_below="@id/rl_list_title"
-                    android:layout_marginTop="@dimen/dp_3"
-                    app:maxHeight="@dimen/dp_300" />
+                    android:layout_marginTop="@dimen/dp_3" />
 
             </RelativeLayout>
     </RelativeLayout>

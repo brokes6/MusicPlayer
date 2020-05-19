@@ -19,6 +19,10 @@ public interface MineContract {
 
         void onGetUserPlaylistFail(String e);
 
+        void onGetUserDetailSuccess(UserDetailBean bean);
+
+        void onGetUserDetailFails(String e);
+
         void onGetPlayHistoryListSuccess(SonghistoryBean bean);
 
         void onGetPlayHistoryListFail(String e);
