@@ -7,10 +7,15 @@
     <data>
 
     </data>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".main.view.SongSheetActivityMusic">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         tools:context=".main.view.SongSheetActivityMusic">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -277,7 +282,7 @@
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10" />
         </RelativeLayout>
-
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
         <com.example.musicplayerdome.rewrite.BottomSongPlayBar
             android:id="@+id/bottom_controller"
             android:visibility="gone"
@@ -286,5 +291,5 @@
             android:layout_alignParentBottom="true"
             android:background="#ffffff"
             app:layout_behavior="@string/bottom_sheet_behavior" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
 </layout>

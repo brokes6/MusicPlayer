@@ -3,21 +3,11 @@ package com.example.musicplayerdome.main.view;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.musicplayerdome.R;
@@ -36,17 +26,8 @@ import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 import com.example.musicplayerdome.main.other.WowPresenter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
-import com.example.musicplayerdome.util.AppBarStateChangeListener;
-import com.example.musicplayerdome.util.DensityUtil;
-import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.model.SongInfo;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,8 +40,8 @@ import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_NA
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_PICURL;
 
 public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implements View.OnClickListener, WowContract.View{
-//    SongSheetBinding binding;
-    SongPlayListBinding binding;
+    SongSheetBinding binding;
+//    SongPlayListBinding binding;
     private static final String TAG = "SongSheetActivity";
     private MySongListAdapter adapter;
     private List<PlaylistDetailBean.PlaylistBean.TracksBean> beanList = new ArrayList<>();
@@ -71,27 +52,13 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     private String playlistName;
     private String playlistPicUrl;
     private String creatorName;
-    private ObjectAnimator alphaAnimator;
-    private ObjectAnimator coverAlphaAnimator;
-    int deltaDistance;
-    int minDistance;
     //计算完成后发送的Handler msg
     public static final int COMPLETED = 0;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == COMPLETED) {
-                binding.background.setBackground((Drawable) msg.obj);
-                getAlphaAnimatorBg().start();
-                getAlphaAnimatorCover().start();
-            }
-        }
-    };
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
-//        binding = DataBindingUtil.setContentView(this,R.layout.song_sheet);
-        binding = DataBindingUtil.setContentView(this,R.layout.song_play_list);
+        binding = DataBindingUtil.setContentView(this,R.layout.song_sheet);
+//        binding = DataBindingUtil.setContentView(this,R.layout.song_play_list);
         ImmersionBar.with(this)
                 .statusBarDarkFont(false)
                 .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
@@ -108,86 +75,27 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         lm.setOrientation(LinearLayoutManager.VERTICAL);
         adapter = new MySongListAdapter(this);
         adapter.setType(2);
-        binding.rvPlaylistSong.setLayoutManager(lm);
-        binding.rvPlaylistSong.setAdapter(adapter);
+        binding.recyclerView.setLayoutManager(lm);
+        binding.recyclerView.setAdapter(adapter);
 
         if (getIntent() != null) {
             playlistPicUrl = getIntent().getStringExtra(PLAYLIST_PICURL);
-            Glide.with(this).load(playlistPicUrl).into(binding.ivCover);
+            Glide.with(this).load(playlistPicUrl).into(binding.XLogin);
             playlistName = getIntent().getStringExtra(PLAYLIST_NAME);
-            binding.tvPlaylistName.setText(playlistName);
+            binding.XTitle.setText(playlistName);
             creatorName = getIntent().getStringExtra(PLAYLIST_CREATOR_NICKNAME);
-            binding.tvCreatorName.setText(creatorName);
+            binding.tvPlaylistName.setText(creatorName);
             creatorUrl = getIntent().getStringExtra(PLAYLIST_CREATOR_AVATARURL);
-            Glide.with(this).load(creatorUrl).into(binding.ivCreatorAvatar);
+            Glide.with(this).load(creatorUrl).into(binding.userImg);
             playlistId = getIntent().getLongExtra(PLAYLIST_ID, 0);
-            calculateColors(playlistPicUrl);
-            Glide.with(this)
-                    .load(playlistPicUrl)
-                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(10, 10)))
-                    .into(binding.ivCoverBg);
-            binding.ivCoverBg.setAlpha(0f);
 
             mPresenter.getPlaylistDetail(playlistId);
         }
-        minDistance = DensityUtil.dp2px(SongSheetActivityMusic.this, 85);
-        deltaDistance = DensityUtil.dp2px(getApplication().getApplicationContext(), 300) - minDistance;
     }
 
     private void initView(){
-        setLeftTitleTextColorWhite();
-        setLeftTitleText(R.string.playlist);
-    }
+        binding.Pback.setOnClickListener(this);
 
-    private ObjectAnimator getAlphaAnimatorCover() {
-        if (coverAlphaAnimator == null) {
-            coverAlphaAnimator = ObjectAnimator.ofFloat(binding.ivCoverBg, "alpha", 0f, 0.5f);
-            coverAlphaAnimator.setDuration(1500);
-            coverAlphaAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        }
-        return coverAlphaAnimator;
-    }
-    private ObjectAnimator getAlphaAnimatorBg() {
-        if (alphaAnimator == null) {
-            alphaAnimator = ObjectAnimator.ofFloat(binding.background, "alpha", 0f, 0.5f);
-            alphaAnimator.setDuration(1500);
-            alphaAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        }
-        return alphaAnimator;
-    }
-
-    /**
-     * 该方法用url申请一个图片bitmap，并将其压缩成原图1/300，计算上半部分和下半部分颜色RGB平均值
-     * 两个RGB去作为渐变色的两个点
-     * 还要开子线程去计算...
-     */
-    public void calculateColors(String url) {
-        new Thread(() -> {
-            try {
-                //渐变色的两个颜色
-                URL fileUrl;
-                Bitmap bitmap;
-                fileUrl = new URL(url);
-                HttpURLConnection conn = (HttpURLConnection) fileUrl.openConnection();
-                conn.setDoInput(true);
-                conn.connect();
-                InputStream is = conn.getInputStream();
-                BitmapFactory.Options opt = new BitmapFactory.Options();
-                opt.inSampleSize = 270;
-                bitmap = BitmapFactory.decodeStream(is, new Rect(), opt);
-
-                Message msg = Message.obtain();
-                msg.what = COMPLETED;
-                msg.obj = new BitmapDrawable(bitmap);
-                handler.sendMessage(msg);
-
-                is.close();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 
     @Override
@@ -206,20 +114,6 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         } else {
             binding.bottomController.setVisibility(View.GONE);
         }
-        binding.appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
-            @Override
-            public void onStateChanged(AppBarLayout appBarLayout, State state) {
-
-            }
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout) {
-                float alphaPercent = (float) (binding.llPlay.getTop() - minDistance) / (float) deltaDistance;
-                binding.ivCover.setAlpha(alphaPercent);
-                binding.ivCreatorAvatar.setAlpha(alphaPercent);
-                binding.tvPlaylistName.setAlpha(alphaPercent);
-                binding.tvCreatorName.setAlpha(alphaPercent);
-            }
-        });
     }
 
     @Override
@@ -278,7 +172,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         hideDialog();
         Log.d(TAG, "获取歌单成功 : " + bean);
         if (!TextUtils.isEmpty(creatorUrl)) {
-            Glide.with(this).load(bean.getPlaylist().getCreator().getAvatarUrl()).into(binding.ivCreatorAvatar);
+            Glide.with(this).load(bean.getPlaylist().getCreator().getAvatarUrl()).into(binding.userImg);
         }
         beanList.addAll(bean.getPlaylist().getTracks());
         songInfos.clear();
