@@ -147,7 +147,6 @@ public class SongPresenter extends SongContract.Presenter {
                     public void onSubscribe(Disposable d) {
                         Log.d(TAG, "onSubscribe");
                     }
-
                     @Override
                     public void onNext(MusicCommentBean bean) {
                         Log.d(TAG, "onNext ss: " + bean);
@@ -156,7 +155,7 @@ public class SongPresenter extends SongContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "onError : " + e.getLocalizedMessage());
+                        Log.e(TAG, "评论onError : " + e.getLocalizedMessage());
                         mView.onGetMusicCommentFail(e.getMessage());
                     }
 

@@ -33,6 +33,8 @@
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:launchMode="singleTop" />
         <activity
+            android:name=".song.view.CommentActivity"/>
+        <activity
             android:name=".login.view.SplashActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:launchMode="singleTop"

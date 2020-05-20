@@ -125,9 +125,9 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
                 if (position == 0) {
                     evaluate = (Integer) evaluator.evaluate(positionOffset, A3A3, red); // 根据positionOffset和第0页~第1页的颜色转换范围取颜色值
                 } else if (position == 1) {
-                    evaluate = (Integer) evaluator.evaluate(positionOffset, red, yellow); // 根据positionOffset和第1页~第2页的颜色转换范围取颜色值
+                    evaluate = (Integer) evaluator.evaluate(positionOffset, red, red); // 根据positionOffset和第1页~第2页的颜色转换范围取颜色值
                 } else if (position == 2) {
-                    evaluate = (Integer) evaluator.evaluate(positionOffset, yellow, red); // 根据positionOffset和第2页~第3页的颜色转换范围取颜色值
+                    evaluate = (Integer) evaluator.evaluate(positionOffset, red, red); // 根据positionOffset和第2页~第3页的颜色转换范围取颜色值
                 } else {
                     evaluate = red; // 最终第3页的颜色
                 }

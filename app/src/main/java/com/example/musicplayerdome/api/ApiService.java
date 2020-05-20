@@ -181,6 +181,9 @@ public interface ApiService {
     @GET("artist/sublist")
     Observable<ArtistSublistBean> getArtistSublist();
 
+    @GET("personalized/mv")
+    Observable<MvSublistBean> getRecommendMV();
+
     @GET("mv/sublist")
     Observable<MvSublistBean> getMvSublist();
 

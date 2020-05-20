@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00BCD4"
+        android:background="#fff"
         tools:context=".main.fragment.MyFragment">
 
     </LinearLayout>

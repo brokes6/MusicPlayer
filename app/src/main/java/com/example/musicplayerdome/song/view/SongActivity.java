@@ -246,12 +246,12 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
             ids = Long.parseLong(currentSongInfo.getSongId());
             String songId = currentSongInfo.getSongId();
             List<String> likeList = SharePreferenceUtil.getInstance(this).getLikeList();
-            if (likeList.contains(songId)) {
-                isLike = true;
-                binding.ivLike.setImageResource(R.drawable.shape_like_white);
-            } else {
-                isLike = false;
-            }
+//            if (likeList.contains(songId)) {
+//                isLike = true;
+//                binding.ivLike.setImageResource(R.drawable.shape_like_white);
+//            } else {
+//                isLike = false;
+//            }
             if (SongPlayManager.getInstance().getSongDetail(ids) == null) {
                 mPresenter.getSongDetail(ids);
             } else {
@@ -378,13 +378,13 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                     XToastUtils.info("获取不到歌曲信息，稍后再试");
                     return;
                 }
-//                intent.setClass(SongActivity.this, CommentActivity.class);
-//                intent.putExtra(CommentActivity.ID, songDetail.getSongs().get(0).getId());
-//                intent.putExtra(CommentActivity.NAME, songDetail.getSongs().get(0).getName());
-//                intent.putExtra(CommentActivity.ARTIST, songDetail.getSongs().get(0).getAr().get(0).getName());
-//                intent.putExtra(CommentActivity.COVER, songDetail.getSongs().get(0).getAl().getPicUrl());
-//                intent.putExtra(CommentActivity.FROM, CommentActivity.SONG_COMMENT);
-//                startActivity(intent);
+                intent.setClass(SongActivity.this, CommentActivity.class);
+                intent.putExtra(CommentActivity.ID, songDetail.getSongs().get(0).getId());
+                intent.putExtra(CommentActivity.NAME, songDetail.getSongs().get(0).getName());
+                intent.putExtra(CommentActivity.ARTIST, songDetail.getSongs().get(0).getAr().get(0).getName());
+                intent.putExtra(CommentActivity.COVER, songDetail.getSongs().get(0).getAl().getPicUrl());
+                intent.putExtra(CommentActivity.FROM, CommentActivity.SONG_COMMENT);
+                startActivity(intent);
                 break;
             case R.id.iv_info:
                 SongDetailDialog songDetailDialog = new SongDetailDialog(mContext,currentSongInfo);

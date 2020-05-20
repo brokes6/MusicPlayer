@@ -3,6 +3,7 @@ package com.example.musicplayerdome.song.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +25,8 @@ import com.example.musicplayerdome.song.bean.LyricBean;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.bean.PlayListCommentBean;
 import com.example.musicplayerdome.song.bean.SongDetailBean;
+import com.example.musicplayerdome.song.view.CommentActivity;
+import com.example.musicplayerdome.song.view.SongActivity;
 import com.lzx.starrysky.model.SongInfo;
 
 public class SongDetailDialog extends Dialog implements SongContract.View,View.OnClickListener{
@@ -32,7 +35,7 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
     ImageView ivCover;
     TextView tvSongName;
     TextView tvSinger;
-    MusicDrawerItemView mdSinger;
+    MusicDrawerItemView mdSinger,md_commend;
     View sview;
     //SongActivity来的
     private long songId;
@@ -54,10 +57,12 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
         mContext = (Activity) context;
         view = mContext.getLayoutInflater().inflate(R.layout.activity_song_detail, null);
         ivCover = view.findViewById(R.id.iv_cover);
+        md_commend = view.findViewById(R.id.md_commend);
         tvSongName = view.findViewById(R.id.tv_songname);
         tvSinger = view.findViewById(R.id.tv_singer);
         mdSinger = view.findViewById(R.id.md_singer);
         sview = view.findViewById(R.id.sview);
+        md_commend.setOnClickListener(this);
         sview.setOnClickListener(this);
 
         setContentView(view);
@@ -86,6 +91,13 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.sview:
+                dismiss();
+                break;
+            case R.id.md_commend:
+                Intent intent = new Intent();
+                intent.setClass(mContext, CommentActivity.class);
+                intent.putExtra(CommentActivity.FROM, CommentActivity.SONG_COMMENT);
+                mContext.startActivity(intent);
                 dismiss();
                 break;
         }
