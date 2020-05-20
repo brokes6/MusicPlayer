@@ -68,6 +68,12 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".song.view.FMSongActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+
+
         <service
             android:name=".servlce.MusicServlce"
             android:enabled="true"

@@ -232,7 +232,7 @@ public class MinePresenter extends MineContract.Presenter {
 
                     @Override
                     public void onNext(MyFmBean bean) {
-                        Log.d(TAG, "getMyFM onNext:" + bean);
+                        Log.d(TAG, "getMyFM onNext:"+bean);
                         mView.onGetMyFMSuccess(bean);
                     }
 

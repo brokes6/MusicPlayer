@@ -108,4 +108,8 @@ dependencies {
 
     // EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
+
+    //视频
+    implementation 'fm.jiecao:jiecaovideoplayer:5.5.2'
+    implementation 'cn.jzvd:jiaozivideoplayer:7.3.1'
 }

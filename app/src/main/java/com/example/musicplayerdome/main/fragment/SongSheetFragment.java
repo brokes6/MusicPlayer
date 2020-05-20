@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.MineContract;
+import com.example.musicplayerdome.bean.SongRecommendation;
 import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
 import com.example.musicplayerdome.main.adapter.MySongAdapter;
 import com.example.musicplayerdome.personal.bean.UserDetailBean;
@@ -33,9 +34,13 @@ import com.example.musicplayerdome.main.other.MinePresenter;
 import com.example.musicplayerdome.personal.bean.PlayListItemBean;
 import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
 import com.example.musicplayerdome.resources.DomeData;
+import com.example.musicplayerdome.song.other.SongPlayManager;
+import com.example.musicplayerdome.song.view.FMSongActivity;
 import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.XToastUtils;
+import com.lzx.starrysky.model.SongInfo;
+import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 import com.xuexiang.xui.widget.popupwindow.easypopup.EasyPopup;
 import com.xuexiang.xui.widget.popupwindow.easypopup.HorizontalGravity;
 import com.xuexiang.xui.widget.popupwindow.easypopup.VerticalGravity;
@@ -90,6 +95,14 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
         binding.myMusicList.setLayoutManager(lm);
         binding.myMusicList.setAdapter(mainMusicAdapter = new MySongAdapter());
         mainMusicAdapter.loadMore(DomeData.getMySong());
+        mainMusicAdapter.setOnItemClickListener(new RecyclerViewHolder.OnItemClickListener<SongRecommendation>() {
+            @Override
+            public void onItemClick(View itemView, SongRecommendation item, int position) {
+                if (position==1){
+                    mPresenter.getMyFM();
+                }
+            }
+        });
 
         showDialog();
         mPresenter.getUserDetail(uid);
@@ -262,26 +275,28 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
     @Override
     public void onGetMyFMSuccess(MyFmBean bean) {
-//        hideDialog();
-//        Log.d(TAG, "onGetMyFMSuccess：" + bean);
-//        List<MyFmBean.DataBean> fmList = bean.getData();
-//        List<SongInfo> songList = new ArrayList<>();
-//        for (int i = 0; i < fmList.size(); i++) {
-//            SongInfo songInfo = new SongInfo();
-//            songInfo.setSongName(fmList.get(i).getName());
-//            songInfo.setSongUrl(SONG_URL + fmList.get(i).getId() + ".mp3");
-//            songInfo.setSongCover(fmList.get(i).getAlbum().getBlurPicUrl());
-//            songInfo.setArtist(fmList.get(i).getArtists().get(0).getName());
-//            songInfo.setSongId(String.valueOf(fmList.get(i).getId()));
-//            songInfo.setDuration(fmList.get(i).getDuration());
-//            songInfo.setArtistId(String.valueOf(fmList.get(i).getArtists().get(0).getId()));
-//            songInfo.setArtistKey(fmList.get(i).getArtists().get(0).getPicUrl());
-//            songList.add(songInfo);
-//        }
-//        SongPlayManager.getInstance().clickPlayAll(songList, 0);
-//        SongInfo songInfo = songList.get(0);
-//        Intent intent = new Intent(getContext(), SongActivity.class);
-//        startActivity(intent);
+        hideDialog();
+        Log.d(TAG, "onGetMyFMSuccess：" + bean);
+        List<MyFmBean.DataBean> fmList = bean.getData();
+        List<SongInfo> songList = new ArrayList<>();
+        for (int i = 0; i < fmList.size(); i++) {
+            SongInfo songInfo = new SongInfo();
+            songInfo.setSongName(fmList.get(i).getName());
+            songInfo.setDownloadUrl((String) fmList.get(i).getMp3Url());
+            songInfo.setSongUrl(SONG_URL + fmList.get(i).getId() + ".mp3");
+            songInfo.setSongCover(fmList.get(i).getAlbum().getBlurPicUrl());
+            songInfo.setArtist(fmList.get(i).getArtists().get(0).getName());
+            songInfo.setSongId(String.valueOf(fmList.get(i).getId()));
+            songInfo.setDuration(fmList.get(i).getDuration());
+            songInfo.setArtistId(String.valueOf(fmList.get(i).getArtists().get(0).getId()));
+            songInfo.setArtistKey(fmList.get(i).getArtists().get(0).getPicUrl());
+            songList.add(songInfo);
+        }
+        SongPlayManager.getInstance().clickPlayAll(songList, 0);
+        SongInfo songInfo = songList.get(0);
+        Intent intent = new Intent(getContext(), FMSongActivity.class);
+        intent.putExtra(FMSongActivity.SONG_INFO, songInfo);
+        startActivity(intent);
     }
 
     @Override

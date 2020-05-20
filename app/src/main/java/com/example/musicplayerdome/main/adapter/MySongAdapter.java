@@ -1,5 +1,7 @@
 package com.example.musicplayerdome.main.adapter;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 
 import com.example.musicplayerdome.R;
@@ -18,7 +20,6 @@ public class MySongAdapter extends BaseRecyclerAdapter<SongRecommendation> {
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, SongRecommendation item) {
         if (item!=null){
             holder.image(R.id.my_song_img,item.getSongUrl());
-
         }
     }
 }

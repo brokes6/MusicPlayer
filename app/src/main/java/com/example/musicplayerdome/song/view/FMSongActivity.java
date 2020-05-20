@@ -12,28 +12,22 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
-
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SongContract;
 import com.example.musicplayerdome.base.BaseActivity;
+import com.example.musicplayerdome.databinding.ActivityFmsongBinding;
 import com.example.musicplayerdome.databinding.ActivitySongBinding;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
-import com.example.musicplayerdome.rewrite.MaxHeightRecyclerView;
-import com.example.musicplayerdome.song.adapter.MusicListAdapter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.other.MusicPauseEvent;
 import com.example.musicplayerdome.song.other.MusicStartEvent;
@@ -47,12 +41,12 @@ import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.song.dialog.SongDetailDialog;
 import com.example.musicplayerdome.song.dialog.SongListDialog;
 import com.example.musicplayerdome.util.GsonUtil;
+import com.example.musicplayerdome.util.JzViewOutlineProvider;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.example.musicplayerdome.util.TimeUtil;
 import com.example.musicplayerdome.util.VolumeChangeObserver;
 import com.example.musicplayerdome.util.XToastUtils;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.manager.MusicManager;
 import com.lzx.starrysky.model.SongInfo;
@@ -67,12 +61,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.example.musicplayerdome.main.view.SongSheetActivityMusic.COMPLETED;
 
 
-public class SongActivity extends BaseActivity<SongPresenter> implements SongContract.View, VolumeChangeObserver.VolumeChangeListener,View.OnClickListener{
+public class FMSongActivity extends BaseActivity<SongPresenter> implements SongContract.View, VolumeChangeObserver.VolumeChangeListener,View.OnClickListener{
     private static final String TAG = "SongActivity";
 
     public static final String SONG_INFO = "songInfo";
@@ -87,10 +83,11 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     private ObjectAnimator alphaAnimator;
     private boolean isShowLyrics = false;
     private LyricBean lyricBean;
-    ActivitySongBinding binding;
+    ActivityFmsongBinding binding;
     private VolumeChangeObserver mVolumeChangeObserver;
     private SongListDialog songListDialog;
     private List<SongInfo> songList = new ArrayList<>();
+    private int Mvid;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMusicStartEvent(MusicStartEvent event) {
@@ -117,7 +114,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_song);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_fmsong);
 
         ImmersionBar.with(this)
                 .transparentStatusBar()
@@ -153,15 +150,11 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         binding.rlCenter.setOnClickListener(this);
         binding.ivPlay.setOnClickListener(this);
         binding.ivLike.setOnClickListener(this);
-        binding.ivDownload.setOnClickListener(this);
-        binding.ivComment.setOnClickListener(this);
-        binding.ivInfo.setOnClickListener(this);
-        binding.ivPlayMode.setOnClickListener(this);
-        binding.ivPre.setOnClickListener(this);
         binding.ivNext.setOnClickListener(this);
-        binding.ivList.setOnClickListener(this);
         binding.actAudioVolumeControl.setOnSeekBarChangeListener(new SeekBarChangeVolumeControl());
         setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
+//        binding.playerVideo.setOutlineProvider(new JzViewOutlineProvider(30));
+//        binding.playerVideo.setClipToOutline(true);
     }
     /**
      * 获取状态栏高度
@@ -217,7 +210,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 SongPlayManager.getInstance().seekTo(seekBar.getProgress());
-                SongActivity.this.binding.seekBar.setProgress(seekBar.getProgress());
+                FMSongActivity.this.binding.seekBar.setProgress(seekBar.getProgress());
                 binding.lrc.updateTime(seekBar.getProgress());
             }
         });
@@ -237,21 +230,19 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     private void checkMusicState() {
         setSongInfo(currentSongInfo.getSongName(), currentSongInfo.getArtist());
         if (judgeContainsStr(currentSongInfo.getSongId())) {
-            binding.PropsColumnS.setVisibility(View.GONE);
         } else {
             if (lyricBean == null) {
                 mPresenter.getLyric(Long.parseLong(currentSongInfo.getSongId()));
             }
-            binding.PropsColumnS.setVisibility(View.VISIBLE);
             ids = Long.parseLong(currentSongInfo.getSongId());
             String songId = currentSongInfo.getSongId();
             List<String> likeList = SharePreferenceUtil.getInstance(this).getLikeList();
-            if (likeList.contains(songId)) {
-                isLike = true;
-                binding.ivLike.setImageResource(R.drawable.shape_like_white);
-            } else {
-                isLike = false;
-            }
+//            if (likeList.contains(songId)) {
+//                isLike = true;
+//                binding.ivLike.setImageResource(R.drawable.shape_like_white);
+//            } else {
+//                isLike = false;
+//            }
             if (SongPlayManager.getInstance().getSongDetail(ids) == null) {
                 mPresenter.getSongDetail(ids);
             } else {
@@ -264,18 +255,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         if (binding.seekBar.getMax() != duration) {
             binding.seekBar.setMax((int) duration);
         }
-
-        switch (playMode) {
-            case SongPlayManager.MODE_LIST_LOOP_PLAY:
-                binding.ivPlayMode.setImageResource(R.drawable.shape_list_cycle);
-                break;
-            case SongPlayManager.MODE_RANDOM:
-                binding.ivPlayMode.setImageResource(R.drawable.shape_list_random);
-                break;
-            case SongPlayManager.MODE_SINGLE_LOOP_PLAY:
-                binding.ivPlayMode.setImageResource(R.drawable.shape_single_cycle);
-                break;
-        }
         binding.totalTime.setText(TimeUtil.getTimeNoYMDH(duration));
         checkMusicPlaying();
     }
@@ -284,18 +263,11 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         mTimerTask.startToUpdateProgress();
         if (SongPlayManager.getInstance().isPlaying()) {
             hideDialog();
-            SharedPreferencesUtil.putData("Ykey",2);
+            SharedPreferencesUtil.putData("Ykey",1);
             Log.e(TAG, "--music正在播放--");
-            if (getRotateAnimator().isPaused()) {
-                getRotateAnimator().resume();
-            } else if (getRotateAnimator().isRunning()) {
-            } else {
-                getRotateAnimator().start();
-            }
             binding.ivPlay.setImageResource(R.drawable.shape_pause);
         } else {
             Log.e(TAG, "--music没有播放--");
-            getRotateAnimator().pause();
             binding.ivPlay.setImageResource(R.drawable.shape_play_white);
         }
     }
@@ -307,21 +279,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         String regex = ".*[a-zA-Z]+.*";
         Matcher m = Pattern.compile(regex).matcher(cardNum);
         return m.matches();
-    }
-
-    /**
-     * 控制封面旋转
-     * @return
-     */
-    private ObjectAnimator getRotateAnimator() {
-        if (rotateAnimator == null) {
-            rotateAnimator = ObjectAnimator.ofFloat(binding.ivRecord, "rotation", 360f);
-            rotateAnimator.setDuration(50 * 1000);
-            rotateAnimator.setInterpolator(new LinearInterpolator());
-            rotateAnimator.setRepeatCount(100000);
-            rotateAnimator.setRepeatMode(ValueAnimator.RESTART);
-        }
-        return rotateAnimator;
     }
 
     private ObjectAnimator getAlphaAnimator() {
@@ -338,7 +295,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         Glide.with(this)
                 .load(coverUrl)
                 .placeholder(R.drawable.shape_record)
-                .into(binding.ivRecord);
+                .into(binding.fmImg);
         Glide.with(this)
                 .load(coverUrl)
                 .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 12)))
@@ -363,62 +320,15 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                     SongPlayManager.getInstance().clickASong(currentSongInfo);
                 }
                 break;
-            case R.id.iv_like:
+            case R.id.iv_Like:
                 if (isLike) {
                     mPresenter.NolikeMusic(ids);
                 } else {
                     mPresenter.likeMusic(ids);
                 }
                 break;
-            case R.id.iv_download:
-                XToastUtils.info("Sorry啊，歌都不是我的，不能下载的");
-                break;
-            case R.id.iv_comment:
-                if (songDetail == null) {
-                    XToastUtils.info("获取不到歌曲信息，稍后再试");
-                    return;
-                }
-//                intent.setClass(SongActivity.this, CommentActivity.class);
-//                intent.putExtra(CommentActivity.ID, songDetail.getSongs().get(0).getId());
-//                intent.putExtra(CommentActivity.NAME, songDetail.getSongs().get(0).getName());
-//                intent.putExtra(CommentActivity.ARTIST, songDetail.getSongs().get(0).getAr().get(0).getName());
-//                intent.putExtra(CommentActivity.COVER, songDetail.getSongs().get(0).getAl().getPicUrl());
-//                intent.putExtra(CommentActivity.FROM, CommentActivity.SONG_COMMENT);
-//                startActivity(intent);
-                break;
-            case R.id.iv_info:
-                SongDetailDialog songDetailDialog = new SongDetailDialog(mContext,currentSongInfo);
-                songDetailDialog.setCanceledOnTouchOutside(true);
-                songDetailDialog.show();
-                break;
-            case R.id.iv_play_mode:
-                if (playMode == SongPlayManager.MODE_LIST_LOOP_PLAY) {
-                    SongPlayManager.getInstance().setMode(SongPlayManager.MODE_SINGLE_LOOP_PLAY);
-                    binding.ivPlayMode.setImageResource(R.drawable.shape_single_cycle);
-                    playMode = SongPlayManager.MODE_SINGLE_LOOP_PLAY;
-                    XToastUtils.info("切换到单曲循环模式");
-                } else if (playMode == SongPlayManager.MODE_SINGLE_LOOP_PLAY) {
-                    SongPlayManager.getInstance().setMode(SongPlayManager.MODE_RANDOM);
-                    binding.ivPlayMode.setImageResource(R.drawable.shape_list_random);
-                    playMode = SongPlayManager.MODE_RANDOM;
-                    XToastUtils.info("切换到随机播放模式");
-                } else if (playMode == SongPlayManager.MODE_RANDOM) {
-                    SongPlayManager.getInstance().setMode(SongPlayManager.MODE_LIST_LOOP_PLAY);
-                    binding.ivPlayMode.setImageResource(R.drawable.shape_list_cycle);
-                    playMode = SongPlayManager.MODE_LIST_LOOP_PLAY;
-                    XToastUtils.info("切换到列表循环模式");
-                }
-                break;
-            case R.id.iv_pre:
-                SongPlayManager.getInstance().playPreMusic();
-                break;
             case R.id.iv_next:
                 SongPlayManager.getInstance().playNextMusic();
-                break;
-            case R.id.iv_list:
-                songListDialog = new SongListDialog(this);
-                songListDialog.setCanceledOnTouchOutside(true);
-                songListDialog.show();
                 break;
         }
     }
@@ -485,13 +395,13 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     //根据isShowLyrics来判断是否展示歌词
     private void showLyrics(boolean isShowLyrics) {
         if (isShowLyrics == true){
-            binding.ivRecord.setVisibility(View.GONE);
-            binding.PropsColumnS.setVisibility(View.GONE);
+//            binding.playerVideo.setVisibility(View.GONE);
+            binding.fmImg.setVisibility(View.GONE);
             binding.lrc.setVisibility(View.VISIBLE);
             binding.volume.setVisibility(View.VISIBLE);
         }else{
-            binding.ivRecord.setVisibility(View.VISIBLE);
-            binding.PropsColumnS.setVisibility(View.VISIBLE);
+//            binding.playerVideo.setVisibility(View.VISIBLE);
+            binding.fmImg.setVisibility(View.VISIBLE);
             binding.lrc.setVisibility(View.GONE);
             binding.volume.setVisibility(View.GONE);
         }
@@ -533,8 +443,14 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     @Override
     public void onGetSongDetailSuccess(SongDetailBean bean) {
         songDetail = bean;
+        List<SongDetailBean.SongsBean> fmList = bean.getSongs();
         setSongDetailBean(songDetail);
         SongPlayManager.getInstance().putSongDetail(songDetail);
+        for (int i = 0; i <fmList.size(); i++) {
+            Mvid = songDetail.getSongs().get(i).getMv();
+            Log.e(TAG, "MV的id为"+Mvid);
+        }
+//        binding.playerVideo.setUp("", JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "");;
     }
 
     @Override

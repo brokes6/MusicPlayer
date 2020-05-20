@@ -24,6 +24,8 @@ import java.util.Objects;
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements View.OnClickListener {
     private static final String TAG = "BaseFragment";
 
+    public static final String SONG_URL = "http://music.163.com/song/media/outer/url?id=";
+
     protected P mPresenter;
 
     protected LoadingDialog mDialog;

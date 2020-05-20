@@ -18,9 +18,11 @@ import com.example.musicplayerdome.song.other.MusicPauseEvent;
 import com.example.musicplayerdome.song.other.MusicStartEvent;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.other.StopMusicEvent;
+import com.example.musicplayerdome.song.view.FMSongActivity;
 import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.song.dialog.SongListDialog;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
+import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.lzx.starrysky.model.SongInfo;
 
 import org.greenrobot.eventbus.EventBus;
@@ -96,9 +98,20 @@ public class BottomSongPlayBar extends RelativeLayout {
 
     private void initListener() {
         ivCover.setOnClickListener(v -> {
-            Intent intent = new Intent(mContext, SongActivity.class);
-            intent.putExtra(SongActivity.SONG_INFO, currentSongInfo);
-            mContext.startActivity(intent);
+            int key = (int) SharedPreferencesUtil.getData("Ykey",0);
+            switch (key){
+                case 1:
+                    Intent intent = new Intent(mContext, FMSongActivity.class);
+                    intent.putExtra(FMSongActivity.SONG_INFO, currentSongInfo);
+                    mContext.startActivity(intent);
+                    break;
+                case 2:
+                    Intent intent2 = new Intent(mContext, SongActivity.class);
+                    intent2.putExtra(SongActivity.SONG_INFO, currentSongInfo);
+                    mContext.startActivity(intent2);
+                    break;
+            }
+
         });
         songlsit.setOnClickListener(v -> {
             songListDialog = new SongListDialog(mContext);
@@ -106,9 +119,19 @@ public class BottomSongPlayBar extends RelativeLayout {
             songListDialog.show();
         });
         llSongInfo.setOnClickListener(v -> {
-            Intent intent = new Intent(mContext, SongActivity.class);
-            intent.putExtra(SongActivity.SONG_INFO, currentSongInfo);
-            mContext.startActivity(intent);
+            int key = (int) SharedPreferencesUtil.getData("Ykey",0);
+            switch (key){
+                case 1:
+                    Intent intent = new Intent(mContext, FMSongActivity.class);
+                    intent.putExtra(FMSongActivity.SONG_INFO, currentSongInfo);
+                    mContext.startActivity(intent);
+                    break;
+                case 2:
+                    Intent intent2 = new Intent(mContext, SongActivity.class);
+                    intent2.putExtra(SongActivity.SONG_INFO, currentSongInfo);
+                    mContext.startActivity(intent2);
+                    break;
+            }
         });
 
         ivPlay.setOnClickListener(v -> {
