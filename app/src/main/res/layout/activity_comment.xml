@@ -98,17 +98,17 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_gap_hot_comment"
                     android:paddingLeft="10dp"
-                    android:background="#E4E4E4"
                     android:layout_marginTop="@dimen/dp_7"
                     android:text="@string/hot_comment"
                     android:textColor="#303233"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_17"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_hot_comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#fff"
                     android:layout_below="@id/tv_hot_comment"
                     android:layout_marginTop="@dimen/dp_3" />
 
@@ -128,9 +128,8 @@
                     android:paddingLeft="10dp"
                     android:layout_marginTop="@dimen/dp_7"
                     android:text="@string/new_comment"
-                    android:background="#E4E4E4"
                     android:textColor="#303233"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="@dimen/sp_17"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -138,6 +137,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_comment"
+                    android:background="#fff"
                     android:layout_marginTop="@dimen/dp_3" />
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>

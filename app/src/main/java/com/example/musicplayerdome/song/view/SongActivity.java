@@ -246,12 +246,12 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
             ids = Long.parseLong(currentSongInfo.getSongId());
             String songId = currentSongInfo.getSongId();
             List<String> likeList = SharePreferenceUtil.getInstance(this).getLikeList();
-//            if (likeList.contains(songId)) {
-//                isLike = true;
-//                binding.ivLike.setImageResource(R.drawable.shape_like_white);
-//            } else {
-//                isLike = false;
-//            }
+            if (likeList.contains(songId)) {
+                isLike = true;
+                binding.ivLike.setImageResource(R.drawable.shape_like_white);
+            } else {
+                isLike = false;
+            }
             if (SongPlayManager.getInstance().getSongDetail(ids) == null) {
                 mPresenter.getSongDetail(ids);
             } else {

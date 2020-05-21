@@ -74,7 +74,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         if (mPresenter != null) {
             mPresenter = null;
         }
-        mDialog = null;
+        if (mDialog!=null){
+            mDialog.recycle();
+            mDialog = null;
+        }
         super.onDestroy();
     }
 

@@ -298,7 +298,7 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
                 .into(binding.fmImg);
         Glide.with(this)
                 .load(coverUrl)
-                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 12)))
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 10)))
                 .transition(new DrawableTransitionOptions().crossFade(1500))
                 .into(binding.ivBg);
     }

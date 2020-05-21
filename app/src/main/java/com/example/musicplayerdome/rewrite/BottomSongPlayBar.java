@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,6 +18,7 @@ import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.song.other.MusicPauseEvent;
 import com.example.musicplayerdome.song.other.MusicStartEvent;
 import com.example.musicplayerdome.song.other.SongPlayManager;
+import com.example.musicplayerdome.song.other.SongPresenter;
 import com.example.musicplayerdome.song.other.StopMusicEvent;
 import com.example.musicplayerdome.song.view.FMSongActivity;
 import com.example.musicplayerdome.song.view.SongActivity;
@@ -41,12 +43,13 @@ public class BottomSongPlayBar extends RelativeLayout {
 
     private RelativeLayout rlSongController;
     private RoundImageView ivCover;
-    private ImageView ivPlay, ivController,songlsit;
+    private ImageView ivPlay, ivController,songlsit,iv_Like;
     private RollTextView tvSongName;
     private TextView tvSongSinger;
     private LinearLayout llSongInfo;
     private SongListDialog songListDialog;
     private SongInfo currentSongInfo;
+    private int key;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPlayMusicEvent(MusicStartEvent event) {
@@ -88,17 +91,28 @@ public class BottomSongPlayBar extends RelativeLayout {
     private void initView() {
         rlSongController = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.layout_bottom_songplay_control, this, true);
         ivCover = rlSongController.findViewById(R.id.iv_cover);
+        iv_Like = rlSongController.findViewById(R.id.iv_Like);
         ivPlay = rlSongController.findViewById(R.id.btn_custom_play);
 //        ivController = rlSongController.findViewById(R.id.iv_bottom_controller);
         tvSongName = rlSongController.findViewById(R.id.tv_songname);
         tvSongSinger = rlSongController.findViewById(R.id.tv_singer);
         llSongInfo = rlSongController.findViewById(R.id.ll_songinfo);
         songlsit = rlSongController.findViewById(R.id.btn_custom_list);
+        key = (int) SharedPreferencesUtil.getData("Ykey",0);
+        switch (key){
+            case 1:
+                iv_Like.setVisibility(View.VISIBLE);
+                songlsit.setVisibility(View.GONE);
+                break;
+            case 2:
+                iv_Like.setVisibility(View.GONE);
+                songlsit.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
     private void initListener() {
         ivCover.setOnClickListener(v -> {
-            int key = (int) SharedPreferencesUtil.getData("Ykey",0);
             switch (key){
                 case 1:
                     Intent intent = new Intent(mContext, FMSongActivity.class);
@@ -113,13 +127,15 @@ public class BottomSongPlayBar extends RelativeLayout {
             }
 
         });
+        iv_Like.setOnClickListener(v -> {
+
+        });
         songlsit.setOnClickListener(v -> {
             songListDialog = new SongListDialog(mContext);
             songListDialog.setCanceledOnTouchOutside(true);
             songListDialog.show();
         });
         llSongInfo.setOnClickListener(v -> {
-            int key = (int) SharedPreferencesUtil.getData("Ykey",0);
             switch (key){
                 case 1:
                     Intent intent = new Intent(mContext, FMSongActivity.class);

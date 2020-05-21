@@ -1,6 +1,8 @@
 package com.example.musicplayerdome;
 
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Intent;
 
 import com.example.musicplayerdome.db.DaoMaster;
 import com.example.musicplayerdome.db.DaoSession;
@@ -44,11 +46,23 @@ public class MyApplication extends Application {
 //        mDaoSession = daoMaster.newSession();
     }
     private void setNotification(){
+        int key = (int) SharedPreferencesUtil.getData("Ykey",0);
+        String lujin;
+        switch (key){
+            case 1:
+               lujin = "com.example.musicplayerdome.song.view.FMSongActivity";
+                break;
+            case 2:
+                lujin = "com.example.musicplayerdome.song.view.SongActivity";
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + key);
+        }
         MusicManager.getInstance().setNotificationConstructor(
                 new NotificationConstructor.Builder()
                         .setCreateSystemNotification(true)
-                        .setNotificationCanClearBySystemBtn(true)
-                        .setTargetClass("com.example.musicplayerdome.song.view.SongActivity")
+                        .setNotificationCanClearBySystemBtn(false)
+                        .setTargetClass(lujin)
                         .bulid()
         );
     }
