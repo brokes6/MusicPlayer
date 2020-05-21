@@ -69,7 +69,7 @@ import static com.example.musicplayerdome.main.view.SongSheetActivityMusic.COMPL
 
 
 public class FMSongActivity extends BaseActivity<SongPresenter> implements SongContract.View, VolumeChangeObserver.VolumeChangeListener,View.OnClickListener{
-    private static final String TAG = "SongActivity";
+    private static final String TAG = "FMSongActivity";
 
     public static final String SONG_INFO = "songInfo";
     AudioManager mAudioManager;
@@ -263,7 +263,6 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
         mTimerTask.startToUpdateProgress();
         if (SongPlayManager.getInstance().isPlaying()) {
             hideDialog();
-            SharedPreferencesUtil.putData("Ykey",1);
             Log.e(TAG, "--music正在播放--");
             binding.ivPlay.setImageResource(R.drawable.shape_pause);
         } else {
@@ -530,6 +529,7 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
     @Override
     public void onGetLyricSuccess(LyricBean bean) {
         Log.e(TAG, "onGetLyricSuccess : " + bean);
+        SharedPreferencesUtil.putData("Ykey",1);
         if (bean.getLrc() != null) {
             if (bean.getTlyric().getLyric() != null) {
                 binding.lrc.loadLrc(bean.getLrc().getLyric(), bean.getTlyric().getLyric());

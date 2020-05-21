@@ -11,7 +11,7 @@ import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.LoginContract;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.databinding.ActivityLoginBinding;
-import com.example.musicplayerdome.login.LoginPresenter;
+import com.example.musicplayerdome.login.other.LoginPresenter;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.util.ActivityStarter;
 import com.example.musicplayerdome.util.ClickUtil;

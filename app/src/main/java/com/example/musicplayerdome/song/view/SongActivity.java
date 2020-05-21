@@ -284,7 +284,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         mTimerTask.startToUpdateProgress();
         if (SongPlayManager.getInstance().isPlaying()) {
             hideDialog();
-            SharedPreferencesUtil.putData("Ykey",2);
             Log.e(TAG, "--music正在播放--");
             if (getRotateAnimator().isPaused()) {
                 getRotateAnimator().resume();
@@ -614,6 +613,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     @Override
     public void onGetLyricSuccess(LyricBean bean) {
         Log.e(TAG, "onGetLyricSuccess : " + bean);
+        SharedPreferencesUtil.putData("Ykey",2);
         if (bean.getLrc() != null) {
             if (bean.getTlyric().getLyric() != null) {
                 binding.lrc.loadLrc(bean.getLrc().getLyric(), bean.getTlyric().getLyric());

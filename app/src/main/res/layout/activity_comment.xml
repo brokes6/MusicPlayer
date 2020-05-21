@@ -32,7 +32,8 @@
                     android:id="@+id/rl_song_info"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_110"
-                    android:layout_marginTop="@dimen/dp_5">
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:background="#fff">
 
                     <com.android.liuzhuang.rcimageview.RoundCornerImageView
                         android:id="@+id/iv_cover"

@@ -95,13 +95,13 @@ public class WowPresenter extends WowContract.Presenter {
 
                     @Override
                     public void onNext(DailyRecommendBean bean) {
-                        Log.d(TAG, "onNext" + bean);
+                        Log.d(TAG, "日推数据：" + bean);
                         mView.onGetDailyRecommendSuccess(bean);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "onError" + e);
+                        Log.e(TAG, "日推onError：" + e);
                         mView.onGetDailyRecommendFail(e.getMessage());
                     }
 
