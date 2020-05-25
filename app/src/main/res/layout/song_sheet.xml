@@ -62,7 +62,10 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
+                    <RelativeLayout
+                        android:id="@+id/Top3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                     <com.android.liuzhuang.rcimageview.RoundCornerImageView
                         android:id="@+id/XLogin"
                         android:layout_margin="17dp"
@@ -103,13 +106,14 @@
                         android:text=" "
                         android:textColor="#FFFFFF" />
                 </RelativeLayout>
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:id="@+id/Props_column"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:animateLayoutChanges="true"
-                        android:layout_below="@+id/XLogin"
+                        android:layout_below="@+id/Top3"
                         android:orientation="vertical">
                         <LinearLayout
                             android:id="@+id/Props_columnS"
