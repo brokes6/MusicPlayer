@@ -64,7 +64,9 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
                 .init();
+        goDialog();
     }
+
 
     @Override
     protected WowPresenter onCreatePresenter() {

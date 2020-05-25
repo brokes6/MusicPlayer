@@ -159,7 +159,7 @@ public class WowPresenter extends WowContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "onError : " + e);
+                        Log.e(TAG, "歌单onError : " + e);
                         mView.onGetPlayListFail(e.getMessage());
                     }
 
@@ -188,7 +188,7 @@ public class WowPresenter extends WowContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "onError : " + e);
+                        Log.e(TAG, "不清楚啥歌单onError : " + e);
                         mView.onGetPlaylistDetailFail(e.getMessage());
                     }
 

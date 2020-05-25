@@ -50,9 +50,10 @@ public class MyApplication extends Application {
         String lujin;
         switch (key){
             case 1:
-               lujin = "com.example.musicplayerdome.song.view.FMSongActivity";
+                lujin = "com.example.musicplayerdome.song.view.FMSongActivity";
                 break;
             case 2:
+            case 0:
                 lujin = "com.example.musicplayerdome.song.view.SongActivity";
                 break;
             default:

@@ -16,10 +16,11 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.rewrite.SearchEditText;
+import com.example.musicplayerdome.util.LoadingDialog;
 import com.example.musicplayerdome.util.LocaleManageUtil;
 import com.lzx.starrysky.manager.MediaSessionConnection;
 import com.lzx.starrysky.model.SongInfo;
-import com.xuexiang.xui.widget.dialog.LoadingDialog;
+//import com.xuexiang.xui.widget.dialog.LoadingDialog;
 
 import java.util.Objects;
 
@@ -74,10 +75,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         if (mPresenter != null) {
             mPresenter = null;
         }
-        if (mDialog!=null){
-            mDialog.recycle();
-            mDialog = null;
-        }
+//        if (mDialog!=null){
+//            mDialog.recycle();
+//            mDialog = null;
+//        }
         super.onDestroy();
     }
 

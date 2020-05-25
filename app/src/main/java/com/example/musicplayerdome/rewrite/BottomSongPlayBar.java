@@ -54,7 +54,6 @@ public class BottomSongPlayBar extends RelativeLayout {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPlayMusicEvent(MusicStartEvent event) {
         Log.d(TAG, "MusicStartEvent :" + event);
-        key = (int) SharedPreferencesUtil.getData("Ykey",0);
         setSongBean(event.getSongInfo());
         ivPlay.setImageResource(R.drawable.shape_pause_black);
     }
@@ -62,7 +61,6 @@ public class BottomSongPlayBar extends RelativeLayout {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStopMusicEvent(StopMusicEvent event) {
         Log.d(TAG, "onStopMusicEvent");
-        key = (int) SharedPreferencesUtil.getData("Ykey",0);
         setSongBean(event.getSongInfo());
         ivPlay.setImageResource(R.drawable.shape_play_black);
     }
@@ -70,7 +68,6 @@ public class BottomSongPlayBar extends RelativeLayout {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPauseMusicEvent(MusicPauseEvent event) {
         Log.d(TAG, "onPauseMusicEvent");
-        key = (int) SharedPreferencesUtil.getData("Ykey",0);
         ivPlay.setImageResource(R.drawable.shape_play_black);
     }
 
@@ -186,12 +183,12 @@ public class BottomSongPlayBar extends RelativeLayout {
 
     public void setSongBean(SongInfo bean) {
         currentSongInfo = bean;
+        key = (int) SharedPreferencesUtil.getData("Ykey",0);
         tvSongName.setText(bean.getSongName());
         tvSongSinger.setText(bean.getArtist());
         if (!TextUtils.isEmpty(bean.getSongCover())) {
             Glide.with(MyApplication.getContext()).load(bean.getSongCover()).into(ivCover);
         }
-        Log.e(TAG, "setSongBean: 当前key为"+key );
         switch (key){
             case 1:
                 iv_Like.setVisibility(View.VISIBLE);

@@ -12,7 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
-import com.xuexiang.xui.widget.dialog.LoadingDialog;
+//import com.xuexiang.xui.widget.dialog.LoadingDialog;
+
+import com.example.musicplayerdome.util.LoadingDialog;
 
 import java.util.Objects;
 

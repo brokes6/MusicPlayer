@@ -91,7 +91,7 @@ public class PlaylistDetailBean {
         private long trackNumberUpdateTime;
         private long createTime;
         private boolean highQuality;
-        private int userId;
+        private long userId;
         private long updateTime;
         private long coverImgId;
         private String coverImgUrl;
@@ -195,11 +195,11 @@ public class PlaylistDetailBean {
             this.highQuality = highQuality;
         }
 
-        public int getUserId() {
+        public long getUserId() {
             return userId;
         }
 
-        public void setUserId(int userId) {
+        public void setUserId(long userId) {
             this.userId = userId;
         }
 
@@ -696,7 +696,7 @@ public class PlaylistDetailBean {
             private int gender;
             private int city;
             private long birthday;
-            private int userId;
+            private long userId;
             private int userType;
             private String nickname;
             private String signature;
@@ -788,11 +788,11 @@ public class PlaylistDetailBean {
                 this.birthday = birthday;
             }
 
-            public int getUserId() {
+            public long getUserId() {
                 return userId;
             }
 
-            public void setUserId(int userId) {
+            public void setUserId(long userId) {
                 this.userId = userId;
             }
 
