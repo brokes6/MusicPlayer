@@ -116,6 +116,7 @@ public class SingerSongSearchFragment extends BaseFragment<SingerPresenter> impl
             songInfos.add(songInfo);
         }
         adapter.loadMore(songInfos);
+        adapter.setList(songInfos);
     }
 
     @Override

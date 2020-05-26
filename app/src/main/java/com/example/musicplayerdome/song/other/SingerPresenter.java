@@ -153,7 +153,6 @@ public class SingerPresenter extends SingerContract.Presenter {
 
                     @Override
                     public void onNext(SimiSingerBean bean) {
-                        Log.d(TAG, "getSimiSinger onNext:" + bean);
                         mView.onGetSimiSingerSuccess(bean);
                     }
 

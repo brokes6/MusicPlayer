@@ -149,7 +149,6 @@ public class SongPresenter extends SongContract.Presenter {
                     }
                     @Override
                     public void onNext(MusicCommentBean bean) {
-                        Log.d(TAG, "onNext ss: " + bean);
                         mView.onGetMusicCommentSuccess(bean);
                     }
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,6 +32,7 @@ import com.example.musicplayerdome.song.view.SongActivity;
 import com.lzx.starrysky.model.SongInfo;
 
 public class SongDetailDialog extends Dialog implements SongContract.View,View.OnClickListener{
+    private static final String TAG = "SongDetailDialog";
     private Context context;
     private Activity mContext;
     ImageView ivCover;
@@ -40,7 +42,7 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
     View sview;
     //SongActivity来的
     private long songId;
-    private SongInfo songInfo;
+    private SongInfo msongInfo;
     private String singerName;
     private long singerId;
     private String singerPicUrl;
@@ -49,7 +51,7 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
     public SongDetailDialog(@NonNull Context context,SongInfo songInfo) {
         super(context, R.style.my_dialog);
         this.context = context;
-        this.songInfo = songInfo;
+        msongInfo = songInfo;
         initView();
         init();
     }
@@ -80,19 +82,15 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
     }
 
     private void init() {
-        Intent intent = mContext.getIntent();
-        if (intent != null) {
-            songInfo = intent.getParcelableExtra(SongActivity.SONG_INFO);
-            singerId = Long.parseLong(songInfo.getArtistId());
-            singerName = songInfo.getArtist();
-            singerPicUrl = songInfo.getArtistKey();
-
-            Glide.with(context).load(songInfo.getSongCover()).into(ivCover);
-            tvSongName.setText("歌名：" + songInfo.getSongName());
-            mdSinger.setText("歌手：" + singerName);
-            tvSinger.setText(singerName);
-            songId = Long.parseLong(songInfo.getSongId());
-        }
+        singerId = Long.parseLong(msongInfo.getArtistId());
+        Log.e(TAG, "init: id数据为"+singerId);
+        singerName = msongInfo.getArtist();
+        singerPicUrl = msongInfo.getArtistKey();
+        Glide.with(context).load(msongInfo.getSongCover()).into(ivCover);
+        tvSongName.setText("歌名："+ msongInfo.getSongName());
+        mdSinger.setText("歌手：" + singerName);
+        tvSinger.setText(singerName);
+        songId = Long.parseLong(msongInfo.getSongId());
     }
 
     @Override

@@ -34,6 +34,7 @@ import com.example.musicplayerdome.song.fragment.SingerInfoSearchFragment;
 import com.example.musicplayerdome.song.fragment.SingerSongSearchFragment;
 import com.example.musicplayerdome.song.other.SingIdEvent;
 import com.example.musicplayerdome.song.other.SingerPresenter;
+import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.AppBarStateChangeListener;
 import com.example.musicplayerdome.util.DensityUtil;
 import com.google.android.material.appbar.AppBarLayout;
@@ -132,7 +133,11 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
     @Override
     protected void onResume() {
         super.onResume();
-
+        if (SongPlayManager.getInstance().isPlaying()) {
+            binding.bottomController.setVisibility(View.VISIBLE);
+        } else {
+            binding.bottomController.setVisibility(View.GONE);
+        }
         binding.appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, AppBarStateChangeListener.State state) {
