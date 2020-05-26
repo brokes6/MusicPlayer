@@ -17,6 +17,7 @@ import com.example.musicplayerdome.bean.Audio;
 import com.example.musicplayerdome.bean.SongRecommendation;
 import com.example.musicplayerdome.main.bean.PlaylistBean;
 import com.example.musicplayerdome.util.XToastUtils;
+import com.lzx.starrysky.model.SongInfo;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
@@ -69,6 +70,9 @@ public class SongListAdapter extends BaseRecyclerAdapter<PlaylistBean> {
                 listener.onClickListener(position);
             }
         });
+    }
+
+    public void loadMore(List<SongInfo> songInfos) {
     }
 
     public interface OnPlayListClickListener {

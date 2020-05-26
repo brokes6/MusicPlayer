@@ -82,9 +82,6 @@ dependencies {
     //屏幕适配
     implementation 'me.jessyan:autosize:1.1.2'
 
-    //音频歌词
-    implementation 'com.github.Lauzy:LyricView:1.0.4'
-
     //轮播图
     implementation 'com.youth.banner:banner:1.4.10'  //最新版本
 
@@ -94,8 +91,9 @@ dependencies {
     // fragment快速实现（可选）
     implementation 'com.gyf.immersionbar:immersionbar-components:3.0.0'
 
-    //圆角图片
+    //圆角图片,圆形
     implementation 'com.liuzhuang.opensource:rcimageview:0.0.2'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 
     //图片模糊
     implementation 'jp.wasabeef:glide-transformations:4.1.0'
@@ -112,4 +110,7 @@ dependencies {
     //视频
     implementation 'fm.jiecao:jiecaovideoplayer:5.5.2'
     implementation 'cn.jzvd:jiaozivideoplayer:7.3.1'
+
+    //滑动TabLayout,对于ViewPager的依赖性强
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 }

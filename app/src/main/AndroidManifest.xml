@@ -35,6 +35,11 @@
         <activity
             android:name=".song.view.CommentActivity"/>
         <activity
+            android:name=".song.view.SingerActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".login.view.SplashActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:launchMode="singleTop"

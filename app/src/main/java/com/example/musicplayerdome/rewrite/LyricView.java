@@ -126,7 +126,7 @@ public class LyricView extends View {
         mDefaultLabel = ta.getString(R.styleable.LyricView_default_label);
         mPadding = ta.getDimension(R.styleable.LyricView_lrc_padding, 0);
         mTimelineColor = ta.getColor(R.styleable.LyricView_timeline_color, Color.parseColor("#f0f0f0"));
-        mPlayDrawable = getResources().getDrawable(R.drawable.play_icon);
+        mPlayDrawable = getResources().getDrawable(R.drawable.ic_lrc_play);
 
         float timeTextSize = ta.getDimension(R.styleable.LyricView_time_text_size, getResources().getDimension(R.dimen.sp_10));
         mTextGravity = ta.getInteger(R.styleable.LyricView_text_gravity, LrcEntry.GRAVITY_CENTER);

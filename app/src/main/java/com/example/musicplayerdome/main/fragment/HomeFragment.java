@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends BaseFragment<WowPresenter> implements WowContract.View{
+public class    HomeFragment extends BaseFragment<WowPresenter> implements WowContract.View{
     private static final String TAG = "HomeFragment";
     FragmentHomeBinding binding;
     SongListAdapter songListAdapter;

@@ -56,9 +56,6 @@ import com.example.musicplayerdome.util.SPManager;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.example.musicplayerdome.util.TimerFlag;
 import com.gyf.immersionbar.ImmersionBar;
-import com.lauzy.freedom.library.Lrc;
-import com.lauzy.freedom.library.LrcHelper;
-import com.lauzy.freedom.library.LrcView;
 import com.lzx.starrysky.model.SongInfo;
 import com.smp.soundtouchandroid.AudioSpeed;
 import com.smp.soundtouchandroid.MediaCallBack;
@@ -187,7 +184,7 @@ public class MusicActivityMusic extends BaseActivity<SongPresenter> implements V
         binding.button.setOnClickListener(this);
         binding.audioTiming.setOnClickListener(this);
         binding.playAlbumIs.setOnClickListener(this);
-        binding.mLrcView.setOnClickListener(this);
+//        binding.mLrcView.setOnClickListener(this);
         binding.back.setOnClickListener(this);
         binding.actAudioPlayerButtonPrebuttonId.setOnClickListener(this);
         binding.actAudioPlayerButtonNextId.setOnClickListener(this);
@@ -310,18 +307,18 @@ public class MusicActivityMusic extends BaseActivity<SongPresenter> implements V
 //                showTimingPop();
                 break;
                 //音频歌词
-            case R.id.play_album_is:
-                binding.playAlbumIs.setVisibility(View.GONE);
-                binding.lrcViews.setVisibility(View.VISIBLE);
-                binding.PropsColumnS.setVisibility(View.GONE);
-                binding.volume.setVisibility(View.VISIBLE);
-                break;
-            case R.id.mLrcView:
-                binding.playAlbumIs.setVisibility(View.VISIBLE);
-                binding.lrcViews.setVisibility(View.GONE);
-                binding.PropsColumnS.setVisibility(View.VISIBLE);
-                binding.volume.setVisibility(View.GONE);
-                break;
+//            case R.id.play_album_is:
+//                binding.playAlbumIs.setVisibility(View.GONE);
+//                binding.lrcViews.setVisibility(View.VISIBLE);
+//                binding.PropsColumnS.setVisibility(View.GONE);
+//                binding.volume.setVisibility(View.VISIBLE);
+//                break;
+//            case R.id.mLrcView:
+//                binding.playAlbumIs.setVisibility(View.VISIBLE);
+//                binding.lrcViews.setVisibility(View.GONE);
+//                binding.PropsColumnS.setVisibility(View.VISIBLE);
+//                binding.volume.setVisibility(View.GONE);
+//                break;
             case R.id.back:
                 ActivityUtils.startActivity(SongSheetActivityMusic.class);
                 break;
@@ -408,24 +405,24 @@ public class MusicActivityMusic extends BaseActivity<SongPresenter> implements V
      * 音乐歌曲初始化
      */
     private void setMusicLrcView(Audio audio){
-        String name = audio.getName();
-        File file = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC)+"/"+name+".lrc");
-        if(FilesUtil.fileIsExists(file)==false){
-            Log.e(TAG, "音乐歌曲初始化: 未发现lrc文件");
-            String url = audio.getLrcurl();
-            binding.mLrcView.setEmptyContent("暂时没有歌词~");
-//            FilesUtil.downloadFile(file,url);
-            return;
-        }
-        List<Lrc> Lyric = LrcHelper.parseLrcFromFile(file);
-        //设置歌词数据：
-        binding.mLrcView.setLrcData(Lyric);
-        binding.mLrcView.setOnPlayIndicatorLineListener(new LrcView.OnPlayIndicatorLineListener() {
-            @Override
-            public void onPlay(long time, String content) {
-                musicController.seekTo(((int) time * 1000));
-            }
-        });
+//        String name = audio.getName();
+//        File file = new File(getExternalFilesDir(Environment.DIRECTORY_MUSIC)+"/"+name+".lrc");
+//        if(FilesUtil.fileIsExists(file)==false){
+//            Log.e(TAG, "音乐歌曲初始化: 未发现lrc文件");
+//            String url = audio.getLrcurl();
+//            binding.mLrcView.setEmptyContent("暂时没有歌词~");
+////            FilesUtil.downloadFile(file,url);
+//            return;
+//        }
+//        List<Lrc> Lyric = LrcHelper.parseLrcFromFile(file);
+//        //设置歌词数据：
+//        binding.mLrcView.setLrcData(Lyric);
+//        binding.mLrcView.setOnPlayIndicatorLineListener(new LrcView.OnPlayIndicatorLineListener() {
+//            @Override
+//            public void onPlay(long time, String content) {
+//                musicController.seekTo(((int) time * 1000));
+//            }
+//        });
     }
     @Override
     public void onGetSongDetailSuccess(SongDetailBean bean) {
@@ -657,7 +654,7 @@ public class MusicActivityMusic extends BaseActivity<SongPresenter> implements V
         if (binding.actAudioPlayerCurrentPlayTimeId != null) {
             binding.actAudioPlayerCurrentPlayTimeId.setText(getTimeStr((int) position));
         }
-        binding.mLrcView.updateTime(musicController.getPlayedDuration() / 1000);
+//        binding.mLrcView.updateTime(musicController.getPlayedDuration() / 1000);
     }
     private void setInitDate(long duration) {
         Log.d(TAG, "duration=" + duration);

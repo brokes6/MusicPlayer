@@ -26,6 +26,7 @@ import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.bean.PlayListCommentBean;
 import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.song.view.CommentActivity;
+import com.example.musicplayerdome.song.view.SingerActivity;
 import com.example.musicplayerdome.song.view.SongActivity;
 import com.lzx.starrysky.model.SongInfo;
 
@@ -35,13 +36,13 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
     ImageView ivCover;
     TextView tvSongName;
     TextView tvSinger;
-    MusicDrawerItemView mdSinger,md_commend;
+    MusicDrawerItemView mdSinger,md_commend,md_singer;
     View sview;
     //SongActivity来的
     private long songId;
     private SongInfo songInfo;
     private String singerName;
-    private String singerId;
+    private long singerId;
     private String singerPicUrl;
     private View view;
 
@@ -57,11 +58,13 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
         mContext = (Activity) context;
         view = mContext.getLayoutInflater().inflate(R.layout.activity_song_detail, null);
         ivCover = view.findViewById(R.id.iv_cover);
+        md_singer = view.findViewById(R.id.md_singer);
         md_commend = view.findViewById(R.id.md_commend);
         tvSongName = view.findViewById(R.id.tv_songname);
         tvSinger = view.findViewById(R.id.tv_singer);
         mdSinger = view.findViewById(R.id.md_singer);
         sview = view.findViewById(R.id.sview);
+        md_singer.setOnClickListener(this);
         md_commend.setOnClickListener(this);
         sview.setOnClickListener(this);
 
@@ -77,26 +80,39 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
     }
 
     private void init() {
-        singerId = songInfo.getArtistId();
-        singerName = songInfo.getArtist();
-        singerPicUrl = songInfo.getArtistKey();
-        Glide.with(context).load(songInfo.getSongCover()).into(ivCover);
-        tvSongName.setText("歌名："+ songInfo.getSongName());
-        mdSinger.setText("歌手：" + singerName);
-        tvSinger.setText(singerName);
-        songId = Long.parseLong(songInfo.getSongId());
+        Intent intent = mContext.getIntent();
+        if (intent != null) {
+            songInfo = intent.getParcelableExtra(SongActivity.SONG_INFO);
+            singerId = Long.parseLong(songInfo.getArtistId());
+            singerName = songInfo.getArtist();
+            singerPicUrl = songInfo.getArtistKey();
+
+            Glide.with(context).load(songInfo.getSongCover()).into(ivCover);
+            tvSongName.setText("歌名：" + songInfo.getSongName());
+            mdSinger.setText("歌手：" + singerName);
+            tvSinger.setText(singerName);
+            songId = Long.parseLong(songInfo.getSongId());
+        }
     }
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent();
         switch (v.getId()){
             case R.id.sview:
                 dismiss();
                 break;
             case R.id.md_commend:
-                Intent intent = new Intent();
                 intent.setClass(mContext, CommentActivity.class);
                 intent.putExtra(CommentActivity.FROM, CommentActivity.SONG_COMMENT);
+                mContext.startActivity(intent);
+                dismiss();
+                break;
+            case R.id.md_singer:
+                intent.setClass(mContext, SingerActivity.class);
+                intent.putExtra(SingerActivity.SINGER_NAME, singerName);
+                intent.putExtra(SingerActivity.SINGER_ID, singerId);
+                intent.putExtra(SingerActivity.SINGER_PICURL, singerPicUrl);
                 mContext.startActivity(intent);
                 dismiss();
                 break;

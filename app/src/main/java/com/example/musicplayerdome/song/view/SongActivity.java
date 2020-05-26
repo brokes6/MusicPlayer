@@ -447,7 +447,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     @Override
     protected void onResume() {
-        checkMusicState();
         mVolumeChangeObserver.registerReceiver();
         super.onResume();
     }

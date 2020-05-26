@@ -12,6 +12,10 @@
         <attr name="item_name" format="reference" />
         <attr name="is_show_gap" format="boolean" />
     </declare-styleable>
+    //专辑封面
+    <declare-styleable name="RikkaRoundRectView">
+        <attr name="roundRatio" format="float" />
+    </declare-styleable>
 
     <declare-styleable name="LyricView">
         <attr name="text_size" format="dimension"/>

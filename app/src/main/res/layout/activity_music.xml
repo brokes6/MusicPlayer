@@ -75,13 +75,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <com.lauzy.freedom.library.LrcView
-                    android:id="@+id/mLrcView"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    app:currentIndicateLrcColor="@color/colorAccent"
-                    app:indicatorTextColor="@android:color/holo_orange_dark"
-                    app:playIcon="@drawable/play_icon" />
+<!--                <com.lauzy.freedom.library.LrcView-->
+<!--                    android:id="@+id/mLrcView"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    app:currentIndicateLrcColor="@color/colorAccent"-->
+<!--                    app:indicatorTextColor="@android:color/holo_orange_dark"-->
+<!--                    app:playIcon="@drawable/play_icon" />-->
             </LinearLayout>
 
         </LinearLayout>
