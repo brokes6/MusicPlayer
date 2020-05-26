@@ -152,7 +152,6 @@ public class CommentActivity extends BaseActivity<SongPresenter> implements Song
     @Override
     public void onGetMusicCommentSuccess(MusicCommentBean bean) {
         hideDialog();
-        Log.d(TAG, "onGetMusicCommentSuccess : " + bean);
         setLeftTitleText(getString(R.string.comment) + "(" + bean.getTotal() + ")", getString(R.string.colorWhite));
         notifyList(bean.getHotComments(), bean.getComments());
     }

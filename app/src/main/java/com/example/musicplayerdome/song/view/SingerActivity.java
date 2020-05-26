@@ -3,17 +3,10 @@ package com.example.musicplayerdome.song.view;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import androidx.databinding.DataBindingUtil;
-import androidx.viewpager.widget.ViewPager;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
@@ -38,8 +31,6 @@ import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.AppBarStateChangeListener;
 import com.example.musicplayerdome.util.DensityUtil;
 import com.google.android.material.appbar.AppBarLayout;
-import com.gyf.immersionbar.ImmersionBar;
-
 import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,24 +64,24 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
         pagerAdapter.init(fragments);
     }
 
-    /**
-     * 获取状态栏高度
-     * @param context
-     * @return
-     */
-    public static int getStatusBarHeight(Context context) {
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        int height = resources.getDimensionPixelSize(resourceId);
-        return height;
-    }
-    public static void setMargins (View v, int l, int t, int r, int b) {
-        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            p.setMargins(l, t, r, b);
-            v.requestLayout();
-        }
-    }
+//    /**
+//     * 获取状态栏高度
+//     * @param context
+//     * @return
+//     */
+//    public static int getStatusBarHeight(Context context) {
+//        Resources resources = context.getResources();
+//        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+//        int height = resources.getDimensionPixelSize(resourceId);
+//        return height;
+//    }
+//    public static void setMargins (View v, int l, int t, int r, int b) {
+//        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+//            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+//            p.setMargins(l, t, r, b);
+//            v.requestLayout();
+//        }
+//    }
 
     @Override
     protected SingerPresenter onCreatePresenter() {
@@ -104,6 +95,7 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
 
     @Override
     protected void initData() {
+        //到时候不使用这个方法，换一个方法（下次来改）
         setBackBtn(getString(R.string.colorWhite));
 
         if (getIntent() != null) {

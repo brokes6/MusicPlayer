@@ -92,7 +92,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         }
     }
 
-    private final int A3A3 = 0xFF3A3A3A, yellow = 0xFFFFBB43, red = 0xFFdb2b1c;
+    private final int A3A3 = 0xFF3A3A3A, While = 0xFFFFFF, red = 0xFFdb2b1c;
     private int text;
     private void initApadter(){
         binding.viewpager.setAdapter(mPagerAdapter);
@@ -105,6 +105,15 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 setSelectTextBoldAndBig(tab);
+                if (tab.getText().equals("云 村")){
+                    ImmersionBar.with(HomeActivityMusic.this).statusBarDarkFont(true).init();
+                    binding.ivSearch.setImageResource(R.drawable.shape_search_gray);
+                    binding.icNav.setImageResource(R.drawable.shape_drawer_gray);
+                }else{
+                    ImmersionBar.with(HomeActivityMusic.this).statusBarDarkFont(false).init();
+                    binding.ivSearch.setImageResource(R.drawable.shape_search);
+                    binding.icNav.setImageResource(R.drawable.shape_drawer);
+                }
             }
 
             @Override
@@ -125,9 +134,10 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
                 if (position == 0) {
                     evaluate = (Integer) evaluator.evaluate(positionOffset, A3A3, red); // 根据positionOffset和第0页~第1页的颜色转换范围取颜色值
                 } else if (position == 1) {
-                    evaluate = (Integer) evaluator.evaluate(positionOffset, red, red); // 根据positionOffset和第1页~第2页的颜色转换范围取颜色值
+                    evaluate = (Integer) evaluator.evaluate(positionOffset, red, While); // 根据positionOffset和第1页~第2页的颜色转换范围取颜色值
                 } else if (position == 2) {
-                    evaluate = (Integer) evaluator.evaluate(positionOffset, red, red); // 根据positionOffset和第2页~第3页的颜色转换范围取颜色值
+                    evaluate = (Integer) evaluator.evaluate(positionOffset, While, While); // 根据positionOffset和第2页~第3页的颜色转换范围取颜色值
+                    ImmersionBar.with(HomeActivityMusic.this).statusBarDarkFont(true);
                 } else {
                     evaluate = red; // 最终第3页的颜色
                 }
@@ -152,7 +162,11 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         textView.setScaleY(1.5f);
         textView.setScaleX(1.5f);
         textView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        textView.setTextColor(Color.parseColor("#FFFDFD"));
+        if (tab.getText().equals("云 村")){
+            textView.setTextColor(Color.parseColor("#000000"));
+        }else{
+            textView.setTextColor(Color.parseColor("#FFFDFD"));
+        }
         tab.setCustomView(textView);
     }
 
