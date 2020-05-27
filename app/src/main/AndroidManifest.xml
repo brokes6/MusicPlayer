@@ -63,12 +63,6 @@
 
         </activity>
         <activity android:name=".util.UserGuideActivity" />
-        <activity
-            android:name=".song.view.MusicActivityMusic"
-            android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"
-            android:hardwareAccelerated="true"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
 
         <activity android:name=".song.view.SongActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"

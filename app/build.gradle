@@ -56,8 +56,6 @@ dependencies {
     implementation 'com.github.xuexiangjys.XUtil:xutil-sub:1.1.7'
     //引入音乐控制库
     implementation "androidx.media:media:1.1.0"
-    implementation project(':soundtouch')
-    implementation project(':kprogresshud')
 
     // 网络请求框架
     // OkHttp + Retrofit + RxJava + RxAndroid + Gson
