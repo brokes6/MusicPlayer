@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.MvContract;
@@ -17,11 +19,15 @@ import com.example.musicplayerdome.main.bean.MvSublistBean;
 import com.example.musicplayerdome.main.other.MvPresenter;
 import com.example.musicplayerdome.main.other.WowPresenter;
 
+import java.util.Collection;
+
+import yuncun.adapter.YuncunAdapter;
 import yuncun.bean.YuncunReviewBean;
 
 public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContract.View {
     MyfragmentBinding binding;
     private static final String TAG = "YuncunFragment";
+    private YuncunAdapter adapter;
 
     public YuncunFragment() {
         setFragmentTitle("云 村");
@@ -40,7 +46,24 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
 
     @Override
     protected void initData() {
-        mPresenter.getRecommendMV();
+        mPresenter.getYuncun();
+        //垂直方向的2列
+        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        binding.recyclerView.setLayoutManager(layoutManager);
+        final int spanCount = 2;
+        binding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                int[] first = new int[spanCount];
+                layoutManager.findFirstCompletelyVisibleItemPositions(first);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && (first[0] == 1 || first[1] == 1)) {
+                    layoutManager.invalidateSpanAssignments();
+                }
+            }
+        });
+        adapter = new YuncunAdapter(getContext());
+        binding.recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -60,7 +83,6 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
 
     @Override
     public void onGetRecommendMVSuccess(MvSublistBean bean) {
-        Log.e(TAG, "onGetRecommendMVSuccess: 推荐mv数据为"+bean);
     }
 
     @Override
@@ -70,7 +92,7 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
 
     @Override
     public void onGetYuncunSuccess(YuncunReviewBean bean) {
-
+        adapter.loadMore((Collection<YuncunReviewBean.UserData>) bean.getData());
     }
 
     @Override

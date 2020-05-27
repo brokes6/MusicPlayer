@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 import yuncun.bean.YuncunReviewBean;
 
 public class MvPresenter extends MvContract.Presenter{
-    private static final String TAG = "WowPresenter";
+    private static final String TAG = "MvPresenter";
 
     public MvPresenter(MvContract.View view) {
         this.mView = view;
@@ -61,12 +61,13 @@ public class MvPresenter extends MvContract.Presenter{
 
                         @Override
                         public void onNext(YuncunReviewBean yuncunReviewBean) {
-
+                            mView.onGetYuncunSuccess(yuncunReviewBean);
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             Log.e(TAG, "云村热评onError: "+e.getMessage());
+                            mView.onGetYuncunFail(e.getMessage());
                         }
 
                         @Override

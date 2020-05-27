@@ -128,7 +128,7 @@ public class BottomSongPlayBar extends RelativeLayout {
 
         });
         iv_Like.setOnClickListener(v -> {
-
+            iv_Like.setImageResource(R.drawable.shape_like_white);
         });
         songlsit.setOnClickListener(v -> {
             songListDialog = new SongListDialog(mContext);

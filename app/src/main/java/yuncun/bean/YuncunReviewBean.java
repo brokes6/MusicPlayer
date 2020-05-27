@@ -1,12 +1,13 @@
 package yuncun.bean;
 
+
 import java.util.List;
 
 public class YuncunReviewBean {
 
     private int code;
     private String message;
-    private List<UserData> data;
+    public List<UserData> data;
 
     public int getCode() {
         return code;
@@ -32,13 +33,13 @@ public class YuncunReviewBean {
         this.data = data;
     }
 
-    public static class UserData{
+    public class UserData{
         private long id;
         private String threadId;
         private String content;
         private long time;
-        private List<simpleUserInfo>simpleUserInfo;
-        private List<simpleResourceInfo>simpleResourceInfo;
+        private simpleUserInfoBean simpleUserInfo;
+        private simpleResourceInfoBean simpleResourceInfo;
 
         public long getId() {
             return id;
@@ -72,23 +73,23 @@ public class YuncunReviewBean {
             this.time = time;
         }
 
-        public List<UserData.simpleUserInfo> getSimpleUserInfo() {
+        public simpleUserInfoBean getSimpleUserInfo() {
             return simpleUserInfo;
         }
 
-        public void setSimpleUserInfo(List<UserData.simpleUserInfo> simpleUserInfo) {
+        public void setSimpleUserInfo(simpleUserInfoBean simpleUserInfo) {
             this.simpleUserInfo = simpleUserInfo;
         }
 
-        public List<UserData.simpleResourceInfo> getSimpleResourceInfo() {
+        public simpleResourceInfoBean getSimpleResourceInfo() {
             return simpleResourceInfo;
         }
 
-        public void setSimpleResourceInfo(List<UserData.simpleResourceInfo> simpleResourceInfo) {
+        public void setSimpleResourceInfo(simpleResourceInfoBean simpleResourceInfo) {
             this.simpleResourceInfo = simpleResourceInfo;
         }
 
-        public static class simpleUserInfo{
+        public class simpleUserInfoBean{
             private long userId;
             private String nickname;
             private String avatar;
@@ -135,13 +136,13 @@ public class YuncunReviewBean {
                 this.userType = userType;
             }
         }
-        public static class simpleResourceInfo{
+        public class simpleResourceInfoBean{
             private long songId;
             private String threadId;
             private String name;
-            private List<artists>artists;
+            private List<artistsBean> artists;
             private String songCoverUrl;
-            private List<song>song;
+            private songBean song;
 
             public long getSongId() {
                 return songId;
@@ -167,14 +168,6 @@ public class YuncunReviewBean {
                 this.name = name;
             }
 
-            public List<UserData.simpleResourceInfo.artists> getArtists() {
-                return artists;
-            }
-
-            public void setArtists(List<UserData.simpleResourceInfo.artists> artists) {
-                this.artists = artists;
-            }
-
             public String getSongCoverUrl() {
                 return songCoverUrl;
             }
@@ -183,15 +176,23 @@ public class YuncunReviewBean {
                 this.songCoverUrl = songCoverUrl;
             }
 
-            public List<UserData.simpleResourceInfo.song> getSong() {
+            public List<artistsBean> getArtists() {
+                return artists;
+            }
+
+            public void setArtists(List<artistsBean> artists) {
+                this.artists = artists;
+            }
+
+            public songBean getSong() {
                 return song;
             }
 
-            public void setSong(List<UserData.simpleResourceInfo.song> song) {
+            public void setSong(songBean song) {
                 this.song = song;
             }
 
-            public static class artists{
+            public class artistsBean{
                 private long id;
                 private String name;
 
@@ -212,10 +213,10 @@ public class YuncunReviewBean {
                 }
             }
 
-            public static class song{
+            public class songBean{
                 private String name;
                 private long id;
-                private List<ar>ar;
+                private List<ar> ar;
 
                 public String getName() {
                     return name;
@@ -233,15 +234,15 @@ public class YuncunReviewBean {
                     this.id = id;
                 }
 
-                public List<UserData.simpleResourceInfo.song.ar> getAr() {
+                public List<songBean.ar> getAr() {
                     return ar;
                 }
 
-                public void setAr(List<UserData.simpleResourceInfo.song.ar> ar) {
+                public void setAr(List<songBean.ar> ar) {
                     this.ar = ar;
                 }
 
-                private static class ar{
+                private class ar{
                     private long id;
                     private String name;
 
