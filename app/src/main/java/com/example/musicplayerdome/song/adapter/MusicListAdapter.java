@@ -41,16 +41,16 @@ public class MusicListAdapter extends BaseRecyclerAdapter<SongInfo> {
 
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, SongInfo item) {
+        tvSongName = holder.findViewById(R.id.tv_music_name);
+        tvSingerName = holder.findViewById(R.id.tv_artist_name);
+        tvLink = holder.findViewById(R.id.tv_link);
+        ivDel = holder.findViewById(R.id.iv_del);
+        ivHorn = holder.findViewById(R.id.iv_horn);
+        rlSongPlay = holder.findViewById(R.id.rl_song_play);
         if (item!=null){
-            tvSongName = holder.findViewById(R.id.tv_music_name);
-            tvSingerName = holder.findViewById(R.id.tv_artist_name);
-            tvLink = holder.findViewById(R.id.tv_link);
-            ivDel = holder.findViewById(R.id.iv_del);
-            ivHorn = holder.findViewById(R.id.iv_horn);
-            rlSongPlay = holder.findViewById(R.id.rl_song_play);
+            setBean(item);
+            setListener(listener,position);
         }
-        setBean(item);
-        setListener(listener,position);
     }
 
     public void setBean(SongInfo songInfo) {

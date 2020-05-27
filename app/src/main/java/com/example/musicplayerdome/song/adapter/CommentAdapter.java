@@ -50,19 +50,19 @@ public class CommentAdapter extends BaseRecyclerAdapter<MusicCommentBean.Comment
 
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, MusicCommentBean.CommentsBean item) {
+        tvUserName = holder.findViewById(R.id.tv_username);
+        ivAvatar = holder.findViewById(R.id.iv_avatar);
+        tvContent = holder.findViewById(R.id.tv_content);
+        tvPublishTime = holder.findViewById(R.id.tv_publish_time);
+        tvLikeCount = holder.findViewById(R.id.tv_like_count);
+        ivLike = holder.findViewById(R.id.iv_like);
+        rlLike = holder.findViewById(R.id.rl_like);
+        rlGap = holder.findViewById(R.id.rl_gap);
+        tvGap = holder.findViewById(R.id.tv_gap);
         if (item!=null) {
-            tvUserName = holder.findViewById(R.id.tv_username);
-            ivAvatar = holder.findViewById(R.id.iv_avatar);
-            tvContent = holder.findViewById(R.id.tv_content);
-            tvPublishTime = holder.findViewById(R.id.tv_publish_time);
-            tvLikeCount = holder.findViewById(R.id.tv_like_count);
-            ivLike = holder.findViewById(R.id.iv_like);
-            rlLike = holder.findViewById(R.id.rl_like);
-            rlGap = holder.findViewById(R.id.rl_gap);
-            tvGap = holder.findViewById(R.id.tv_gap);
+            setBean(item, position);
+            setListener(listener, position);
         }
-        setBean(item, position);
-        setListener(listener, position);
     }
     public void setBean(MusicCommentBean.CommentsBean bean, int position) {
         Glide.with(mContext).load(bean.getUser().getAvatarUrl()).transition(new DrawableTransitionOptions().crossFade()).into(ivAvatar);

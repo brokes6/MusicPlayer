@@ -23,11 +23,11 @@ public class RecommendMusicAdapter extends BaseRecyclerAdapter<Audio> {
 
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, Audio item) {
+        holder.text(R.id.rec_text,item.getName());
+        holder.text(R.id.rec_author,"-"+item.getAuthor());
+        holder.text(R.id.rec_introduce,item.getAbstractInfo());
+        holder.image(R.id.rec_img,item.getFaceUrl());
         if(item!=null){
-            holder.text(R.id.rec_text,item.getName());
-            holder.text(R.id.rec_author,"-"+item.getAuthor());
-            holder.text(R.id.rec_introduce,item.getAbstractInfo());
-            holder.image(R.id.rec_img,item.getFaceUrl());
             holder.click(R.id.rplay, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

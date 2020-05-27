@@ -18,8 +18,6 @@ public class MySongAdapter extends BaseRecyclerAdapter<SongRecommendation> {
 
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, SongRecommendation item) {
-        if (item!=null){
-            holder.image(R.id.my_song_img,item.getSongUrl());
-        }
+        holder.image(R.id.my_song_img,item.getSongUrl());
     }
 }

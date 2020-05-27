@@ -71,22 +71,22 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
 
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, SongInfo item) {
+        tvName = holder.findViewById(R.id.tv_songname);
+        tvSinger = holder.findViewById(R.id.tv_singer);
+        tvSongNumber = holder.findViewById(R.id.iv_songnumber);
+        ivCover = holder.findViewById(R.id.iv_songcover);
+        ivSongDetail = holder.findViewById(R.id.iv_songdetail);
+        llSong = holder.findViewById(R.id.ll_song);
+        ivPhone = holder.findViewById(R.id.iv_phone);
+        rlSong = holder.findViewById(R.id.rl_song);
         if (item!=null){
-            tvName = holder.findViewById(R.id.tv_songname);
-            tvSinger = holder.findViewById(R.id.tv_singer);
-            tvSongNumber = holder.findViewById(R.id.iv_songnumber);
-            ivCover = holder.findViewById(R.id.iv_songcover);
-            ivSongDetail = holder.findViewById(R.id.iv_songdetail);
-            llSong = holder.findViewById(R.id.ll_song);
-            ivPhone = holder.findViewById(R.id.iv_phone);
-            rlSong = holder.findViewById(R.id.rl_song);
+            if (type == 3) {
+                setSongInfo(mContext, item, keywords);
+            } else {
+                setSongInfo(mContext, item, position, type);
+            }
+            setSongClick(item, position);
         }
-        if (type == 3) {
-            setSongInfo(mContext, item, keywords);
-        } else {
-            setSongInfo(mContext, item, position, type);
-        }
-        setSongClick(item, position);
     }
     public void setSongInfo(Context context, SongInfo bean, int position, int type) {
         tvName.setText(bean.getSongName());

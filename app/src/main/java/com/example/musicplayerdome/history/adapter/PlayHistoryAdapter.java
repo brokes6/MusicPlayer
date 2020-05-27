@@ -37,9 +37,9 @@ public class PlayHistoryAdapter extends BaseRecyclerAdapter<PlayListItemBean> {
 
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, PlayListItemBean item) {
+        llItem = holder.findViewById(R.id.ll_item);
+        ivCover = holder.findViewById(R.id.iv_cover);
         if(item!=null) {
-            llItem = holder.findViewById(R.id.ll_item);
-            ivCover = holder.findViewById(R.id.iv_cover);
             Glide.with(mContext).load(item.getCoverUrl()).transition(new DrawableTransitionOptions().crossFade()).into(ivCover);
             holder.text(R.id.tv_playlist_name, item.getPlayListName());
             long playcount = item.getPlayCount();

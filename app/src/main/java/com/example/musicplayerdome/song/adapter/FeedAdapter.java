@@ -55,15 +55,15 @@ public class FeedAdapter extends BaseRecyclerAdapter<MvBean> {
 
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, MvBean item) {
+        ivCover = holder.findViewById(R.id.iv_cover);
+        tvName = holder.findViewById(R.id.tv_name);
+        tvCreator = holder.findViewById(R.id.tv_creator);
+        rlFeed = holder.findViewById(R.id.rl_feed);
+        tvMv = holder.findViewById(R.id.tv_mv);
         if (item!=null){
-            ivCover = holder.findViewById(R.id.iv_cover);
-            tvName = holder.findViewById(R.id.tv_name);
-            tvCreator = holder.findViewById(R.id.tv_creator);
-            rlFeed = holder.findViewById(R.id.rl_feed);
-            tvMv = holder.findViewById(R.id.tv_mv);
+            setBean(mContext, item, keywords, type);
+            setListener(mContext, position);
         }
-        setBean(mContext, item, keywords, type);
-        setListener(mContext, position);
     }
 
     public void setBean(Context context, MvBean videosBean, String keywords, int type) {

@@ -40,13 +40,13 @@ public class SimiSingerAdapter extends BaseRecyclerAdapter<SimiSingerBean.Artist
 
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, SimiSingerBean.ArtistsBean item) {
+        rlSimi = holder.findViewById(R.id.rl_simi);
+        ivCover = holder.findViewById(R.id.iv_cover);
+        tvName = holder.findViewById(R.id.tv_name);
         if (item!=null){
-            rlSimi = holder.findViewById(R.id.rl_simi);
-            ivCover = holder.findViewById(R.id.iv_cover);
-            tvName = holder.findViewById(R.id.tv_name);
+            setBean(mContext,item);
+            setListener(listener, position);
         }
-        setBean(mContext,item);
-        setListener(listener, position);
     }
 
     public void setBean(Context context, SimiSingerBean.ArtistsBean bean) {

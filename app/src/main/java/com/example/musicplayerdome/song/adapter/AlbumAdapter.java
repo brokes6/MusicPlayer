@@ -57,15 +57,15 @@ public class AlbumAdapter extends BaseRecyclerAdapter<AlbumAdapterBean> {
 
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, AlbumAdapterBean item) {
+        ivCover = holder.findViewById(R.id.iv_cover);
+        tvName = holder.findViewById(R.id.tv_name);
+        tvDescription = holder.findViewById(R.id.tv_description);
+        rlAlbum = holder.findViewById(R.id.rl_album);
+        tvSinger = holder.findViewById(R.id.tv_singer);
         if(item!=null){
-            ivCover = holder.findViewById(R.id.iv_cover);
-            tvName = holder.findViewById(R.id.tv_name);
-            tvDescription = holder.findViewById(R.id.tv_description);
-            rlAlbum = holder.findViewById(R.id.rl_album);
-            tvSinger = holder.findViewById(R.id.tv_singer);
+            setBean(mContext, item, keywords, type);
+            setListener(listener, position);
         }
-        setBean(mContext, item, keywords, type);
-        setListener(listener, position);
     }
     void setBean(Context context, AlbumAdapterBean bean, String keywords, int type) {
         Glide.with(context)
