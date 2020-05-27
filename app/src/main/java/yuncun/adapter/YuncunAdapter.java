@@ -21,7 +21,6 @@ import yuncun.bean.YuncunReviewBean;
 public class YuncunAdapter extends BaseRecyclerAdapter<YuncunReviewBean.UserData> {
     private static final String TAG = "YuncunAdapter";
     private Context mcontext;
-    private YuncunReviewBean.UserData beans;
     RoundCornerImageView yuncun_img;
     RoundImageView user_img;
     TextView yuncun_wz,user_name;
@@ -40,17 +39,16 @@ public class YuncunAdapter extends BaseRecyclerAdapter<YuncunReviewBean.UserData
         user_name = holder.findViewById(R.id.tv_playlist_name);
         yuncun_wz = holder.findViewById(R.id.yuncun_wz);
         if (item!=null){
-            beans = item;
-            setData(position, (YuncunReviewBean.UserData.simpleUserInfoBean) item.getSimpleUserInfo());
+            setData(position,item);
         }
     }
 
-    public void setData(int position, YuncunReviewBean.UserData.simpleUserInfoBean bean) {
+    public void setData(int position, YuncunReviewBean.UserData bean) {
         if (bean != null) {
-            yuncun_wz.setText(beans.getContent());
-            user_name.setText(bean.getNickname());
-            Glide.with(mcontext).load(bean.getAvatar()).transition(new DrawableTransitionOptions().crossFade()).into(user_img);
-            Glide.with(mcontext).load(beans.getSimpleResourceInfo().getSongCoverUrl()).transition(new DrawableTransitionOptions().crossFade()).into(yuncun_img);
+            yuncun_wz.setText(bean.getContent());
+            user_name.setText(bean.getSimpleUserInfo().getNickname());
+            Glide.with(mcontext).load(bean.getSimpleUserInfo().getAvatar()).transition(new DrawableTransitionOptions().crossFade()).into(user_img);
+            Glide.with(mcontext).load(bean.getSimpleResourceInfo().getSongCoverUrl()).transition(new DrawableTransitionOptions().crossFade()).into(yuncun_img);
             //需要Item高度不同才能出现瀑布流的效果，此处简单粗暴地设置一下高度
             if (position % 2 == 0) {
                 yuncun_img.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 760));

@@ -64,6 +64,7 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
         });
         adapter = new YuncunAdapter(getContext());
         binding.recyclerView.setAdapter(adapter);
+        showDialog();
     }
 
     @Override
@@ -92,7 +93,8 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
 
     @Override
     public void onGetYuncunSuccess(YuncunReviewBean bean) {
-        adapter.loadMore((Collection<YuncunReviewBean.UserData>) bean.getData());
+        hideDialog();
+        adapter.loadMore(bean.getData());
     }
 
     @Override
