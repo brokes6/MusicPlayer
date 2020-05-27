@@ -10,6 +10,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import yuncun.bean.YuncunReviewBean;
 
 public class MvPresenter extends MvContract.Presenter{
     private static final String TAG = "WowPresenter";
@@ -37,7 +38,7 @@ public class MvPresenter extends MvContract.Presenter{
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "onError: "+e.getMessage());
+                        Log.e(TAG, "MVonError: "+e.getMessage());
                     }
 
                     @Override
@@ -46,4 +47,32 @@ public class MvPresenter extends MvContract.Presenter{
                     }
                 });
     }
+
+        @Override
+        public void getYuncun() {
+            mModel.getYuncun()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<YuncunReviewBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(YuncunReviewBean yuncunReviewBean) {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e(TAG, "云村热评onError: "+e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
 }

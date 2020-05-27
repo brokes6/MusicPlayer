@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.databinding.ActivityHomeBinding;
 import com.example.musicplayerdome.main.fragment.HomeFragment;
-import com.example.musicplayerdome.main.fragment.MyFragment;
+import com.example.musicplayerdome.main.fragment.YuncunFragment;
 import com.example.musicplayerdome.main.fragment.SongSheetFragment;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
@@ -62,7 +61,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         mPagerAdapter = new MultiFragmentPagerAdapter(getSupportFragmentManager());
         fragmentList.add(new SongSheetFragment());
         fragmentList.add(new HomeFragment());
-        fragmentList.add(new MyFragment());
+        fragmentList.add(new YuncunFragment());
         mPagerAdapter.init(fragmentList);
         initView();
     }

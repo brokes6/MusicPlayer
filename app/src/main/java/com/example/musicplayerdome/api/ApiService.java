@@ -55,6 +55,7 @@ import com.example.musicplayerdome.song.bean.SongDetailBean;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import yuncun.bean.YuncunReviewBean;
 
 /**
  * Created By Rikka on 2019/7/12
@@ -183,6 +184,9 @@ public interface ApiService {
 
     @GET("personalized/mv")
     Observable<MvSublistBean> getRecommendMV();
+
+    @GET("comment/hotwall/list")
+    Observable<YuncunReviewBean> getYuncun();
 
     @GET("mv/sublist")
     Observable<MvSublistBean> getMvSublist();

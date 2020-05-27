@@ -17,11 +17,13 @@ import com.example.musicplayerdome.main.bean.MvSublistBean;
 import com.example.musicplayerdome.main.other.MvPresenter;
 import com.example.musicplayerdome.main.other.WowPresenter;
 
-public class MyFragment extends BaseFragment<MvPresenter> implements MvContract.View {
-    MyfragmentBinding binding;
-    private static final String TAG = "MyFragment";
+import yuncun.bean.YuncunReviewBean;
 
-    public MyFragment() {
+public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContract.View {
+    MyfragmentBinding binding;
+    private static final String TAG = "YuncunFragment";
+
+    public YuncunFragment() {
         setFragmentTitle("云 村");
     }
 
@@ -63,6 +65,16 @@ public class MyFragment extends BaseFragment<MvPresenter> implements MvContract.
 
     @Override
     public void onGetRecommendMVFail(String e) {
+
+    }
+
+    @Override
+    public void onGetYuncunSuccess(YuncunReviewBean bean) {
+
+    }
+
+    @Override
+    public void onGetYuncunFail(String e) {
 
     }
 }
