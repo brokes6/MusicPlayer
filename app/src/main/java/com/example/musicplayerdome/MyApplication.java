@@ -54,6 +54,7 @@ public class MyApplication extends Application {
                 break;
             case 2:
             case 0:
+            case 3:
                 lujin = "com.example.musicplayerdome.song.view.SongActivity";
                 break;
             default:

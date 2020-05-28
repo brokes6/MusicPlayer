@@ -22,6 +22,7 @@
     <string name="colorPrimaryDark">#ffffff</string>
     <string name="colorAccent">#D81B60</string>
     <string name="colorWhite">#ffffff</string>
+    <string name="colorGray">#8C8787</string>
     <string name="colorBlack">#333333</string>
     <string name="colorBlue">#2196f3</string>
     <string name="colorTransWithe">#ccffffff</string>

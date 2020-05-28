@@ -32,9 +32,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="27dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/XTitle"
-            android:layout_toRightOf="@id/XLogin">
+            android:layout_marginTop="10dp">
             <com.example.musicplayerdome.rewrite.RoundImageView
                 android:id="@+id/user_img"
                 android:layout_width="27dp"

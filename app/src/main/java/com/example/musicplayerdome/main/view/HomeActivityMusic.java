@@ -33,6 +33,7 @@ import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.ActivityStarter;
 import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
+import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.google.android.material.tabs.TabLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import com.xuexiang.xui.utils.SnackbarUtils;
@@ -179,10 +180,13 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
     @Override
     protected void onResume() {
         super.onResume();
-        if (SongPlayManager.getInstance().isPlaying()) {
-            binding.bottomController.setVisibility(View.VISIBLE);
-        } else {
-            binding.bottomController.setVisibility(View.GONE);
+        int key = (int) SharedPreferencesUtil.getData("Ykey",0);
+        if (key!=3){
+            if (SongPlayManager.getInstance().isPlaying()) {
+                binding.bottomController.setVisibility(View.VISIBLE);
+            } else {
+                binding.bottomController.setVisibility(View.GONE);
+            }
         }
     }
 

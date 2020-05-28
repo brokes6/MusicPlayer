@@ -23,6 +23,7 @@ import com.example.musicplayerdome.main.other.WowPresenter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.yuncun.adapter.YuncunAdapter;
+import com.example.musicplayerdome.yuncun.view.YuncunSongActivity;
 import com.lzx.starrysky.model.SongInfo;
 
 import java.util.ArrayList;
@@ -91,15 +92,14 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
             msongInfo.setSongUrl(SONG_URL + userData.get(position).getSimpleResourceInfo().getSongId() + ".mp3");
             msongInfo.setArtist(userData.get(position).getSimpleResourceInfo().getArtists().get(0).getName());
             msongInfo.setSongCover(userData.get(position).getSimpleResourceInfo().getSongCoverUrl());
-            msongInfo.setDuration(userData.get(position).getSimpleResourceInfo().getSong().getDt());
-//            msongInfo.setDescription(userData.get(position).getContent());
-//            msongInfo.setAlbumArtist(userData.get(position).getSimpleUserInfo().getNickname());
-//            msongInfo.setAlbumCover(userData.get(position).getSimpleUserInfo().getAvatar());
+            msongInfo.setDescription(userData.get(position).getContent());
+            msongInfo.setAlbumArtist(userData.get(position).getSimpleUserInfo().getNickname());
+            msongInfo.setAlbumCover(userData.get(position).getSimpleUserInfo().getAvatar());
 
             SongPlayManager.getInstance().clickASong(msongInfo);
             Log.e(TAG, "onPlayListItemClick: 当前id为"+msongInfo.getSongId());
-            Intent intent = new Intent(getContext(), SongActivity.class);
-            intent.putExtra(SongActivity.SONG_INFO, msongInfo);
+            Intent intent = new Intent(getContext(), YuncunSongActivity.class);
+            intent.putExtra(YuncunSongActivity.YUNSONG_INFO, msongInfo);
             getContext().startActivity(intent);
         }
 

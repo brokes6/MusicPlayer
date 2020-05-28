@@ -57,7 +57,7 @@ public class YuncunAdapter extends BaseRecyclerAdapter<YuncunReviewBean.UserData
             if (position % 2 == 0) {
                 yuncun_img.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 760));
             } else {
-                yuncun_img.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 860));
+                yuncun_img.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 870));
             }
         }
     }
