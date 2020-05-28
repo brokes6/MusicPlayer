@@ -216,6 +216,7 @@ public class YuncunReviewBean {
             public class songBean{
                 private String name;
                 private long id;
+                private long dt;
                 private List<ar> ar;
 
                 public String getName() {
@@ -232,6 +233,14 @@ public class YuncunReviewBean {
 
                 public void setId(long id) {
                     this.id = id;
+                }
+
+                public long getDt() {
+                    return dt;
+                }
+
+                public void setDt(long dt) {
+                    this.dt = dt;
                 }
 
                 public List<songBean.ar> getAr() {

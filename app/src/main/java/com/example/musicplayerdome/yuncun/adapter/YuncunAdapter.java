@@ -1,4 +1,4 @@
-package yuncun.adapter;
+package com.example.musicplayerdome.yuncun.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.rewrite.RoundImageView;
+import com.example.musicplayerdome.song.adapter.UserPlaylistAdapter;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
@@ -24,6 +25,8 @@ public class YuncunAdapter extends BaseRecyclerAdapter<YuncunReviewBean.UserData
     RoundCornerImageView yuncun_img;
     RoundImageView user_img;
     TextView yuncun_wz,user_name;
+    private OnYuncunListItemClickListener listener;
+
     public YuncunAdapter(Context context){
         mcontext = context;
     }
@@ -40,6 +43,7 @@ public class YuncunAdapter extends BaseRecyclerAdapter<YuncunReviewBean.UserData
         yuncun_wz = holder.findViewById(R.id.yuncun_wz);
         if (item!=null){
             setData(position,item);
+            onSetListClickListener(listener,position);
         }
     }
 
@@ -56,6 +60,24 @@ public class YuncunAdapter extends BaseRecyclerAdapter<YuncunReviewBean.UserData
                 yuncun_img.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 860));
             }
         }
+    }
+
+    public void onSetListClickListener(OnYuncunListItemClickListener listener, int i) {
+        yuncun_img.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onPlayListItemClick(i);
+            }
+        });
+    }
+
+    public interface OnYuncunListItemClickListener {
+        void onPlayListItemClick(int position);
+
+        void onSmartPlayClick(int position);
+    }
+
+    public void setListener(OnYuncunListItemClickListener listener) {
+        this.listener = listener;
     }
 
 }

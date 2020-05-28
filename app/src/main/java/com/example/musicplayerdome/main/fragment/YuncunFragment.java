@@ -1,6 +1,8 @@
 package com.example.musicplayerdome.main.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +20,23 @@ import com.example.musicplayerdome.databinding.MyfragmentBinding;
 import com.example.musicplayerdome.main.bean.MvSublistBean;
 import com.example.musicplayerdome.main.other.MvPresenter;
 import com.example.musicplayerdome.main.other.WowPresenter;
+import com.example.musicplayerdome.song.other.SongPlayManager;
+import com.example.musicplayerdome.song.view.SongActivity;
+import com.example.musicplayerdome.yuncun.adapter.YuncunAdapter;
+import com.lzx.starrysky.model.SongInfo;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-import yuncun.adapter.YuncunAdapter;
 import yuncun.bean.YuncunReviewBean;
 
 public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContract.View {
     MyfragmentBinding binding;
     private static final String TAG = "YuncunFragment";
     private YuncunAdapter adapter;
+    private List<YuncunReviewBean.UserData> userData = new ArrayList<>();
+    private SongInfo msongInfo;
 
     public YuncunFragment() {
         setFragmentTitle("云 村");
@@ -63,6 +72,7 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
             }
         });
         adapter = new YuncunAdapter(getContext());
+        adapter.setListener(listener);
         binding.recyclerView.setAdapter(adapter);
         showDialog();
     }
@@ -71,6 +81,33 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
     public MvPresenter onCreatePresenter() {
         return new MvPresenter(this);
     }
+
+    YuncunAdapter.OnYuncunListItemClickListener listener = new YuncunAdapter.OnYuncunListItemClickListener() {
+        @Override
+        public void onPlayListItemClick(int position) {
+            msongInfo = new SongInfo();
+            msongInfo.setSongId(String.valueOf(userData.get(position).getSimpleResourceInfo().getSongId()));
+            msongInfo.setSongName(userData.get(position).getSimpleResourceInfo().getName());
+            msongInfo.setSongUrl(SONG_URL + userData.get(position).getSimpleResourceInfo().getSongId() + ".mp3");
+            msongInfo.setArtist(userData.get(position).getSimpleResourceInfo().getArtists().get(0).getName());
+            msongInfo.setSongCover(userData.get(position).getSimpleResourceInfo().getSongCoverUrl());
+            msongInfo.setDuration(userData.get(position).getSimpleResourceInfo().getSong().getDt());
+//            msongInfo.setDescription(userData.get(position).getContent());
+//            msongInfo.setAlbumArtist(userData.get(position).getSimpleUserInfo().getNickname());
+//            msongInfo.setAlbumCover(userData.get(position).getSimpleUserInfo().getAvatar());
+
+            SongPlayManager.getInstance().clickASong(msongInfo);
+            Log.e(TAG, "onPlayListItemClick: 当前id为"+msongInfo.getSongId());
+            Intent intent = new Intent(getContext(), SongActivity.class);
+            intent.putExtra(SongActivity.SONG_INFO, msongInfo);
+            getContext().startActivity(intent);
+        }
+
+        @Override
+        public void onSmartPlayClick(int position) {
+
+        }
+    };
 
     @Override
     protected void initVariables(Bundle bundle) {
@@ -95,6 +132,8 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
     public void onGetYuncunSuccess(YuncunReviewBean bean) {
         hideDialog();
         adapter.loadMore(bean.getData());
+        userData.clear();
+        userData.addAll(bean.getData());
     }
 
     @Override
