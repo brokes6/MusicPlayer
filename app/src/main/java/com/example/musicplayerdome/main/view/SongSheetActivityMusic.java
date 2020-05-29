@@ -137,6 +137,16 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     }
 
     @Override
+    public void onGetRecommendPlayListAgainSuccess(MainRecommendPlayListBean bean) {
+
+    }
+
+    @Override
+    public void onGetRecommendPlayListAgainFail(String e) {
+
+    }
+
+    @Override
     public void onGetDailyRecommendSuccess(DailyRecommendBean bean) {
 
     }

@@ -72,8 +72,6 @@ public class SongListAdapter extends BaseRecyclerAdapter<PlaylistBean> {
         });
     }
 
-    public void loadMore(List<SongInfo> songInfos) {
-    }
 
     public interface OnPlayListClickListener {
         void onClickListener(int position);

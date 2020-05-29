@@ -17,4 +17,9 @@ public class MvModel implements MvContract.Model{
     public Observable<YuncunReviewBean> getYuncun() {
         return ApiEngine.getInstance().getApiService().getYuncun();
     }
+
+    @Override
+    public Observable<YuncunReviewBean> getYuncunAgain() {
+        return ApiEngine.getInstance().getApiService().getYuncun();
+    }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +41,9 @@ import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.lzx.starrysky.model.SongInfo;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 import com.xuexiang.xui.widget.popupwindow.easypopup.EasyPopup;
 import com.xuexiang.xui.widget.popupwindow.easypopup.HorizontalGravity;
@@ -71,12 +75,12 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.songsheetfragment,container,false);
+        initView();
         return binding.getRoot();
     }
 
     @Override
     protected void initData() {
-        initView();
         initCirclePop();
         loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
         initUser(loginBean);
@@ -177,6 +181,19 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
     private void initView(){
         binding.minePlaylistMore.setOnClickListener(this);
+        //设置 Header式
+        binding.refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
+        //取消Footer
+        binding.refreshLayout.setEnableLoadMore(false);
+        binding.refreshLayout.setDisableContentWhenRefresh(true);
+
+        binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Log.e(TAG, "onRefresh: 开始刷新");
+                mPresenter.getUserPlaylistAgain(uid);
+            }
+        });
     }
 
     @Override
@@ -210,6 +227,32 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     @Override
     public void onGetUserPlaylistFail(String e) {
         hideDialog();
+    }
+
+    @Override
+    public void onGetUserPlaylistAgainSuccess(UserPlaylistBean bean) {
+        List<UserPlaylistBean.PlaylistBean> playlistBeans = new ArrayList<>();
+        List<PlayListItemBean> adapterList = new ArrayList<>();
+
+        playlistBeans.clear();
+        playlistBeans.addAll(bean.getPlaylist());
+        for (int i = 0; i < playlistBeans.size(); i++) {
+            PlayListItemBean beanInfo = new PlayListItemBean();
+            beanInfo.setCoverUrl(playlistBeans.get(i).getCoverImgUrl());
+            beanInfo.setPlaylistId(playlistBeans.get(i).getId());
+            beanInfo.setPlayCount(playlistBeans.get(i).getPlayCount());
+            beanInfo.setPlayListName(playlistBeans.get(i).getName());
+            beanInfo.setSongNumber(playlistBeans.get(i).getTrackCount());
+            beanInfo.setPlaylistCreator(playlistBeans.get(i).getCreator().getNickname());
+            adapterList.add(beanInfo);
+        }
+        adapter.refresh(adapterList);
+        binding.refreshLayout.finishRefresh(true);
+    }
+
+    @Override
+    public void onGetUserPlaylistAgainFail(String e) {
+
     }
 
     @Override

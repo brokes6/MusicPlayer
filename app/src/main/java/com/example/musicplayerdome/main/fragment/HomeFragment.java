@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.graphics.Outline;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,9 @@ import com.example.musicplayerdome.main.adapter.RecommendMusicAdapter;
 import com.example.musicplayerdome.main.adapter.SongListAdapter;
 import com.example.musicplayerdome.databinding.FragmentHomeBinding;
 import com.example.musicplayerdome.resources.DomeData;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.BannerConfig;
 
 import java.net.MalformedURLException;
@@ -108,6 +113,19 @@ public class    HomeFragment extends BaseFragment<WowPresenter> implements WowCo
 
     private void initView(){
         binding.hDailyRecommend.setOnClickListener(this);
+        //设置 Header式
+        binding.refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
+        //取消Footer
+        binding.refreshLayout.setEnableLoadMore(false);
+        binding.refreshLayout.setDisableContentWhenRefresh(true);
+
+        binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Log.e(TAG, "onRefresh: 开始刷新");
+                mPresenter.getRecommendPlayListAgain();
+            }
+        });
     }
     private void initBanner(List<?> imageUrls){
         binding.banner.setImageLoader(new GlideImageLoader());
@@ -183,6 +201,27 @@ public class    HomeFragment extends BaseFragment<WowPresenter> implements WowCo
     @Override
     public void onGetRecommendPlayListFail(String e) {
         hideDialog();
+    }
+
+    @Override
+    public void onGetRecommendPlayListAgainSuccess(MainRecommendPlayListBean bean) {
+        List<MainRecommendPlayListBean.RecommendBean> recommends = new ArrayList<>();
+        List<PlaylistBean> list = new ArrayList<>();
+        recommends.addAll(bean.getRecommend());
+        for (int i = 0; i < recommends.size(); i++) {
+            PlaylistBean beanInfo = new PlaylistBean();
+            beanInfo.setPlaylistName(recommends.get(i).getName());
+            beanInfo.setPlaylistCoverUrl(recommends.get(i).getPicUrl());
+            list.add(beanInfo);
+        }
+        Log.e(TAG, "onRefresh刷新成功");
+        songListAdapter.refresh(list);
+        binding.refreshLayout.finishRefresh(true);
+    }
+
+    @Override
+    public void onGetRecommendPlayListAgainFail(String e) {
+
     }
 
     @Override

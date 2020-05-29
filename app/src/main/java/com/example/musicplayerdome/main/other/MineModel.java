@@ -25,6 +25,11 @@ public class MineModel implements MineContract.Model {
     }
 
     @Override
+    public Observable<UserPlaylistBean> getUserPlaylistAgain(long uid) {
+        return ApiEngine.getInstance().getApiService().getUserPlaylist(uid);
+    }
+
+    @Override
     public Observable<PlayModeIntelligenceBean> getIntelligenceList(long id, long pid) {
         return ApiEngine.getInstance().getApiService().getIntelligenceList(id, pid);
     }

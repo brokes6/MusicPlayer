@@ -76,4 +76,32 @@ public class MvPresenter extends MvContract.Presenter{
                         }
                     });
         }
+
+        @Override
+        public void getYuncunAgain() {
+            mModel.getYuncun()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<YuncunReviewBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(YuncunReviewBean bean) {
+                            mView.onGetgetYuncunAgainSuccess(bean);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mView.onGetYuncunAgainFail(e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
 }

@@ -26,6 +26,11 @@ public class WowModel implements WowContract.Model {
     }
 
     @Override
+    public Observable<MainRecommendPlayListBean> getRecommendPlayListAgain() {
+        return ApiEngine.getInstance().getApiService().getRecommendPlayList();
+    }
+
+    @Override
     public Observable<DailyRecommendBean> getDailyRecommend() {
         return ApiEngine.getInstance().getApiService().getDailyRecommend();
     }

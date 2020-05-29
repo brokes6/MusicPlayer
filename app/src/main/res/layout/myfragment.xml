@@ -6,7 +6,11 @@
     <data>
 
     </data>
-
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F3F3F3">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,4 +31,5 @@
             android:layout_margin="5dp"/>
 
     </LinearLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </layout>

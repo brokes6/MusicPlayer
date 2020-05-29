@@ -23,6 +23,10 @@ public interface WowContract {
 
         void onGetRecommendPlayListFail(String e);
 
+        void onGetRecommendPlayListAgainSuccess(MainRecommendPlayListBean bean);
+
+        void onGetRecommendPlayListAgainFail(String e);
+
         void onGetDailyRecommendSuccess(DailyRecommendBean bean);
 
         void onGetDailyRecommendFail(String e);
@@ -53,6 +57,8 @@ public interface WowContract {
 
         Observable<MainRecommendPlayListBean> getRecommendPlayList();
 
+        Observable<MainRecommendPlayListBean> getRecommendPlayListAgain();
+
         Observable<DailyRecommendBean> getDailyRecommend();
 
         Observable<TopListBean> getTopList();
@@ -70,6 +76,8 @@ public interface WowContract {
         public abstract void getBanner();
 
         public abstract void getRecommendPlayList();
+
+        public abstract void getRecommendPlayListAgain();
 
         public abstract void getDailyRecommend();
 

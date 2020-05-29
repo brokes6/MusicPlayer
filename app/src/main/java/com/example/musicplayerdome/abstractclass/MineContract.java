@@ -19,6 +19,10 @@ public interface MineContract {
 
         void onGetUserPlaylistFail(String e);
 
+        void onGetUserPlaylistAgainSuccess(UserPlaylistBean bean);
+
+        void onGetUserPlaylistAgainFail(String e);
+
         void onGetUserDetailSuccess(UserDetailBean bean);
 
         void onGetUserDetailFails(String e);
@@ -51,6 +55,8 @@ public interface MineContract {
     interface Model extends BaseModel {
         Observable<UserPlaylistBean> getUserPlaylist(long uid);
 
+        Observable<UserPlaylistBean> getUserPlaylistAgain(long uid);
+
         Observable<PlayModeIntelligenceBean> getIntelligenceList(long id, long pid);
 
         Observable<SonghistoryBean> getPlayHistoryList(long id,int type);
@@ -68,6 +74,8 @@ public interface MineContract {
 
     abstract class Presenter extends BasePresenter<MineContract.View, MineContract.Model> {
         public abstract void getUserPlaylist(long uid);
+
+        public abstract void getUserPlaylistAgain(long uid);
 
         public abstract void getIntelligenceList(long id, long pid);
 

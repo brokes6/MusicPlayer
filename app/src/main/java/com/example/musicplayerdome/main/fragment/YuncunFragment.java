@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,9 @@ import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.yuncun.adapter.YuncunAdapter;
 import com.example.musicplayerdome.yuncun.view.YuncunSongActivity;
 import com.lzx.starrysky.model.SongInfo;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,6 +55,7 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.myfragment,container,false);
+        initView();
         return binding.getRoot();
     }
 
@@ -76,6 +81,21 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
         adapter.setListener(listener);
         binding.recyclerView.setAdapter(adapter);
         showDialog();
+    }
+
+    public void initView(){
+        //设置 Header式
+        binding.refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
+        //取消Footer
+        binding.refreshLayout.setEnableLoadMore(false);
+        binding.refreshLayout.setDisableContentWhenRefresh(true);
+        binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Log.e(TAG, "云村: 开始刷新");
+                mPresenter.getYuncunAgain();
+            }
+        });
     }
 
     @Override
@@ -138,6 +158,20 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
 
     @Override
     public void onGetYuncunFail(String e) {
+
+    }
+
+    @Override
+    public void onGetgetYuncunAgainSuccess(YuncunReviewBean bean) {
+        Log.e(TAG, "云村: 刷新成功");
+        adapter.refresh(bean.getData());
+        binding.refreshLayout.finishRefresh(true);
+        userData.clear();
+        userData.addAll(bean.getData());
+    }
+
+    @Override
+    public void onGetYuncunAgainFail(String e) {
 
     }
 }

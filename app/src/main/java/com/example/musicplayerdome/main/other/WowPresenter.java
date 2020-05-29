@@ -84,6 +84,34 @@ public class WowPresenter extends WowContract.Presenter {
     }
 
     @Override
+    public void getRecommendPlayListAgain() {
+        mModel.getRecommendPlayList().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MainRecommendPlayListBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(MainRecommendPlayListBean mainRecommendPlayListBean) {
+                        mView.onGetRecommendPlayListAgainSuccess(mainRecommendPlayListBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "推荐歌单onError:" + e);
+                        mView.onGetRecommendPlayListAgainFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
     public void getDailyRecommend() {
         mModel.getDailyRecommend().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

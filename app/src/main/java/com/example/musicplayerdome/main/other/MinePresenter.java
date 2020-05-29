@@ -55,6 +55,33 @@ public class MinePresenter extends MineContract.Presenter {
                 });
     }
 
+        @Override
+        public void getUserPlaylistAgain(long uid) {
+            mModel.getUserPlaylist(uid).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<UserPlaylistBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(UserPlaylistBean userPlaylistBean) {
+                            mView.onGetUserPlaylistAgainSuccess(userPlaylistBean);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mView.onGetUserPlaylistAgainFail(e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
+
     @Override
     public void getUserDetail(long id) {
         mModel.getUserDetail(id).subscribeOn(Schedulers.io())

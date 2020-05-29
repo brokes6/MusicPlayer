@@ -15,16 +15,24 @@ public interface MvContract {
         void onGetYuncunSuccess(YuncunReviewBean bean);
 
         void onGetYuncunFail(String e);
+
+        void onGetgetYuncunAgainSuccess(YuncunReviewBean bean);
+
+        void onGetYuncunAgainFail(String e);
     }
     interface Model extends BaseModel {
         Observable<MvSublistBean> getRecommendMV();
 
         Observable<YuncunReviewBean> getYuncun();
 
+        Observable<YuncunReviewBean> getYuncunAgain();
+
     }
     abstract class Presenter extends BasePresenter<View,Model> {
         public abstract void getRecommendMV();
 
         public abstract void getYuncun();
+
+        public abstract void getYuncunAgain();
     }
 }
