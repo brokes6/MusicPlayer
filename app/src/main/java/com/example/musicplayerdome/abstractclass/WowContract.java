@@ -43,6 +43,10 @@ public interface WowContract {
 
         void onGetPlaylistDetailFail(String e);
 
+        void onGetPlaylistDetailAgainSuccess(PlaylistDetailBean bean);
+
+        void onGetPlaylistDetailAgainFail(String e);
+
         void onGetMusicCanPlaySuccess(MusicCanPlayBean bean);
 
         void onGetMusicCanPlayFail(String e);
@@ -67,6 +71,8 @@ public interface WowContract {
 
         Observable<PlaylistDetailBean> getPlaylistDetail(long id);
 
+        Observable<PlaylistDetailBean> getPlaylistDetailAgain(long id);
+
         Observable<MusicCanPlayBean> getMusicCanPlay(long id);
 
         Observable<HighQualityPlayListBean> getHighQuality(int limit, long before);
@@ -86,6 +92,8 @@ public interface WowContract {
         public abstract void getPlayList(String type, int limit);
 
         public abstract void getPlaylistDetail(long id);
+
+        public abstract void getPlaylistDetailAgain(long id);
 
         public abstract void getMusicCanPlay(long id);
 

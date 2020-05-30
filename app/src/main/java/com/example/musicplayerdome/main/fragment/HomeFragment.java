@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class    HomeFragment extends BaseFragment<WowPresenter> implements WowContract.View{
+public class HomeFragment extends BaseFragment<WowPresenter> implements WowContract.View{
     private static final String TAG = "HomeFragment";
     FragmentHomeBinding binding;
     SongListAdapter songListAdapter;
@@ -253,7 +253,7 @@ public class    HomeFragment extends BaseFragment<WowPresenter> implements WowCo
     public void onGetPlayListFail(String e) {
 
     }
-
+    //获取歌单详情
     @Override
     public void onGetPlaylistDetailSuccess(PlaylistDetailBean bean) {
 
@@ -261,6 +261,16 @@ public class    HomeFragment extends BaseFragment<WowPresenter> implements WowCo
 
     @Override
     public void onGetPlaylistDetailFail(String e) {
+
+    }
+    //刷新歌单详情
+    @Override
+    public void onGetPlaylistDetailAgainSuccess(PlaylistDetailBean bean) {
+
+    }
+
+    @Override
+    public void onGetPlaylistDetailAgainFail(String e) {
 
     }
 

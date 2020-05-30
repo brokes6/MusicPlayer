@@ -307,6 +307,16 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
     }
 
     @Override
+    public void onGetPlaylistDetailAgainSuccess(PlaylistDetailBean bean) {
+
+    }
+
+    @Override
+    public void onGetPlaylistDetailAgainFail(String e) {
+
+    }
+
+    @Override
     public void onGetMusicCanPlaySuccess(MusicCanPlayBean bean) {
 
     }

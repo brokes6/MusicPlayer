@@ -228,6 +228,33 @@ public class WowPresenter extends WowContract.Presenter {
     }
 
     @Override
+    public void getPlaylistDetailAgain(long id) {
+        mModel.getPlaylistDetail(id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<PlaylistDetailBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(PlaylistDetailBean playlistDetailBean) {
+                        mView.onGetPlaylistDetailAgainSuccess(playlistDetailBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onGetPlaylistDetailAgainFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
     public void getMusicCanPlay(long id) {
         Log.d(TAG, "getMusicCanPlay  id = " + id);
         mModel.getMusicCanPlay(id).subscribeOn(Schedulers.io())

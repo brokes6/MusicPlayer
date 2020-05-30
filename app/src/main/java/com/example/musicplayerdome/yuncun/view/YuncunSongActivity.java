@@ -111,7 +111,7 @@ public class YuncunSongActivity extends BaseActivity<SongPresenter> implements S
         showDialog();
         initView();
         getIntentData();
-        setBackBtn(getString(R.string.colorGray));
+        setBackBtn(getString(R.string.colorWhite));
         setSongDetailBean();
     }
 

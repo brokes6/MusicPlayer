@@ -246,6 +246,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
             beanInfo.setPlaylistCreator(playlistBeans.get(i).getCreator().getNickname());
             adapterList.add(beanInfo);
         }
+        Log.e(TAG, "onRefresh刷新成功");
         adapter.refresh(adapterList);
         binding.refreshLayout.finishRefresh(true);
     }

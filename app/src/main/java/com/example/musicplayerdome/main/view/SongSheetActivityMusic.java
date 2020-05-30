@@ -1,5 +1,6 @@
 package com.example.musicplayerdome.main.view;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -28,6 +29,10 @@ import com.example.musicplayerdome.main.other.WowPresenter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.model.SongInfo;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,7 +100,19 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 
     private void initView(){
         binding.Pback.setOnClickListener(this);
+        //设置 Header式
+        binding.refreshLayout.setRefreshHeader(new MaterialHeader(this));
+        //取消Footer
+        binding.refreshLayout.setEnableLoadMore(false);
+        binding.refreshLayout.setDisableContentWhenRefresh(true);
 
+        binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Log.e(TAG, "onRefresh: 开始刷新");
+                mPresenter.getPlaylistDetailAgain(playlistId);
+            }
+        });
     }
 
     @Override
@@ -206,6 +223,34 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     @Override
     public void onGetPlaylistDetailFail(String e) {
         hideDialog();
+    }
+
+    @Override
+    public void onGetPlaylistDetailAgainSuccess(PlaylistDetailBean bean) {
+        List<PlaylistDetailBean.PlaylistBean.TracksBean> beanList = new ArrayList<>();
+        List<SongInfo> songInfos = new ArrayList<>();
+        beanList.addAll(bean.getPlaylist().getTracks());
+        songInfos.clear();
+        for (int i = 0; i < beanList.size(); i++) {
+            SongInfo beanInfo = new SongInfo();
+            beanInfo.setArtist(beanList.get(i).getAr().get(0).getName());
+            beanInfo.setSongName(beanList.get(i).getName());
+            beanInfo.setSongCover(beanList.get(i).getAl().getPicUrl());
+            beanInfo.setSongId(String.valueOf(beanList.get(i).getId()));
+            beanInfo.setDuration(beanList.get(i).getDt());
+            beanInfo.setSongUrl(SONG_URL + beanList.get(i).getId() + ".mp3");
+            beanInfo.setArtistId(String.valueOf(beanList.get(i).getAr().get(0).getId()));
+            beanInfo.setArtistKey(beanList.get(i).getAl().getPicUrl());
+            songInfos.add(beanInfo);
+        }
+        Log.e(TAG, "onRefresh刷新成功");
+        adapter.refresh(songInfos);
+        binding.refreshLayout.finishRefresh(true);
+    }
+
+    @Override
+    public void onGetPlaylistDetailAgainFail(String e) {
+
     }
 
     @Override

@@ -51,6 +51,11 @@ public class WowModel implements WowContract.Model {
     }
 
     @Override
+    public Observable<PlaylistDetailBean> getPlaylistDetailAgain(long id) {
+        return ApiEngine.getInstance().getApiService().getPlaylistDetail(id);
+    }
+
+    @Override
     public Observable<MusicCanPlayBean> getMusicCanPlay(long id) {
         return ApiEngine.getInstance().getApiService().getMusicCanPlay(id);
     }

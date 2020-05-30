@@ -32,7 +32,7 @@
                 android:background="#D33A31" />
             <com.youth.banner.Banner
                 android:id="@+id/banner"
-                android:layout_margin="15dp"
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 app:banner_layout="@layout/banner"/>
@@ -145,8 +145,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="0dp"
@@ -167,7 +167,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/song_list"
                 android:minHeight="120dp"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -178,8 +181,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="0dp"
@@ -193,7 +196,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recommend_music"
                 android:minHeight="220dp"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

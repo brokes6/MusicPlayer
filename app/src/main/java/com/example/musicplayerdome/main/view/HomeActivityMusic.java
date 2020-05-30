@@ -187,6 +187,8 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
             } else {
                 binding.bottomController.setVisibility(View.GONE);
             }
+        }else{
+            binding.bottomController.setVisibility(View.GONE);
         }
     }
 
