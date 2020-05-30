@@ -1,5 +1,6 @@
 package com.example.musicplayerdome.song.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SingerContract;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.databinding.FragmentRecyclerviewBinding;
+import com.example.musicplayerdome.main.adapter.SongListAdapter;
 import com.example.musicplayerdome.search.bean.FeedSearchBean;
 import com.example.musicplayerdome.search.bean.MvBean;
 import com.example.musicplayerdome.search.bean.SimiSingerBean;
@@ -23,6 +25,7 @@ import com.example.musicplayerdome.search.bean.SingerSongSearchBean;
 import com.example.musicplayerdome.song.adapter.FeedAdapter;
 import com.example.musicplayerdome.song.other.SingIdEvent;
 import com.example.musicplayerdome.song.other.SingerPresenter;
+import com.example.musicplayerdome.song.view.SongMvActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,6 +64,7 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
     protected void initData() {
         adapter = new FeedAdapter(getContext());
         adapter.setType(2);
+        adapter.setListener(listClickListener);
         binding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rv.setAdapter(adapter);
 
@@ -69,6 +73,14 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
             mPresenter.getFeedSearch(singerName, searchType);
         }
     }
+
+    private FeedAdapter.OnSimiSingerClickListener listClickListener = position -> {
+        Intent intent = new Intent(getContext(), SongMvActivity.class);
+        intent.putExtra(SongMvActivity.MVSONG_INFO, videoList.get(position).getVid());
+        intent.putExtra("MVname",videoList.get(position).getTitle());
+        intent.putExtra("MVimg",videoList.get(position).getCoverUrl());
+        getContext().startActivity(intent);
+    };
 
     @Override
     public SingerPresenter onCreatePresenter() {
@@ -131,6 +143,7 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
             mvBean.setTitle(videoList.get(i).getTitle());
             mvBean.setType(videoList.get(i).getType());
             mvBean.setVid(videoList.get(i).getVid());
+            Log.e(TAG, "歌曲id为"+videoList.get(i).getVid()+";歌曲mv名称"+videoList.get(i).getTitle());
             mvList.add(mvBean);
         }
         adapter.loadMore(mvList);

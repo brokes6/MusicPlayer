@@ -51,6 +51,7 @@ import com.example.musicplayerdome.song.bean.LyricBean;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.bean.PlayListCommentBean;
 import com.example.musicplayerdome.song.bean.SongDetailBean;
+import com.example.musicplayerdome.song.bean.SongMvBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -175,6 +176,9 @@ public interface ApiService {
 
     @GET("playmode/intelligence/list")
     Observable<PlayModeIntelligenceBean> getIntelligenceList(@Query("id") long id, @Query("pid") long pid);
+
+    @GET("mv/url")
+    Observable<SongMvBean> getSongMv(@Query("id") long id);
 
     @GET("album/sublist")
     Observable<AlbumSublistBean> getAlbumSublist();

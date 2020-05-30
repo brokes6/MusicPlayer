@@ -16,6 +16,7 @@ import com.android.liuzhuang.rcimageview.RoundCornerImageView;
 import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.search.bean.MvBean;
+import com.example.musicplayerdome.song.view.SongMvActivity;
 import com.example.musicplayerdome.util.TimeUtil;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
@@ -30,6 +31,7 @@ public class FeedAdapter extends BaseRecyclerAdapter<MvBean> {
     private List<MvBean> list;
     private String keywords;
     private int type;
+    private OnSimiSingerClickListener listener;
     private RoundCornerImageView ivCover;
     private TextView tvName;
     private TextView tvCreator, tvMv;
@@ -47,6 +49,10 @@ public class FeedAdapter extends BaseRecyclerAdapter<MvBean> {
         this.keywords = keywords;
     }
 
+    public void setListener(OnSimiSingerClickListener listener) {
+        this.listener = listener;
+    }
+
     //type==1，显示蓝色字体
     //type==2，不显示
     public void setType(int type) {
@@ -62,7 +68,7 @@ public class FeedAdapter extends BaseRecyclerAdapter<MvBean> {
         tvMv = holder.findViewById(R.id.tv_mv);
         if (item!=null){
             setBean(mContext, item, keywords, type);
-            setListener(mContext, position);
+            setListener(listener, position);
         }
     }
 
@@ -101,10 +107,11 @@ public class FeedAdapter extends BaseRecyclerAdapter<MvBean> {
         Glide.with(context).load(videosBean.getCoverUrl()).into(ivCover);
     }
 
-    public void setListener(Context context, int position) {
+    public void setListener(OnSimiSingerClickListener listener, int position) {
         rlFeed.setOnClickListener(v -> {
-//            Intent intent = new Intent(context, VideoActivity.class);
-//            context.startActivity(intent);
+            if (listener != null) {
+                listener.onSimiClick(position);
+            }
         });
     }
     /**
@@ -114,6 +121,10 @@ public class FeedAdapter extends BaseRecyclerAdapter<MvBean> {
         String regex = ".*[a-zA-Z]+.*";
         Matcher m = Pattern.compile(regex).matcher(cardNum);
         return m.matches();
+    }
+
+    public interface OnSimiSingerClickListener {
+        void onSimiClick(int position);
     }
 
 }

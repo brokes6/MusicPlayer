@@ -61,8 +61,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.example.musicplayerdome.main.view.SongSheetActivityMusic.COMPLETED;
