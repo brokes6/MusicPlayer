@@ -19,8 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemes"
         android:usesCleartextTraffic="true">
-        <activity android:name=".song.view.SongMvActivity"></activity>
-        <activity android:name=".yuncun.view.YuncunSongActivity" /> <!-- android:networkSecurityConfig="@xml/network_security_config"很重要，要加上去 -->
+        <!-- android:networkSecurityConfig="@xml/network_security_config"很重要，要加上去 -->
+
+        <activity android:name=".yuncun.view.YuncunSongActivity" />
+
+        <activity android:name=".song.view.SongMvActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".login.view.LoginActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"

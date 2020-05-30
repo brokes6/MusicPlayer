@@ -64,6 +64,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         //重力感应
         Jzvd.FULLSCREEN_ORIENTATION=ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
         Jzvd.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+
     }
 
     private void getMvIntent(){
@@ -72,6 +73,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         name = intent.getStringExtra("MVname");
         img = intent.getStringExtra("MVimg");
         mPresenter.getSongMv(Long.parseLong(MVid));
+        binding.SMTitle.setText(name);
         Log.e(TAG, "getMvIntent: id为"+MVid);
     }
 
