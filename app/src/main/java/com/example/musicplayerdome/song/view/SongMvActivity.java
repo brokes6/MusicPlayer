@@ -7,7 +7,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.R;
@@ -15,6 +14,7 @@ import com.example.musicplayerdome.abstractclass.SongMvContract;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.databinding.ActivitySongMvBinding;
 import com.example.musicplayerdome.song.bean.SongMvBean;
+import com.example.musicplayerdome.song.bean.SongMvDataBean;
 import com.example.musicplayerdome.song.other.MvPersenter;
 import com.gyf.immersionbar.ImmersionBar;
 
@@ -25,7 +25,8 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     private static final String TAG = "SongMvActivity";
     ActivitySongMvBinding binding;
     public static final String MVSONG_INFO = "mvsongInfo";
-    private String MVid,name,img;
+    private SongMvBean mvData;
+    private int sid;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -69,12 +70,9 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
 
     private void getMvIntent(){
         Intent intent = getIntent();
-        MVid = intent.getStringExtra(MVSONG_INFO);
-        name = intent.getStringExtra("MVname");
-        img = intent.getStringExtra("MVimg");
-        mPresenter.getSongMv(Long.parseLong(MVid));
-        binding.SMTitle.setText(name);
-        Log.e(TAG, "getMvIntent: id为"+MVid);
+        sid = intent.getIntExtra("sid",-1);
+        mvData = (SongMvBean) intent.getSerializableExtra(MVSONG_INFO);
+        mPresenter.getSongMv(mvData.getMvs().get(sid).getId());
     }
 
     @Override
@@ -83,11 +81,15 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     }
 
     @Override
-    public void onGetgetSongMvSuccess(SongMvBean bean) {
+    public void onGetgetSongMvSuccess(SongMvDataBean bean) {
         hideDialog();
-        Log.e(TAG, "getMvIntent: url为"+bean.getData().getUrl());
-        binding.jzVideo.setUp(bean.getData().getUrl(), name);
-        Glide.with(this).load(img).into(binding.jzVideo.posterImageView);
+        binding.jzVideo.setUp(bean.getData().getUrl(),mvData.getMvs().get(sid).getName());
+        Glide.with(this).load(mvData.getMvs().get(sid).getImgurl()).into(binding.jzVideo.posterImageView);
+
+        binding.userName.setText(mvData.getMvs().get(sid).getArtist().getName());
+        binding.SMTitle.setText(mvData.getMvs().get(sid).getName());
+        binding.SMNumber.setText("播放量："+mvData.getMvs().get(sid).getPlayCount());
+        Glide.with(this).load(mvData.getMvs().get(sid).getArtist().getImg1v1Url()).into(binding.userImg);
     }
 
     @Override
@@ -112,5 +114,9 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         JzvdStd.goOnPlayOnPause();
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

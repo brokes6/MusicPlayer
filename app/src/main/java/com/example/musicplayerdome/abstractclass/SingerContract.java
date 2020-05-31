@@ -6,6 +6,7 @@ import com.example.musicplayerdome.search.bean.SimiSingerBean;
 import com.example.musicplayerdome.search.bean.SingerAblumSearchBean;
 import com.example.musicplayerdome.search.bean.SingerDescriptionBean;
 import com.example.musicplayerdome.search.bean.SingerSongSearchBean;
+import com.example.musicplayerdome.song.bean.SongMvBean;
 
 import io.reactivex.Observable;
 
@@ -30,6 +31,10 @@ public interface SingerContract {
         void onGetSimiSingerSuccess(SimiSingerBean bean);
 
         void onGetSimiSingerFail(String e);
+
+        void onGetSongMvDataSuccess(SongMvBean bean);
+
+        void onGetSongMvDataFail(String e);
     }
 
     interface Model extends BaseModel {
@@ -42,6 +47,8 @@ public interface SingerContract {
         Observable<SingerDescriptionBean> getSingerDesc(long id);
 
         Observable<SimiSingerBean> getSimiSinger(long id);
+
+        Observable<SongMvBean> getSongMvData(long id);
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
@@ -54,5 +61,7 @@ public interface SingerContract {
         public abstract void getSingerDesc(long id);
 
         public abstract void getSimiSinger(long id);
+
+        public abstract void getSongMvData(long id);
     }
 }

@@ -22,6 +22,7 @@ import com.example.musicplayerdome.search.bean.SingerAblumSearchBean;
 import com.example.musicplayerdome.search.bean.SingerDescriptionBean;
 import com.example.musicplayerdome.search.bean.SingerSongSearchBean;
 import com.example.musicplayerdome.song.adapter.SimiSingerAdapter;
+import com.example.musicplayerdome.song.bean.SongMvBean;
 import com.example.musicplayerdome.song.other.SingIdEvent;
 import com.example.musicplayerdome.song.other.SingerPresenter;
 import com.example.musicplayerdome.util.GsonUtil;
@@ -173,5 +174,15 @@ public class SingerInfoSearchFragment extends BaseFragment<SingerPresenter> impl
         hideDialog();
         Log.e(TAG, "onGetSimiSingerFail : " + e);
         XToastUtils.error(e);
+    }
+
+    @Override
+    public void onGetSongMvDataSuccess(SongMvBean bean) {
+
+    }
+
+    @Override
+    public void onGetSongMvDataFail(String e) {
+
     }
 }

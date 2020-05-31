@@ -23,6 +23,7 @@ import com.example.musicplayerdome.search.bean.SingerAblumSearchBean;
 import com.example.musicplayerdome.search.bean.SingerDescriptionBean;
 import com.example.musicplayerdome.search.bean.SingerSongSearchBean;
 import com.example.musicplayerdome.song.adapter.MySongListAdapter;
+import com.example.musicplayerdome.song.bean.SongMvBean;
 import com.example.musicplayerdome.song.other.SingIdEvent;
 import com.example.musicplayerdome.song.other.SingerPresenter;
 import com.example.musicplayerdome.util.XToastUtils;
@@ -163,6 +164,16 @@ public class SingerSongSearchFragment extends BaseFragment<SingerPresenter> impl
 
     @Override
     public void onGetSimiSingerFail(String e) {
+
+    }
+
+    @Override
+    public void onGetSongMvDataSuccess(SongMvBean bean) {
+
+    }
+
+    @Override
+    public void onGetSongMvDataFail(String e) {
 
     }
 }

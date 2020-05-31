@@ -1,10 +1,12 @@
 package com.example.musicplayerdome.song.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class SongMvBean {
+public class SongMvBean implements Serializable {
     private int code;
-    private MvData data;
+    private long time;
+    private List<MvData> mvs;
 
     public int getCode() {
         return code;
@@ -14,18 +16,31 @@ public class SongMvBean {
         this.code = code;
     }
 
-    public MvData getData() {
-        return data;
+    public long getTime() {
+        return time;
     }
 
-    public void setData(MvData data) {
-        this.data = data;
+    public void setTime(long time) {
+        this.time = time;
     }
 
-    public class MvData{
+    public List<MvData> getMvs() {
+        return mvs;
+    }
+
+    public void setMvs(List<MvData> mvs) {
+        this.mvs = mvs;
+    }
+
+    public class MvData implements Serializable{
         private long id;
-        private String url;
-        private long size;
+        private String name;
+        private String artistName;
+        private String imgurl;
+        private ArtistData artist;
+        private long duration;
+        private int playCount;
+        private String publishTime;
 
         public long getId() {
             return id;
@@ -35,20 +50,99 @@ public class SongMvBean {
             this.id = id;
         }
 
-        public String getUrl() {
-            return url;
+        public String getName() {
+            return name;
         }
 
-        public void setUrl(String url) {
-            this.url = url;
+        public void setName(String name) {
+            this.name = name;
         }
 
-        public long getSize() {
-            return size;
+        public String getArtistName() {
+            return artistName;
         }
 
-        public void setSize(long size) {
-            this.size = size;
+        public void setArtistName(String artistName) {
+            this.artistName = artistName;
+        }
+
+        public String getImgurl() {
+            return imgurl;
+        }
+
+        public void setImgurl(String imgurl) {
+            this.imgurl = imgurl;
+        }
+
+        public ArtistData getArtist() {
+            return artist;
+        }
+
+        public void setArtist(ArtistData artist) {
+            this.artist = artist;
+        }
+
+        public long getDuration() {
+            return duration;
+        }
+
+        public void setDuration(long duration) {
+            this.duration = duration;
+        }
+
+        public int getPlayCount() {
+            return playCount;
+        }
+
+        public void setPlayCount(int playCount) {
+            this.playCount = playCount;
+        }
+
+        public String getPublishTime() {
+            return publishTime;
+        }
+
+        public void setPublishTime(String publishTime) {
+            this.publishTime = publishTime;
+        }
+
+        public class ArtistData implements Serializable{
+            private long img1v1Id;
+            private String img1v1Url;
+            private String name;
+            private int id;
+
+            public long getImg1v1Id() {
+                return img1v1Id;
+            }
+
+            public void setImg1v1Id(long img1v1Id) {
+                this.img1v1Id = img1v1Id;
+            }
+
+            public String getImg1v1Url() {
+                return img1v1Url;
+            }
+
+            public void setImg1v1Url(String img1v1Url) {
+                this.img1v1Url = img1v1Url;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
         }
     }
 }

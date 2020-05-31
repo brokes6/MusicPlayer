@@ -34,8 +34,7 @@
             android:paddingEnd="@dimen/dp_7"
             android:text="MV"
             android:textColor="#B53D32"
-            android:textSize="@dimen/sp_13"
-            android:visibility="gone"/>
+            android:textSize="@dimen/sp_13" />
 
 
         <TextView

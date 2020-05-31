@@ -1,21 +1,21 @@
 package com.example.musicplayerdome.abstractclass;
 
 import com.example.musicplayerdome.base.BasePresenter;
-import com.example.musicplayerdome.song.bean.SongMvBean;
+import com.example.musicplayerdome.song.bean.SongMvDataBean;
 
 import io.reactivex.Observable;
 
 public interface SongMvContract {
 
     interface View extends BaseView {
-        void onGetgetSongMvSuccess(SongMvBean bean);
+        void onGetgetSongMvSuccess(SongMvDataBean bean);
 
         void onGetgetSongMvFail(String e);
 
     }
 
     interface Model extends BaseModel {
-        Observable<SongMvBean> getSongMv(long id);
+        Observable<SongMvDataBean> getSongMv(long id);
     }
 
     abstract class Presenter extends BasePresenter<View,Model> {

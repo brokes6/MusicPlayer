@@ -8,6 +8,7 @@ import com.example.musicplayerdome.search.bean.SimiSingerBean;
 import com.example.musicplayerdome.search.bean.SingerAblumSearchBean;
 import com.example.musicplayerdome.search.bean.SingerDescriptionBean;
 import com.example.musicplayerdome.search.bean.SingerSongSearchBean;
+import com.example.musicplayerdome.song.bean.SongMvBean;
 
 import io.reactivex.Observable;
 
@@ -35,5 +36,10 @@ public class SingerModel implements SingerContract.Model {
     @Override
     public Observable<SimiSingerBean> getSimiSinger(long id) {
         return ApiEngine.getInstance().getApiService().getSimiSinger(id);
+    }
+
+    @Override
+    public Observable<SongMvBean> getSongMvData(long id) {
+        return ApiEngine.getInstance().getApiService().getSongMvData(id);
     }
 }

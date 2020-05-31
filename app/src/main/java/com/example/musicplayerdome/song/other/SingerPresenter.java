@@ -8,6 +8,7 @@ import com.example.musicplayerdome.search.bean.SimiSingerBean;
 import com.example.musicplayerdome.search.bean.SingerAblumSearchBean;
 import com.example.musicplayerdome.search.bean.SingerDescriptionBean;
 import com.example.musicplayerdome.search.bean.SingerSongSearchBean;
+import com.example.musicplayerdome.song.bean.SongMvBean;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -168,4 +169,32 @@ public class SingerPresenter extends SingerContract.Presenter {
                     }
                 });
     }
+
+        @Override
+        public void getSongMvData(long id) {
+            mModel.getSongMvData(id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<SongMvBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(SongMvBean songMvBean) {
+                            mView.onGetSongMvDataSuccess(songMvBean);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mView.onGetSongMvDataFail(e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
 }

@@ -3,6 +3,7 @@ package com.example.musicplayerdome.song.view;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -21,6 +22,7 @@ import com.example.musicplayerdome.search.bean.SimiSingerBean;
 import com.example.musicplayerdome.search.bean.SingerAblumSearchBean;
 import com.example.musicplayerdome.search.bean.SingerDescriptionBean;
 import com.example.musicplayerdome.search.bean.SingerSongSearchBean;
+import com.example.musicplayerdome.song.bean.SongMvBean;
 import com.example.musicplayerdome.song.fragment.SingerAlbumSearchFragment;
 import com.example.musicplayerdome.song.fragment.SingerFeedSearchFragment;
 import com.example.musicplayerdome.song.fragment.SingerInfoSearchFragment;
@@ -207,6 +209,16 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
 
     @Override
     public void onGetSimiSingerFail(String e) {
+
+    }
+
+    @Override
+    public void onGetSongMvDataSuccess(SongMvBean bean) {
+
+    }
+
+    @Override
+    public void onGetSongMvDataFail(String e) {
 
     }
 }

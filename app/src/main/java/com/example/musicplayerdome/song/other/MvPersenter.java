@@ -1,9 +1,7 @@
 package com.example.musicplayerdome.song.other;
 
-import android.util.Log;
-
 import com.example.musicplayerdome.abstractclass.SongMvContract;
-import com.example.musicplayerdome.song.bean.SongMvBean;
+import com.example.musicplayerdome.song.bean.SongMvDataBean;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,15 +20,15 @@ public class MvPersenter extends SongMvContract.Presenter{
     public void getSongMv(long id) {
         mModel.getSongMv(id).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<SongMvBean>() {
+                .subscribe(new Observer<SongMvDataBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(SongMvBean songMvBean) {
-                        mView.onGetgetSongMvSuccess(songMvBean);
+                    public void onNext(SongMvDataBean songMvDataBean) {
+                        mView.onGetgetSongMvSuccess(songMvDataBean);
                     }
 
                     @Override
