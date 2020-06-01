@@ -81,7 +81,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffff"
-            android:paddingBottom="@dimen/dp_40"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.flyco.tablayout.SlidingTabLayout
