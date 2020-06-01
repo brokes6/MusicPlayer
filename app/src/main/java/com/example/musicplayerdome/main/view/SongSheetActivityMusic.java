@@ -215,6 +215,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             beanInfo.setArtistKey(beanList.get(i).getAl().getPicUrl());
             songInfos.add(beanInfo);
         }
+        binding.songComment.setText(""+bean.getPlaylist().getCommentCount());
         adapter.setList(songInfos);
         adapter.loadMore(songInfos);
 

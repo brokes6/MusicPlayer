@@ -67,33 +67,33 @@
 
                     <LinearLayout
                         android:id="@+id/Props_columnS"
-                        android:layout_marginTop="25dp"
+                        android:layout_margin="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/Suserimg"
                         android:orientation="horizontal"
                         android:gravity="center">
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="60dp"
                         android:orientation="vertical"
                         android:gravity="center">
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="30dp"
-                            android:src="@mipmap/comment_while"/>
+                            android:src="@mipmap/music_fill"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#fff"
-                            android:text="1"/>
+                            android:text="我的音乐"/>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="60dp"
                         android:orientation="vertical"
                         android:gravity="center">
                         <ImageView
@@ -107,9 +107,9 @@
                             android:text="分享"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="60dp"
                         android:orientation="vertical"
                         android:gravity="center">
                         <ImageView
@@ -122,8 +122,10 @@
                             android:textColor="#fff"
                             android:text="下载"/>
                     </LinearLayout>
+
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:gravity="center">
@@ -137,6 +139,24 @@
                             android:textColor="#fff"
                             android:text="多选"/>
                     </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="30dp"
+                                android:src="@mipmap/audio_collect_nomal_while"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#fff"
+                                android:text="我的收藏"/>
+                        </LinearLayout>
+
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>

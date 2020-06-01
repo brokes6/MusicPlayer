@@ -19,6 +19,7 @@ import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.bean.SongMvBean;
 import com.example.musicplayerdome.song.bean.SongMvDataBean;
 import com.example.musicplayerdome.song.other.MvPersenter;
+import com.gyf.immersionbar.BarHide;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
+                .hideBar(BarHide.FLAG_HIDE_STATUS_BAR)
                 .init();
         goDialog();
         initView();
@@ -85,11 +87,12 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
 
     private void getMvIntent(){
         Intent intent = getIntent();
-        sid = intent.getIntExtra("sid",-1);
-        mvData = (SongMvBean) intent.getSerializableExtra(MVSONG_INFO);
-        mPresenter.getSongMv(mvData.getMvs().get(sid).getId());
-        mPresenter.getSongMvComment(mvData.getMvs().get(sid).getId());
-        Log.e(TAG, "getMvIntent: --------------"+mvData.getMvs().get(sid).getId());
+        if (intent!=null){
+            sid = intent.getIntExtra("sid",-1);
+            mvData = (SongMvBean) intent.getSerializableExtra(MVSONG_INFO);
+            mPresenter.getSongMv(mvData.getMvs().get(sid).getId());
+            mPresenter.getSongMvComment(mvData.getMvs().get(sid).getId());
+        }
     }
 
     @Override
@@ -105,7 +108,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
 
         binding.userName.setText(mvData.getMvs().get(sid).getArtist().getName());
         binding.SMTitle.setText(mvData.getMvs().get(sid).getName());
-        binding.SMNumber.setText("播放量："+mvData.getMvs().get(sid).getPlayCount());
+        binding.SMNumber.setText("观看次数："+mvData.getMvs().get(sid).getPlayCount());
         Glide.with(this).load(mvData.getMvs().get(sid).getArtist().getImg1v1Url()).into(binding.userImg);
     }
 
@@ -118,6 +121,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     @Override
     public void onGetSongMvCommentSuccess(MusicCommentBean bean) {
         notifyList(bean.getHotComments(), bean.getComments());
+        binding.SMComment.setText(bean.getTotal());
     }
 
     private void notifyList(List<MusicCommentBean.CommentsBean> hotComments, List<MusicCommentBean.CommentsBean> comments) {
