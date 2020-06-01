@@ -121,7 +121,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     @Override
     public void onGetSongMvCommentSuccess(MusicCommentBean bean) {
         notifyList(bean.getHotComments(), bean.getComments());
-        binding.SMComment.setText(bean.getTotal());
+        binding.SMComment.setText(""+bean.getTotal());
     }
 
     private void notifyList(List<MusicCommentBean.CommentsBean> hotComments, List<MusicCommentBean.CommentsBean> comments) {
