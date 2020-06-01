@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <RelativeLayout
-                android:layout_margin="15dp"
+                android:id="@+id/main_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 //标题和观看次数
@@ -29,6 +29,7 @@
                     android:id="@+id/SM_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:textSize="18sp"
                     android:textColor="#2C2B2B"
                     android:text=" "/>
@@ -36,14 +37,16 @@
                     android:id="@+id/SM_Number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:layout_below="@+id/SM_title"
                     android:textSize="15sp"
-                    android:textColor="#5E5B5B"
+                    android:textColor="#858080"
                     android:text=" "/>
                 //4个按钮
                 <LinearLayout
                     android:id="@+id/Props_columnS"
                     android:layout_marginTop="25dp"
+                    android:layout_margin="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/SM_Number"
@@ -116,9 +119,11 @@
                 </LinearLayout>
                 //作者图片和名字
                 <RelativeLayout
+                    android:id="@+id/SM_author"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
+                    android:layout_margin="10dp"
                     android:layout_below="@id/Props_columnS">
                     <com.example.musicplayerdome.rewrite.RoundImageView
                         android:id="@+id/user_img"
@@ -136,6 +141,70 @@
                         android:text=" "
                         android:textColor="#2C2B2B" />
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_below="@+id/SM_author"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_gap_hot_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:layout_below="@id/rl_song_info"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:background="#f0f0f0" />
+
+                    <TextView
+                        android:id="@+id/tv_hot_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_gap_hot_comment"
+                        android:paddingLeft="10dp"
+                        android:layout_marginTop="@dimen/dp_7"
+                        android:text="@string/hot_comment"
+                        android:textColor="#303233"
+                        android:textSize="@dimen/sp_17"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_hot_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:layout_below="@id/tv_hot_comment"
+                        android:layout_marginTop="@dimen/dp_3" />
+
+                    <TextView
+                        android:id="@+id/tv_gap_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:layout_below="@id/rv_hot_comment"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:background="#f0f0f0" />
+
+                    <TextView
+                        android:id="@+id/tv_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/tv_gap_comment"
+                        android:paddingLeft="10dp"
+                        android:layout_marginTop="@dimen/dp_7"
+                        android:text="@string/new_comment"
+                        android:textColor="#303233"
+                        android:textSize="@dimen/sp_17"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_new_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_comment"
+                        android:background="#fff"
+                        android:layout_marginTop="@dimen/dp_3" />
+                </LinearLayout>
 
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>

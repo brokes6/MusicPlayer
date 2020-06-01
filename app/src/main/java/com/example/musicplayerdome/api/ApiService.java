@@ -171,6 +171,9 @@ public interface ApiService {
     @GET("comment/music")
     Observable<MusicCommentBean> getMusicComment(@Query("id") long id);
 
+    @GET("comment/mv")
+    Observable<MusicCommentBean> getSongMvComment(@Query("id") long id);
+
     @GET("comment/like")
     Observable<CommentLikeBean> likeComment(@Query("id") long id, @Query("cid") long cid, @Query("t") int t, @Query("type") int type);
 

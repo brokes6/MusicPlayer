@@ -1,6 +1,7 @@
 package com.example.musicplayerdome.song.view;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -13,10 +14,15 @@ import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SongMvContract;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.databinding.ActivitySongMvBinding;
+import com.example.musicplayerdome.song.adapter.CommentAdapter;
+import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.bean.SongMvBean;
 import com.example.musicplayerdome.song.bean.SongMvDataBean;
 import com.example.musicplayerdome.song.other.MvPersenter;
 import com.gyf.immersionbar.ImmersionBar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
@@ -27,6 +33,9 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     public static final String MVSONG_INFO = "mvsongInfo";
     private SongMvBean mvData;
     private int sid;
+    private CommentAdapter hotAdapter, newAdapter;
+    private List<MusicCommentBean.CommentsBean> hotCommentList = new ArrayList<>();
+    private List<MusicCommentBean.CommentsBean> newCommentList = new ArrayList<>();
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -66,6 +75,12 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         Jzvd.FULLSCREEN_ORIENTATION=ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
         Jzvd.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 
+        binding.rvHotComment.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvNewComment.setLayoutManager(new LinearLayoutManager(this));
+        hotAdapter = new CommentAdapter(this);
+        newAdapter = new CommentAdapter(this);
+        binding.rvHotComment.setAdapter(hotAdapter);
+        binding.rvNewComment.setAdapter(newAdapter);
     }
 
     private void getMvIntent(){
@@ -73,6 +88,8 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         sid = intent.getIntExtra("sid",-1);
         mvData = (SongMvBean) intent.getSerializableExtra(MVSONG_INFO);
         mPresenter.getSongMv(mvData.getMvs().get(sid).getId());
+        mPresenter.getSongMvComment(mvData.getMvs().get(sid).getId());
+        Log.e(TAG, "getMvIntent: --------------"+mvData.getMvs().get(sid).getId());
     }
 
     @Override
@@ -98,6 +115,36 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         Log.e(TAG, "onGetgetSongMvFail: 错误"+e);
     }
 
+    @Override
+    public void onGetSongMvCommentSuccess(MusicCommentBean bean) {
+        notifyList(bean.getHotComments(), bean.getComments());
+    }
+
+    private void notifyList(List<MusicCommentBean.CommentsBean> hotComments, List<MusicCommentBean.CommentsBean> comments) {
+        hotCommentList.clear();
+        newCommentList.clear();
+        if (hotComments != null) {
+            hotCommentList = hotComments;
+        }
+        if (comments != null) {
+            newCommentList = comments;
+        }
+        hotAdapter.loadMore(hotCommentList);
+        newAdapter.loadMore(newCommentList);
+    }
+
+    @Override
+    public void onGetSongMvCommentFail(String e) {
+        Log.d(TAG, "评论错误 : " + e);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (Jzvd.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
 
     @Override
     protected void onResume() {
@@ -112,6 +159,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         //     Jzvd.clearSavedProgress(this, null);
         //home back
         JzvdStd.goOnPlayOnPause();
+        Jzvd.releaseAllVideos();
     }
 
     @Override

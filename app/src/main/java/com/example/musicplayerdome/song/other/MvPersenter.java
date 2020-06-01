@@ -1,6 +1,7 @@
 package com.example.musicplayerdome.song.other;
 
 import com.example.musicplayerdome.abstractclass.SongMvContract;
+import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.bean.SongMvDataBean;
 
 import io.reactivex.Observer;
@@ -42,4 +43,31 @@ public class MvPersenter extends SongMvContract.Presenter{
                     }
                 });
     }
+
+        @Override
+        public void getSongMvComment(long id) {
+            mModel.getSongMvComment(id).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<MusicCommentBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(MusicCommentBean musicCommentBean) {
+                            mView.onGetSongMvCommentSuccess(musicCommentBean);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mView.onGetgetSongMvFail(e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
 }
