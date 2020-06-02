@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,11 @@ import com.example.musicplayerdome.song.bean.SongMvBean;
 import com.example.musicplayerdome.song.other.SingIdEvent;
 import com.example.musicplayerdome.song.other.SingerPresenter;
 import com.example.musicplayerdome.song.view.SongMvActivity;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +56,7 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
     private int searchType = 1014;
     private String singerName;
     private long singId;
+    private int offset = 0;
 
     public SingerFeedSearchFragment() {
         setFragmentTitle("相关视频");
@@ -74,6 +81,21 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
         adapter.setListener(listClickListener);
         binding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rv.setAdapter(adapter);
+
+        //设置 Header式
+        binding.refreshLayout.setEnableRefresh(false);
+        //取消Footer
+        binding.refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
+        binding.refreshLayout.setDisableContentWhenRefresh(true);
+
+        binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                Log.e(TAG, "onRefresh: 开始加载下一页");
+                offset+=10;
+                mPresenter.LoadMoreSongMvData(singId,offset);
+            }
+        });
 
         if (singerName != null) {
             showDialog();
@@ -194,6 +216,19 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
 
     @Override
     public void onGetSongMvDataFail(String e) {
+
+    }
+
+    @Override
+    public void onLoadMoreSongMvDataSuccess(SongMvBean bean) {
+        Log.e(TAG, "onRefresh加载更多成功");
+        adapter.loadMore(bean.getMvs());
+        binding.refreshLayout.finishLoadMore(true);
+        songMvBean.addMvs(bean.getMvs());
+    }
+
+    @Override
+    public void onLoadMoreSongMvDataFail(String e) {
 
     }
 }

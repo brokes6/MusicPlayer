@@ -20,6 +20,7 @@ import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.bean.SongMvBean;
 import com.example.musicplayerdome.song.bean.SongMvDataBean;
 import com.example.musicplayerdome.song.other.MvPersenter;
+import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.gyf.immersionbar.BarHide;
 import com.gyf.immersionbar.ImmersionBar;
 
@@ -36,6 +37,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     private SongMvBean mvData;
     private int pid;
     private long sid;
+    private boolean open = false;
     private String MVurl;
     private CommentAdapter hotAdapter, newAdapter;
     private List<MusicCommentBean.CommentsBean> hotCommentList = new ArrayList<>();
@@ -68,6 +70,9 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     protected void initData() {
         showDialog();
         getMvIntent();
+        if (SongPlayManager.getInstance().isPlaying()){
+            SongPlayManager.getInstance().pauseMusic();
+        }
     }
 
     //初始化视频播放器
@@ -86,6 +91,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         newAdapter = new CommentAdapter(this);
         binding.rvHotComment.setAdapter(hotAdapter);
         binding.rvNewComment.setAdapter(newAdapter);
+        binding.SMOpen.setOnClickListener(this);
     }
 
     private void getMvIntent(){
@@ -101,7 +107,24 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.SM_open:
+                if (open==false){
+                    open=true;
+                    OpenMore(open);
+                }else{
+                    open=false;
+                    OpenMore(open);
+                }
+                break;
+        }
+    }
+    private void OpenMore(boolean y){
+        if (y==false){
+            binding.SMDetails.setVisibility(View.GONE);
+        }else{
+            binding.SMDetails.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -146,7 +169,8 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         Glide.with(this).load(bean.getData().getCover()).into(binding.jzVideo.posterImageView);
 
         binding.userName.setText(bean.getData().getArtistName());
-        binding.SMTitle.setText(bean.getData().getDesc());
+        binding.SMTitle.setText(bean.getData().getName());
+        binding.SMDetails.setText(bean.getData().getDesc());
         binding.SMShare.setText(""+bean.getData().getShareCount());
         binding.SMCollect.setText(""+bean.getData().getSubCount());
         binding.SMNumber.setText(bean.getData().getPlayCount()+"次观看");

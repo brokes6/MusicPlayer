@@ -197,4 +197,32 @@ public class SingerPresenter extends SingerContract.Presenter {
                         }
                     });
         }
+
+        @Override
+        public void LoadMoreSongMvData(long id, int offset) {
+            mModel.LoadMoreSongMvData(id,offset)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<SongMvBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(SongMvBean songMvBean) {
+                            mView.onLoadMoreSongMvDataSuccess(songMvBean);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mView.onLoadMoreSongMvDataFail(e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
 }

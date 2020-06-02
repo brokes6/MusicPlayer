@@ -42,4 +42,9 @@ public class SingerModel implements SingerContract.Model {
     public Observable<SongMvBean> getSongMvData(long id) {
         return ApiEngine.getInstance().getApiService().getSongMvData(id);
     }
+
+    @Override
+    public Observable<SongMvBean> LoadMoreSongMvData(long id, int offset) {
+        return ApiEngine.getInstance().getApiService().LoadMoreSongMvData(id,offset);
+    }
 }

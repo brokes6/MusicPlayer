@@ -190,6 +190,9 @@ public interface ApiService {
     @GET("artist/mv")
     Observable<SongMvBean> getSongMvData(@Query("id") long id);
 
+    @GET("artist/mv")
+    Observable<SongMvBean> LoadMoreSongMvData(@Query("id") long id, @Query("offset") long offset);
+
     @GET("album/sublist")
     Observable<AlbumSublistBean> getAlbumSublist();
 

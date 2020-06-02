@@ -32,6 +32,10 @@ public class SongMvBean implements Serializable {
         this.mvs = mvs;
     }
 
+    public void addMvs(List<MvData> mvs){
+        this.mvs.addAll(mvs);
+    }
+
     public class MvData implements Serializable{
         private long id;
         private String name;

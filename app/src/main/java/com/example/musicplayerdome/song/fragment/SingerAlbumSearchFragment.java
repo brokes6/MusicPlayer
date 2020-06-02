@@ -180,4 +180,14 @@ public class SingerAlbumSearchFragment extends BaseFragment<SingerPresenter> imp
     public void onGetSongMvDataFail(String e) {
 
     }
+
+    @Override
+    public void onLoadMoreSongMvDataSuccess(SongMvBean bean) {
+
+    }
+
+    @Override
+    public void onLoadMoreSongMvDataFail(String e) {
+
+    }
 }

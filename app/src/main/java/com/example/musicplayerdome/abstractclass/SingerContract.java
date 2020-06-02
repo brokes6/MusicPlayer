@@ -35,6 +35,10 @@ public interface SingerContract {
         void onGetSongMvDataSuccess(SongMvBean bean);
 
         void onGetSongMvDataFail(String e);
+
+        void onLoadMoreSongMvDataSuccess(SongMvBean bean);
+
+        void onLoadMoreSongMvDataFail(String e);
     }
 
     interface Model extends BaseModel {
@@ -49,6 +53,8 @@ public interface SingerContract {
         Observable<SimiSingerBean> getSimiSinger(long id);
 
         Observable<SongMvBean> getSongMvData(long id);
+
+        Observable<SongMvBean> LoadMoreSongMvData(long id,int offset);
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
@@ -63,5 +69,7 @@ public interface SingerContract {
         public abstract void getSimiSinger(long id);
 
         public abstract void getSongMvData(long id);
+
+        public abstract void LoadMoreSongMvData(long id,int offset);
     }
 }

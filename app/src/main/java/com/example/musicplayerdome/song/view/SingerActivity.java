@@ -221,4 +221,20 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
     public void onGetSongMvDataFail(String e) {
 
     }
+
+    @Override
+    public void onLoadMoreSongMvDataSuccess(SongMvBean bean) {
+
+    }
+
+    @Override
+    public void onLoadMoreSongMvDataFail(String e) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        finish();
+        super.onDestroy();
+    }
 }

@@ -5,9 +5,14 @@
 
     </data>
 
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </layout>
