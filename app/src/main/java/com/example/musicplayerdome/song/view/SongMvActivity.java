@@ -92,7 +92,6 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         Intent intent = getIntent();
         if (intent!=null){
             sid = intent.getLongExtra(MVSONG_INFO,-1);
-            Log.e(TAG, "onGetSingerIdEvent: idididiid"+ sid);
             pid = intent.getIntExtra("pid",-1);
             mPresenter.getSongMv(sid);
             mPresenter.getMVDetail(sid);
@@ -148,6 +147,8 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
 
         binding.userName.setText(bean.getData().getArtistName());
         binding.SMTitle.setText(bean.getData().getDesc());
+        binding.SMShare.setText(""+bean.getData().getShareCount());
+        binding.SMCollect.setText(""+bean.getData().getSubCount());
         binding.SMNumber.setText(bean.getData().getPlayCount()+"次观看");
         Glide.with(this).load(bean.getData().getArtists().get(0).getImg1v1Url()).into(binding.userImg);
     }

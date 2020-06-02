@@ -41,7 +41,9 @@ public class MVDetailBean {
         private long coverId_strl;
         private long coverId;
         private int playCount;
+        private int shareCount;
         private int commentCount;
+        private int subCount;
         private String publishTime;
         private List<ArtistsData>artists;
 
@@ -139,6 +141,22 @@ public class MVDetailBean {
 
         public void setArtists(List<ArtistsData> artists) {
             this.artists = artists;
+        }
+
+        public int getSubCount() {
+            return subCount;
+        }
+
+        public void setSubCount(int subCount) {
+            this.subCount = subCount;
+        }
+
+        public int getShareCount() {
+            return shareCount;
+        }
+
+        public void setShareCount(int shareCount) {
+            this.shareCount = shareCount;
         }
 
         public class ArtistsData{
