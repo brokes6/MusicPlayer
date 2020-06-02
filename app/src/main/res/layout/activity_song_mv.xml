@@ -7,158 +7,202 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#fff"
         tools:context=".song.view.SongMvActivity">
+
         <cn.jzvd.JzvdStd
             android:id="@+id/jz_video"
             android:layout_width="match_parent"
             android:layout_height="240dp" />
-        <androidx.core.widget.NestedScrollView
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <RelativeLayout
-                android:id="@+id/main_top"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/jz_video"
+            android:orientation="vertical"
+            android:background="#fff">
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                //标题和观看次数
-                <TextView
-                    android:id="@+id/SM_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:textSize="18sp"
-                    android:textColor="#2C2B2B"
-                    android:text=" "/>
-                <TextView
-                    android:id="@+id/SM_Number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_below="@+id/SM_title"
-                    android:textSize="15sp"
-                    android:textColor="#858080"
-                    android:text=" "/>
-                //4个按钮
-                <LinearLayout
-                    android:id="@+id/Props_columnS"
-                    android:layout_marginTop="25dp"
-                    android:layout_margin="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/SM_Number"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="30dp"
-                            android:src="@mipmap/comment"/>
-                        <TextView
-                            android:id="@+id/SM_comment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="#2B2929"
-                            android:text="评论"/>
-                    </LinearLayout>
+                android:layout_height="match_parent">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="30dp"
-                            android:src="@mipmap/ic_share_black"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="#2B2929"
-                            android:text="分享"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="30dp"
-                            android:src="@mipmap/download"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="#2B2929"
-                            android:text="下载"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="30dp"
-                            android:src="@mipmap/audio_collect_nomal"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="#2B2929"
-                            android:text="收藏"/>
-                    </LinearLayout>
-                </LinearLayout>
-                //作者图片和名字
-                <RelativeLayout
-                    android:id="@+id/SM_author"
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/appbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:layout_margin="10dp"
-                    android:layout_below="@id/Props_columnS">
-                    <com.example.musicplayerdome.rewrite.RoundImageView
-                        android:id="@+id/user_img"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        app:type="circle"/>
-                    <TextView
-                        android:id="@+id/user_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_centerInParent="true"
-                        android:layout_toRightOf="@id/user_img"
-                        android:text=" "
-                        android:textColor="#2C2B2B" />
-                </RelativeLayout>
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        app:layout_scrollFlags="scroll|snap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        //标题和观看次数
 
-                <LinearLayout
-                    android:layout_below="@+id/SM_author"
+                        <TextView
+                            android:id="@+id/SM_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:textSize="18sp"
+                            android:textColor="#2C2B2B"
+                            android:text=" " />
+
+                        <TextView
+                            android:id="@+id/SM_Number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_below="@+id/SM_title"
+                            android:textSize="15sp"
+                            android:textColor="#858080"
+                            android:text=" " />
+                        //4个按钮
+
+                        <LinearLayout
+                            android:id="@+id/Props_columnS"
+                            android:layout_marginTop="25dp"
+                            android:layout_margin="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/SM_Number"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/comment" />
+
+                                <TextView
+                                    android:id="@+id/SM_comment"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#2B2929"
+                                    android:text="评论" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/ic_share_black" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#2B2929"
+                                    android:text="分享" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/download" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#2B2929"
+                                    android:text="下载" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="30dp"
+                                    android:src="@mipmap/audio_collect_nomal" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#2B2929"
+                                    android:text="收藏" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_1"
+                            android:layout_below="@id/Props_columnS"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:background="#f0f0f0" />
+                    </RelativeLayout>
+                    </LinearLayout>
+                    //作者图片和名字
+
+                    <RelativeLayout
+                        android:id="@+id/SM_author"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:layout_margin="10dp"
+                        android:layout_below="@id/Props_columnS">
+
+                        <com.android.liuzhuang.rcimageview.CircleImageView
+                            android:id="@+id/user_img"
+                            android:layout_width="@dimen/dp_40"
+                            android:layout_height="@dimen/dp_40"
+                            android:layout_centerVertical="true" />
+
+                        <TextView
+                            android:id="@+id/user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_centerInParent="true"
+                            android:layout_toRightOf="@id/user_img"
+                            android:text=" "
+                            android:textColor="#2C2B2B" />
+                    </RelativeLayout>
+
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
                     <TextView
                         android:id="@+id/tv_gap_hot_comment"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_1"
+                        android:layout_height="@dimen/dp_10"
                         android:layout_below="@id/rl_song_info"
                         android:layout_marginTop="@dimen/dp_5"
-                        android:background="#f0f0f0" />
+                        android:background="#EAEAEA" />
 
                     <TextView
                         android:id="@+id/tv_hot_comment"
@@ -207,9 +251,10 @@
                         android:layout_below="@id/tv_comment"
                         android:background="#fff"
                         android:layout_marginTop="@dimen/dp_3" />
-                </LinearLayout>
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
 
-            </RelativeLayout>
-        </androidx.core.widget.NestedScrollView>
-    </LinearLayout>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </layout>

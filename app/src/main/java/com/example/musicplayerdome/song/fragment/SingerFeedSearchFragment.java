@@ -59,7 +59,6 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
     public void onGetSingerIdEvent(SingIdEvent event) {
         singerName = event.getSingerName();
         singId = event.getSingId();
-        Log.e(TAG, "onGetSingerIdEvent: idididiid"+ singId);
     }
 
     @Override
@@ -87,8 +86,8 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
 //        intent.putExtra(SongMvActivity.MVSONG_INFO, bean.getMvs().get(position).getId());
 //        intent.putExtra("MVname",bean.getMvs().get(position).getName());
 //        intent.putExtra("MVimg",bean.getMvs().get(position).getImgurl());
-        intent.putExtra("sid", position);
-        intent.putExtra(SongMvActivity.MVSONG_INFO,songMvBean);
+        intent.putExtra("pid", position);
+        intent.putExtra(SongMvActivity.MVSONG_INFO, songMvBean.getMvs().get(position).getId());
         getContext().startActivity(intent);
 
 
