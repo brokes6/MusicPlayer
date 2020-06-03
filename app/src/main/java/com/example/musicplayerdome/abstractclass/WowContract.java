@@ -8,6 +8,7 @@ import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
+import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 
 import io.reactivex.Observable;
@@ -54,6 +55,10 @@ public interface WowContract {
         void onGetHighQualitySuccess(HighQualityPlayListBean bean);
 
         void onGetHighQualityFail(String e);
+
+        void onGetRecommendsongSuccess(RecommendsongBean bean);
+
+        void onGetRecommendsongFail(String e);
     }
 
     interface Model extends BaseModel {
@@ -76,6 +81,8 @@ public interface WowContract {
         Observable<MusicCanPlayBean> getMusicCanPlay(long id);
 
         Observable<HighQualityPlayListBean> getHighQuality(int limit, long before);
+
+        Observable<RecommendsongBean> getRecommendsong();
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
@@ -86,6 +93,8 @@ public interface WowContract {
         public abstract void getRecommendPlayListAgain();
 
         public abstract void getDailyRecommend();
+
+        public abstract void getRecommendsong();
 
         public abstract void getTopList();
 

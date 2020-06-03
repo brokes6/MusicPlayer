@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
 import com.example.musicplayerdome.abstractclass.WowContract;
+import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.bean.BannerBean;
@@ -34,6 +35,11 @@ import com.example.musicplayerdome.main.adapter.RecommendMusicAdapter;
 import com.example.musicplayerdome.main.adapter.SongListAdapter;
 import com.example.musicplayerdome.databinding.FragmentHomeBinding;
 import com.example.musicplayerdome.resources.DomeData;
+import com.example.musicplayerdome.song.other.SongPlayManager;
+import com.example.musicplayerdome.song.view.SongActivity;
+import com.example.musicplayerdome.yuncun.adapter.YuncunAdapter;
+import com.example.musicplayerdome.yuncun.view.YuncunSongActivity;
+import com.lzx.starrysky.model.SongInfo;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -61,6 +67,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     //推荐歌单集合
     List<MainRecommendPlayListBean.RecommendBean> recommends = new ArrayList<>();
     List<PlaylistBean> list = new ArrayList<>();
+    private SongInfo msongInfo;
 
     public HomeFragment() {
         setFragmentTitle("主 页");
@@ -83,6 +90,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
         recommends.clear();
         mPresenter.getBanner();
         mPresenter.getRecommendPlayList();
+        mPresenter.getRecommendsong();
 
         songListAdapter = new SongListAdapter(getContext());
         songListAdapter.setType(1);
@@ -97,7 +105,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
         i1.setOrientation(LinearLayoutManager.VERTICAL);
         binding.recommendMusic.setLayoutManager(i1);
         binding.recommendMusic.setAdapter(recommendMusicAdapter);
-        recommendMusicAdapter.loadMore(DomeData.getRecommendMusic());
+        recommendMusicAdapter.setListener(listener);
         showDialog();
     }
 
@@ -105,6 +113,25 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     public WowPresenter onCreatePresenter() {
         return new WowPresenter(this);
     }
+
+    RecommendMusicAdapter.RecommendMusicItemClickListener listener = new RecommendMusicAdapter.RecommendMusicItemClickListener() {
+
+        @Override
+        public void onPlayListItemClick(int position) {
+            msongInfo = new SongInfo();
+            msongInfo.setSongId(String.valueOf(resultData.get(position).getSong().getId()));
+            msongInfo.setSongName(resultData.get(position).getName());
+            msongInfo.setSongUrl(SONG_URL + resultData.get(position).getSong().getId() + ".mp3");
+            msongInfo.setArtist(resultData.get(position).getSong().getArtists().get(0).getName());
+            msongInfo.setArtistId(String.valueOf(resultData.get(position).getSong().getArtists().get(0).getId()));
+            msongInfo.setSongCover(resultData.get(position).getPicUrl());
+
+            SongPlayManager.getInstance().clickASong(msongInfo);
+            Intent intent = new Intent(getContext(), SongActivity.class);
+            intent.putExtra(SongActivity.SONG_INFO, msongInfo);
+            startActivity(intent);
+        }
+    };
 
     @Override
     protected void initVariables(Bundle bundle) {
@@ -291,6 +318,19 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
 
     @Override
     public void onGetHighQualityFail(String e) {
+
+    }
+
+    private List<RecommendsongBean.resultData> resultData = new ArrayList<>();
+    @Override
+    public void onGetRecommendsongSuccess(RecommendsongBean bean) {
+        recommendMusicAdapter.loadMore(bean.getResult());
+        resultData.clear();
+        resultData.addAll(bean.getResult());
+    }
+
+    @Override
+    public void onGetRecommendsongFail(String e) {
 
     }
 

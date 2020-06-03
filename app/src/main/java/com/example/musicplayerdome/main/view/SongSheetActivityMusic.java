@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.WowContract;
 import com.example.musicplayerdome.databinding.SongPlayListBinding;
+import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.song.adapter.MySongListAdapter;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.bean.BannerBean;
@@ -285,6 +286,16 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 
     @Override
     public void onGetHighQualityFail(String e) {
+
+    }
+
+    @Override
+    public void onGetRecommendsongSuccess(RecommendsongBean bean) {
+
+    }
+
+    @Override
+    public void onGetRecommendsongFail(String e) {
 
     }
 

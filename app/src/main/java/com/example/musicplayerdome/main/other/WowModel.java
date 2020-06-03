@@ -10,6 +10,7 @@ import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
+import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 
 import io.reactivex.Observable;
@@ -63,5 +64,10 @@ public class WowModel implements WowContract.Model {
     @Override
     public Observable<HighQualityPlayListBean> getHighQuality(int limit, long before) {
         return ApiEngine.getInstance().getApiService().getHighquality(limit, before);
+    }
+
+    @Override
+    public Observable<RecommendsongBean> getRecommendsong() {
+        return ApiEngine.getInstance().getApiService().getRecommendsong();
     }
 }

@@ -21,22 +21,14 @@
         android:text="名称"/>
     <TextView
         android:id="@+id/rec_author"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/rec_text"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/rec_img"
+        android:layout_below="@+id/rec_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         android:textColor="#6A6A6A"
         android:text="-作者"/>
-    <TextView
-        android:id="@+id/rec_introduce"
-        android:layout_toRightOf="@+id/rec_img"
-        android:layout_below="@+id/rec_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textColor="#6A6A6A"
-        android:text="介绍"/>
     <ImageView
         android:id="@+id/rplay"
         android:layout_width="30dp"

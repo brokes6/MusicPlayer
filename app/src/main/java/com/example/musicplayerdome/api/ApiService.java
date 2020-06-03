@@ -27,6 +27,7 @@ import com.example.musicplayerdome.main.bean.MyFmBean;
 import com.example.musicplayerdome.main.bean.PlayModeIntelligenceBean;
 import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
+import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 import com.example.musicplayerdome.personal.bean.UserDetailBean;
 import com.example.musicplayerdome.personal.bean.UserEventBean;
@@ -195,6 +196,9 @@ public interface ApiService {
 
     @GET("album/sublist")
     Observable<AlbumSublistBean> getAlbumSublist();
+
+    @GET("personalized/newsong")
+    Observable<RecommendsongBean> getRecommendsong();
 
     @GET("artist/sublist")
     Observable<ArtistSublistBean> getArtistSublist();

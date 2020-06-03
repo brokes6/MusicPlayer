@@ -11,6 +11,7 @@ import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
+import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 
 import io.reactivex.Observer;
@@ -139,6 +140,33 @@ public class WowPresenter extends WowContract.Presenter {
                     }
                 });
     }
+
+        @Override
+        public void getRecommendsong() {
+            mModel.getRecommendsong().subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<RecommendsongBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(RecommendsongBean recommendsongBean) {
+                            mView.onGetRecommendsongSuccess(recommendsongBean);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mView.onGetRecommendsongFail(e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
 
     @Override
     public void getTopList() {
