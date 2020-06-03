@@ -32,6 +32,10 @@
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:launchMode="singleTop" />
         <activity
+            android:name=".main.view.SongSheetComment"
+            android:configChanges="screenSize|orientation|keyboardHidden"
+            android:launchMode="singleTop" />
+        <activity
             android:name=".login.view.SelectLoginActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:launchMode="singleTop" />

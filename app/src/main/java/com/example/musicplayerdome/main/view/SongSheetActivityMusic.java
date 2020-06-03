@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -27,6 +28,8 @@ import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 import com.example.musicplayerdome.main.other.WowPresenter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
+import com.example.musicplayerdome.song.view.CommentActivity;
+import com.example.musicplayerdome.song.view.SongActivity;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.model.SongInfo;
 import com.scwang.smartrefresh.header.MaterialHeader;
@@ -100,6 +103,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 
     private void initView(){
         binding.Pback.setOnClickListener(this);
+        binding.SHComment.setOnClickListener(this);
         //设置 Header式
         binding.refreshLayout.setRefreshHeader(new MaterialHeader(this));
         //取消Footer
@@ -117,9 +121,18 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent();
         switch (v.getId()){
             case R.id.Pback:
                 finish();
+                break;
+            case R.id.SH_comment:
+                intent.setClass(this, SongSheetComment.class);
+                intent.putExtra(SongSheetComment.ID, playlistId);
+                intent.putExtra(SongSheetComment.NAME, playlistName);
+                intent.putExtra(SongSheetComment.ARTIST, creatorName);
+                intent.putExtra(SongSheetComment.COVER, creatorUrl);
+                startActivity(intent);
                 break;
         }
     }
@@ -215,6 +228,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             beanInfo.setArtistKey(beanList.get(i).getAl().getPicUrl());
             songInfos.add(beanInfo);
         }
+        Log.e(TAG, "onGetPlaylistDetailSuccess: 当前id为"+ bean.getPlaylist().getId());
         binding.songComment.setText(""+bean.getPlaylist().getCommentCount());
         adapter.setList(songInfos);
         adapter.loadMore(songInfos);

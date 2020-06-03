@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:rc="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:background="@color/white">
+
+            <include
+                android:id="@+id/title"
+                layout="@layout/common_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45" />
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="always"
+            android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rl_song_info"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_110"
+                android:background="#fff">
+
+                <com.android.liuzhuang.rcimageview.RoundCornerImageView
+                    android:id="@+id/iv_cover"
+                    android:layout_width="@dimen/dp_90"
+                    android:layout_height="@dimen/dp_90"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:scaleType="fitXY"
+                    rc:rciv_radius="15dp"
+                    android:layout_centerVertical="true" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/iv_cover">
+
+                    <TextView
+                        android:id="@+id/tv_music_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="#303233"
+                        android:textSize="@dimen/sp_16" />
+
+                    <TextView
+                        android:id="@+id/tv_artist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_music_name"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="#2196f3"
+                        android:textSize="@dimen/sp_13" />
+                </RelativeLayout>
+            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/rl_song_info"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_gap_hot_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_10"
+                        android:layout_below="@id/rl_song_info"
+                        android:background="#EAEAEA" />
+
+                    <TextView
+                        android:id="@+id/tv_hot_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_gap_hot_comment"
+                        android:paddingLeft="10dp"
+                        android:background="@color/white"
+                        android:layout_marginTop="@dimen/dp_7"
+                        android:text="评论区"
+                        android:textColor="#303233"
+                        android:textSize="@dimen/sp_17"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_hot_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:layout_below="@id/tv_hot_comment"/>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_new_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_comment"
+                        android:background="#fff" />
+                </LinearLayout>
+        </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>
