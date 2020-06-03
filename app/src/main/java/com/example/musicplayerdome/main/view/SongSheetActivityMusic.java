@@ -131,7 +131,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
                 intent.putExtra(SongSheetComment.ID, playlistId);
                 intent.putExtra(SongSheetComment.NAME, playlistName);
                 intent.putExtra(SongSheetComment.ARTIST, creatorName);
-                intent.putExtra(SongSheetComment.COVER, creatorUrl);
+                intent.putExtra(SongSheetComment.COVER, playlistPicUrl);
                 startActivity(intent);
                 break;
         }

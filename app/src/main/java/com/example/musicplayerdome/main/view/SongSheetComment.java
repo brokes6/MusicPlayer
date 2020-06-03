@@ -67,10 +67,9 @@ public class SongSheetComment extends BaseActivity<SongPresenter> implements Son
 
         Intent intent = getIntent();
         id = intent.getLongExtra(ID, 0);
-        Log.e(TAG, "initData: 当前id为"+id );
         Glide.with(this).load(intent.getStringExtra(COVER)).into(binding.ivCover);
         binding.tvMusicName.setText(intent.getStringExtra(NAME));
-        binding.tvArtist.setText(intent.getStringExtra(ARTIST));
+        binding.tvArtist.setText("by."+intent.getStringExtra(ARTIST));
 
         binding.rvHotComment.setLayoutManager(new LinearLayoutManager(this));
         binding.rvNewComment.setLayoutManager(new LinearLayoutManager(this));

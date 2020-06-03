@@ -251,6 +251,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                 binding.ivLike.setImageResource(R.drawable.shape_like_white);
             } else {
                 isLike = false;
+                binding.ivLike.setImageResource(R.drawable.shape_not_like);
             }
             if (SongPlayManager.getInstance().getSongDetail(ids) == null) {
                 mPresenter.getSongDetail(ids);
@@ -421,6 +422,8 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                 break;
         }
     }
+
+
     /**
      * 初始化音量控制器
      */
