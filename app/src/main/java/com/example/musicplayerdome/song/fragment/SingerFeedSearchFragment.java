@@ -87,6 +87,7 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
         //取消Footer
         binding.refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
         binding.refreshLayout.setDisableContentWhenRefresh(true);
+        binding.refreshLayout.setEnableAutoLoadMore(false);
 
         binding.refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -221,6 +222,10 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
 
     @Override
     public void onLoadMoreSongMvDataSuccess(SongMvBean bean) {
+        if (bean.isHasMore()==false){
+            Log.e(TAG, "没有更多了");
+            binding.refreshLayout.finishLoadMoreWithNoMoreData();
+        }
         Log.e(TAG, "onRefresh加载更多成功");
         adapter.loadMore(bean.getMvs());
         binding.refreshLayout.finishLoadMore(true);

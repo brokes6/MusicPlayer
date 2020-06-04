@@ -101,6 +101,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         mainL = findViewById(R.id.mainL);
 
         icNav.setOnClickListener(this);
+        Sbinding.rlLogout.setOnClickListener(this);
         setMargins(tabBackground,0,getStatusBarHeight(this),0,0);
     }
     private void initSidebar(LoginBean bean){
@@ -209,8 +210,11 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ic_nav:
-                Log.e(TAG, "onClick: 点点点点点点");
                 Sbinding.drawerLayout.openDrawer(GravityCompat.START);
+                break;
+            case R.id.rl_logout:
+                showDialog();
+                mPresenter.logout();
                 break;
         }
     }

@@ -6,6 +6,7 @@ import java.util.List;
 public class SongMvBean implements Serializable {
     private int code;
     private long time;
+    private boolean hasMore;
     private List<MvData> mvs;
 
     public int getCode() {
@@ -22,6 +23,14 @@ public class SongMvBean implements Serializable {
 
     public void setTime(long time) {
         this.time = time;
+    }
+
+    public boolean isHasMore() {
+        return hasMore;
+    }
+
+    public void setHasMore(boolean hasMore) {
+        this.hasMore = hasMore;
     }
 
     public List<MvData> getMvs() {
