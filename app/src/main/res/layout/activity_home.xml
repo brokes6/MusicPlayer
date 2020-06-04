@@ -7,16 +7,16 @@
 
     </data>
     <RelativeLayout
-        android:id="@+id/mtop"
+        android:id="@+id/mrelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/red"
         tools:context=".main.view.HomeActivityMusic">
     <LinearLayout
         android:id="@+id/mainL"
         android:layout_above="@+id/bottom_controller"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/red"
         android:orientation="vertical">
     <LinearLayout
         android:id="@+id/tabBackground"

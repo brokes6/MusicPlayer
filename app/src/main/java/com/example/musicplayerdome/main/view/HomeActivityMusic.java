@@ -1,5 +1,6 @@
 package com.example.musicplayerdome.main.view;
 
+import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.ViewPager;
 
@@ -10,15 +11,21 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.Constants;
 import com.example.musicplayerdome.abstractclass.MainContract;
+import com.example.musicplayerdome.databinding.SidebarMainBinding;
 import com.example.musicplayerdome.main.adapter.MultiFragmentPagerAdapter;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.base.BaseFragment;
@@ -29,6 +36,7 @@ import com.example.musicplayerdome.main.fragment.SongSheetFragment;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
 import com.example.musicplayerdome.main.other.MainPresenter;
+import com.example.musicplayerdome.rewrite.BottomSongPlayBar;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.ActivityStarter;
 import com.example.musicplayerdome.util.GsonUtil;
@@ -43,17 +51,25 @@ import java.util.List;
 
 public class HomeActivityMusic extends BaseActivity<MainPresenter> implements View.OnClickListener, MainContract.View{
     private static final String TAG = "HomeActivity";
-    ActivityHomeBinding binding;
+//    ActivityHomeBinding binding;
+    SidebarMainBinding Sbinding;
     private List<BaseFragment> fragmentList = new ArrayList<>();
     private MultiFragmentPagerAdapter mPagerAdapter;
     private long firstTime = 0;
+    private ImageView icNav,ivSearch;
+    private ViewPager viewpager;
+    private BottomSongPlayBar bottomController;
+    private TabLayout tablayoutReal;
+    private LinearLayout tabBackground,mainL;
+    private RelativeLayout mRelativeLayout;
     //用户信息
     private LoginBean loginBean;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_home);
-
+        Sbinding = DataBindingUtil.setContentView(this,R.layout.sidebar_main);
+//        binding = DataBindingUtil.setContentView(this,R.layout.activity_home);
+        initView();
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
@@ -64,18 +80,37 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         fragmentList.add(new HomeFragment());
         fragmentList.add(new YuncunFragment());
         mPagerAdapter.init(fragmentList);
-        initView();
     }
     @Override
     protected void initData() {
         String userLoginInfo = SharePreferenceUtil.getInstance(this).getUserInfo("");
         loginBean = GsonUtil.fromJSON(userLoginInfo, LoginBean.class);
 
+        initSidebar(loginBean);
         initApadter();
         mPresenter.getLikeList(loginBean.getAccount().getId());
     }
     private void initView(){
-        setMargins(binding.tabBackground,0,getStatusBarHeight(this),0,0);
+        icNav = findViewById(R.id.ic_nav);
+        ivSearch = findViewById(R.id.iv_search);
+        viewpager = findViewById(R.id.viewpager);
+        bottomController = findViewById(R.id.bottom_controller);
+        tablayoutReal = findViewById(R.id.tablayoutReal);
+        tabBackground = findViewById(R.id.tabBackground);
+        mRelativeLayout = findViewById(R.id.mrelativeLayout);
+        mainL = findViewById(R.id.mainL);
+
+        icNav.setOnClickListener(this);
+        setMargins(tabBackground,0,getStatusBarHeight(this),0,0);
+    }
+    private void initSidebar(LoginBean bean){
+        if (bean.getProfile().getAvatarUrl() != null) {
+            String avatarUrl = bean.getProfile().getAvatarUrl();
+            Glide.with(this).load(avatarUrl).into(Sbinding.ivAvatar);
+        }
+        if (bean.getProfile().getNickname() != null) {
+            Sbinding.tvUsername.setText(bean.getProfile().getNickname());
+        }
     }
 
     public static int getStatusBarHeight(Context context) {
@@ -95,24 +130,24 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
     private final int A3A3 = 0xFF3A3A3A, While = 0xFFFFFF, red = 0xFFdb2b1c;
     private int text;
     private void initApadter(){
-        binding.viewpager.setAdapter(mPagerAdapter);
-        binding.viewpager.setCurrentItem(1);
-        binding.viewpager.setOffscreenPageLimit(fragmentList.size()-1);
+        viewpager.setAdapter(mPagerAdapter);
+        viewpager.setCurrentItem(1);
+        viewpager.setOffscreenPageLimit(fragmentList.size()-1);
         mPagerAdapter.getItem(1).setUserVisibleHint(true);
-        binding.tablayoutReal.setupWithViewPager(binding.viewpager);
-        binding.tablayoutReal.setTabTextColors(Color.parseColor("#C6B3B3"), Color.parseColor("#FFFDFD"));
-        binding.tablayoutReal.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tablayoutReal.setupWithViewPager(viewpager);
+        tablayoutReal.setTabTextColors(Color.parseColor("#C6B3B3"), Color.parseColor("#FFFDFD"));
+        tablayoutReal.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 setSelectTextBoldAndBig(tab);
                 if (tab.getText().equals("云 村")){
                     ImmersionBar.with(HomeActivityMusic.this).statusBarDarkFont(true).init();
-                    binding.ivSearch.setImageResource(R.drawable.shape_search_gray);
-                    binding.icNav.setImageResource(R.drawable.shape_drawer_gray);
+                    ivSearch.setImageResource(R.drawable.shape_search_gray);
+                    icNav.setImageResource(R.drawable.shape_drawer_gray);
                 }else{
                     ImmersionBar.with(HomeActivityMusic.this).statusBarDarkFont(false).init();
-                    binding.ivSearch.setImageResource(R.drawable.shape_search);
-                    binding.icNav.setImageResource(R.drawable.shape_drawer);
+                    ivSearch.setImageResource(R.drawable.shape_search);
+                    icNav.setImageResource(R.drawable.shape_drawer);
                 }
             }
 
@@ -126,7 +161,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
 
             }
         });
-        binding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 ArgbEvaluator evaluator = new ArgbEvaluator(); // ARGB求值器
@@ -141,8 +176,8 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
                 } else {
                     evaluate = red; // 最终第3页的颜色
                 }
-                binding.tablayoutReal.setBackgroundColor(evaluate);// 切换底部导航栏和toolbar的颜色。
-                binding.mtop.setBackgroundColor(evaluate);//整体activity的颜色
+                tablayoutReal.setBackgroundColor(evaluate);// 切换底部导航栏和toolbar的颜色。
+                mainL.setBackgroundColor(evaluate);//整体activity的颜色
             }
 
             @Override
@@ -173,7 +208,10 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
+            case R.id.ic_nav:
+                Log.e(TAG, "onClick: 点点点点点点");
+                Sbinding.drawerLayout.openDrawer(GravityCompat.START);
+                break;
         }
     }
 
@@ -183,12 +221,12 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         int key = (int) SharedPreferencesUtil.getData("Ykey",0);
         if (key!=3){
             if (SongPlayManager.getInstance().isPlaying()) {
-                binding.bottomController.setVisibility(View.VISIBLE);
+                bottomController.setVisibility(View.VISIBLE);
             } else {
-                binding.bottomController.setVisibility(View.GONE);
+                bottomController.setVisibility(View.GONE);
             }
         }else{
-            binding.bottomController.setVisibility(View.GONE);
+            bottomController.setVisibility(View.GONE);
         }
     }
 
@@ -242,7 +280,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
     public void onBackPressed() {
         long secondTime = System.currentTimeMillis();
         if (secondTime - firstTime > 2000) {
-            SnackbarUtils.Short(binding.mainL, "再按一次退出").info().show();
+            SnackbarUtils.Short(mainL, "再按一次退出").info().show();
             firstTime = secondTime;
         } else{
 //            ActivityUtils.finishAllActivities();

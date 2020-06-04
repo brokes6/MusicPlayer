@@ -17,13 +17,7 @@
         android:background="#DFDADA"
         android:orientation="vertical"
         tools:context=".main.fragment.YuncunFragment">
-<!--        <com.android.liuzhuang.rcimageview.RoundCornerImageView-->
-<!--            android:id="@+id/my_song_img"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:scaleType="centerCrop"-->
-<!--            android:layout_margin="15dp"-->
-<!--            rc:rciv_radius="15dp"/>-->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

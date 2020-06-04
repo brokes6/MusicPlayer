@@ -140,13 +140,8 @@ public class SingerInfoSearchFragment extends BaseFragment<SingerPresenter> impl
         hideDialog();
         Log.d(TAG, "onGetSingerDescSuccess :" + bean);
         descBean = bean;
-        if(bean.getIntroduction().size()!=0){
-            binding.tvSingername.setText(bean.getIntroduction().get(0).getTi());
-            binding.tvDesc.setText(bean.getIntroduction().get(0).getTxt());
-        }else {
-            binding.tvSingername.setText("");
-            binding.tvDesc.setText("");
-        }
+
+        binding.tvDesc.setText(bean.getBriefDesc());
     }
 
     @Override

@@ -5,7 +5,7 @@
 
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
@@ -15,23 +15,10 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tv_singername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:padding="@dimen/dp_10"
-                android:singleLine="true"
-                android:textColor="#333333"
-                android:textSize="@dimen/sp_16"
-                android:textStyle="bold" />
-
-            <TextView
                 android:id="@+id/tv_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_singername"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_10"
                 android:paddingStart="@dimen/dp_10"
                 android:paddingEnd="@dimen/dp_10"
                 android:textColor="#A9A9A9"
@@ -80,5 +67,5 @@
                 </RelativeLayout>
             </HorizontalScrollView>
         </RelativeLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

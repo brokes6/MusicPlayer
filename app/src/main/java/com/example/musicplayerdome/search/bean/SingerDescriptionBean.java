@@ -14,7 +14,7 @@ public class SingerDescriptionBean {
 
     private String briefDesc;
     private int count;
-    private Object topicData;
+    private List<TopicDataBean> topicData;
     private int code;
     private List<IntroductionBean> introduction;
 
@@ -34,11 +34,11 @@ public class SingerDescriptionBean {
         this.count = count;
     }
 
-    public Object getTopicData() {
+    public List<TopicDataBean> getTopicData() {
         return topicData;
     }
 
-    public void setTopicData(Object topicData) {
+    public void setTopicData(List<TopicDataBean> topicData) {
         this.topicData = topicData;
     }
 
@@ -84,6 +84,35 @@ public class SingerDescriptionBean {
 
         public void setTxt(String txt) {
             this.txt = txt;
+        }
+    }
+    public class TopicDataBean{
+        private int commentCount;
+        private int likedCount;
+        private boolean liked;
+
+        public int getCommentCount() {
+            return commentCount;
+        }
+
+        public void setCommentCount(int commentCount) {
+            this.commentCount = commentCount;
+        }
+
+        public int getLikedCount() {
+            return likedCount;
+        }
+
+        public void setLikedCount(int likedCount) {
+            this.likedCount = likedCount;
+        }
+
+        public boolean isLiked() {
+            return liked;
+        }
+
+        public void setLiked(boolean liked) {
+            this.liked = liked;
         }
     }
 }

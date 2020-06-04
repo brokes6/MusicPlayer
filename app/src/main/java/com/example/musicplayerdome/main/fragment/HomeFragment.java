@@ -151,6 +151,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 Log.e(TAG, "onRefresh: 开始刷新");
                 mPresenter.getRecommendPlayListAgain();
+                mPresenter.getRecommendsong();
             }
         });
     }
@@ -211,16 +212,11 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
             //进入歌单详情页面
             Intent intent = new Intent(getActivity(), SongSheetActivityMusic.class);
             MainRecommendPlayListBean.RecommendBean bean = recommends.get(position);
-            String playlistName = bean.getName();
-            intent.putExtra(PLAYLIST_NAME, playlistName);
-            String playlistPicUrl = bean.getPicUrl();
-            intent.putExtra(PLAYLIST_PICURL, playlistPicUrl);
-            String playlistCreatorNickname = bean.getCreator().getNickname();
-            intent.putExtra(PLAYLIST_CREATOR_NICKNAME, playlistCreatorNickname);
-            String playlistCreatorAvatarUrl = bean.getCreator().getAvatarUrl();
-            intent.putExtra(PLAYLIST_CREATOR_AVATARURL, playlistCreatorAvatarUrl);
-            long playlistId = bean.getId();
-            intent.putExtra(PLAYLIST_ID, playlistId);
+            intent.putExtra(PLAYLIST_NAME, bean.getName());
+            intent.putExtra(PLAYLIST_PICURL, bean.getPicUrl());
+            intent.putExtra(PLAYLIST_CREATOR_NICKNAME, bean.getCreator().getNickname());
+            intent.putExtra(PLAYLIST_CREATOR_AVATARURL, bean.getCreator().getAvatarUrl());
+            intent.putExtra(PLAYLIST_ID, bean.getId());
             startActivity(intent);
         }
     };
@@ -241,7 +237,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
             beanInfo.setPlaylistCoverUrl(recommends.get(i).getPicUrl());
             list.add(beanInfo);
         }
-        Log.e(TAG, "onRefresh刷新成功");
+        Log.e(TAG, "推荐歌单刷新成功");
         songListAdapter.refresh(list);
         binding.refreshLayout.finishRefresh(true);
     }
@@ -324,8 +320,13 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     private List<RecommendsongBean.resultData> resultData = new ArrayList<>();
     @Override
     public void onGetRecommendsongSuccess(RecommendsongBean bean) {
+        if (resultData.size()>0){
+            Log.e(TAG, "新歌刷新成功");
+            recommendMusicAdapter.refresh(bean.getResult());
+            binding.refreshLayout.finishRefresh(true);
+        }
         recommendMusicAdapter.loadMore(bean.getResult());
-        resultData.clear();
+//        resultData.clear();
         resultData.addAll(bean.getResult());
     }
 
