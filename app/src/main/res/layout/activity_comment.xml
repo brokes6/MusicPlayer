@@ -14,7 +14,7 @@
         <RelativeLayout
             android:id="@+id/rl_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_65"
+            android:layout_height="wrap_content"
             android:background="@color/red">
 
             <include

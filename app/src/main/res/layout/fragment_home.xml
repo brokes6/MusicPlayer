@@ -85,6 +85,7 @@
                         android:text="歌单"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/h_rank"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"

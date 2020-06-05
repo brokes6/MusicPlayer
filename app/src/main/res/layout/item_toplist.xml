@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:rc="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_toplist"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dp_165"
+    android:layout_rowWeight="1"
+    android:layout_weight="1"
+    android:padding="@dimen/dp_8">
+
+    <com.android.liuzhuang.rcimageview.RoundCornerImageView
+        android:id="@+id/iv_toplist"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:scaleType="fitXY"
+        android:layout_centerHorizontal="true"
+        rc:rciv_radius="15dp"/>
+
+    <TextView
+        android:id="@+id/tv_toplist_name"
+        android:layout_width="@dimen/dp_110"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_toplist"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_5"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="#333333"
+        android:textSize="@dimen/sp_12" />
+</RelativeLayout>

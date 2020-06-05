@@ -162,6 +162,7 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
         }
         songAdapter.setList(songInfos);
         songAdapter.loadMore(songInfos);
+        hideDialog();
     }
 
     @Override
@@ -248,7 +249,6 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
 
     @Override
     public void onGetDailyRecommendSuccess(DailyRecommendBean bean) {
-        hideDialog();
         SharePreferenceUtil.getInstance(this).saveDailyUpdateTime(System.currentTimeMillis());
         dailyList.addAll(bean.getRecommend());
 

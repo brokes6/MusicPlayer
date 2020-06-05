@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/red">
+
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                layout="@layout/common_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45" />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_toplist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/rl_title"
+            android:layout_above="@+id/bottom_controller"
+            android:background="#fff"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingEnd="@dimen/dp_10" />
+
+        <com.example.musicplayerdome.rewrite.BottomSongPlayBar
+            android:id="@+id/bottom_controller"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            app:layout_behavior="@string/bottom_sheet_behavior" />
+    </RelativeLayout>
+</layout>

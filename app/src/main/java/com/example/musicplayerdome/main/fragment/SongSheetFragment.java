@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,7 +38,6 @@ import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.view.FMSongActivity;
 import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
-import com.example.musicplayerdome.util.XToastUtils;
 import com.lzx.starrysky.model.SongInfo;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -48,7 +46,6 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 import com.xuexiang.xui.widget.popupwindow.easypopup.EasyPopup;
 import com.xuexiang.xui.widget.popupwindow.easypopup.HorizontalGravity;
 import com.xuexiang.xui.widget.popupwindow.easypopup.VerticalGravity;
-
 import java.util.ArrayList;
 import java.util.List;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_CREATOR_AVATARURL;

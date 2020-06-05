@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.musicplayerdome.R;
@@ -63,6 +66,8 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     private String creatorName;
     //计算完成后发送的Handler msg
     public static final int COMPLETED = 0;
+    LinearLayout SHComment;
+    TextView songComment;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -103,8 +108,11 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     }
 
     private void initView(){
+        SHComment = findViewById(R.id.SH_comment);
+        songComment = findViewById(R.id.song_comment);
+
         binding.Pback.setOnClickListener(this);
-        binding.SHComment.setOnClickListener(this);
+        SHComment.setOnClickListener(this);
         //设置 Header式
         binding.refreshLayout.setRefreshHeader(new MaterialHeader(this));
         //取消Footer
@@ -114,7 +122,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         binding.refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                Log.e(TAG, "onRefresh: 开始刷新");
+                Log.e(TAG, "onRefresh: 歌单开始刷新");
                 mPresenter.getPlaylistDetailAgain(playlistId);
             }
         });
@@ -210,7 +218,6 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     @SuppressLint("SetTextI18n")
     @Override
     public void onGetPlaylistDetailSuccess(PlaylistDetailBean bean) {
-        hideDialog();
         Log.d(TAG, "获取歌单成功 : " + bean);
         if (!TextUtils.isEmpty(creatorUrl)) {
             Glide.with(this).load(bean.getPlaylist().getCreator().getAvatarUrl()).into(binding.userImg);
@@ -230,10 +237,10 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             songInfos.add(beanInfo);
         }
         Log.e(TAG, "onGetPlaylistDetailSuccess: 当前id为"+ bean.getPlaylist().getId());
-        binding.songComment.setText(""+bean.getPlaylist().getCommentCount());
+        songComment.setText(""+bean.getPlaylist().getCommentCount());
         adapter.setList(songInfos);
         adapter.loadMore(songInfos);
-
+        hideDialog();
     }
 
     @Override
@@ -259,7 +266,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             beanInfo.setArtistKey(beanList.get(i).getAl().getPicUrl());
             songInfos.add(beanInfo);
         }
-        Log.e(TAG, "onRefresh刷新成功");
+        Log.e(TAG, "歌单刷新成功");
         adapter.refresh(songInfos);
         binding.refreshLayout.finishRefresh(true);
     }

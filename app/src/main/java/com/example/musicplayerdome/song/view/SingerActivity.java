@@ -66,25 +66,6 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
         pagerAdapter.init(fragments);
     }
 
-//    /**
-//     * 获取状态栏高度
-//     * @param context
-//     * @return
-//     */
-//    public static int getStatusBarHeight(Context context) {
-//        Resources resources = context.getResources();
-//        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-//        int height = resources.getDimensionPixelSize(resourceId);
-//        return height;
-//    }
-//    public static void setMargins (View v, int l, int t, int r, int b) {
-//        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-//            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-//            p.setMargins(l, t, r, b);
-//            v.requestLayout();
-//        }
-//    }
-
     @Override
     protected SingerPresenter onCreatePresenter() {
         return new SingerPresenter(this);

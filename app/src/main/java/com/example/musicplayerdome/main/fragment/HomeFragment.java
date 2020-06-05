@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.example.musicplayerdome.abstractclass.WowContract;
 import com.example.musicplayerdome.main.bean.RecommendsongBean;
+import com.example.musicplayerdome.main.view.RankActivity;
 import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.bean.BannerBean;
@@ -51,7 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends BaseFragment<WowPresenter> implements WowContract.View{
+public class HomeFragment extends BaseFragment<WowPresenter> implements WowContract.View,View.OnClickListener{
     private static final String TAG = "HomeFragment";
     FragmentHomeBinding binding;
     SongListAdapter songListAdapter;
@@ -71,11 +73,6 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
 
     public HomeFragment() {
         setFragmentTitle("主 页");
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -139,7 +136,9 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     }
 
     private void initView(){
+        binding.hRank.setOnClickListener(this);
         binding.hDailyRecommend.setOnClickListener(this);
+
         //设置 Header式
         binding.refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
         //取消Footer
@@ -339,7 +338,10 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.h_daily_recommend:
-                startActivity(new Intent(activity, DailyRecommendActivity.class));
+                ActivityUtils.startActivity(DailyRecommendActivity.class);
+                break;
+            case R.id.h_rank:
+                ActivityUtils.startActivity(RankActivity.class);
                 break;
         }
     }

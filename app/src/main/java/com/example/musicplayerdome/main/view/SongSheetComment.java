@@ -155,7 +155,6 @@ public class SongSheetComment extends BaseActivity<SongPresenter> implements Son
 
     @Override
     public void onGetPlaylistCommentSuccess(PlayListCommentBean bean) {
-        hideDialog();
         setLeftTitleText(getString(R.string.comment) + "(" + bean.getTotal() + ")", getString(R.string.colorBlack));
         notifyList(bean.getHotComments(), bean.getComments());
     }
@@ -171,6 +170,7 @@ public class SongSheetComment extends BaseActivity<SongPresenter> implements Son
         }
         hotAdapter.loadMore(hotCommentList);
         newAdapter.loadMore(newCommentList);
+        hideDialog();
     }
 
     @Override
