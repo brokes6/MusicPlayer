@@ -38,6 +38,7 @@ import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.view.FMSongActivity;
 import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
+import com.example.musicplayerdome.util.XToastUtils;
 import com.lzx.starrysky.model.SongInfo;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -224,6 +225,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     @Override
     public void onGetUserPlaylistFail(String e) {
         hideDialog();
+        XToastUtils.error("网络请求失败，请检查网络再试");
     }
 
     @Override
@@ -250,7 +252,8 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
     @Override
     public void onGetUserPlaylistAgainFail(String e) {
-
+        XToastUtils.error("刷新失败，请检查网络再试");
+        binding.refreshLayout.finishRefresh(true);
     }
 
     @Override

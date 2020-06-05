@@ -39,6 +39,7 @@ import com.example.musicplayerdome.databinding.FragmentHomeBinding;
 import com.example.musicplayerdome.resources.DomeData;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.view.SongActivity;
+import com.example.musicplayerdome.util.XToastUtils;
 import com.example.musicplayerdome.yuncun.adapter.YuncunAdapter;
 import com.example.musicplayerdome.yuncun.view.YuncunSongActivity;
 import com.lzx.starrysky.model.SongInfo;
@@ -223,6 +224,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     @Override
     public void onGetRecommendPlayListFail(String e) {
         hideDialog();
+        XToastUtils.error("网络请求失败，请检查网络再试");
     }
 
     @Override
@@ -331,7 +333,8 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
 
     @Override
     public void onGetRecommendsongFail(String e) {
-
+        binding.refreshLayout.finishRefresh(true);
+        XToastUtils.error("获取新歌失败，请检查网络再试");
     }
 
     @Override

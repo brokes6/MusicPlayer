@@ -34,6 +34,7 @@ import com.example.musicplayerdome.main.other.WowPresenter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.view.CommentActivity;
 import com.example.musicplayerdome.song.view.SongActivity;
+import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.model.SongInfo;
 import com.scwang.smartrefresh.header.MaterialHeader;
@@ -246,6 +247,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     @Override
     public void onGetPlaylistDetailFail(String e) {
         hideDialog();
+        XToastUtils.error("网络请求失败，请检查网络再试");
     }
 
     @Override
@@ -273,7 +275,8 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 
     @Override
     public void onGetPlaylistDetailAgainFail(String e) {
-
+        XToastUtils.error("刷新失败，请检查网络再试");
+        binding.refreshLayout.finishRefresh(true);
     }
 
     @Override

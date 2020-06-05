@@ -6,7 +6,7 @@ import android.util.DisplayMetrics;
 
 public class DisplayUtil {
     private static DisplayUtil displayUtil = null;
-    private DisplayMetrics dm = null;
+    private static DisplayMetrics dm = null;
 
     public static DisplayUtil getInstance() {
         if (displayUtil == null) {
@@ -50,7 +50,7 @@ public class DisplayUtil {
      * @param activity
      * @return 屏幕的高度
      */
-    public int getScreenHeight(Activity activity) {
+    public static int getScreenHeight(Activity activity) {
         if (activity == null) {
             return 0;
         }

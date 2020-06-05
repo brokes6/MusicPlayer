@@ -23,6 +23,8 @@ import com.example.musicplayerdome.main.other.MvPresenter;
 import com.example.musicplayerdome.main.other.WowPresenter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.view.SongActivity;
+import com.example.musicplayerdome.util.DisplayUtil;
+import com.example.musicplayerdome.util.XToastUtils;
 import com.example.musicplayerdome.yuncun.adapter.YuncunAdapter;
 import com.example.musicplayerdome.yuncun.view.YuncunSongActivity;
 import com.lzx.starrysky.model.SongInfo;
@@ -77,7 +79,7 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
                 }
             }
         });
-        adapter = new YuncunAdapter(getContext());
+        adapter = new YuncunAdapter(getContext(), DisplayUtil.getScreenHeight(getActivity()));
         adapter.setListener(listener);
         binding.recyclerView.setAdapter(adapter);
         showDialog();
@@ -158,7 +160,8 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
 
     @Override
     public void onGetYuncunFail(String e) {
-
+        hideDialog();
+        XToastUtils.error("网络请求失败，请检查网络再试");
     }
 
     @Override
@@ -172,6 +175,7 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
 
     @Override
     public void onGetYuncunAgainFail(String e) {
-
+        XToastUtils.error("刷新求失败，请检查网络再试");
+        binding.refreshLayout.finishRefresh(true);
     }
 }

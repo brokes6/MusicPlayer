@@ -170,7 +170,7 @@ public class SongPlayManager {
             return;
         }
         if (musicCanPlayMap.get(songId) == null) {
-            //如果一首歌还没有去检测它 是否可以播放，则就去做检测
+//            //如果一首歌还没有去检测它 是否可以播放，则就去做检测
 //            setOnSongCanPlayListener(songId, new OnSongListener() {
 //                @Override
 //                public void onSongCanPlaySuccess(MusicCanPlayBean bean) {
@@ -184,7 +184,7 @@ public class SongPlayManager {
 //
 //                @Override
 //                public void onSongCnaPlayFail(String e) {
-//                    ToastUtils.show(e);
+//                    XToastUtils.error(e);
 //                }
 //            });
             musicCanPlayMap.put(songId, true);
@@ -323,7 +323,8 @@ public class SongPlayManager {
         @Override
         public void onError(int errorCode, String errorMsg) {
             Log.d(TAG, "onError : " + errorCode + " msg:" + errorMsg);
-            XToastUtils.info(errorMsg);
+            XToastUtils.info("无法播放此歌曲,切换至下一首");
+            playNextMusic();
         }
     }
 

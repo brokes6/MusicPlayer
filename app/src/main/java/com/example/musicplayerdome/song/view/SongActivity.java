@@ -541,7 +541,8 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     @Override
     public void onGetSongDetailFail(String e) {
-        XToastUtils.error(e);
+        hideDialog();
+        XToastUtils.error("获取歌曲失败，请稍后尝试");
     }
 
     @Override
@@ -573,7 +574,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     @Override
     public void onLikeMusicFail(String e) {
         Log.e(TAG, "onLikeMusicFail : " + e);
-        XToastUtils.error(e);
+        XToastUtils.error("网络请求失败，请检查网络再试");
     }
 
     @Override
@@ -649,6 +650,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     @Override
     public void onGetLyricFail(String e) {
         Log.e(TAG, "onGetLyricFail: " + e);
+        XToastUtils.error("无法获取歌词，请稍后尝试");
     }
 
     @Override

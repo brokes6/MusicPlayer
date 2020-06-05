@@ -1,11 +1,12 @@
 package com.example.musicplayerdome.yuncun.adapter;
 
 import android.content.Context;
+import android.graphics.Point;
+
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 
 import com.android.liuzhuang.rcimageview.RoundCornerImageView;
@@ -13,7 +14,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.rewrite.RoundImageView;
-import com.example.musicplayerdome.song.adapter.UserPlaylistAdapter;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
@@ -25,10 +25,12 @@ public class YuncunAdapter extends BaseRecyclerAdapter<YuncunReviewBean.UserData
     RoundCornerImageView yuncun_img;
     RoundImageView user_img;
     TextView yuncun_wz,user_name;
+    private int Pheight;
     private OnYuncunListItemClickListener listener;
 
-    public YuncunAdapter(Context context){
+    public YuncunAdapter(Context context,int Pheight){
         mcontext = context;
+        this.Pheight = Pheight;
     }
     @Override
     protected int getItemLayoutId(int viewType) {
@@ -55,9 +57,9 @@ public class YuncunAdapter extends BaseRecyclerAdapter<YuncunReviewBean.UserData
             Glide.with(mcontext).load(bean.getSimpleResourceInfo().getSongCoverUrl()).transition(new DrawableTransitionOptions().crossFade()).into(yuncun_img);
             //需要Item高度不同才能出现瀑布流的效果，此处简单粗暴地设置一下高度
             if (position % 2 == 0) {
-                yuncun_img.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 760));
+                yuncun_img.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (Pheight/2)-100));
             } else {
-                yuncun_img.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 870));
+                yuncun_img.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (Pheight/2)));
             }
         }
     }
