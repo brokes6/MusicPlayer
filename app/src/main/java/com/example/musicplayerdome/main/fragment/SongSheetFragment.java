@@ -14,11 +14,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.MineContract;
-import com.example.musicplayerdome.bean.SongRecommendation;
 import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
-import com.example.musicplayerdome.main.adapter.MySongAdapter;
 import com.example.musicplayerdome.personal.bean.UserDetailBean;
 import com.example.musicplayerdome.song.adapter.UserPlaylistAdapter;
 import com.example.musicplayerdome.base.BaseFragment;
@@ -33,7 +32,6 @@ import com.example.musicplayerdome.main.bean.PlayModeIntelligenceBean;
 import com.example.musicplayerdome.main.other.MinePresenter;
 import com.example.musicplayerdome.personal.bean.PlayListItemBean;
 import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
-import com.example.musicplayerdome.resources.DomeData;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.view.FMSongActivity;
 import com.example.musicplayerdome.util.GsonUtil;
@@ -43,7 +41,6 @@ import com.lzx.starrysky.model.SongInfo;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 import com.xuexiang.xui.widget.popupwindow.easypopup.EasyPopup;
 import com.xuexiang.xui.widget.popupwindow.easypopup.HorizontalGravity;
 import com.xuexiang.xui.widget.popupwindow.easypopup.VerticalGravity;
@@ -59,12 +56,12 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     SongsheetfragmentBinding binding;
     private static final String TAG = "SongSheetFragment";
     private UserPlaylistAdapter adapter;
-    private MySongAdapter mainMusicAdapter;
     private EasyPopup mCirclePop;
     private LoginBean loginBean;
     private long uid;
     private List<UserPlaylistBean.PlaylistBean> playlistBeans = new ArrayList<>();
     private List<PlayListItemBean> adapterList = new ArrayList<>();
+    private List<SongInfo> songList;
 
     public SongSheetFragment() {
         setFragmentTitle("歌 单");
@@ -94,19 +91,9 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
         LinearLayoutManager lm = new LinearLayoutManager(getContext());
         lm.setOrientation(LinearLayoutManager.HORIZONTAL);
-        binding.myMusicList.setLayoutManager(lm);
-        binding.myMusicList.setAdapter(mainMusicAdapter = new MySongAdapter());
-        mainMusicAdapter.loadMore(DomeData.getMySong());
-        mainMusicAdapter.setOnItemClickListener(new RecyclerViewHolder.OnItemClickListener<SongRecommendation>() {
-            @Override
-            public void onItemClick(View itemView, SongRecommendation item, int position) {
-                if (position==1){
-                    mPresenter.getMyFM();
-                }
-            }
-        });
 
         showDialog();
+        mPresenter.getMyFM();
         mPresenter.getUserDetail(uid);
         mPresenter.getUserPlaylist(uid);
     }
@@ -178,6 +165,8 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
 
     private void initView(){
+        binding.SongLike.setOnClickListener(this);
+        binding.SongFM.setOnClickListener(this);
         binding.minePlaylistMore.setOnClickListener(this);
         //设置 Header式
         binding.refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
@@ -200,6 +189,22 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
             case R.id.mine_playlist_more:
                 mCirclePop.showAtAnchorView(binding.minePlaylistMore, VerticalGravity.CENTER, HorizontalGravity.LEFT, 0, 0);
                 break;
+            case R.id.Song_FM:
+                SongPlayManager.getInstance().clickPlayAll(songList, 0);
+                SongInfo songInfo = songList.get(0);
+                Intent intent = new Intent(getContext(), FMSongActivity.class);
+                intent.putExtra(FMSongActivity.SONG_INFO, songInfo);
+                startActivity(intent);
+                break;
+            case R.id.Song_Like:
+                Intent intent1 = new Intent(getContext(), SongSheetActivityMusic.class);
+                intent1.putExtra(PLAYLIST_PICURL, playlistBeans.get(0).getCoverImgUrl());
+                intent1.putExtra(PLAYLIST_NAME, playlistBeans.get(0).getName());
+                intent1.putExtra(PLAYLIST_CREATOR_NICKNAME, playlistBeans.get(0).getCreator().getNickname());
+                intent1.putExtra(PLAYLIST_CREATOR_AVATARURL, playlistBeans.get(0).getCreator().getAvatarUrl());
+                intent1.putExtra(PLAYLIST_ID, playlistBeans.get(0).getId());
+                getContext().startActivity(intent1);
+                break;
         }
     }
 
@@ -220,6 +225,8 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
             adapterList.add(beanInfo);
         }
         adapter.loadMore(adapterList);
+        Glide.with(this).load(bean.getPlaylist().get(0).getCoverImgUrl()).transition(new DrawableTransitionOptions().crossFade()).into(binding.SongLikeImg);
+
     }
 
     @Override
@@ -322,7 +329,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
         hideDialog();
         Log.d(TAG, "onGetMyFMSuccess：" + bean);
         List<MyFmBean.DataBean> fmList = bean.getData();
-        List<SongInfo> songList = new ArrayList<>();
+        songList = new ArrayList<>();
         for (int i = 0; i < fmList.size(); i++) {
             SongInfo songInfo = new SongInfo();
             songInfo.setSongName(fmList.get(i).getName());
@@ -336,11 +343,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
             songInfo.setArtistKey(fmList.get(i).getArtists().get(0).getPicUrl());
             songList.add(songInfo);
         }
-        SongPlayManager.getInstance().clickPlayAll(songList, 0);
-        SongInfo songInfo = songList.get(0);
-        Intent intent = new Intent(getContext(), FMSongActivity.class);
-        intent.putExtra(FMSongActivity.SONG_INFO, songInfo);
-        startActivity(intent);
+        Glide.with(this).load(bean.getData().get(0).getAlbum().getBlurPicUrl()).transition(new DrawableTransitionOptions().crossFade()).into(binding.mySongImg);
     }
 
     @Override

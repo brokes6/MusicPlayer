@@ -1,9 +1,6 @@
 package com.example.musicplayerdome.yuncun.adapter;
 
 import android.content.Context;
-import android.graphics.Point;
-
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
