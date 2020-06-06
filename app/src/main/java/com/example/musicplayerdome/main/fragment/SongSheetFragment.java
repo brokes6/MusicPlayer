@@ -62,6 +62,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     private List<UserPlaylistBean.PlaylistBean> playlistBeans = new ArrayList<>();
     private List<PlayListItemBean> adapterList = new ArrayList<>();
     private List<SongInfo> songList;
+    private List<MyFmBean.DataBean> fmList;
 
     public SongSheetFragment() {
         setFragmentTitle("歌 单");
@@ -178,6 +179,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 Log.e(TAG, "onRefresh: 开始刷新");
+                mPresenter.getMyFM();
                 mPresenter.getUserPlaylistAgain(uid);
             }
         });
@@ -252,7 +254,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
             beanInfo.setPlaylistCreator(playlistBeans.get(i).getCreator().getNickname());
             adapterList.add(beanInfo);
         }
-        Log.e(TAG, "onRefresh刷新成功");
+        Log.e(TAG, "歌单刷新成功");
         adapter.refresh(adapterList);
         binding.refreshLayout.finishRefresh(true);
     }
@@ -327,8 +329,32 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     @Override
     public void onGetMyFMSuccess(MyFmBean bean) {
         hideDialog();
+        if (fmList!=null){
+            Log.e(TAG, "onGetMyFMSuccess: 开始清除旧内容");
+            fmList.clear();
+            songList.clear();
+
+            fmList = bean.getData();
+            songList = new ArrayList<>();
+            for (int i = 0; i < fmList.size(); i++) {
+                SongInfo songInfo = new SongInfo();
+                songInfo.setSongName(fmList.get(i).getName());
+                songInfo.setDownloadUrl((String) fmList.get(i).getMp3Url());
+                songInfo.setSongUrl(SONG_URL + fmList.get(i).getId() + ".mp3");
+                songInfo.setSongCover(fmList.get(i).getAlbum().getBlurPicUrl());
+                songInfo.setArtist(fmList.get(i).getArtists().get(0).getName());
+                songInfo.setSongId(String.valueOf(fmList.get(i).getId()));
+                songInfo.setDuration(fmList.get(i).getDuration());
+                songInfo.setArtistId(String.valueOf(fmList.get(i).getArtists().get(0).getId()));
+                songInfo.setArtistKey(fmList.get(i).getArtists().get(0).getPicUrl());
+                songList.add(songInfo);
+            }
+
+            Glide.with(this).load(bean.getData().get(0).getAlbum().getBlurPicUrl()).transition(new DrawableTransitionOptions().crossFade()).into(binding.mySongImg);
+            Log.e(TAG, "私人FM刷新成功");
+        }
         Log.d(TAG, "onGetMyFMSuccess：" + bean);
-        List<MyFmBean.DataBean> fmList = bean.getData();
+        fmList = bean.getData();
         songList = new ArrayList<>();
         for (int i = 0; i < fmList.size(); i++) {
             SongInfo songInfo = new SongInfo();
