@@ -152,6 +152,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
                 Log.e(TAG, "onRefresh: 开始刷新");
                 mPresenter.getRecommendPlayListAgain();
                 mPresenter.getRecommendsong();
+                mPresenter.getBanner();
             }
         });
     }
@@ -172,6 +173,13 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
 
     @Override
     public void onGetBannerSuccess(BannerBean bean) {
+        if (banners.size()>0){
+            Log.e(TAG, "轮播图开始刷新");
+            banners.clear();
+            banners.addAll(bean.getBanners());
+            loadImageToList();
+            initBanner(bannerImageList);
+        }
         banners.addAll(bean.getBanners());
         loadImageToList();
         initBanner(bannerImageList);

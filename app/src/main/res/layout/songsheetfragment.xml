@@ -234,7 +234,7 @@
                 <RelativeLayout
                     android:id="@+id/Song_FM"
                     android:layout_toRightOf="@+id/Song_Like"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <com.android.liuzhuang.rcimageview.RoundCornerImageView
