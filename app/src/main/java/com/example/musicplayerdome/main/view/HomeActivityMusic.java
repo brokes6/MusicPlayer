@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.Constants;
@@ -37,6 +38,7 @@ import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
 import com.example.musicplayerdome.main.other.MainPresenter;
 import com.example.musicplayerdome.rewrite.BottomSongPlayBar;
+import com.example.musicplayerdome.search.view.SearchActivity;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.ActivityStarter;
 import com.example.musicplayerdome.util.GsonUtil;
@@ -45,7 +47,6 @@ import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.google.android.material.tabs.TabLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import com.xuexiang.xui.utils.SnackbarUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +101,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         mRelativeLayout = findViewById(R.id.mrelativeLayout);
         mainL = findViewById(R.id.mainL);
 
+        ivSearch.setOnClickListener(this);
         icNav.setOnClickListener(this);
         Sbinding.rlLogout.setOnClickListener(this);
         setMargins(tabBackground,0,getStatusBarHeight(this),0,0);
@@ -215,6 +217,9 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
             case R.id.rl_logout:
                 showDialog();
                 mPresenter.logout();
+                break;
+            case R.id.iv_search:
+                ActivityUtils.startActivity(SearchActivity.class);
                 break;
         }
     }

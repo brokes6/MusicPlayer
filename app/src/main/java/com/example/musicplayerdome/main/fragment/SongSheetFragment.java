@@ -77,7 +77,6 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
     @Override
     protected void initData() {
-        initCirclePop();
         loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
         initUser(loginBean);
         uid = loginBean.getAccount().getId();
@@ -128,30 +127,6 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
         }
     };
 
-    public void initCirclePop() {
-        mCirclePop = new EasyPopup(getContext())
-                .setContentView(R.layout.layout_friend_circle_comment)
-                .setFocusAndOutsideEnable(true)
-                .createPopup();
-
-        TextView tvZan = mCirclePop.getView(R.id.tv_zan);
-        TextView tvComment = mCirclePop.getView(R.id.tv_comment);
-        tvZan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.minePlaylist.setVisibility(View.GONE);
-                mCirclePop.dismiss();
-            }
-        });
-
-        tvComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.minePlaylist.setVisibility(View.VISIBLE);
-                mCirclePop.dismiss();
-            }
-        });
-    }
 
 
     @Override
@@ -189,7 +164,6 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.mine_playlist_more:
-                mCirclePop.showAtAnchorView(binding.minePlaylistMore, VerticalGravity.CENTER, HorizontalGravity.LEFT, 0, 0);
                 break;
             case R.id.Song_FM:
                 SongPlayManager.getInstance().clickPlayAll(songList, 0);

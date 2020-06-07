@@ -74,4 +74,13 @@
     <style name="ClubToolbar" parent="Widget.AppCompat.Toolbar">
         <item name="contentInsetStart">0dp</item>
     </style>
+
+    <style name="SearchHistoryTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:textColor">#333333</item>
+        <item name="android:textSize">@dimen/sp_15</item>
+    </style>
+
 </resources>
