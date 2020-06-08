@@ -76,7 +76,7 @@ public class SearchHistoryTagLayout extends HorizontalScrollView {
                 tvHistory.setText(stringList.get(stringList.size() - i).getKeyowrds());
             }
             tvHistory.setTextAppearance(R.style.SearchHistoryTextStyle);
-            tvHistory.setBackgroundResource(R.drawable.file_background_radius_15_while);
+            tvHistory.setBackgroundResource(R.drawable.file_background_radius_15_white_pressed);
             tvHistory.setPadding(40, 10, 40, 10);
             if (i != 1) {
                 lp.leftMargin = 25;

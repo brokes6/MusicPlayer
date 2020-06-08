@@ -25,7 +25,7 @@
                 android:layout_height="@dimen/dp_45" />
         </RelativeLayout>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -85,7 +85,7 @@
                     android:layout_below="@id/hot_search"
                     android:layout_marginTop="@dimen/dp_10" />
             </RelativeLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <com.example.musicplayerdome.rewrite.BottomSongPlayBar
             android:id="@+id/bottom_controller"

@@ -1,33 +1,53 @@
 package com.example.musicplayerdome.search.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SearchContract;
 import com.example.musicplayerdome.base.BaseActivity;
+import com.example.musicplayerdome.database.SearchHistoryDaoOp;
 import com.example.musicplayerdome.databinding.ActivitySearchBinding;
+import com.example.musicplayerdome.rewrite.SearchHistoryTagLayout;
+import com.example.musicplayerdome.search.adapter.HotSearchAdapter;
 import com.example.musicplayerdome.search.bean.AlbumSearchBean;
 import com.example.musicplayerdome.search.bean.FeedSearchBean;
 import com.example.musicplayerdome.search.bean.HotSearchDetailBean;
 import com.example.musicplayerdome.search.bean.PlayListSearchBean;
 import com.example.musicplayerdome.search.bean.RadioSearchBean;
+import com.example.musicplayerdome.search.bean.SearchHistoryBean;
 import com.example.musicplayerdome.search.bean.SingerSearchBean;
 import com.example.musicplayerdome.search.bean.SongSearchBean;
 import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
 import com.example.musicplayerdome.search.other.SearchPresenter;
+import com.example.musicplayerdome.song.other.SongPlayManager;
+import com.example.musicplayerdome.util.SharedPreferencesUtil;
+import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
+import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchActivity extends BaseActivity<SearchPresenter> implements SearchContract.View {
+    private static final String TAG = "SearchActivity";
     ActivitySearchBinding binding;
-
+    private HotSearchAdapter adapter;
+    private HotSearchDetailBean searchDetailBean;
+    private List<SearchHistoryBean> stringList = new ArrayList<>();
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -38,6 +58,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
                 .statusBarColor(R.color.red)
                 .statusBarDarkFont(false)
                 .init();
+        goDialog();
     }
 
     @Override
@@ -55,12 +76,50 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         setBackBtn(getString(R.string.colorWhite));
         setEditText(getString(R.string.colorTransWithe));
         setRightSearchButton();
+
+        adapter = new HotSearchAdapter(this);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        binding.rvHotsearch.setLayoutManager(manager);
+        binding.rvHotsearch.setAdapter(adapter);
+        adapter.setListener(searchListener);
+        showDialog();
+        mPresenter.getHotSearchDetail();
     }
     private void initView(){
-
+        binding.ivRubbishBin.setOnClickListener(this);
         setMargins(binding.rlTitle,0,(getStatusBarHeight(this)-10),0,0);
     }
 
+    private HotSearchAdapter.OnHotSearchAdapterClickListener searchListener = position -> {
+        if (searchDetailBean != null) {
+            String keywords = searchDetailBean.getData().get(position).getSearchWord();
+            searchSong(keywords);
+        }
+    };
+    private SearchHistoryTagLayout.OnHistoryTagClickListener tagListener = position -> {
+        String keywords = stringList.get(position).getKeyowrds();
+        searchSong(keywords);
+    };
+
+    //根据关键字去搜索
+    private void searchSong(String keywords) {
+        stringList.add(new SearchHistoryBean(keywords));
+        if (stringList.size() > 10) {
+            stringList.remove(0);
+        }
+        for (int i = 0; i < stringList.size() - 1; i++) {
+            //去重
+            if (stringList.get(i).getKeyowrds().equals(keywords)) {
+                stringList.remove(i);
+                break;
+            }
+        }
+        SearchHistoryDaoOp.saveData(this, stringList);
+
+//        Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
+//        intent.putExtra(KEYWORDS, keywords);
+//        startActivity(intent);
+    }
 
     public static int getStatusBarHeight(Context context) {
         Resources resources = context.getResources();
@@ -79,17 +138,78 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_rubbish_bin:
+                new MaterialDialog.Builder(SearchActivity.this)
+                        .content("确定清空全部历史记录？")
+                        .positiveText("取消")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .negativeText("清空")
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                                SearchHistoryDaoOp.deleteAllData(SearchActivity.this);
+                                stringList = SearchHistoryDaoOp.queryAll(SearchActivity.this);
+                                binding.tlSearchhistory.addHistoryText(stringList, tagListener);
+                            }
+                        })
+                        .show();
+                break;
+        }
+    }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        stringList.clear();
+
+        int key = (int) SharedPreferencesUtil.getData("Ykey",0);
+        if (key!=3){
+            if (SongPlayManager.getInstance().isPlaying()) {
+                binding.bottomController.setVisibility(View.VISIBLE);
+            } else {
+                binding.bottomController.setVisibility(View.GONE);
+            }
+        }else{
+            binding.bottomController.setVisibility(View.GONE);
+        }
+
+        //从GreenDao里拿搜索历史
+        if (SearchHistoryDaoOp.queryAll(this) != null) {
+            stringList = SearchHistoryDaoOp.queryAll(this);
+            if (stringList.size() > 0) {
+                binding.searchHistory.setVisibility(View.VISIBLE);
+                binding.ivRubbishBin.setVisibility(View.VISIBLE);
+                binding.tlSearchhistory.setVisibility(View.VISIBLE);
+            } else {
+                binding.searchHistory.setVisibility(View.GONE);
+                binding.ivRubbishBin.setVisibility(View.GONE);
+                binding.tlSearchhistory.setVisibility(View.GONE);
+            }
+        }
+        binding.tlSearchhistory.addHistoryText(stringList, tagListener);
     }
 
     @Override
     public void onGetHotSearchDetailSuccess(HotSearchDetailBean bean) {
-
+        hideDialog();
+        searchDetailBean = bean;
+//        List<HotSearchDetailBean> adapterList = new ArrayList<>();
+//        adapterList.add(searchDetailBean);
+        adapter.loadMore(bean.getData());
     }
 
     @Override
     public void onGetHotSearchDetailFail(String e) {
-
+        hideDialog();
+        XToastUtils.error("获取热门搜索失败，请检查网络尝试");
     }
 
     @Override
