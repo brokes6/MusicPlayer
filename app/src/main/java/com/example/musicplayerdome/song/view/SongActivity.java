@@ -548,26 +548,26 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     @Override
     public void onLikeMusicSuccess(LikeMusicBean bean) {
         if (bean.getCode() == 200) {
-            XToastUtils.info("喜欢成功");
+            XToastUtils.success("喜欢成功");
             binding.ivLike.setImageResource(R.drawable.shape_like_white);
             isLike = true;
             LoginBean loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(this).getUserInfo(""), LoginBean.class);
             mPresenter.getLikeList(loginBean.getAccount().getId());
         } else {
-            XToastUtils.info("喜欢失败TAT ErrorCode = " + bean.getCode());
+            XToastUtils.error("喜欢失败TAT ErrorCode = " + bean.getCode());
         }
     }
 
     @Override
     public void onNoLikeMusicSuccess(LikeMusicBean bean) {
         if (bean.getCode() == 200) {
-            XToastUtils.info("取消喜欢成功");
+            XToastUtils.success("取消喜欢成功");
             binding.ivLike.setImageResource(R.drawable.shape_not_like);
             isLike = true;
             LoginBean loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(this).getUserInfo(""), LoginBean.class);
             mPresenter.getLikeList(loginBean.getAccount().getId());
         } else {
-            XToastUtils.info("取消喜欢失败TAT ErrorCode = " + bean.getCode());
+            XToastUtils.error("取消喜欢失败TAT ErrorCode = " + bean.getCode());
         }
     }
 

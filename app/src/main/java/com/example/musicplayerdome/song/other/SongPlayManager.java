@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -57,6 +58,10 @@ public class SongPlayManager {
     private int mode;
     //播放列表
     private List<SongInfo> songList = new ArrayList<>();
+    //备份播放列表
+    private List<SongInfo> BFsongList = new ArrayList<>();
+    //随机播放列表
+    private List<SongInfo> ShufflesongList = new ArrayList<>();
     //播放到第几首歌曲
     private int currentSongIndex;
     //单例模式
@@ -129,6 +134,7 @@ public class SongPlayManager {
     public void addSongList(List<SongInfo> songInfoList, int index) {
         clearSongList();
         songList.addAll(songInfoList);
+        BFsongList.addAll(songList);
         if (index >= songInfoList.size()) {
             currentSongIndex = songInfoList.size() - 1;
         } else {
@@ -365,13 +371,20 @@ public class SongPlayManager {
                 playMusic(songList.get(currentSongIndex).getSongId());
                 break;
             case MODE_RANDOM:
-                Random ra = new Random();
-                int random = ra.nextInt(songList.size() - 1);
-                while (random == currentSongIndex) {
-                    random = ra.nextInt(songList.size() - 1);
+//                Random ra = new Random();
+//                int random = ra.nextInt(songList.size() - 1);
+//                while (random == currentSongIndex) {
+//                    random = ra.nextInt(songList.size() - 1);
+//                }
+//                currentSongIndex = random;
+
+                if (currentSongIndex == ShufflesongList.size() - 1) {
+                    currentSongIndex = 0;
+                } else {
+                    currentSongIndex++;
                 }
-                currentSongIndex = random;
-                checkMusic(songList.get(currentSongIndex).getSongId());
+
+                checkMusic(ShufflesongList.get(currentSongIndex).getSongId());
                 break;
         }
     }
@@ -399,13 +412,19 @@ public class SongPlayManager {
                 playMusic(songList.get(currentSongIndex).getSongId());
                 break;
             case MODE_RANDOM:
-                Random ra = new Random();
-                int random = ra.nextInt(songList.size() - 1);
-                while (random == currentSongIndex) {
-                    random = ra.nextInt(songList.size() - 1);
+//                Random ra = new Random();
+//                int random = ra.nextInt(songList.size() - 1);
+//                while (random == currentSongIndex) {
+//                    random = ra.nextInt(songList.size() - 1);
+//                }
+//                currentSongIndex = random;
+                if (currentSongIndex == 0) {
+                    currentSongIndex = ShufflesongList.size() - 1;
+                } else {
+                    currentSongIndex--;
                 }
-                currentSongIndex = random;
-                checkMusic(songList.get(currentSongIndex).getSongId());
+
+                checkMusic(ShufflesongList.get(currentSongIndex).getSongId());
                 break;
         }
     }
@@ -558,6 +577,32 @@ public class SongPlayManager {
 
     public void setMode(int mode) {
         this.mode = mode;
+        if (mode==MODE_RANDOM){
+            ShuffleMusic(getCurrentSongIndex());
+        }
+        if (mode==MODE_LIST_LOOP_PLAY){
+            songList.clear();
+            songList.addAll(BFsongList);
+        }
+    }
+
+    private void ShuffleMusic(int index){
+        ShufflesongList = songList;
+        if(index>-1 && index<ShufflesongList.size()){
+            SongInfo list =  ShufflesongList.get(index);
+            ShufflesongList.remove(index);
+            //洗牌算法打乱除当前音乐的其它音乐顺序
+            Collections.shuffle(ShufflesongList);
+            //将当前播放的音乐置为第一位
+            ShufflesongList.add(0, list);
+
+            Log.e(TAG, "ShuffleMusic: 1当前list为"+songList);
+            Log.e(TAG, "ShuffleMusic: 2当前list为"+ShufflesongList);
+            Log.e(TAG, "ShuffleMusic: 3当前list为"+BFsongList);
+
+        }else{
+            Collections.shuffle(ShufflesongList);
+        }
     }
 
     public SongDetailBean getSongDetail(long ids) {
