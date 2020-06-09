@@ -36,7 +36,6 @@ import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.main.adapter.RecommendMusicAdapter;
 import com.example.musicplayerdome.main.adapter.SongListAdapter;
 import com.example.musicplayerdome.databinding.FragmentHomeBinding;
-import com.example.musicplayerdome.resources.DomeData;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.util.XToastUtils;

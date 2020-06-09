@@ -123,7 +123,7 @@ public class RankActivity extends BaseActivity<WowPresenter> implements WowContr
     @Override
     protected void onResume() {
         super.onResume();
-        if (SongPlayManager.getInstance().isPlaying()) {
+        if (SongPlayManager.getInstance().isDisplay()) {
             binding.bottomController.setVisibility(View.VISIBLE);
         } else {
             binding.bottomController.setVisibility(View.GONE);

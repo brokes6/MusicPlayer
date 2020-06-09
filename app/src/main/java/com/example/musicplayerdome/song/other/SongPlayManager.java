@@ -72,6 +72,7 @@ public class SongPlayManager {
     private SongPlayListener songListener;
     //维护第二个哈希表，Key是SongId,value是 songDetail，如果歌曲详情已经获取，则不必再获取
     private HashMap<Long, SongDetailBean> songDetailMap;
+    private boolean display = false;
 
     private SongPlayManager() {
         musicCanPlayMap = new HashMap<>();
@@ -208,6 +209,7 @@ public class SongPlayManager {
      */
     public void playMusic(String songId) {
         Log.d(TAG, "songId :" + songId + "music size : " + songList.size());
+        display = true;
         if (musicCanPlayMap.get(songId) || judgeContainsStr(songId)) {
             //歌曲是可以播放的，直接播放,或者他是本地音乐
             MusicManager.getInstance().playMusic(songList, currentSongIndex);
@@ -239,6 +241,7 @@ public class SongPlayManager {
     public void cancelPlay() {
         if (isPlaying() || isPaused()) {
             Log.d(TAG, "cancel Play");
+            display = false;
             MusicManager.getInstance().stopMusic();
         }
     }
@@ -266,6 +269,10 @@ public class SongPlayManager {
      */
     public boolean isPlaying() {
         return MusicManager.getInstance().isPlaying();
+    }
+
+    public boolean isDisplay(){
+        return display;
     }
 
     /**
@@ -624,7 +631,7 @@ public class SongPlayManager {
      * 获取歌单列表
      */
     public List<SongInfo> getSongList() {
-        return BFsongList;
+        return songList;
     }
 
     /**

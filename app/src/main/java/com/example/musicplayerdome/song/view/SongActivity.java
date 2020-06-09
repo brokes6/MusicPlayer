@@ -300,6 +300,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         }
     }
 
+
     /**
      * 该方法主要使用正则表达式来判断字符串中是否包含字母
      */

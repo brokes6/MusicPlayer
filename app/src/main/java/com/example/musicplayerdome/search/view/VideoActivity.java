@@ -30,6 +30,7 @@ import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
 import com.example.musicplayerdome.search.bean.VideoUrlBean;
 import com.example.musicplayerdome.search.other.SearchPresenter;
+import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
@@ -82,6 +83,9 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
         showDialog();
         setBackBtn(getString(R.string.colorWhite));
         getMvIntent();
+        if (SongPlayManager.getInstance().isPlaying()){
+            SongPlayManager.getInstance().pauseMusic();
+        }
     }
 
     private void getMvIntent(){

@@ -106,8 +106,8 @@ public class FeedSearchFragment extends BaseFragment<SearchPresenter> implements
             if (feedSearchBean.getVideos().get(position).getType()==0){
                 Intent intent1 = new Intent(getContext(), SongMvActivity.class);
                 intent1.putExtra("pid", position);
-                Long num = Long.valueOf(feedSearchBean.getVideos().get(position).getVid());
-                intent1.putExtra(SongMvActivity.MVSONG_INFO,num);
+                Long id = Long.valueOf(feedSearchBean.getVideos().get(position).getVid());
+                intent1.putExtra(SongMvActivity.MVSONG_INFO,id);
                 getContext().startActivity(intent1);
             }else{
                 Intent intent = new Intent(getContext(), VideoActivity.class);

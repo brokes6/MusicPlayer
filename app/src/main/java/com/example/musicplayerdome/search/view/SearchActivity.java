@@ -190,7 +190,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
         int key = (int) SharedPreferencesUtil.getData("Ykey",0);
         if (key!=3){
-            if (SongPlayManager.getInstance().isPlaying()) {
+            if (SongPlayManager.getInstance().isDisplay()) {
                 binding.bottomController.setVisibility(View.VISIBLE);
             } else {
                 binding.bottomController.setVisibility(View.GONE);

@@ -35,7 +35,9 @@ import com.example.musicplayerdome.search.fragment.SongSearchFragment;
 import com.example.musicplayerdome.search.other.KeywordsEvent;
 import com.example.musicplayerdome.search.other.SearchPresenter;
 import com.example.musicplayerdome.song.fragment.SingerFeedSearchFragment;
+import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.ClickUtil;
+import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 
@@ -163,6 +165,21 @@ public class SearchResultActivity extends BaseActivity<SearchPresenter> implemen
     public int getPosition() {
         Log.d(TAG, "getCurrentTab : " + binding.tablayout.getCurrentTab());
         return binding.tablayout.getCurrentTab();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int key = (int) SharedPreferencesUtil.getData("Ykey",0);
+        if (key!=3){
+            if (SongPlayManager.getInstance().isDisplay()) {
+                binding.bottomController.setVisibility(View.VISIBLE);
+            } else {
+                binding.bottomController.setVisibility(View.GONE);
+            }
+        }else{
+            binding.bottomController.setVisibility(View.GONE);
+        }
     }
 
     @Override

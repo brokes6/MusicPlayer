@@ -2,6 +2,7 @@ package com.example.musicplayerdome.song.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,6 +22,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class MusicListAdapter extends BaseRecyclerAdapter<SongInfo> {
+    private static final String TAG = "MusicListAdapter";
     private OnSongClickListener listener;
     TextView tvSongName, tvSingerName, tvLink;
     ImageView ivDel, ivHorn;
@@ -68,6 +70,7 @@ public class MusicListAdapter extends BaseRecyclerAdapter<SongInfo> {
             tvSingerName.setTextColor(Color.parseColor("#808080"));
         }
     }
+
 
     public void setListener(OnSongClickListener listener, int i) {
         rlSongPlay.setOnClickListener(v -> {

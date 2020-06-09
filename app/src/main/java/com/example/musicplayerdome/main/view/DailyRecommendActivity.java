@@ -168,7 +168,7 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
     @Override
     protected void onResume() {
         super.onResume();
-        if (SongPlayManager.getInstance().isPlaying()) {
+        if (SongPlayManager.getInstance().isDisplay()) {
             binding.bottomController.setVisibility(View.VISIBLE);
         } else {
             binding.bottomController.setVisibility(View.GONE);

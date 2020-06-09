@@ -229,7 +229,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         super.onResume();
         int key = (int) SharedPreferencesUtil.getData("Ykey",0);
         if (key!=3){
-            if (SongPlayManager.getInstance().isPlaying()) {
+            if (SongPlayManager.getInstance().isDisplay()) {
                 bottomController.setVisibility(View.VISIBLE);
             } else {
                 bottomController.setVisibility(View.GONE);

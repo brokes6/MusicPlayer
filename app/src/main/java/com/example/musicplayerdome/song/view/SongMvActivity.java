@@ -70,7 +70,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     protected void initData() {
         showDialog();
         getMvIntent();
-        if (SongPlayManager.getInstance().isPlaying()){
+        if (SongPlayManager.getInstance().isDisplay()){
             SongPlayManager.getInstance().pauseMusic();
         }
     }

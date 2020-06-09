@@ -1,12 +1,11 @@
 package com.example.musicplayerdome.search.other;
 
 public class KeywordsEvent {
+    private String keyword;
 
     public KeywordsEvent(String keyword) {
         this.keyword = keyword;
     }
-
-    private String keyword;
 
     public String getKeyword() {
         return keyword;
