@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".search.view.VideoActivity">
+
+        <ImageView
+            android:id="@+id/V_img"
+            android:background="#2C2B2B"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:alpha="0.8"/>
+
+        <include
+            android:id="@+id/V_top"
+            layout="@layout/common_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45" />
+
+        <cn.jzvd.JzvdStd
+            android:id="@+id/jz_video"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_centerInParent="true"/>
+
+        <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+            android:id="@+id/button_personal"
+            style="@style/RoundButton.Auto"
+            android:text=" 下一个 "
+            app:rb_radius="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="50dp"
+            android:textColor="@color/xui_default_round_btn_white_text"
+            app:rb_backgroundColor="@color/xui_round_btn_green_bg"
+            app:rb_borderColor="@color/xui_round_btn_green_bg" />
+    </RelativeLayout>
+</layout>

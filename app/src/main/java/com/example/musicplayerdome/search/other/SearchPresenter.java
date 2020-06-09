@@ -11,6 +11,7 @@ import com.example.musicplayerdome.search.bean.SingerSearchBean;
 import com.example.musicplayerdome.search.bean.SongSearchBean;
 import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
+import com.example.musicplayerdome.search.bean.VideoUrlBean;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -286,4 +287,31 @@ public class SearchPresenter extends SearchContract.Presenter {
                     }
                 });
     }
+
+        @Override
+        public void getVideoData(String id) {
+            mModel.getVideoData(id).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<VideoUrlBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(VideoUrlBean videoUrlBean) {
+                            mView.onGetVideoDataSuccess(videoUrlBean);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mView.onGetVideoDataFail(e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
 }

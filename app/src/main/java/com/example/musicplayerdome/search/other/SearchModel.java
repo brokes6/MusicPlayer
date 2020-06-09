@@ -11,6 +11,7 @@ import com.example.musicplayerdome.search.bean.SingerSearchBean;
 import com.example.musicplayerdome.search.bean.SongSearchBean;
 import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
+import com.example.musicplayerdome.search.bean.VideoUrlBean;
 
 import io.reactivex.Observable;
 
@@ -58,6 +59,11 @@ public class SearchModel implements SearchContract.Model {
     @Override
     public Observable<SynthesisSearchBean> getSynthesisSearch(String keywords, int type) {
         return ApiEngine.getInstance().getApiService().getSynthesisSearch(keywords, type);
+    }
+
+    @Override
+    public Observable<VideoUrlBean> getVideoData(String id) {
+        return ApiEngine.getInstance().getApiService().getVideoData(id);
     }
 
 }

@@ -10,15 +10,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SearchContract;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.database.SearchHistoryDaoOp;
 import com.example.musicplayerdome.databinding.ActivitySearchBinding;
+import com.example.musicplayerdome.rewrite.SearchEditText;
 import com.example.musicplayerdome.rewrite.SearchHistoryTagLayout;
 import com.example.musicplayerdome.search.adapter.HotSearchAdapter;
 import com.example.musicplayerdome.search.bean.AlbumSearchBean;
@@ -31,6 +34,7 @@ import com.example.musicplayerdome.search.bean.SingerSearchBean;
 import com.example.musicplayerdome.search.bean.SongSearchBean;
 import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
+import com.example.musicplayerdome.search.bean.VideoUrlBean;
 import com.example.musicplayerdome.search.other.SearchPresenter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
@@ -46,6 +50,8 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
     private static final String TAG = "SearchActivity";
     public static final String KEYWORDS = "keywords";
     ActivitySearchBinding binding;
+    private TextView btn_search;
+    private SearchEditText etSearch;
     private HotSearchAdapter adapter;
     private HotSearchDetailBean searchDetailBean;
     private List<SearchHistoryBean> stringList = new ArrayList<>();
@@ -87,6 +93,9 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         mPresenter.getHotSearchDetail();
     }
     private void initView(){
+        etSearch = findViewById(R.id.et_search);
+        btn_search = findViewById(R.id.btn_search);
+        btn_search.setOnClickListener(this);
         binding.ivRubbishBin.setOnClickListener(this);
         setMargins(binding.rlTitle,0,(getStatusBarHeight(this)-10),0,0);
     }
@@ -161,6 +170,14 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
                             }
                         })
                         .show();
+                break;
+            case R.id.btn_search:
+                String keywords = etSearch.getKeyWords();
+                if (!TextUtils.isEmpty(keywords)) {
+                    searchSong(keywords);
+                } else {
+                    XToastUtils.warning("请输入关键字！");
+                }
                 break;
         }
     }
@@ -290,6 +307,16 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
     @Override
     public void onGetSynthesisSearchFail(String e) {
+
+    }
+
+    @Override
+    public void onGetVideoDataSuccess(VideoUrlBean bean) {
+
+    }
+
+    @Override
+    public void onGetVideoDataFail(String e) {
 
     }
 }

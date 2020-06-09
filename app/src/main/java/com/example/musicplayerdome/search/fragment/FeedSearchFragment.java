@@ -1,5 +1,6 @@
 package com.example.musicplayerdome.search.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,10 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SearchContract;
 import com.example.musicplayerdome.base.BaseFragment;
-import com.example.musicplayerdome.databinding.FragmentSearchSongBinding;
+import com.example.musicplayerdome.databinding.FragmentRecyclerviewBinding;
 import com.example.musicplayerdome.search.bean.AlbumSearchBean;
 import com.example.musicplayerdome.search.bean.FeedSearchBean;
 import com.example.musicplayerdome.search.bean.HotSearchDetailBean;
+import com.example.musicplayerdome.search.bean.MvBean;
 import com.example.musicplayerdome.search.bean.PlayListSearchBean;
 import com.example.musicplayerdome.search.bean.RadioSearchBean;
 import com.example.musicplayerdome.search.bean.SingerSearchBean;
@@ -26,8 +28,9 @@ import com.example.musicplayerdome.search.bean.VideoUrlBean;
 import com.example.musicplayerdome.search.other.KeywordsEvent;
 import com.example.musicplayerdome.search.other.SearchPresenter;
 import com.example.musicplayerdome.search.view.SearchResultActivity;
-import com.example.musicplayerdome.song.adapter.MySongListAdapter;
-import com.lzx.starrysky.model.SongInfo;
+import com.example.musicplayerdome.search.view.VideoActivity;
+import com.example.musicplayerdome.song.adapter.FeedAdapter;
+import com.example.musicplayerdome.song.view.SongMvActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,62 +39,86 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SongSearchFragment extends BaseFragment<SearchPresenter> implements SearchContract.View{
-    private static final String TAG = "SongSearchFragment";
-    FragmentSearchSongBinding binding;
+public class FeedSearchFragment extends BaseFragment<SearchPresenter> implements SearchContract.View{
+    private static final String TAG = "FeedSearchFragment";
+    FragmentRecyclerviewBinding binding;
     private String type;
     private String keywords;
-    private int searchType = 1;
-    private MySongListAdapter adapter;
-    private List<SongSearchBean.ResultBean.SongsBean> resultBeans = new ArrayList<>();
+    private List<FeedSearchBean.ResultBean.VideosBean> videoList = new ArrayList<>();
+    private List<MvBean> mvList = new ArrayList<>();
+    private FeedSearchBean.ResultBean feedSearchBean;
+    private FeedAdapter adapter;
     private boolean needRefresh = false;
-    private List<SongInfo> songInfos = new ArrayList<>();
+    private int searchType = 1014;
 
-    public SongSearchFragment() {
-        setFragmentTitle("单 曲");
+    public FeedSearchFragment() {
+        setFragmentTitle("视频");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onGetKeywordsEvent(KeywordsEvent event) {
-        Log.d(TAG, "onGetKeywordsEvent : " + event);
+        Log.d(TAG, "onGetKeywordsEvent : " + event.toString());
         if (event != null) {
             if (keywords != null && !event.getKeyword().equals(keywords)) {
                 needRefresh = true;
-                if (((SearchResultActivity) getActivity()).getPosition() == 1) {
+                if (((SearchResultActivity) getActivity()).getPosition() == 2) {
                     needRefresh = false;
                     keywords = event.getKeyword();
                     showDialog();
-                    mPresenter.getSongSearch(keywords, searchType);
+                    mPresenter.getFeedSearch(keywords, searchType);
                 }
             }
             keywords = event.getKeyword();
         }
     }
 
-
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_song,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recyclerview, container, false);
         EventBus.getDefault().register(this);
         return binding.getRoot();
     }
 
     @Override
     protected void initData() {
-        resultBeans.clear();
+        //取消Header
+        binding.refreshLayout.setEnableRefresh(false);
+        //取消Footer
+        binding.refreshLayout.setEnableLoadMore(false);
 
-        adapter = new MySongListAdapter(getContext());
-        adapter.setType(3);
-        adapter.setKeywords(keywords);
+        adapter = new FeedAdapter(getContext());
+        adapter.setType(1);
+        adapter.setKeywords(keywords == null ? "" : keywords);
+        adapter.setListener(onSimiSingerClickListener);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        binding.rvSongSearch.setLayoutManager(manager);
-        binding.rvSongSearch.setAdapter(adapter);
-        Log.e(TAG, "initData: 输出字符"+keywords);
+        binding.rv.setLayoutManager(manager);
+        binding.rv.setAdapter(adapter);
+
         if (keywords != null) {
             showDialog();
-            mPresenter.getSongSearch(keywords, searchType);
+            mPresenter.getFeedSearch(keywords, searchType);
         }
     }
+
+    FeedAdapter.OnSimiSingerClickListener onSimiSingerClickListener = new FeedAdapter.OnSimiSingerClickListener() {
+        @Override
+        public void onSimiClick(int position) {
+            if (feedSearchBean.getVideos().get(position).getType()==0){
+                Intent intent1 = new Intent(getContext(), SongMvActivity.class);
+                intent1.putExtra("pid", position);
+                Long num = Long.valueOf(feedSearchBean.getVideos().get(position).getVid());
+                intent1.putExtra(SongMvActivity.MVSONG_INFO,num);
+                getContext().startActivity(intent1);
+            }else{
+                Intent intent = new Intent(getContext(), VideoActivity.class);
+                intent.putExtra("Vid",feedSearchBean.getVideos().get(position).getVid());
+                intent.putExtra("VcoverUrl",feedSearchBean.getVideos().get(position).getCoverUrl());
+                intent.putExtra("Vtitle",feedSearchBean.getVideos().get(position).getTitle());
+                intent.putExtra("userName",feedSearchBean.getVideos().get(position).getCreator().get(0).getUserName());
+                getContext().startActivity(intent);
+            }
+        }
+    };
 
     @Override
     public SearchPresenter onCreatePresenter() {
@@ -120,26 +147,7 @@ public class SongSearchFragment extends BaseFragment<SearchPresenter> implements
 
     @Override
     public void onGetSongSearchSuccess(SongSearchBean bean) {
-        hideDialog();
-        resultBeans.clear();
-        if (bean.getResult().getSongs() != null) {
-            resultBeans.addAll(bean.getResult().getSongs());
-        }
-        songInfos.clear();
-        for (int i = 0; i < resultBeans.size(); i++) {
-            SongInfo songInfo = new SongInfo();
-            songInfo.setSongId(String.valueOf(resultBeans.get(i).getId()));
-            songInfo.setArtist(resultBeans.get(i).getArtists().get(0).getName());
-            songInfo.setSongCover(resultBeans.get(i).getArtists().get(0).getPicUrl() != null ? resultBeans.get(i).getArtists().get(0).getPicUrl() :
-                    resultBeans.get(i).getArtists().get(0).getImg1v1Url());
-            songInfo.setSongName(resultBeans.get(i).getName());
-            songInfo.setSongUrl(SONG_URL + resultBeans.get(i).getId() + ".mp3");
-            songInfo.setDuration(resultBeans.get(i).getDuration());
-            songInfo.setArtistId(String.valueOf(resultBeans.get(i).getArtists().get(0).getId()));
-            songInfo.setArtistKey(resultBeans.get(i).getArtists().get(0).getPicUrl());
-            songInfos.add(songInfo);
-        }
-        adapter.loadMore(songInfos);
+
     }
 
     @Override
@@ -149,7 +157,25 @@ public class SongSearchFragment extends BaseFragment<SearchPresenter> implements
 
     @Override
     public void onGetFeedSearchSuccess(FeedSearchBean bean) {
-
+        hideDialog();
+        feedSearchBean = bean.getResult();
+        videoList.clear();
+        if (bean.getResult().getVideos() != null) {
+            videoList.addAll(bean.getResult().getVideos());
+        }
+        mvList.clear();
+        for (int i = 0; i < videoList.size(); i++) {
+            MvBean mvBean = new MvBean();
+            mvBean.setCoverUrl(videoList.get(i).getCoverUrl());
+            mvBean.setCreator(videoList.get(i).getCreator());
+            mvBean.setDuration(videoList.get(i).getDurationms());
+            mvBean.setPlayTime(videoList.get(i).getPlayTime());
+            mvBean.setTitle(videoList.get(i).getTitle());
+            mvBean.setType(videoList.get(i).getType());
+            mvBean.setVid(videoList.get(i).getVid());
+            mvList.add(mvBean);
+        }
+        adapter.loadMore(mvList);
     }
 
     @Override

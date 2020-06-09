@@ -29,9 +29,12 @@ import com.example.musicplayerdome.search.bean.SingerSearchBean;
 import com.example.musicplayerdome.search.bean.SongSearchBean;
 import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
+import com.example.musicplayerdome.search.bean.VideoUrlBean;
+import com.example.musicplayerdome.search.fragment.FeedSearchFragment;
 import com.example.musicplayerdome.search.fragment.SongSearchFragment;
 import com.example.musicplayerdome.search.other.KeywordsEvent;
 import com.example.musicplayerdome.search.other.SearchPresenter;
+import com.example.musicplayerdome.song.fragment.SingerFeedSearchFragment;
 import com.example.musicplayerdome.util.ClickUtil;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
@@ -62,7 +65,7 @@ public class SearchResultActivity extends BaseActivity<SearchPresenter> implemen
         initView();
         pagerAdapter = new MultiFragmentPagerAdapter(getSupportFragmentManager());
         fragments.add(new SongSearchFragment());
-//        fragments.add(new FeedSearchFragment());
+        fragments.add(new FeedSearchFragment());
 //        fragments.add(new SingerSearchFragment());
         pagerAdapter.init(fragments);
     }
@@ -250,5 +253,21 @@ public class SearchResultActivity extends BaseActivity<SearchPresenter> implemen
     @Override
     public void onGetSynthesisSearchFail(String e) {
 
+    }
+
+    @Override
+    public void onGetVideoDataSuccess(VideoUrlBean bean) {
+
+    }
+
+    @Override
+    public void onGetVideoDataFail(String e) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        finish();
+        super.onDestroy();
     }
 }

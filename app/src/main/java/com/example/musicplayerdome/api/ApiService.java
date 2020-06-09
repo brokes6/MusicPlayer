@@ -45,6 +45,7 @@ import com.example.musicplayerdome.search.bean.SingerSongSearchBean;
 import com.example.musicplayerdome.search.bean.SongSearchBean;
 import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
+import com.example.musicplayerdome.search.bean.VideoUrlBean;
 import com.example.musicplayerdome.song.bean.CommentLikeBean;
 import com.example.musicplayerdome.song.bean.LikeMusicBean;
 import com.example.musicplayerdome.song.bean.LyricBean;
@@ -193,6 +194,9 @@ public interface ApiService {
 
     @GET("artist/mv")
     Observable<SongMvBean> LoadMoreSongMvData(@Query("id") long id, @Query("offset") long offset);
+
+    @GET("video/url")
+    Observable<VideoUrlBean> getVideoData(@Query("id") String  id);
 
     @GET("album/sublist")
     Observable<AlbumSublistBean> getAlbumSublist();

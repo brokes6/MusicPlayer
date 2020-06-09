@@ -10,6 +10,7 @@ import com.example.musicplayerdome.search.bean.SingerSearchBean;
 import com.example.musicplayerdome.search.bean.SongSearchBean;
 import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
+import com.example.musicplayerdome.search.bean.VideoUrlBean;
 
 import io.reactivex.Observable;
 
@@ -50,6 +51,10 @@ public interface SearchContract {
         void onGetSynthesisSearchSuccess(SynthesisSearchBean bean);
 
         void onGetSynthesisSearchFail(String e);
+
+        void onGetVideoDataSuccess(VideoUrlBean bean);
+
+        void onGetVideoDataFail(String e);
     }
 
     interface Model extends BaseModel {
@@ -70,6 +75,8 @@ public interface SearchContract {
         Observable<UserSearchBean> getUserSearch(String keywords, int type);
 
         Observable<SynthesisSearchBean> getSynthesisSearch(String keywords, int type);
+
+        Observable<VideoUrlBean> getVideoData(String id);
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
@@ -90,5 +97,7 @@ public interface SearchContract {
         public abstract void getUserSearch(String keywords, int type);
 
         public abstract void getSynthesisSearch(String keywords, int type);
+
+        public abstract void getVideoData(String id);
     }
 }
