@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".search.view.SearchResultActivity">
+
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/red">
+
+            <include
+                layout="@layout/common_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45" />
+        </RelativeLayout>
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_below="@id/rl_title"
+            android:background="@color/red"
+            app:tl_indicator_color="#ffffff"
+            app:tl_indicator_corner_radius="@dimen/dp_2"
+            app:tl_indicator_height="@dimen/dp_2"
+            app:tl_indicator_width="@dimen/dp_20"
+            app:tl_indicator_width_equal_title="false"
+            app:tl_tab_space_equal="false"
+            app:tl_textBold="SELECT"
+            app:tl_textSelectColor="#ffffff"
+            app:tl_textUnselectColor="#f8d9d7" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tablayout"
+            android:layout_above="@+id/bottom_controller"/>
+
+        <com.example.musicplayerdome.rewrite.BottomSongPlayBar
+            android:id="@+id/bottom_controller"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            app:layout_behavior="@string/bottom_sheet_behavior" />
+
+    </RelativeLayout>
+</layout>

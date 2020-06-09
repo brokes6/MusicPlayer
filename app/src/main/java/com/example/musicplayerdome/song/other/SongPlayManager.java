@@ -125,6 +125,7 @@ public class SongPlayManager {
      */
     public void clearSongList() {
         songList.clear();
+        BFsongList.clear();
         currentSongIndex = 0;
     }
 
@@ -595,11 +596,6 @@ public class SongPlayManager {
             Collections.shuffle(ShufflesongList);
             //将当前播放的音乐置为第一位
             ShufflesongList.add(0, list);
-
-            Log.e(TAG, "ShuffleMusic: 1当前list为"+songList);
-            Log.e(TAG, "ShuffleMusic: 2当前list为"+ShufflesongList);
-            Log.e(TAG, "ShuffleMusic: 3当前list为"+BFsongList);
-
         }else{
             Collections.shuffle(ShufflesongList);
         }
@@ -628,7 +624,7 @@ public class SongPlayManager {
      * 获取歌单列表
      */
     public List<SongInfo> getSongList() {
-        return songList;
+        return BFsongList;
     }
 
     /**

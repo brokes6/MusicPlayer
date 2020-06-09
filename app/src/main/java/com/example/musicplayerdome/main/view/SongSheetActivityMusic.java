@@ -223,8 +223,8 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         if (!TextUtils.isEmpty(creatorUrl)) {
             Glide.with(this).load(bean.getPlaylist().getCreator().getAvatarUrl()).into(binding.userImg);
         }
-        beanList.addAll(bean.getPlaylist().getTracks());
         songInfos.clear();
+        beanList.addAll(bean.getPlaylist().getTracks());
         for (int i = 0; i < beanList.size(); i++) {
             SongInfo beanInfo = new SongInfo();
             beanInfo.setArtist(beanList.get(i).getAr().get(0).getName());
@@ -237,7 +237,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             beanInfo.setArtistKey(beanList.get(i).getAl().getPicUrl());
             songInfos.add(beanInfo);
         }
-        Log.e(TAG, "onGetPlaylistDetailSuccess: 当前id为"+ bean.getPlaylist().getId());
+        Log.e(TAG, "当前歌曲id为"+ bean.getPlaylist().getId());
         songComment.setText(""+bean.getPlaylist().getCommentCount());
         adapter.setList(songInfos);
         adapter.loadMore(songInfos);

@@ -18,7 +18,7 @@
         <!-- 自定义自己的主题样式 -->
         <item name="colorPrimary">@color/menu_white_normal</item>
         <item name="colorPrimaryDark">@color/menu_white_normal</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/red</item>
     </style>
 
     <!-- 自定义dialog-->

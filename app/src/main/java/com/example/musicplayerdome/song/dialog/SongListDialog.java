@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -94,6 +95,7 @@ public class SongListDialog extends Dialog implements SongContract.View,View.OnC
         adapter.loadMore(songList);
 
         if (SongPlayManager.getInstance().isPlaying() || SongPlayManager.getInstance().isPaused()) {
+            Log.e(TAG, "init: 正在跳转位置;"+"当前index为"+SongPlayManager.getInstance().getCurrentSongIndex());
             recyclerView.scrollToPosition(SongPlayManager.getInstance().getCurrentSongIndex());
         }
         setPlayMode(SongPlayManager.getInstance().getMode());

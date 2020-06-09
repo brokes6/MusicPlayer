@@ -51,7 +51,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
-
         <com.example.musicplayerdome.rewrite.BottomSongPlayBar
             android:id="@+id/bottom_controller"
             android:visibility="gone"

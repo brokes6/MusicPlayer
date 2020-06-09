@@ -44,6 +44,7 @@ import java.util.List;
 
 public class SearchActivity extends BaseActivity<SearchPresenter> implements SearchContract.View {
     private static final String TAG = "SearchActivity";
+    public static final String KEYWORDS = "keywords";
     ActivitySearchBinding binding;
     private HotSearchAdapter adapter;
     private HotSearchDetailBean searchDetailBean;
@@ -116,9 +117,9 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         }
         SearchHistoryDaoOp.saveData(this, stringList);
 
-//        Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-//        intent.putExtra(KEYWORDS, keywords);
-//        startActivity(intent);
+        Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
+        intent.putExtra(KEYWORDS, keywords);
+        startActivity(intent);
     }
 
     public static int getStatusBarHeight(Context context) {
