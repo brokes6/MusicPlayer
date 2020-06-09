@@ -52,40 +52,37 @@ public class FeedSearchFragment extends BaseFragment<SearchPresenter> implements
     private int searchType = 1014;
 
     public FeedSearchFragment() {
-        setFragmentTitle("视频");
+        setFragmentTitle("视 频");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onGetKeywordsEvent(KeywordsEvent event) {
-        Log.d(TAG, "onGetKeywordsEvent : " + event.toString());
+        //在主线程中进行，处理粘性事件
+        Log.e(TAG, "FeedSearchEvent : " + event.toString());
         if (event != null) {
             if (keywords != null && !event.getKeyword().equals(keywords)) {
                 needRefresh = true;
                 if (((SearchResultActivity) getActivity()).getPosition() == 2) {
                     needRefresh = false;
                     keywords = event.getKeyword();
-                    showDialog();
-                    mPresenter.getFeedSearch(keywords, searchType);
+//                    showDialog();
                 }
             }
+            showDialog();
             keywords = event.getKeyword();
+            mPresenter.getFeedSearch(keywords, searchType);
         }
     }
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recyclerview, container, false);
+        initView();
         EventBus.getDefault().register(this);
         return binding.getRoot();
     }
 
-    @Override
-    protected void initData() {
-        //取消Header
-        binding.refreshLayout.setEnableRefresh(false);
-        //取消Footer
-        binding.refreshLayout.setEnableLoadMore(false);
-
+    private void initView(){
         adapter = new FeedAdapter(getContext());
         adapter.setType(1);
         adapter.setKeywords(keywords == null ? "" : keywords);
@@ -93,10 +90,20 @@ public class FeedSearchFragment extends BaseFragment<SearchPresenter> implements
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         binding.rv.setLayoutManager(manager);
         binding.rv.setAdapter(adapter);
+    }
+
+    @Override
+    protected void initData() {
+        videoList.clear();
+
+        //取消Header
+        binding.refreshLayout.setEnableRefresh(false);
+        //取消Footer
+        binding.refreshLayout.setEnableLoadMore(false);
 
         if (keywords != null) {
-            showDialog();
-            mPresenter.getFeedSearch(keywords, searchType);
+//            showDialog();
+//            mPresenter.getFeedSearch(keywords, searchType);
         }
     }
 
@@ -158,24 +165,44 @@ public class FeedSearchFragment extends BaseFragment<SearchPresenter> implements
     @Override
     public void onGetFeedSearchSuccess(FeedSearchBean bean) {
         hideDialog();
-        feedSearchBean = bean.getResult();
-        videoList.clear();
-        if (bean.getResult().getVideos() != null) {
-            videoList.addAll(bean.getResult().getVideos());
+        if (videoList.size()!=0){
+            videoList.clear();
+            mvList.clear();
+            if (bean.getResult().getVideos() != null) {
+                videoList.addAll(bean.getResult().getVideos());
+            }
+            for (int i = 0; i < videoList.size(); i++) {
+                MvBean mvBean = new MvBean();
+                mvBean.setCoverUrl(videoList.get(i).getCoverUrl());
+                mvBean.setCreator(videoList.get(i).getCreator());
+                mvBean.setDuration(videoList.get(i).getDurationms());
+                mvBean.setPlayTime(videoList.get(i).getPlayTime());
+                mvBean.setTitle(videoList.get(i).getTitle());
+                mvBean.setType(videoList.get(i).getType());
+                mvBean.setVid(videoList.get(i).getVid());
+                mvList.add(mvBean);
+            }
+            adapter.refresh(mvList);
+        }else{
+            feedSearchBean = bean.getResult();
+            videoList.clear();
+            if (bean.getResult().getVideos() != null) {
+                videoList.addAll(bean.getResult().getVideos());
+            }
+            mvList.clear();
+            for (int i = 0; i < videoList.size(); i++) {
+                MvBean mvBean = new MvBean();
+                mvBean.setCoverUrl(videoList.get(i).getCoverUrl());
+                mvBean.setCreator(videoList.get(i).getCreator());
+                mvBean.setDuration(videoList.get(i).getDurationms());
+                mvBean.setPlayTime(videoList.get(i).getPlayTime());
+                mvBean.setTitle(videoList.get(i).getTitle());
+                mvBean.setType(videoList.get(i).getType());
+                mvBean.setVid(videoList.get(i).getVid());
+                mvList.add(mvBean);
+            }
+            adapter.loadMore(mvList);
         }
-        mvList.clear();
-        for (int i = 0; i < videoList.size(); i++) {
-            MvBean mvBean = new MvBean();
-            mvBean.setCoverUrl(videoList.get(i).getCoverUrl());
-            mvBean.setCreator(videoList.get(i).getCreator());
-            mvBean.setDuration(videoList.get(i).getDurationms());
-            mvBean.setPlayTime(videoList.get(i).getPlayTime());
-            mvBean.setTitle(videoList.get(i).getTitle());
-            mvBean.setType(videoList.get(i).getType());
-            mvBean.setVid(videoList.get(i).getVid());
-            mvList.add(mvBean);
-        }
-        adapter.loadMore(mvList);
     }
 
     @Override

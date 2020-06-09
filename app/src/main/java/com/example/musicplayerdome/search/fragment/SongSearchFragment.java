@@ -53,18 +53,20 @@ public class SongSearchFragment extends BaseFragment<SearchPresenter> implements
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onGetKeywordsEvent(KeywordsEvent event) {
-        Log.d(TAG, "onGetKeywordsEvent : " + event);
+        //在主线程中进行，处理粘性事件
+        Log.e(TAG, "SongSearchEvent : " + event);
         if (event != null) {
             if (keywords != null && !event.getKeyword().equals(keywords)) {
                 needRefresh = true;
                 if (((SearchResultActivity) getActivity()).getPosition() == 1) {
                     needRefresh = false;
                     keywords = event.getKeyword();
-                    showDialog();
-                    mPresenter.getSongSearch(keywords, searchType);
+//                    showDialog();
                 }
             }
+            showDialog();
             keywords = event.getKeyword();
+            mPresenter.getSongSearch(keywords, searchType);
         }
     }
 
@@ -86,10 +88,9 @@ public class SongSearchFragment extends BaseFragment<SearchPresenter> implements
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         binding.rvSongSearch.setLayoutManager(manager);
         binding.rvSongSearch.setAdapter(adapter);
-        Log.e(TAG, "initData: 输出字符"+keywords);
         if (keywords != null) {
             showDialog();
-            mPresenter.getSongSearch(keywords, searchType);
+//            mPresenter.getSongSearch(keywords, searchType);
         }
     }
 
@@ -121,25 +122,47 @@ public class SongSearchFragment extends BaseFragment<SearchPresenter> implements
     @Override
     public void onGetSongSearchSuccess(SongSearchBean bean) {
         hideDialog();
-        resultBeans.clear();
-        if (bean.getResult().getSongs() != null) {
-            resultBeans.addAll(bean.getResult().getSongs());
+        if (resultBeans.size()!=0){
+            resultBeans.clear();
+            songInfos.clear();
+            if (bean.getResult().getSongs() != null) {
+                resultBeans.addAll(bean.getResult().getSongs());
+            }
+            for (int i = 0; i < resultBeans.size(); i++) {
+                SongInfo songInfo = new SongInfo();
+                songInfo.setSongId(String.valueOf(resultBeans.get(i).getId()));
+                songInfo.setArtist(resultBeans.get(i).getArtists().get(0).getName());
+                songInfo.setSongCover(resultBeans.get(i).getArtists().get(0).getPicUrl() != null ? resultBeans.get(i).getArtists().get(0).getPicUrl() :
+                        resultBeans.get(i).getArtists().get(0).getImg1v1Url());
+                songInfo.setSongName(resultBeans.get(i).getName());
+                songInfo.setSongUrl(SONG_URL + resultBeans.get(i).getId() + ".mp3");
+                songInfo.setDuration(resultBeans.get(i).getDuration());
+                songInfo.setArtistId(String.valueOf(resultBeans.get(i).getArtists().get(0).getId()));
+                songInfo.setArtistKey(resultBeans.get(i).getArtists().get(0).getPicUrl());
+                songInfos.add(songInfo);
+            }
+            adapter.refresh(songInfos);
+        }else{
+            resultBeans.clear();
+            if (bean.getResult().getSongs() != null) {
+                resultBeans.addAll(bean.getResult().getSongs());
+            }
+            songInfos.clear();
+            for (int i = 0; i < resultBeans.size(); i++) {
+                SongInfo songInfo = new SongInfo();
+                songInfo.setSongId(String.valueOf(resultBeans.get(i).getId()));
+                songInfo.setArtist(resultBeans.get(i).getArtists().get(0).getName());
+                songInfo.setSongCover(resultBeans.get(i).getArtists().get(0).getPicUrl() != null ? resultBeans.get(i).getArtists().get(0).getPicUrl() :
+                        resultBeans.get(i).getArtists().get(0).getImg1v1Url());
+                songInfo.setSongName(resultBeans.get(i).getName());
+                songInfo.setSongUrl(SONG_URL + resultBeans.get(i).getId() + ".mp3");
+                songInfo.setDuration(resultBeans.get(i).getDuration());
+                songInfo.setArtistId(String.valueOf(resultBeans.get(i).getArtists().get(0).getId()));
+                songInfo.setArtistKey(resultBeans.get(i).getArtists().get(0).getPicUrl());
+                songInfos.add(songInfo);
+            }
+            adapter.loadMore(songInfos);
         }
-        songInfos.clear();
-        for (int i = 0; i < resultBeans.size(); i++) {
-            SongInfo songInfo = new SongInfo();
-            songInfo.setSongId(String.valueOf(resultBeans.get(i).getId()));
-            songInfo.setArtist(resultBeans.get(i).getArtists().get(0).getName());
-            songInfo.setSongCover(resultBeans.get(i).getArtists().get(0).getPicUrl() != null ? resultBeans.get(i).getArtists().get(0).getPicUrl() :
-                    resultBeans.get(i).getArtists().get(0).getImg1v1Url());
-            songInfo.setSongName(resultBeans.get(i).getName());
-            songInfo.setSongUrl(SONG_URL + resultBeans.get(i).getId() + ".mp3");
-            songInfo.setDuration(resultBeans.get(i).getDuration());
-            songInfo.setArtistId(String.valueOf(resultBeans.get(i).getArtists().get(0).getId()));
-            songInfo.setArtistKey(resultBeans.get(i).getArtists().get(0).getPicUrl());
-            songInfos.add(songInfo);
-        }
-        adapter.loadMore(songInfos);
     }
 
     @Override

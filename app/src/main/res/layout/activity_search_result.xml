@@ -33,10 +33,8 @@
             android:background="@color/red"
             app:tl_indicator_color="#ffffff"
             app:tl_indicator_corner_radius="@dimen/dp_2"
-            app:tl_indicator_height="@dimen/dp_2"
-            app:tl_indicator_width="@dimen/dp_20"
             app:tl_indicator_width_equal_title="false"
-            app:tl_tab_space_equal="false"
+            app:tl_tab_space_equal="true"
             app:tl_textBold="SELECT"
             app:tl_textSelectColor="#ffffff"
             app:tl_textUnselectColor="#f8d9d7" />

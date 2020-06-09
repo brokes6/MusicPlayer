@@ -40,7 +40,7 @@ import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
-public class VideoActivity extends BaseActivity<SearchPresenter> implements SearchContract.View {
+public class VideoActivity extends BaseActivity<SearchPresenter> implements SearchContract.View,View.OnClickListener {
     private static final String TAG = "VideoActivity";
     ActivityVideoBinding binding;
     String title,coverUrl,vid,userName;
@@ -99,7 +99,7 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
             Glide.with(this).load(coverUrl).into(binding.jzVideo.posterImageView);
             Glide.with(this)
                     .load(coverUrl)
-                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 12)))
+                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 25)))
                     .transition(new DrawableTransitionOptions().crossFade(1500))
                     .into(binding.VImg);
 

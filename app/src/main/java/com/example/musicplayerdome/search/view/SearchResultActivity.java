@@ -120,9 +120,10 @@ public class SearchResultActivity extends BaseActivity<SearchPresenter> implemen
         if (SearchHistoryDaoOp.queryAll(this) != null) {
             stringList = SearchHistoryDaoOp.queryAll(this);
         }
-
+        //接收到前面传递来的关键字
         if (getIntent().getStringExtra(KEYWORDS) != null) {
             keywords = getIntent().getStringExtra(KEYWORDS);
+            //将关键字进行postSticky发送粘性事件
             EventBus.getDefault().postSticky(new KeywordsEvent(keywords));
             etSearch.setText(keywords);
         }
@@ -160,6 +161,7 @@ public class SearchResultActivity extends BaseActivity<SearchPresenter> implemen
         SearchHistoryDaoOp.saveData(this, stringList);
 
         EventBus.getDefault().postSticky(new KeywordsEvent(keywords));
+
     }
 
     public int getPosition() {

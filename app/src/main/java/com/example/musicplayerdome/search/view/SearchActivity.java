@@ -124,6 +124,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
                 break;
             }
         }
+        //将每次搜索的关键字存储到数据库
         SearchHistoryDaoOp.saveData(this, stringList);
 
         Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
@@ -164,6 +165,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 dialog.dismiss();
+                                //直接清楚数据库
                                 SearchHistoryDaoOp.deleteAllData(SearchActivity.this);
                                 stringList = SearchHistoryDaoOp.queryAll(SearchActivity.this);
                                 binding.tlSearchhistory.addHistoryText(stringList, tagListener);
@@ -176,7 +178,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
                 if (!TextUtils.isEmpty(keywords)) {
                     searchSong(keywords);
                 } else {
-                    XToastUtils.warning("请输入关键字！");
+                    XToastUtils.info("请输入关键字！");
                 }
                 break;
         }
