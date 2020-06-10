@@ -172,16 +172,18 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
 
     @Override
     public void onGetBannerSuccess(BannerBean bean) {
-        if (banners.size()>0){
+        if (bannerImageList.size()>0){
             Log.e(TAG, "轮播图开始刷新");
             banners.clear();
+            bannerImageList.clear();
             banners.addAll(bean.getBanners());
             loadImageToList();
             initBanner(bannerImageList);
-        }
+        }else{
         banners.addAll(bean.getBanners());
         loadImageToList();
         initBanner(bannerImageList);
+        }
     }
 
     //将图片装到BannerList中

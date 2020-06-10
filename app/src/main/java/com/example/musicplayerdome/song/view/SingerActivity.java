@@ -78,15 +78,11 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
 
     @Override
     protected void initData() {
+        showDialog();
         //到时候不使用这个方法，换一个方法（下次来改）
         setBackBtn(getString(R.string.colorWhite));
 
         if (getIntent() != null) {
-            Glide.with(this).load(getIntent().getStringExtra(SINGER_PICURL)).transition(new DrawableTransitionOptions().crossFade()).into(binding.ivSingerCover);
-            Glide.with(this)
-                    .load(getIntent().getStringExtra(SINGER_PICURL))
-                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 1)))
-                    .into(binding.ivSinger);
             binding.tvName.setText(getIntent().getStringExtra(SINGER_NAME));
             singId = getIntent().getLongExtra(SINGER_ID, -1);
             setLeftTitleText(getIntent().getStringExtra(SINGER_NAME), getString(R.string.colorWhite));
@@ -102,6 +98,8 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
 
             minDistance = DensityUtil.dp2px(SingerActivity.this, 85);
             deltaDistance = DensityUtil.dp2px(SingerActivity.this, 250) - minDistance;
+
+            mPresenter.getSingerHotSong(singId);
         }
     }
 
@@ -145,7 +143,12 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
 
     @Override
     public void onGetSingerHotSongSuccess(SingerSongSearchBean bean) {
-
+        hideDialog();
+        Glide.with(this).load(bean.getArtist().getPicUrl()).transition(new DrawableTransitionOptions().crossFade()).into(binding.ivSingerCover);
+        Glide.with(this)
+                .load(bean.getArtist().getPicUrl())
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 1)))
+                .into(binding.ivSinger);
     }
 
     @Override
