@@ -60,6 +60,7 @@ public class MyApplication extends Application {
             default:
                 throw new IllegalStateException("Unexpected value: " + key);
         }
+
         MusicManager.getInstance().setNotificationConstructor(
                 new NotificationConstructor.Builder()
                         .setCreateSystemNotification(true)

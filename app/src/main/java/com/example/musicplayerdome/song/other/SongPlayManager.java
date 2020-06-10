@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.musicplayerdome.MyApplication;
 import com.example.musicplayerdome.api.ApiService;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
+import com.example.musicplayerdome.search.other.KeywordsEvent;
 import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
@@ -309,7 +310,12 @@ public class SongPlayManager {
         @Override
         public void onPlayerStart() {
             //开始播放
+            if (getNowPlayingIndex()!=currentSongIndex){
+                currentSongIndex = getNowPlayingIndex();
+            }
             EventBus.getDefault().post(new MusicStartEvent(songList.get(currentSongIndex)));
+            Log.e(TAG, "onPlayerStart: 输出当前id"+getNowPlayingSongInfo().getSongId() +"当前index为:"+getNowPlayingIndex());
+            EventBus.getDefault().postSticky(new MusicStartEvent(getNowPlayingSongInfo()));
         }
 
         @Override
@@ -625,6 +631,14 @@ public class SongPlayManager {
         } else {
             return 0;
         }
+    }
+
+    public SongInfo getNowPlayingSongInfo(){
+        return MusicManager.getInstance().getNowPlayingSongInfo();
+    }
+
+    public int getNowPlayingIndex(){
+        return MusicManager.getInstance().getNowPlayingIndex();
     }
 
     /**

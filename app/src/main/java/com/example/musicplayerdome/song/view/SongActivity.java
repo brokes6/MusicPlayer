@@ -33,6 +33,8 @@ import com.example.musicplayerdome.databinding.ActivitySongBinding;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
 import com.example.musicplayerdome.rewrite.MaxHeightRecyclerView;
+import com.example.musicplayerdome.search.other.KeywordsEvent;
+import com.example.musicplayerdome.search.view.SearchResultActivity;
 import com.example.musicplayerdome.song.adapter.MusicListAdapter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.other.MusicPauseEvent;
@@ -106,6 +108,24 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         } else {
             //如果没有没有切歌，则check一下就行了
             checkMusicPlaying();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onGetKeywordsEvent(MusicStartEvent event) {
+        //在主线程中进行，处理粘性事件
+        if (event != null) {
+            SongInfo songInfo = event.getSongInfo();
+            //从事件中获取的是最新的，需要进行更改
+            if (!songInfo.getSongId().equals(currentSongInfo.getSongId())) {
+                currentSongInfo = songInfo;
+                if (lyricBean != null) {
+                    lyricBean = null;
+                }
+                checkMusicState();
+            }else {
+
+            }
         }
     }
 
