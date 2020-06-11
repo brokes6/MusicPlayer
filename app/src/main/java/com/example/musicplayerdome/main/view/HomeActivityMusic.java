@@ -50,6 +50,10 @@ import com.xuexiang.xui.utils.SnackbarUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 也就是MainAcitiviy，主页面
+ * 分为3个Tab，展示3个不同页面
+ */
 public class HomeActivityMusic extends BaseActivity<MainPresenter> implements View.OnClickListener, MainContract.View{
     private static final String TAG = "HomeActivity";
 //    ActivityHomeBinding binding;

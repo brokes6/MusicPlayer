@@ -31,6 +31,10 @@ import com.gyf.immersionbar.ImmersionBar;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * HomeFragment.PlayListRecommendActivity（HomeFragment页面 5个按钮之一）
+ * 展示（系统推荐的）歌单
+ */
 public class PlayListRecommendActivity extends BaseActivity<WowPresenter> implements WowContract.View{
     private static final String TAG = "PlayListRecommendActivi";
     ActivityPlayListRecommendBinding binding;

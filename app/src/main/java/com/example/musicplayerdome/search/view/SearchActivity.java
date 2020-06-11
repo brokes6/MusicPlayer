@@ -46,6 +46,10 @@ import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SearchActivity 搜索页面
+ * 展示热门搜索，也可以进行搜索
+ */
 public class SearchActivity extends BaseActivity<SearchPresenter> implements SearchContract.View {
     private static final String TAG = "SearchActivity";
     public static final String KEYWORDS = "keywords";

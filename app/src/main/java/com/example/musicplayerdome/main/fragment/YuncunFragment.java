@@ -38,6 +38,10 @@ import java.util.List;
 
 import yuncun.bean.YuncunReviewBean;
 
+/**
+ * HomeActivityMusic.YuncunFragment（Tab之一，云村）
+ * 展示云村热评
+ */
 public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContract.View {
     MyfragmentBinding binding;
     private static final String TAG = "YuncunFragment";

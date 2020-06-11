@@ -17,6 +17,10 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 类似歌手适配器（展示类似的歌手）
+ * SimiSingerBean.ArtistsBean
+ */
 public class SimiSingerAdapter extends BaseRecyclerAdapter<SimiSingerBean.ArtistsBean> {
     private static final String TAG = "SimiSingerAdapter";
     private Context mContext;

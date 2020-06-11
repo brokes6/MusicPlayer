@@ -1,15 +1,9 @@
 package com.example.musicplayerdome.song.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.liuzhuang.rcimageview.RoundCornerImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -21,6 +15,10 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 import java.util.List;
 
+/**
+ * 主页SongSheetAtivity，我的歌单适配器
+ * PlayListItemBean
+ */
 public class UserPlaylistAdapter extends BaseRecyclerAdapter<PlayListItemBean> {
     private static final String TAG = "UserPlaylistAdapter";
     private Context mContext;

@@ -21,6 +21,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+/**
+ * 歌手热门歌曲适配器
+ * SongInfo
+ */
 public class MusicListAdapter extends BaseRecyclerAdapter<SongInfo> {
     private static final String TAG = "MusicListAdapter";
     private OnSongClickListener listener;

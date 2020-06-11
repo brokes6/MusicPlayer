@@ -54,6 +54,10 @@ import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_ID
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_NAME;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_PICURL;
 
+/**
+ * SongSheetActivityMusic 歌单详情页面
+ * 展示歌单里的歌曲
+ */
 public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implements View.OnClickListener, WowContract.View{
     SongSheetBinding binding;
 //    SongPlayListBinding binding;
@@ -162,18 +166,13 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             binding.bottomController.setVisibility(View.GONE);
         }
     }
-
+    //底部弹出选择列表
     private void showSimpleBottomSheetGrid() {
-        final int TAG_SHARE_WECHAT_FRIEND = 0;
-        final int TAG_SHARE_WECHAT_MOMENT = 1;
-        final int TAG_SHARE_WEIBO = 2;
-        final int TAG_SHARE_CHAT = 3;
         BottomSheet.BottomGridSheetBuilder builder = new BottomSheet.BottomGridSheetBuilder(this);
-        builder
-                .addItem(R.drawable.icon_more_operation_share_friend, "分享到微信", TAG_SHARE_WECHAT_FRIEND, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
-                .addItem(R.drawable.icon_more_operation_share_moment, "分享到朋友圈", TAG_SHARE_WECHAT_MOMENT, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
-                .addItem(R.drawable.icon_more_operation_share_weibo, "分享到微博", TAG_SHARE_WEIBO, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
-                .addItem(R.drawable.icon_more_operation_share_chat, "分享到私信", TAG_SHARE_CHAT, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+        builder.addItem(R.drawable.icon_more_operation_share_friend, "分享到微信", 0, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_moment, "分享到朋友圈", 1, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_weibo, "分享到微博", 2, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_chat, "分享到私信", 3, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
                 .setOnSheetItemClickListener(new BottomSheet.BottomGridSheetBuilder.OnSheetItemClickListener() {
                     @Override
                     public void onClick(BottomSheet dialog, BottomSheetItemView itemView) {

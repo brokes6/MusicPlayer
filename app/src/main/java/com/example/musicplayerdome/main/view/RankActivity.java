@@ -40,6 +40,10 @@ import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_ID
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_NAME;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_PICURL;
 
+/**
+ * HomeFragment.RankActivity（HomeFragment页面 5个按钮之一）
+ * 展示歌曲排行榜
+ */
 public class RankActivity extends BaseActivity<WowPresenter> implements WowContract.View {
     private static final String TAG = "RankActivity";
     ActivityRankBinding binding;

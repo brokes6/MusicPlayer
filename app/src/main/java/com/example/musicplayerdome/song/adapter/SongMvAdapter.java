@@ -24,6 +24,10 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 import java.util.List;
 
+/**
+ * 歌手MV适配器
+ * MvBean
+ */
 public class SongMvAdapter extends BaseRecyclerAdapter<SongMvBean.MvData> {
     private static final String TAG = "FeedAdapter";
     private Context mContext;

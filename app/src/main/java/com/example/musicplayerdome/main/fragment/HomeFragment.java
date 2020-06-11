@@ -53,7 +53,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * HomeActivityMusic.HomeFragment（Tab之一，主页）
+ * 展示轮播图，推荐歌单，推荐新歌
+ */
 public class HomeFragment extends BaseFragment<WowPresenter> implements WowContract.View,View.OnClickListener{
     private static final String TAG = "HomeFragment";
     FragmentHomeBinding binding;

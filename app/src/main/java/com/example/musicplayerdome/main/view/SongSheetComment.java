@@ -27,6 +27,10 @@ import com.gyf.immersionbar.ImmersionBar;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SongSheetActivityMusic.SongSheetComment 歌单评论
+ * 展示歌单的评论
+ */
 public class SongSheetComment extends BaseActivity<SongPresenter> implements SongContract.View{
     ActivitySheetCommentBinding binding;
     private static final String TAG = "SongSheetComment";

@@ -36,6 +36,10 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SearchActivity.SearchResultActivity.SongSearchFragment 搜索结果之一 歌曲页面
+ * 展示搜索的结果为歌曲的页面
+ */
 public class SongSearchFragment extends BaseFragment<SearchPresenter> implements SearchContract.View{
     private static final String TAG = "SongSearchFragment";
     FragmentSearchSongBinding binding;

@@ -39,6 +39,10 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SearchActivity.SearchResultActivity.FeedSearchFragment 搜索结果之一 视频/MV页面
+ * 展示搜索的结果为视频的页面
+ */
 public class FeedSearchFragment extends BaseFragment<SearchPresenter> implements SearchContract.View{
     private static final String TAG = "FeedSearchFragment";
     FragmentRecyclerviewBinding binding;

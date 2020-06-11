@@ -25,6 +25,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 视频/MV适配器
+ * 1.搜索出来的视频
+ * 2.歌手的MV
+ * MvBean
+ */
 public class FeedAdapter extends BaseRecyclerAdapter<MvBean> {
     private static final String TAG = "FeedAdapter";
     private Context mContext;

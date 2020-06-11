@@ -46,6 +46,10 @@ import static com.example.musicplayerdome.search.view.SearchActivity.KEYWORDS;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SearchActivity.SearchResultActivity 搜索结果页面
+ * 展示搜索的结果，分为2个页面
+ */
 public class SearchResultActivity extends BaseActivity<SearchPresenter> implements SearchContract.View{
     private static final String TAG = "SearchResultActivity";
     ActivitySearchResultBinding binding;

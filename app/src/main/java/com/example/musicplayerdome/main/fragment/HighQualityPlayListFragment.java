@@ -39,6 +39,10 @@ import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_ID
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_NAME;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_PICURL;
 
+/**
+ * 主页歌单页面.精品页面
+ * 展示精品歌单
+ */
 public class HighQualityPlayListFragment extends BaseFragment<WowPresenter> implements WowContract.View{
     private static final String TAG = "HighQualityPlayListFrag";
     FragmentHighQualityBinding binding;

@@ -52,6 +52,10 @@ import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_ID
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_NAME;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_PICURL;
 
+/**
+ * HomeActivityMusic.SongSheetFragment（Tab之一，歌单）
+ * 展示用户的歌单，私人FM
+ */
 public class SongSheetFragment extends BaseFragment<MinePresenter> implements View.OnClickListener, MineContract.View{
     SongsheetfragmentBinding binding;
     private static final String TAG = "SongSheetFragment";

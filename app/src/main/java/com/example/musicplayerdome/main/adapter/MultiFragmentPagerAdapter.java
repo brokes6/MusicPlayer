@@ -11,6 +11,10 @@ import com.example.musicplayerdome.base.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ViewPager适配器
+ * Fragment
+ */
 public class MultiFragmentPagerAdapter extends FragmentStatePagerAdapter {
     private static final String TAG = "MultiFragmentPagerAdapt";
 

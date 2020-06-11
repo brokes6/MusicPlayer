@@ -16,6 +16,10 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 import yuncun.bean.YuncunReviewBean;
 
+/**
+ * 云村瀑布流适配器
+ * YuncunReviewBean.UserData
+ */
 public class YuncunAdapter extends BaseRecyclerAdapter<YuncunReviewBean.UserData> {
     private static final String TAG = "YuncunAdapter";
     private Context mcontext;

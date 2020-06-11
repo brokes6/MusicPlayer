@@ -28,6 +28,14 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 import java.util.List;
 
+/**
+ * 歌曲展示多功能适配器
+ * 1.日推列表
+ * 2.歌单列表
+ * 3.搜索列表
+ * 4.本地音乐（已取消）
+ * SongInfo
+ */
 public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
     private static final String TAG = "MySongListAdapter";
     public List<SongInfo> list;

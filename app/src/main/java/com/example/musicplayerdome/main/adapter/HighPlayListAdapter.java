@@ -15,6 +15,10 @@ import com.example.musicplayerdome.main.bean.TopListBean;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
+/**
+ * 精品歌单适配器
+ * PlaylistBean
+ */
 public class HighPlayListAdapter extends BaseRecyclerAdapter<PlaylistBean> {
     private Context mContext;
     private OnTopListClickListener listener;

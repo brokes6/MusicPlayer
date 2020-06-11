@@ -23,6 +23,10 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 import java.util.List;
 
+/**
+ * 专辑展示适配器
+ * AlbumAdapterBean
+ */
 public class AlbumAdapter extends BaseRecyclerAdapter<AlbumAdapterBean> {
     private static final String TAG = "AlbumAdapter";
     private Context mContext;

@@ -16,6 +16,10 @@ import com.example.musicplayerdome.yuncun.adapter.YuncunAdapter;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
+/**
+ * 主页推荐歌曲适配器
+ * RecommendsongBean.resultData
+ */
 public class RecommendMusicAdapter extends BaseRecyclerAdapter<RecommendsongBean.resultData> {
     Context context;
     TextView M_name,M_author;

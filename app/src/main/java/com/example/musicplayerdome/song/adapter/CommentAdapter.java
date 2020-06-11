@@ -22,6 +22,10 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 评论展示适配器
+ * MusicCommentBean.CommentsBean
+ */
 public class CommentAdapter extends BaseRecyclerAdapter<MusicCommentBean.CommentsBean> {
     private static final String TAG = "CommentAdapter";
 

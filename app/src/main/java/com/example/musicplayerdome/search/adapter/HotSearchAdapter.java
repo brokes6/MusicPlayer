@@ -11,6 +11,10 @@ import com.example.musicplayerdome.search.bean.HotSearchDetailBean;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
+/**
+ * 热门搜索适配器（展示热门搜索）
+ * HotSearchDetailBean.DataBean
+ */
 public class HotSearchAdapter extends BaseRecyclerAdapter<HotSearchDetailBean.DataBean> {
     private Context context;
     private HotSearchDetailBean list;

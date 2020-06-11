@@ -46,6 +46,10 @@ import java.util.List;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
+/**
+ * HomeFragment.DailyRecommendActivity（HomeFragment页面 5个按钮之一）
+ * 展示每日推荐歌曲
+ */
 public class DailyRecommendActivity extends BaseActivity<WowPresenter> implements WowContract.View,View.OnClickListener {
     private static final String TAG = "DailyRecommendActivity";
     ActivityDailyRecommendBinding binding;

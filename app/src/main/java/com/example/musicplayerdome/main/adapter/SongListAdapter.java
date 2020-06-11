@@ -23,6 +23,10 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 import java.util.List;
 
+/**
+ * 主页推荐歌单
+ * PlaylistBean
+ */
 public class SongListAdapter extends BaseRecyclerAdapter<PlaylistBean> {
     private Context mContext;
     private OnPlayListClickListener listener;

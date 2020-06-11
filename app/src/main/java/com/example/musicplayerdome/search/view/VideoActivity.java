@@ -40,6 +40,10 @@ import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
+/**
+ * VideoActivity 视频详情页面
+ * 播放视频（后期预计可以想抖音一样上滑切换）
+ */
 public class VideoActivity extends BaseActivity<SearchPresenter> implements SearchContract.View,View.OnClickListener {
     private static final String TAG = "VideoActivity";
     ActivityVideoBinding binding;

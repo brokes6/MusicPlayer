@@ -13,6 +13,10 @@ import com.example.musicplayerdome.main.bean.TopListBean;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
+/**
+ * 排行榜适配器
+ * TopListBean.ListBean
+ */
 public class RankAdapter extends BaseRecyclerAdapter<TopListBean.ListBean> {
     private Context mContext;
     private OnTopListClickListener listener;
