@@ -83,4 +83,9 @@
         <item name="android:textSize">@dimen/sp_15</item>
     </style>
 
+<!--    Loading-->
+    <style name="TransparentDialog" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 </resources>

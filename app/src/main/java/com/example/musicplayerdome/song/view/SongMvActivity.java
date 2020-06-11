@@ -21,6 +21,7 @@ import com.example.musicplayerdome.song.bean.SongMvBean;
 import com.example.musicplayerdome.song.bean.SongMvDataBean;
 import com.example.musicplayerdome.song.other.MvPersenter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
+import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.BarHide;
 import com.gyf.immersionbar.ImmersionBar;
 
@@ -100,7 +101,6 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
             sid = intent.getLongExtra(MVSONG_INFO,-1);
             pid = intent.getIntExtra("pid",-1);
             mPresenter.getSongMv(sid);
-            mPresenter.getMVDetail(sid);
             mPresenter.getSongMvComment(sid);
         }
     }
@@ -130,11 +130,13 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     @Override
     public void onGetgetSongMvSuccess(SongMvDataBean bean) {
         MVurl = bean.getData().getUrl();
+        mPresenter.getMVDetail(sid);
     }
 
     @Override
     public void onGetgetSongMvFail(String e) {
         hideDialog();
+        XToastUtils.error("网络异常");
         Log.e(TAG, "获取MV播放地址错误"+e);
     }
 
@@ -164,10 +166,9 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
 
     @Override
     public void onGetMVDetailSuccess(MVDetailBean bean) {
-        hideDialog();
         binding.jzVideo.setUp(MVurl,bean.getData().getName());
         Glide.with(this).load(bean.getData().getCover()).into(binding.jzVideo.posterImageView);
-
+        hideDialog();
         binding.userName.setText(bean.getData().getArtistName());
         binding.SMTitle.setText(bean.getData().getName());
         binding.SMDetails.setText(bean.getData().getDesc());

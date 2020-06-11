@@ -84,7 +84,6 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-
                     <RelativeLayout
                         android:id="@+id/rl_logout"
                         android:layout_width="0dp"
@@ -110,6 +109,8 @@
                             android:textColor="#333333"
                             android:textSize="@dimen/sp_12" />
                     </RelativeLayout>
+
+
                 </LinearLayout>
             </RelativeLayout>
         </com.google.android.material.navigation.NavigationView>

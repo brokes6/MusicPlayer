@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,13 +15,11 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.rewrite.SearchEditText;
-import com.example.musicplayerdome.util.LoadingDialog;
+import com.example.musicplayerdome.util.LoadingsDialog;
 import com.example.musicplayerdome.util.LocaleManageUtil;
 import com.lzx.starrysky.manager.MediaSessionConnection;
 import com.lzx.starrysky.model.SongInfo;
 //import com.xuexiang.xui.widget.dialog.LoadingDialog;
-
-import java.util.Objects;
 
 
 /**
@@ -35,7 +32,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected P mPresenter;
 
-    protected LoadingDialog mDialog;
+    protected LoadingsDialog mDialogs;
 
     public Context mContext;
     private SongInfo bottomSongInfo;
@@ -53,7 +50,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             mPresenter = onCreatePresenter();
         }
         mContext = this;
-        createDialog();
         onCreateView(savedInstanceState);
         initModule();
         initData();
@@ -82,14 +78,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onDestroy();
     }
 
-    public void createDialog() {
-        if (mDialog == null) {
-//            mDialog = new LoadingDialog(this, "Loading...");
-        }
-    }
+    //
     public void goDialog(){
-        if (mDialog == null) {
-            mDialog = new LoadingDialog(this, "Loading...");
+        if (mDialogs == null) {
+            mDialogs = LoadingsDialog.getInstance(this);
         }else{
             return;
         }
@@ -192,14 +184,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     public void showDialog() {
-        if (mDialog != null && !mDialog.isShowing()) {
-            mDialog.show();
-        }
+        mDialogs.show();
     }
 
     public void hideDialog() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
-        }
+        mDialogs.dismiss();
     }
 }

@@ -14,9 +14,7 @@ import androidx.fragment.app.Fragment;
 
 //import com.xuexiang.xui.widget.dialog.LoadingDialog;
 
-import com.example.musicplayerdome.util.LoadingDialog;
-
-import java.util.Objects;
+import com.example.musicplayerdome.util.LoadingsDialog;
 
 
 /**
@@ -30,7 +28,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     protected P mPresenter;
 
-    protected LoadingDialog mDialog;
+    protected LoadingsDialog mDialogs;
 
     protected Activity activity;
 
@@ -168,8 +166,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     protected abstract void initVariables(Bundle bundle);
 
     private void createDialog() {
-        if (mDialog == null) {
-            mDialog = new LoadingDialog(Objects.requireNonNull(getContext()), "Loading...");
+        if (mDialogs == null){
+            mDialogs = LoadingsDialog.getInstance(getContext());
         }
     }
 
@@ -212,14 +210,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     }
 
     public void showDialog() {
-        if (mDialog != null && !mDialog.isShowing()) {
-            mDialog.show();
-        }
+        mDialogs.show();
     }
 
     public void hideDialog() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
-        }
+        mDialogs.dismiss();
     }
 }

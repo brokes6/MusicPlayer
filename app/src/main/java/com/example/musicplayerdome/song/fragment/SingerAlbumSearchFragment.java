@@ -62,6 +62,11 @@ public class SingerAlbumSearchFragment extends BaseFragment<SingerPresenter> imp
 
     @Override
     protected void initData() {
+        //取消Header
+        binding.refreshLayout.setEnableRefresh(false);
+        //取消Footer
+        binding.refreshLayout.setEnableLoadMore(false);
+
         adapter = new AlbumAdapter(getContext());
         binding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rv.setAdapter(adapter);
