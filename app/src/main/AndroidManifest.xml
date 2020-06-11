@@ -19,19 +19,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemes"
         android:usesCleartextTraffic="true">
+        <activity android:name=".main.view.PlayListRecommendActivity"></activity>
         <!-- android:networkSecurityConfig="@xml/network_security_config"很重要，要加上去 -->
-        <activity
-            android:name=".search.view.SearchResultActivity" />
-        <activity
-            android:name=".search.view.SearchActivity" />
+        <activity android:name=".search.view.SearchResultActivity" />
+        <activity android:name=".search.view.SearchActivity" />
         <activity
             android:name=".search.view.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".main.view.RankActivity" />
-        <activity
-            android:name=".yuncun.view.YuncunSongActivity" />
+            android:screenOrientation="portrait" />
+        <activity android:name=".main.view.RankActivity" />
+        <activity android:name=".yuncun.view.YuncunSongActivity" />
         <activity
             android:name=".song.view.SongMvActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

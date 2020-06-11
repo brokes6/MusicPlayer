@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
-        tools:context=".search.view.SearchResultActivity">
+        tools:context=".main.view.PlayListRecommendActivity">
 
         <RelativeLayout
             android:id="@+id/rl_title"
@@ -25,36 +25,37 @@
                 android:layout_height="@dimen/dp_45" />
         </RelativeLayout>
 
+
         <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/tablayout"
+            android:id="@+id/tab_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="7dp"
-            android:layout_below="@id/rl_title"
             android:background="@color/red"
-            app:tl_indicator_color="#ffffff"
-            app:tl_indicator_corner_radius="@dimen/dp_2"
-            app:tl_indicator_width_equal_title="false"
+            android:layout_below="@id/rl_title"
+            app:tl_indicator_color="#FFFFFF"
             app:tl_tab_space_equal="true"
             app:tl_textBold="SELECT"
-            app:tl_textSelectColor="#ffffff"
-            app:tl_textUnselectColor="#f8d9d7" />
+            app:tl_textSelectColor="#FFFFFF"
+            app:tl_textUnselectColor="#7F7F7F" />
+
+        <TextView
+            android:id="@+id/tv_gap"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_below="@id/tab_type"
+            android:background="#f0f0f0" />
+
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tablayout"
-            android:layout_above="@+id/bottom_controller"/>
-
-        <com.example.musicplayerdome.rewrite.BottomSongPlayBar
-            android:id="@+id/bottom_controller"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_55"
-            android:layout_alignParentBottom="true"
-            android:background="#ffffff"
-            app:layout_behavior="@string/bottom_sheet_behavior" />
+            android:layout_below="@id/tv_gap"
+            android:overScrollMode="always"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </RelativeLayout>
 </layout>

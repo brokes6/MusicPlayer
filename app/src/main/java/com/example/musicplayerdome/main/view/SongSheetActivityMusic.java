@@ -40,6 +40,8 @@ import com.lzx.starrysky.model.SongInfo;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
+import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheetItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +69,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     private String creatorName;
     //计算完成后发送的Handler msg
     public static final int COMPLETED = 0;
-    LinearLayout SHComment;
+    LinearLayout SHComment,share;
     TextView songComment;
 
     @Override
@@ -111,7 +113,9 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     private void initView(){
         SHComment = findViewById(R.id.SH_comment);
         songComment = findViewById(R.id.song_comment);
+        share = findViewById(R.id.share);
 
+        share.setOnClickListener(this);
         binding.Pback.setOnClickListener(this);
         SHComment.setOnClickListener(this);
         //设置 Header式
@@ -144,6 +148,9 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
                 intent.putExtra(SongSheetComment.COVER, playlistPicUrl);
                 startActivity(intent);
                 break;
+            case R.id.share:
+                showSimpleBottomSheetGrid();
+                break;
         }
     }
     @Override
@@ -154,6 +161,26 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         } else {
             binding.bottomController.setVisibility(View.GONE);
         }
+    }
+
+    private void showSimpleBottomSheetGrid() {
+        final int TAG_SHARE_WECHAT_FRIEND = 0;
+        final int TAG_SHARE_WECHAT_MOMENT = 1;
+        final int TAG_SHARE_WEIBO = 2;
+        final int TAG_SHARE_CHAT = 3;
+        BottomSheet.BottomGridSheetBuilder builder = new BottomSheet.BottomGridSheetBuilder(this);
+        builder
+                .addItem(R.drawable.icon_more_operation_share_friend, "分享到微信", TAG_SHARE_WECHAT_FRIEND, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_moment, "分享到朋友圈", TAG_SHARE_WECHAT_MOMENT, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_weibo, "分享到微博", TAG_SHARE_WEIBO, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_chat, "分享到私信", TAG_SHARE_CHAT, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .setOnSheetItemClickListener(new BottomSheet.BottomGridSheetBuilder.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(BottomSheet dialog, BottomSheetItemView itemView) {
+                        dialog.dismiss();
+                        XToastUtils.toast(itemView.toString());
+                    }
+                }).build().show();
     }
 
     @Override

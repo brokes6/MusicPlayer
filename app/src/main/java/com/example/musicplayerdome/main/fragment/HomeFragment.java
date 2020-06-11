@@ -17,6 +17,7 @@ import android.view.ViewOutlineProvider;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.musicplayerdome.abstractclass.WowContract;
 import com.example.musicplayerdome.main.bean.RecommendsongBean;
+import com.example.musicplayerdome.main.view.PlayListRecommendActivity;
 import com.example.musicplayerdome.main.view.RankActivity;
 import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
 import com.example.musicplayerdome.base.BaseFragment;
@@ -138,6 +139,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     private void initView(){
         binding.hRank.setOnClickListener(this);
         binding.hDailyRecommend.setOnClickListener(this);
+        binding.songSheet.setOnClickListener(this);
 
         //设置 Header式
         binding.refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
@@ -354,6 +356,9 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
                 break;
             case R.id.h_rank:
                 ActivityUtils.startActivity(RankActivity.class);
+                break;
+            case R.id.song_sheet:
+                ActivityUtils.startActivity(PlayListRecommendActivity.class);
                 break;
         }
     }
