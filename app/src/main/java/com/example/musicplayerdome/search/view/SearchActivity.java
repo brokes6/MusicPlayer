@@ -34,8 +34,10 @@ import com.example.musicplayerdome.search.bean.SingerSearchBean;
 import com.example.musicplayerdome.search.bean.SongSearchBean;
 import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
+import com.example.musicplayerdome.search.bean.VideoDataBean;
 import com.example.musicplayerdome.search.bean.VideoUrlBean;
 import com.example.musicplayerdome.search.other.SearchPresenter;
+import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.example.musicplayerdome.util.XToastUtils;
@@ -323,6 +325,26 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
 
     @Override
     public void onGetVideoDataFail(String e) {
+
+    }
+
+    @Override
+    public void onGetVideoCommentSuccess(MusicCommentBean bean) {
+
+    }
+
+    @Override
+    public void onGetVideoCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onGetVideoDetailsSuccess(VideoDataBean bean) {
+
+    }
+
+    @Override
+    public void onGetVideoDetailsFail(String e) {
 
     }
 }

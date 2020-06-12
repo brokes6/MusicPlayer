@@ -1,6 +1,5 @@
 package com.example.musicplayerdome.search.view;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
@@ -8,17 +7,16 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SearchContract;
 import com.example.musicplayerdome.base.BaseActivity;
-import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.databinding.ActivityVideoBinding;
+import com.example.musicplayerdome.search.dialog.VideoReviewDialog;
 import com.example.musicplayerdome.search.bean.AlbumSearchBean;
 import com.example.musicplayerdome.search.bean.FeedSearchBean;
 import com.example.musicplayerdome.search.bean.HotSearchDetailBean;
@@ -28,17 +26,21 @@ import com.example.musicplayerdome.search.bean.SingerSearchBean;
 import com.example.musicplayerdome.search.bean.SongSearchBean;
 import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
+import com.example.musicplayerdome.search.bean.VideoDataBean;
 import com.example.musicplayerdome.search.bean.VideoUrlBean;
 import com.example.musicplayerdome.search.other.SearchPresenter;
+import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.other.SongPlayManager;
+import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
+import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
+import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheetItemView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
-import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * VideoActivity 视频详情页面
@@ -48,7 +50,8 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
     private static final String TAG = "VideoActivity";
     ActivityVideoBinding binding;
     String title,coverUrl,vid,userName;
-
+    private List<MusicCommentBean> CommentList = new ArrayList<>();
+    private boolean isLike = false;
 
 
     @Override
@@ -74,6 +77,9 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
     }
 
     private void initView(){
+        binding.VComment.setOnClickListener(this);
+        binding.VShare.setOnClickListener(this);
+
         //不保存播放进度
         Jzvd.SAVE_PROGRESS = false;
         //重力感应
@@ -98,22 +104,34 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
             title = intent.getStringExtra("Vtitle");
             coverUrl = intent.getStringExtra("VcoverUrl");
             vid = intent.getStringExtra("Vid");
+            Log.e(TAG, "getMvIntent: 当前视频id为"+vid );
             userName = intent.getStringExtra("userName");
             setSongInfo(title,userName);
             Glide.with(this).load(coverUrl).into(binding.jzVideo.posterImageView);
-            Glide.with(this)
-                    .load(coverUrl)
-                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 25)))
-                    .transition(new DrawableTransitionOptions().crossFade(1500))
-                    .into(binding.VImg);
+//            Glide.with(this)
+//                    .load(coverUrl)
+//                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 25)))
+//                    .transition(new DrawableTransitionOptions().crossFade(1500))
+//                    .into(binding.VImg);
 
             mPresenter.getVideoData(vid);
+            mPresenter.getVideoDetails(vid);
+            mPresenter.getVideoComment(vid);
         }
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.V_comment:
+                VideoReviewDialog reviewDialog = new VideoReviewDialog(mContext,CommentList);
+                reviewDialog.setCanceledOnTouchOutside(true);
+                reviewDialog.show();
+                break;
+            case R.id.V_share:
+                showSimpleBottomSheetGrid();
+                break;
+        }
     }
 
     public static int getStatusBarHeight(Context context) {
@@ -128,6 +146,22 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
             p.setMargins(l, t, r, b);
             v.requestLayout();
         }
+    }
+
+    //底部弹出选择列表
+    private void showSimpleBottomSheetGrid() {
+        BottomSheet.BottomGridSheetBuilder builder = new BottomSheet.BottomGridSheetBuilder(this);
+        builder.addItem(R.drawable.icon_more_operation_share_friend, "分享到微信", 0, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_moment, "分享到朋友圈", 1, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_weibo, "分享到微博", 2, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_chat, "分享到私信", 3, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .setOnSheetItemClickListener(new BottomSheet.BottomGridSheetBuilder.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(BottomSheet dialog, BottomSheetItemView itemView) {
+                        dialog.dismiss();
+                        XToastUtils.toast(itemView.toString());
+                    }
+                }).build().show();
     }
 
     @Override
@@ -227,6 +261,7 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
         videoList.addAll(bean.getUrls());
 
         binding.jzVideo.setUp(videoList.get(0).getUrl(),title);
+        binding.jzVideo.startVideo();
     }
 
     @Override
@@ -234,13 +269,41 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
 
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        if (Jzvd.backPress()) {
-//            return;
-//        }
-//        super.onBackPressed();
-//    }
+    @Override
+    public void onGetVideoCommentSuccess(MusicCommentBean bean) {
+        CommentList.add(bean);
+    }
+
+    @Override
+    public void onGetVideoCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onGetVideoDetailsSuccess(VideoDataBean bean) {
+        isLike = bean.isLiked();
+        if (isLike) {
+            binding.ivLike.setImageResource(R.drawable.shape_like_white);
+        } else {
+            binding.ivLike.setImageResource(R.drawable.shape_not_like);
+        }
+        binding.VThumbsUpNum.setText(""+bean.getLikedCount());
+        binding.VCommentNum.setText(""+bean.getCommentCount());
+        binding.VShareNum.setText(""+bean.getShareCount());
+    }
+
+    @Override
+    public void onGetVideoDetailsFail(String e) {
+        XToastUtils.error(e);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (Jzvd.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
 
     @Override
     protected void onResume() {
@@ -252,9 +315,7 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
     @Override
     protected void onPause() {
         super.onPause();
-        //     Jzvd.clearSavedProgress(this, null);
-        //home back
-        JzvdStd.goOnPlayOnPause();
+//        JzvdStd.goOnPlayOnPause();
         Jzvd.releaseAllVideos();
     }
 

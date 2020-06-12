@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/file_back_shape">
+
+        <LinearLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="5dp"
+                android:background="@drawable/file_over_shape"/>
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_below="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+        <RelativeLayout
+            android:id="@+id/rl_list_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_hot_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="@dimen/dp_7"
+                android:text="@string/hot_comment"
+                android:textColor="#303233"
+                android:textSize="@dimen/sp_17"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/v_hot_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:layout_below="@id/tv_hot_comment"
+                android:layout_marginTop="@dimen/dp_3" />
+            <TextView
+                android:id="@+id/tv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/v_hot_comment"
+                android:paddingLeft="10dp"
+                android:layout_marginTop="@dimen/dp_7"
+                android:text="@string/new_comment"
+                android:textColor="#303233"
+                android:textSize="@dimen/sp_17"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_new_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_comment"
+                android:background="#fff"
+                android:layout_marginTop="@dimen/dp_3" />
+        </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+</RelativeLayout>

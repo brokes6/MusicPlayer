@@ -25,7 +25,7 @@
 -keep public class cn.jzvd.demo.CustomMedia.CustomMedia {*; }
 -keep public class cn.jzvd.demo.CustomMedia.JZMediaIjk {*; }
 -keep public class cn.jzvd.demo.CustomMedia.JZMediaSystemAssertFolder {*; }
-
+#忘记是啥的混淆
 -keep class tv.danmaku.ijk.media.player.** {*; }
 -dontwarn tv.danmaku.ijk.media.player.*
 -keep interface tv.danmaku.ijk.media.player.** { *; }

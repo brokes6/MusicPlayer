@@ -35,6 +35,7 @@ import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
 import com.example.musicplayerdome.search.bean.AlbumSearchBean;
 import com.example.musicplayerdome.search.bean.FeedSearchBean;
 import com.example.musicplayerdome.search.bean.HotSearchDetailBean;
+import com.example.musicplayerdome.search.bean.LikeVideoBean;
 import com.example.musicplayerdome.search.bean.PlayListSearchBean;
 import com.example.musicplayerdome.search.bean.RadioSearchBean;
 import com.example.musicplayerdome.search.bean.SimiSingerBean;
@@ -45,6 +46,7 @@ import com.example.musicplayerdome.search.bean.SingerSongSearchBean;
 import com.example.musicplayerdome.search.bean.SongSearchBean;
 import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
+import com.example.musicplayerdome.search.bean.VideoDataBean;
 import com.example.musicplayerdome.search.bean.VideoUrlBean;
 import com.example.musicplayerdome.song.bean.CommentLikeBean;
 import com.example.musicplayerdome.song.bean.LikeMusicBean;
@@ -124,109 +126,118 @@ public interface ApiService {
     @GET("search/hot/detail")
     Observable<HotSearchDetailBean> getSearchHotDetail();
 
-    @GET("search")
+    @GET("search")//歌曲搜索
     Observable<SongSearchBean> getSongSearch(@Query("keywords") String keywords, @Query("type") int type);
 
-    @GET("search")
+    @GET("search")//视频搜索
     Observable<FeedSearchBean> getFeedSearch(@Query("keywords") String keywords, @Query("type") int type);
 
-    @GET("search")
+    @GET("search")//歌手搜索
     Observable<SingerSearchBean> getSingerSearch(@Query("keywords") String keywords, @Query("type") int type);
 
     @GET("search")
     Observable<AlbumSearchBean> getAlbumSearch(@Query("keywords") String keywords, @Query("type") int type);
 
-    @GET("search")
+    @GET("search")//歌单搜索
     Observable<PlayListSearchBean> getPlayListSearch(@Query("keywords") String keywords, @Query("type") int type);
 
     @GET("search")
     Observable<RadioSearchBean> getRadioSearch(@Query("keywords") String keywords, @Query("type") int type);
 
-    @GET("search")
+    @GET("search")//用户搜索
     Observable<UserSearchBean> getUserSearch(@Query("keywords") String keywords, @Query("type") int type);
 
-    @GET("search")
+    @GET("search")//搜索
     Observable<SynthesisSearchBean> getSynthesisSearch(@Query("keywords") String keywords, @Query("type") int type);
 
-    @GET("artists")
+    @GET("artists")//热门歌手
     Observable<SingerSongSearchBean> getSingerHotSong(@Query("id") long id);
 
-    @GET("artist/album")
+    @GET("artist/album")//获取歌手专辑
     Observable<SingerAblumSearchBean> getSingerAlbum(@Query("id") long id);
 
-    @GET("artist/desc")
+    @GET("artist/desc")//获取歌手描述
     Observable<SingerDescriptionBean> getSingerDesc(@Query("id") long id);
 
-    @GET("simi/artist")
+    @GET("simi/artist")//获取相似歌手
     Observable<SimiSingerBean> getSimiSinger(@Query("id") long id);
 
-    @GET("likelist")
+    @GET("likelist")//喜欢音乐列表
     Observable<LikeListBean> getLikeList(@Query("uid") long uid);
 
-    @GET("song/detail")
+    @GET("song/detail")//获取歌曲详情
     Observable<SongDetailBean> getSongDetail(@Query("ids") long ids);
 
-    @GET("like")
+    @GET("like")//喜欢音乐
     Observable<LikeMusicBean> likeMusice(@Query("id") long id);
 
-    @GET("like")
+    @GET("like")//不喜欢音乐
     Observable<LikeMusicBean> NolikeMusic(@Query("like") boolean y,@Query("id") long id);
 
-    @GET("comment/music")
+    @GET("comment/music")//歌曲评论
     Observable<MusicCommentBean> getMusicComment(@Query("id") long id);
 
-    @GET("mv/detail")
+    @GET("mv/detail")//获取 mv 数据
     Observable<MVDetailBean> getMVDetail(@Query("mvid") long id);
 
-    @GET("comment/mv")
+    @GET("comment/mv")//mv 评论
     Observable<MusicCommentBean> getSongMvComment(@Query("id") long id);
 
-    @GET("comment/like")
+    @GET("comment/like")//给评论点赞
     Observable<CommentLikeBean> likeComment(@Query("id") long id, @Query("cid") long cid, @Query("t") int t, @Query("type") int type);
 
-    @GET("playmode/intelligence/list")
+    @GET("playmode/intelligence/list")//心动模式/智能播放
     Observable<PlayModeIntelligenceBean> getIntelligenceList(@Query("id") long id, @Query("pid") long pid);
 
-    @GET("mv/url")
+    @GET("mv/url")//mv 地址
     Observable<SongMvDataBean> getSongMv(@Query("id") long id);
 
-    @GET("artist/mv")
+    @GET("artist/mv")//获取歌手 mv
     Observable<SongMvBean> getSongMvData(@Query("id") long id);
 
-    @GET("artist/mv")
+    @GET("artist/mv")//加载更多歌手 mv
     Observable<SongMvBean> LoadMoreSongMvData(@Query("id") long id, @Query("offset") long offset);
 
-    @GET("video/url")
-    Observable<VideoUrlBean> getVideoData(@Query("id") String  id);
+    @GET("video/url")//获取视频播放地址
+    Observable<VideoUrlBean> getVideoData(@Query("id") String id);
 
-    @GET("album/sublist")
+    @GET("comment/video")//视频评论
+    Observable<MusicCommentBean> getVideoComment(@Query("id") String id);
+
+    @GET("video/detail/info")//获取视频点赞转发评论数数据
+    Observable<VideoDataBean> getVideoDetails(@Query("vid") String id);
+
+    @GET("resource/like")//资源点赞( MV,电台,视频)
+    Observable<LikeVideoBean> ISLikeVideo(@Query("t") int t , @Query("type") int type , @Query("id") String id);
+
+    @GET("album/sublist")//获取已收藏专辑列表
     Observable<AlbumSublistBean> getAlbumSublist();
 
-    @GET("personalized/newsong")
+    @GET("personalized/newsong")//推荐新音乐
     Observable<RecommendsongBean> getRecommendsong();
 
-    @GET("artist/sublist")
+    @GET("artist/sublist")//收藏的歌手列表
     Observable<ArtistSublistBean> getArtistSublist();
 
-    @GET("personalized/mv")
+    @GET("personalized/mv")//推荐 mv
     Observable<MvSublistBean> getRecommendMV();
 
-    @GET("comment/hotwall/list")
+    @GET("comment/hotwall/list")//云村热评
     Observable<YuncunReviewBean> getYuncun();
 
-    @GET("mv/sublist")
+    @GET("mv/sublist")//收藏的 MV 列表
     Observable<MvSublistBean> getMvSublist();
 
-    @GET("personal_fm")
+    @GET("personal_fm")//私人 FM
     Observable<MyFmBean> getMyFm();
 
     @GET("event")
     Observable<MainEventBean> getMainEvent();
 
-    @GET("lyric")
+    @GET("lyric")//获取歌词
     Observable<LyricBean> getLyric(@Query("id") long id);
 
-    @GET("comment/playlist")
+    @GET("comment/playlist")//歌单评论
     Observable<PlayListCommentBean> getPlaylistComment(@Query("id") long id);
 
     @GET("dj/paygift")

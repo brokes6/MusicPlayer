@@ -11,7 +11,9 @@ import com.example.musicplayerdome.search.bean.SingerSearchBean;
 import com.example.musicplayerdome.search.bean.SongSearchBean;
 import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
+import com.example.musicplayerdome.search.bean.VideoDataBean;
 import com.example.musicplayerdome.search.bean.VideoUrlBean;
+import com.example.musicplayerdome.song.bean.MusicCommentBean;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -306,6 +308,60 @@ public class SearchPresenter extends SearchContract.Presenter {
                         @Override
                         public void onError(Throwable e) {
                             mView.onGetVideoDataFail(e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
+
+        @Override
+        public void getVideoComment(String id) {
+            mModel.getVideoComment(id).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<MusicCommentBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(MusicCommentBean musicCommentBean) {
+                            mView.onGetVideoCommentSuccess(musicCommentBean);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mView.onGetVideoCommentFail(e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
+
+        @Override
+        public void getVideoDetails(String id) {
+            mModel.getVideoDetails(id).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<VideoDataBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(VideoDataBean videoDataBean) {
+                            mView.onGetVideoDetailsSuccess(videoDataBean);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mView.onGetVideoDetailsFail(e.getMessage());
                         }
 
                         @Override

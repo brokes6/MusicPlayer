@@ -24,12 +24,14 @@ import com.example.musicplayerdome.search.bean.SingerSearchBean;
 import com.example.musicplayerdome.search.bean.SongSearchBean;
 import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
+import com.example.musicplayerdome.search.bean.VideoDataBean;
 import com.example.musicplayerdome.search.bean.VideoUrlBean;
 import com.example.musicplayerdome.search.other.KeywordsEvent;
 import com.example.musicplayerdome.search.other.SearchPresenter;
 import com.example.musicplayerdome.search.view.SearchResultActivity;
 import com.example.musicplayerdome.search.view.VideoActivity;
 import com.example.musicplayerdome.song.adapter.FeedAdapter;
+import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.view.SongMvActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -281,6 +283,26 @@ public class FeedSearchFragment extends BaseFragment<SearchPresenter> implements
 
     @Override
     public void onGetVideoDataFail(String e) {
+
+    }
+
+    @Override
+    public void onGetVideoCommentSuccess(MusicCommentBean bean) {
+
+    }
+
+    @Override
+    public void onGetVideoCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onGetVideoDetailsSuccess(VideoDataBean bean) {
+
+    }
+
+    @Override
+    public void onGetVideoDetailsFail(String e) {
 
     }
 
