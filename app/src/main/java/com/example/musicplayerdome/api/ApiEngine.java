@@ -37,6 +37,7 @@ public class ApiEngine {
 
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(MyApplication.getContext()));
 
+        //拦截器
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
@@ -48,14 +49,20 @@ public class ApiEngine {
                 .build();
 
         Gson gson = new Gson();
+        //开启retrofit
         retrofit = new Retrofit.Builder()
+                //指定主url
                 .baseUrl(ApiService.BASE_URL)
+                //指定拦截器
                 .client(client)
+                //指定使用Gson解析
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                //设置支持Observable
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
+    //获取实例
     public static ApiEngine getInstance() {
         if (apiEngine == null) {
             synchronized (ApiEngine.class) {

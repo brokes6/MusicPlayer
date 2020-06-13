@@ -19,7 +19,6 @@ import com.example.musicplayerdome.util.LoadingsDialog;
 import com.example.musicplayerdome.util.LocaleManageUtil;
 import com.lzx.starrysky.manager.MediaSessionConnection;
 import com.lzx.starrysky.model.SongInfo;
-//import com.xuexiang.xui.widget.dialog.LoadingDialog;
 
 
 /**

@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.example.musicplayerdome.R;
@@ -100,6 +101,7 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
     }
     private void initView(){
         etSearch = findViewById(R.id.et_search);
+        etSearch.requestFocus();
         btn_search = findViewById(R.id.btn_search);
         btn_search.setOnClickListener(this);
         binding.ivRubbishBin.setOnClickListener(this);
