@@ -183,33 +183,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         binding.actAudioVolumeControl.setOnSeekBarChangeListener(new SeekBarChangeVolumeControl());
         setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
     }
-    /**
-     * 获取状态栏高度
-     * @param context
-     * @return
-     */
-    public static int getStatusBarHeight(Context context) {
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        int height = resources.getDimensionPixelSize(resourceId);
-        return height;
-    }
-
-    /**
-     * 用来防止状态栏和控件重叠在一起（设置控件的Margins值）
-     * @param v 传递进来最上方的控件
-     * @param l 左
-     * @param t 上
-     * @param r 右
-     * @param b 下
-     */
-    public static void setMargins (View v, int l, int t, int r, int b) {
-        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            p.setMargins(l, t, r, b);
-            v.requestLayout();
-        }
-    }
 
     /**
      * 初始化音乐进度条

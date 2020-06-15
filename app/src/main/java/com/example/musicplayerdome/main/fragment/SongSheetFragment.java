@@ -13,10 +13,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.MineContract;
+import com.example.musicplayerdome.collection.view.MyCollectionActivity;
 import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
 import com.example.musicplayerdome.personal.bean.UserDetailBean;
 import com.example.musicplayerdome.song.adapter.UserPlaylistAdapter;
@@ -145,6 +147,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
 
     private void initView(){
+        binding.MCollection.setOnClickListener(this);
         binding.SongLike.setOnClickListener(this);
         binding.SongFM.setOnClickListener(this);
         binding.minePlaylistMore.setOnClickListener(this);
@@ -184,6 +187,9 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
                 intent1.putExtra(PLAYLIST_CREATOR_AVATARURL, playlistBeans.get(0).getCreator().getAvatarUrl());
                 intent1.putExtra(PLAYLIST_ID, playlistBeans.get(0).getId());
                 getContext().startActivity(intent1);
+                break;
+            case R.id.M_collection:
+                ActivityUtils.startActivity(MyCollectionActivity.class);
                 break;
         }
     }

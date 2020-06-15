@@ -83,17 +83,6 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
         binding.rlPlayall.setOnClickListener(this);
         setMargins(binding.toolbar,0,getStatusBarHeight(this),0,0);
     }
-    /**
-     * 获取状态栏高度
-     * @param context
-     * @return
-     */
-    public static int getStatusBarHeight(Context context) {
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        int height = resources.getDimensionPixelSize(resourceId);
-        return height;
-    }
 
     @Override
     protected void initData() {
@@ -140,14 +129,6 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
         }
         minDistance = DensityUtil.dp2px(DailyRecommendActivity.this, 85);
         deltaDistance = DensityUtil.dp2px(DailyRecommendActivity.this, 200) - minDistance;
-    }
-
-    public static void setMargins (View v, int l, int t, int r, int b) {
-        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            p.setMargins(l, t, r, b);
-            v.requestLayout();
-        }
     }
 
     private void notifyAdapter(List<DRGreenDaoBean> greenDaoList) {

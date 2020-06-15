@@ -16,6 +16,7 @@ class NetWorkInterceptor implements Interceptor {
         Request request = chain.request();
 
         //无网络时强制使用缓存
+        //无网络下强制使用缓存，无论缓存是否过期,此时该请求实际上不会被发送出去
         if (!NetUtil.isConnected()) {
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
@@ -26,6 +27,8 @@ class NetWorkInterceptor implements Interceptor {
 
         if (NetUtil.isConnected()) {
             //有网络时，设置超时为0
+            //当然如果你想在有网络的情况下都直接走网络，那么只需要
+            //将其超时时间这是为0即可:String cacheControl="Cache-Control:public,max-age=0"
             int maxStale = 0;
             response.newBuilder()
                     .header("Cache-Control", "public,max-age=" + maxStale)

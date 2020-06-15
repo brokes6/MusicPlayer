@@ -21,8 +21,8 @@ public class EventPresenter extends EventContract.Presenter {
 
     @Override
     public void getMainEvent() {
-        mModel.getMainEvent().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        mModel.getMainEvent().subscribeOn(Schedulers.io())//指定 subscribe() 发生在I/O 操作
+                .observeOn(AndroidSchedulers.mainThread())// 指定 Subscriber 的回调发生在主线程
                 .subscribe(new Observer<MainEventBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {

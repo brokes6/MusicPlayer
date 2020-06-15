@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.example.musicplayerdome.rewrite.RoundImageView
+        android:id="@+id/iv_cover"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+        app:type="circle"/>
+
+    <TextView
+        android:id="@+id/tv_singer"
+        android:layout_toRightOf="@+id/iv_cover"
+        android:layout_margin="5dp"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="top"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="音乐作者"
+        android:textColor="@color/color_33"
+        android:textSize="19sp" />
+    <TextView
+        android:id="@+id/tv_gap"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_below="@id/iv_cover"
+        android:layout_marginStart="@dimen/dp_55"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginEnd="@dimen/dp_40"
+        android:background="#f0f0f0" />
+</RelativeLayout>

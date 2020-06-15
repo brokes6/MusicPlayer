@@ -2,9 +2,11 @@ package com.example.musicplayerdome.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -180,6 +182,32 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         TextView tvSingerName = findViewById(R.id.tv_singername);
         tvSongName.setText(songName);
         tvSingerName.setText(singerName);
+    }
+    /**
+     * 获取状态栏高度
+     * @param context
+     * @return
+     */
+    public static int getStatusBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
+    }
+    /**
+     * 用来防止状态栏和控件重叠在一起（设置控件的Margins值）
+     * @param v 传递进来最上方的控件
+     * @param l 左
+     * @param t 上
+     * @param r 右
+     * @param b 下
+     */
+    public static void setMargins (View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
+        }
     }
 
     public void showDialog() {
