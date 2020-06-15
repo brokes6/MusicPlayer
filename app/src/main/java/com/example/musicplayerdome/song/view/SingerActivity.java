@@ -47,10 +47,12 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
     public static final String SINGER_ID = "singerId";
     public static final String SINGER_PICURL = "singerPicUrl";
     public static final String SINGER_NAME = "singerName";
+    public static final String ISCOLLECTION = "isCollection";
     private List<BaseFragment> fragments = new ArrayList<>();
     private long singId;
     private float minDistance, deltaDistance;
     private MultiFragmentPagerAdapter pagerAdapter;
+    private boolean isCollection = false;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -73,7 +75,6 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
 
     @Override
     protected void initModule() {
-//        setMargins(binding.Top,0,getStatusBarHeight(this),0,0);
     }
 
     @Override
@@ -85,10 +86,16 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
         if (getIntent() != null) {
             binding.tvName.setText(getIntent().getStringExtra(SINGER_NAME));
             singId = getIntent().getLongExtra(SINGER_ID, -1);
+            isCollection = getIntent().getBooleanExtra(ISCOLLECTION, false);
             setLeftTitleText(getIntent().getStringExtra(SINGER_NAME), getString(R.string.colorWhite));
             setLeftTitleTextColorWhite();
             if (singId != -1) {
                 EventBus.getDefault().postSticky(new SingIdEvent(singId, binding.tvName.getText().toString().trim()));
+            }
+            if (isCollection){
+                binding.buttonPersonal.setText("取消收藏");
+            }else{
+                binding.buttonPersonal.setText("收藏");
             }
             binding.vpContainer.setAdapter(pagerAdapter);
             binding.vpContainer.setOffscreenPageLimit(3);
@@ -118,6 +125,7 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
                     setLeftTitleAlpha(255f);
                 } else if (state == State.EXPANDED) {
                     binding.tvName.setAlpha(1f);
+                    binding.buttonPersonal.setAlpha(1f);
                 }
             }
 
@@ -125,6 +133,7 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
             public void onOffsetChanged(AppBarLayout appBarLayout) {
                 float alphaPercent = (binding.rlInfo.getTop() - minDistance) / deltaDistance;
                 binding.tvName.setAlpha(alphaPercent);
+                binding.buttonPersonal.setAlpha(alphaPercent);
                 binding.ivSingerCover.setImageAlpha((int) (alphaPercent * 255));
                 if (alphaPercent < 0.2f) {
                     float leftTitleAlpha = (1.0f - alphaPercent / 0.2f);

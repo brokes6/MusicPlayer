@@ -15,6 +15,7 @@ import com.example.musicplayerdome.abstractclass.SongMvContract;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.databinding.ActivitySongMvBinding;
 import com.example.musicplayerdome.song.adapter.CommentAdapter;
+import com.example.musicplayerdome.song.bean.CollectionMVBean;
 import com.example.musicplayerdome.song.bean.MVDetailBean;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.bean.SongMvBean;
@@ -36,7 +37,6 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     ActivitySongMvBinding binding;
     public static final String MVSONG_INFO = "mvsongInfo";
     private SongMvBean mvData;
-    private int pid;
     private long sid;
     private boolean open = false;
     private String MVurl;
@@ -93,13 +93,14 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         binding.rvHotComment.setAdapter(hotAdapter);
         binding.rvNewComment.setAdapter(newAdapter);
         binding.SMOpen.setOnClickListener(this);
+        binding.MVCollection.setOnClickListener(this);
     }
 
     private void getMvIntent(){
         Intent intent = getIntent();
         if (intent!=null){
             sid = intent.getLongExtra(MVSONG_INFO,-1);
-            pid = intent.getIntExtra("pid",-1);
+            Log.e(TAG, "getMvIntent: 视频id为"+sid );
             mPresenter.getSongMv(sid);
             mPresenter.getSongMvComment(sid);
         }
@@ -116,6 +117,9 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
                     open=false;
                     OpenMore(open);
                 }
+                break;
+            case R.id.MV_collection:
+                mPresenter.CollectionMV(sid,1);
                 break;
         }
     }
@@ -182,6 +186,16 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     public void onGetMVDetailFail(String e) {
         hideDialog();
         Log.e(TAG, "获取MV详情错误"+e);
+    }
+
+    @Override
+    public void onCollectionMvSuccess(CollectionMVBean bean) {
+        XToastUtils.success(bean.getMessage());
+    }
+
+    @Override
+    public void onCollectionMvFail(String e) {
+        XToastUtils.error(e);
     }
 
     @Override

@@ -44,6 +44,7 @@ public class CSingersAdapter extends BaseRecyclerAdapter<ArtistSublistBean.DataB
                 intent.setClass(mContext, SingerActivity.class);
                 intent.putExtra(SingerActivity.SINGER_NAME, item.getName());
                 intent.putExtra(SingerActivity.SINGER_ID, item.getId());
+                intent.putExtra(SingerActivity.ISCOLLECTION, true);
                 mContext.startActivity(intent);
             }
         });

@@ -106,10 +106,6 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
 
     private SongMvAdapter.OnSimiSingerClickListener listClickListener = position -> {
         Intent intent = new Intent(getContext(), SongMvActivity.class);
-//        intent.putExtra(SongMvActivity.MVSONG_INFO, bean.getMvs().get(position).getId());
-//        intent.putExtra("MVname",bean.getMvs().get(position).getName());
-//        intent.putExtra("MVimg",bean.getMvs().get(position).getImgurl());
-        intent.putExtra("pid", position);
         intent.putExtra(SongMvActivity.MVSONG_INFO, songMvBean.getMvs().get(position).getId());
         getContext().startActivity(intent);
 

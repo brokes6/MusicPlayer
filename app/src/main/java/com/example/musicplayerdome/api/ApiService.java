@@ -48,6 +48,7 @@ import com.example.musicplayerdome.search.bean.SynthesisSearchBean;
 import com.example.musicplayerdome.search.bean.UserSearchBean;
 import com.example.musicplayerdome.search.bean.VideoDataBean;
 import com.example.musicplayerdome.search.bean.VideoUrlBean;
+import com.example.musicplayerdome.song.bean.CollectionMVBean;
 import com.example.musicplayerdome.song.bean.CommentLikeBean;
 import com.example.musicplayerdome.song.bean.LikeMusicBean;
 import com.example.musicplayerdome.song.bean.LyricBean;
@@ -218,6 +219,9 @@ public interface ApiService {
 
     @GET("artist/sublist")//收藏的歌手列表
     Observable<ArtistSublistBean> getArtistSublist();
+
+    @GET("mv/sub")//收藏/取消收藏 MV
+    Observable<CollectionMVBean> CollectionMV(@Query("mvid") long id,@Query("t") int t);
 
     @GET("personalized/mv")//推荐 mv
     Observable<MvSublistBean> getRecommendMV();

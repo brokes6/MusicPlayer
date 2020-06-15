@@ -1,6 +1,7 @@
 package com.example.musicplayerdome.song.other;
 
 import com.example.musicplayerdome.abstractclass.SongMvContract;
+import com.example.musicplayerdome.song.bean.CollectionMVBean;
 import com.example.musicplayerdome.song.bean.MVDetailBean;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.bean.SongMvDataBean;
@@ -90,6 +91,33 @@ public class MvPersenter extends SongMvContract.Presenter{
                         @Override
                         public void onError(Throwable e) {
                             mView.onGetMVDetailFail(e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
+
+        @Override
+        public void CollectionMV(long id, int t) {
+            mModel.CollectionMv(id,t).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<CollectionMVBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(CollectionMVBean collectionMVBean) {
+                            mView.onCollectionMvSuccess(collectionMVBean);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mView.onCollectionMvFail(e.getMessage());
                         }
 
                         @Override
