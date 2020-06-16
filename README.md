@@ -10,5 +10,4 @@
 ![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/main/res/DomePicture/%E6%AD%8C%E5%8D%95%E8%AF%84%E8%AE%BA.png)
 ![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/main/res/DomePicture/%E6%AD%8C%E5%8D%95%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2.png)
 
-
-此项目是参考了许多https://github.com/Rikkatheworld/RikkaMusic这个项目实现功能
+此项目是参考了许多https://github.com/Rikkatheworld/RikkaMusic这个项目实现功能.
