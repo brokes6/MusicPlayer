@@ -279,6 +279,7 @@
                             android:src="@mipmap/fm_log"
                             android:layout_centerInParent="true"/>
                         <TextView
+                            android:id="@+id/fm_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -286,6 +287,14 @@
                             android:layout_below="@+id/fm_img"
                             android:textColor="#fff"
                             android:text="私人FM"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_centerInParent="true"
+                            android:layout_alignParentBottom="true"
+                            android:textColor="#D8D2D2"
+                            android:text="你的私人库曲"/>
                     </RelativeLayout>
                 </RelativeLayout>
 

@@ -38,6 +38,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     private static final String TAG = "SongMvActivity";
     ActivitySongMvBinding binding;
     public static final String MVSONG_INFO = "mvsongInfo";
+    private MVDetailBean.MVData mvDetailBean;
     private long sid;
     private boolean open = false;
     private String MVurl;
@@ -96,6 +97,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         binding.SMOpen.setOnClickListener(this);
         binding.MVCollection.setOnClickListener(this);
         binding.MVShare.setOnClickListener(this);
+        binding.userImg.setOnClickListener(this);
     }
 
     private void getMvIntent(){
@@ -125,6 +127,13 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
                 break;
             case R.id.MV_share:
                 showSimpleBottomSheetGrid();
+                break;
+            case R.id.user_img:
+                Intent intent = new Intent();
+                intent.setClass(mContext, SingerActivity.class);
+                intent.putExtra(SingerActivity.SINGER_NAME, mvDetailBean.getArtistName());
+                intent.putExtra(SingerActivity.SINGER_ID, mvDetailBean.getArtistId());
+                mContext.startActivity(intent);
                 break;
         }
     }
@@ -200,6 +209,8 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         binding.SMCollect.setText(""+bean.getData().getSubCount());
         binding.SMNumber.setText(bean.getData().getPlayCount()+"次观看");
         Glide.with(this).load(bean.getData().getArtists().get(0).getImg1v1Url()).into(binding.userImg);
+
+        mvDetailBean = bean.getData();
     }
 
     @Override
