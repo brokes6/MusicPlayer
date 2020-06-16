@@ -25,6 +25,8 @@ import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.BarHide;
 import com.gyf.immersionbar.ImmersionBar;
+import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
+import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheetItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,6 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     private static final String TAG = "SongMvActivity";
     ActivitySongMvBinding binding;
     public static final String MVSONG_INFO = "mvsongInfo";
-    private SongMvBean mvData;
     private long sid;
     private boolean open = false;
     private String MVurl;
@@ -94,6 +95,7 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         binding.rvNewComment.setAdapter(newAdapter);
         binding.SMOpen.setOnClickListener(this);
         binding.MVCollection.setOnClickListener(this);
+        binding.MVShare.setOnClickListener(this);
     }
 
     private void getMvIntent(){
@@ -121,6 +123,9 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
             case R.id.MV_collection:
                 mPresenter.CollectionMV(sid,1);
                 break;
+            case R.id.MV_share:
+                showSimpleBottomSheetGrid();
+                break;
         }
     }
     private void OpenMore(boolean y){
@@ -129,6 +134,21 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
         }else{
             binding.SMDetails.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void showSimpleBottomSheetGrid() {
+        BottomSheet.BottomGridSheetBuilder builder = new BottomSheet.BottomGridSheetBuilder(this);
+        builder.addItem(R.drawable.icon_more_operation_share_friend, "分享到微信", 0, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_moment, "分享到朋友圈", 1, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_weibo, "分享到微博", 2, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .addItem(R.drawable.icon_more_operation_share_chat, "分享到私信", 3, BottomSheet.BottomGridSheetBuilder.FIRST_LINE)
+                .setOnSheetItemClickListener(new BottomSheet.BottomGridSheetBuilder.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(BottomSheet dialog, BottomSheetItemView itemView) {
+                        dialog.dismiss();
+                        XToastUtils.toast(itemView.toString());
+                    }
+                }).build().show();
     }
 
     @Override

@@ -147,6 +147,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
 
     private void initView(){
+        binding.myMusic.setOnClickListener(this);
         binding.MCollection.setOnClickListener(this);
         binding.SongLike.setOnClickListener(this);
         binding.SongFM.setOnClickListener(this);
@@ -180,6 +181,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
                 startActivity(intent);
                 break;
             case R.id.Song_Like:
+            case R.id.my_music:
                 Intent intent1 = new Intent(getContext(), SongSheetActivityMusic.class);
                 intent1.putExtra(PLAYLIST_PICURL, playlistBeans.get(0).getCoverImgUrl());
                 intent1.putExtra(PLAYLIST_NAME, playlistBeans.get(0).getName());

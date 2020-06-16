@@ -65,6 +65,25 @@
                         android:background="@drawable/file_background_radius_10_gray"
                         android:letterSpacing="0.05"
                         android:textColor="#fff" />
+                    <LinearLayout
+                        android:id="@+id/Personal_page"
+                       android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#fff"
+                            android:text="进入个人中心"/>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@mipmap/more_right"/>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/Props_columnS"
@@ -75,6 +94,7 @@
                         android:orientation="horizontal"
                         android:gravity="center">
                     <LinearLayout
+                        android:id="@+id/my_music"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -100,12 +120,12 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="30dp"
-                            android:src="@mipmap/share_while"/>
+                            android:src="@mipmap/radiostation"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#fff"
-                            android:text="分享"/>
+                            android:text="我的电台"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
@@ -121,7 +141,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#fff"
-                            android:text="下载"/>
+                            android:text="下载记录"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -133,12 +153,12 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="30dp"
-                            android:src="@mipmap/morechoice_while"/>
+                            android:src="@mipmap/focussongs"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#fff"
-                            android:text="多选"/>
+                            android:text="关注新歌"/>
                     </LinearLayout>
 
                         <LinearLayout

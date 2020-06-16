@@ -75,7 +75,6 @@
             android:name=".main.view.HomeActivityMusic"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".util.UserGuideActivity" />
         <activity
             android:name=".song.view.SongActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"

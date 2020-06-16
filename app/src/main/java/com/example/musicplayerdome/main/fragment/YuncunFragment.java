@@ -53,10 +53,6 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
         setFragmentTitle("云 村");
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

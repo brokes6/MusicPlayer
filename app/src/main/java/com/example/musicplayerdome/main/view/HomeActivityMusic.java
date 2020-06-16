@@ -116,7 +116,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
             Glide.with(this).load(avatarUrl).into(Sbinding.ivAvatar);
         }
         if (bean.getProfile().getNickname() != null) {
-            Sbinding.tvUsername.setText(bean.getProfile().getNickname()+",欢迎来到云音乐");
+            Sbinding.tvUsername.setText(bean.getProfile().getNickname());
         }
     }
 
