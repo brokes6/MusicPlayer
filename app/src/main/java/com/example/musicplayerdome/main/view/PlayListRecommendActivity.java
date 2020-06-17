@@ -17,6 +17,7 @@ import com.example.musicplayerdome.bean.BannerBean;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
 import com.example.musicplayerdome.databinding.ActivityPlayListRecommendBinding;
 import com.example.musicplayerdome.main.adapter.MultiFragmentPagerAdapter;
+import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.DailyRecommendBean;
 import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
@@ -193,6 +194,16 @@ public class PlayListRecommendActivity extends BaseActivity<WowPresenter> implem
 
     @Override
     public void onGetRecommendsongFail(String e) {
+
+    }
+
+    @Override
+    public void onGetCollectionListSuccess(CollectionListBean bean) {
+
+    }
+
+    @Override
+    public void onGetCollectionListFail(String e) {
 
     }
 }

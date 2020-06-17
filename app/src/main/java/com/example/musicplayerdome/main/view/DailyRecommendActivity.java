@@ -15,6 +15,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.WowContract;
+import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.song.adapter.MySongListAdapter;
 import com.example.musicplayerdome.base.BaseActivity;
@@ -329,6 +330,16 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
 
     @Override
     public void onGetRecommendsongFail(String e) {
+
+    }
+
+    @Override
+    public void onGetCollectionListSuccess(CollectionListBean bean) {
+
+    }
+
+    @Override
+    public void onGetCollectionListFail(String e) {
 
     }
 

@@ -17,6 +17,7 @@ import com.example.musicplayerdome.bean.MusicCanPlayBean;
 import com.example.musicplayerdome.databinding.FragmentHighQualityBinding;
 import com.example.musicplayerdome.main.adapter.HighPlayListAdapter;
 import com.example.musicplayerdome.main.adapter.SongListAdapter;
+import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.DailyRecommendBean;
 import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
@@ -253,6 +254,16 @@ public class HighQualityPlayListFragment extends BaseFragment<WowPresenter> impl
 
     @Override
     public void onGetRecommendsongFail(String e) {
+
+    }
+
+    @Override
+    public void onGetCollectionListSuccess(CollectionListBean bean) {
+
+    }
+
+    @Override
+    public void onGetCollectionListFail(String e) {
 
     }
 }

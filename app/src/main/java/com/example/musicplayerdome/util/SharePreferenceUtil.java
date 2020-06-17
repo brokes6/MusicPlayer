@@ -3,6 +3,7 @@ package com.example.musicplayerdome.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.musicplayerdome.abstractclass.Constants;
 import com.example.musicplayerdome.login.bean.LoginBean;
@@ -62,12 +63,13 @@ public class SharePreferenceUtil {
 
     /**
      * 保存用户的信息以及电话号码（因为bean里的电话号码要处理字符串，所以这里直接暴力传比较高效）
-     *
+     * 这里有点小问题，新创建的账号，bean.getBindings().size()为 1，之前的老号size为3（不清楚为啥）
+     * 所以 新账号会无法保存登录状态
      * @param bean
      */
     public void saveUserInfo(LoginBean bean, String phoneNumber) {
-        if (bean.getBindings().size() > 1) {
-            saveAuthToken(bean.getBindings().get(1).getTokenJsonStr());
+        if (bean.getBindings().size() > 0) {
+            saveAuthToken(bean.getBindings().get(0).getTokenJsonStr());
         }
         saveAccountNum(phoneNumber);
         saveString(Constants.SpKey.USER_INFO, GsonUtil.toJson(bean));

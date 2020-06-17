@@ -6,7 +6,7 @@ import java.util.List;
  * 通过login接口返回来的bean
  */
 public class LoginBean {
-
+    //这里原本的userId的类型都是为int的，更换了别人的腾讯服务器后，全都改为了long
 
     /**
      * loginType : 1
@@ -267,7 +267,7 @@ public class LoginBean {
 
         private String detailDescription;
         private boolean followed;
-        private int userId;
+        private long userId;
         private boolean defaultAvatar;
         private String avatarUrl;
         private String nickname;
@@ -315,11 +315,11 @@ public class LoginBean {
             this.followed = followed;
         }
 
-        public int getUserId() {
+        public long getUserId() {
             return userId;
         }
 
-        public void setUserId(int userId) {
+        public void setUserId(long userId) {
             this.userId = userId;
         }
 
@@ -621,7 +621,7 @@ public class LoginBean {
 
         private int refreshTime;
         private String url;
-        private int userId;
+        private long userId;
         private String tokenJsonStr;
         private long id;
         private int type;
@@ -645,11 +645,11 @@ public class LoginBean {
             this.url = url;
         }
 
-        public int getUserId() {
+        public long getUserId() {
             return userId;
         }
 
-        public void setUserId(int userId) {
+        public void setUserId(long userId) {
             this.userId = userId;
         }
 

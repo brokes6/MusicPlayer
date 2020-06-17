@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.musicplayerdome.abstractclass.WowContract;
 import com.example.musicplayerdome.bean.BannerBean;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
+import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.DailyRecommendBean;
 import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
@@ -341,4 +342,31 @@ public class WowPresenter extends WowContract.Presenter {
                     }
                 });
     }
+
+        @Override
+        public void CollectionList(int t, long id) {
+            mModel.CollectionList(t,id).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<CollectionListBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(CollectionListBean collectionListBean) {
+                            mView.onGetCollectionListSuccess(collectionListBean);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mView.onGetCollectionListFail(e.getMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }
 }

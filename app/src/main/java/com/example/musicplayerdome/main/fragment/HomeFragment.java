@@ -16,6 +16,7 @@ import android.view.ViewOutlineProvider;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.musicplayerdome.abstractclass.WowContract;
+import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.view.PlayListRecommendActivity;
 import com.example.musicplayerdome.main.view.RankActivity;
@@ -349,6 +350,16 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     public void onGetRecommendsongFail(String e) {
         binding.refreshLayout.finishRefresh(true);
         XToastUtils.error("获取新歌失败，请检查网络再试");
+    }
+
+    @Override
+    public void onGetCollectionListSuccess(CollectionListBean bean) {
+
+    }
+
+    @Override
+    public void onGetCollectionListFail(String e) {
+
     }
 
     @Override

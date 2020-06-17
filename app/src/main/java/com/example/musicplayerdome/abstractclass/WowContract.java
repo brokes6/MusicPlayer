@@ -3,6 +3,7 @@ package com.example.musicplayerdome.abstractclass;
 import com.example.musicplayerdome.base.BasePresenter;
 import com.example.musicplayerdome.bean.BannerBean;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
+import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.DailyRecommendBean;
 import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
@@ -59,6 +60,10 @@ public interface WowContract {
         void onGetRecommendsongSuccess(RecommendsongBean bean);
 
         void onGetRecommendsongFail(String e);
+
+        void onGetCollectionListSuccess(CollectionListBean bean);
+
+        void onGetCollectionListFail(String e);
     }
 
     interface Model extends BaseModel {
@@ -83,6 +88,8 @@ public interface WowContract {
         Observable<HighQualityPlayListBean> getHighQuality(int limit, long before);
 
         Observable<RecommendsongBean> getRecommendsong();
+
+        Observable<CollectionListBean> CollectionList(int t, long id);
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
@@ -107,5 +114,7 @@ public interface WowContract {
         public abstract void getMusicCanPlay(long id);
 
         public abstract void getHighQuality(int limit, long before);
+
+        public abstract void CollectionList(int t, long id);
     }
 }

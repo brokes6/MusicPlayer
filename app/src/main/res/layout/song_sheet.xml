@@ -16,27 +16,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".main.view.SongSheetActivityMusic">
-        <LinearLayout
-            android:id="@+id/topLayout"
-            android:background="#3A3A3A"
-            android:layout_alignParentTop="true"
+        <RelativeLayout
+            android:id="@+id/rl_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:gravity="left|center"
-            android:orientation="horizontal">
+            android:background="#3A3A3A">
 
-            <ImageView
-                android:id="@+id/Pback"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@mipmap/ic_navigation_back_white" />
-
-        </LinearLayout>
+            <include
+                android:id="@+id/title"
+                layout="@layout/common_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45" />
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/topLayout"
+            android:layout_below="@+id/rl_title"
             android:orientation="vertical">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/layout_top"
@@ -114,19 +109,30 @@
                 </RelativeLayout>
 
             </LinearLayout>
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@drawable/file_back_shape"
-                android:gravity="left|center">
+                android:background="@drawable/file_back_shape">
                 <TextView
                     android:paddingTop="5dp"
                     android:layout_marginLeft="@dimen/afc_10dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="20sp"
                     android:text="歌单歌曲:"/>
-            </LinearLayout>
+                <com.xuexiang.xui.widget.button.roundbutton.RoundButton
+                    android:id="@+id/button_personal"
+                    style="@style/RoundButton.Auto"
+                    android:layout_alignParentRight="true"
+                    android:padding="5dp"
+                    android:layout_marginRight="10dp"
+                    android:text="+收藏"
+                    app:rb_radius="15dp"
+                    android:textColor="@color/xui_default_round_btn_white_text"
+                    app:rb_backgroundColor="@color/selector_tag_color"
+                    app:rb_borderColor="@color/selector_tag_color" />
+            </RelativeLayout>
         </com.google.android.material.appbar.AppBarLayout>
         <LinearLayout
             android:layout_width="match_parent"

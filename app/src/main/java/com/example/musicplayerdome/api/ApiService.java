@@ -16,6 +16,7 @@ import com.example.musicplayerdome.main.bean.AlbumSublistBean;
 import com.example.musicplayerdome.main.bean.ArtistSublistBean;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.CatlistBean;
+import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.DailyRecommendBean;
 import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
@@ -65,13 +66,15 @@ import retrofit2.http.Query;
 import yuncun.bean.YuncunReviewBean;
 
 /**
- * Created By Rikka on 2019/7/12
+ * Created By fuxinbo on 2020/5/1
  */
 public interface ApiService {
     //电脑ip
-    String BASE_URL = "http:///192.168.0.150:3000";
+//    String BASE_URL = "http:///192.168.0.150:3000";
     //小米8手机ip
 //    String BASE_URL = "http:///192.168.43.96:3000";
+    //别人的腾讯服务器
+    String BASE_URL = "http:///62.234.57.125:3000";
 
     @GET("login/cellphone")
     Observable<LoginBean> login(@Query("phone") String phone, @Query("password") String password);
@@ -153,6 +156,9 @@ public interface ApiService {
 
     @GET("artists")//热门歌手
     Observable<SingerSongSearchBean> getSingerHotSong(@Query("id") long id);
+
+    @GET("playlist/subscribe")//收藏/取消收藏歌单
+    Observable<CollectionListBean> CollectionMusicList(@Query("t") int t, @Query("id") long id);
 
     @GET("artist/album")//获取歌手专辑
     Observable<SingerAblumSearchBean> getSingerAlbum(@Query("id") long id);

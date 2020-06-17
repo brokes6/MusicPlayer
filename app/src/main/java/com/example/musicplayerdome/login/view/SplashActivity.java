@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -16,6 +17,7 @@ import com.example.musicplayerdome.util.SharePreferenceUtil;
 
 
 public class SplashActivity extends BaseActivity {
+    private static final String TAG = "SplashActivity";
     private CountDownTimer countDownTimer;
 
     @Override
@@ -52,6 +54,7 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onFinish() {
                 String authToken = SharePreferenceUtil.getInstance(SplashActivity.this).getAuthToken("");
+                Log.e(TAG, "onFinish: 获取的结果为"+authToken);
                 if (TextUtils.isEmpty(authToken)) {
                     ActivityStarter.getInstance().startLoginActivity(SplashActivity.this);
                 } else {

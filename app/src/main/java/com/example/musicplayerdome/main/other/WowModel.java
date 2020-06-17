@@ -5,6 +5,7 @@ import com.example.musicplayerdome.abstractclass.WowContract;
 import com.example.musicplayerdome.api.ApiEngine;
 import com.example.musicplayerdome.bean.BannerBean;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
+import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.DailyRecommendBean;
 import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
@@ -69,5 +70,10 @@ public class WowModel implements WowContract.Model {
     @Override
     public Observable<RecommendsongBean> getRecommendsong() {
         return ApiEngine.getInstance().getApiService().getRecommendsong();
+    }
+
+    @Override
+    public Observable<CollectionListBean> CollectionList(int t, long id) {
+        return ApiEngine.getInstance().getApiService().CollectionMusicList(t,id);
     }
 }

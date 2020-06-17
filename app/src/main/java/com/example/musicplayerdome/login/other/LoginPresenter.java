@@ -38,7 +38,7 @@ public class LoginPresenter extends LoginContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "onError : " + e.toString());
+                        Log.e(TAG, "登录onError : " + e.toString());
                         mView.onLoginFail(e.getMessage());
                     }
 
