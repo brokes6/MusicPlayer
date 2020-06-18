@@ -381,7 +381,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                 startActivity(intent);
                 break;
             case R.id.iv_info:
-                SongDetailDialog songDetailDialog = new SongDetailDialog(mContext,currentSongInfo);
+                SongDetailDialog songDetailDialog = new SongDetailDialog(mContext,currentSongInfo,songDetail.getSongs().get(0).getId());
                 songDetailDialog.setCanceledOnTouchOutside(true);
                 songDetailDialog.show();
                 break;
@@ -528,6 +528,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     @Override
     public void onGetSongDetailSuccess(SongDetailBean bean) {
+        hideDialog();
         songDetail = bean;
         setSongDetailBean(songDetail);
         SongPlayManager.getInstance().putSongDetail(songDetail);
@@ -610,6 +611,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     @Override
     public void onGetLyricSuccess(LyricBean bean) {
+        hideDialog();
         Log.e(TAG, "onGetLyricSuccess : " + bean);
         SharedPreferencesUtil.putData("Ykey",2);
         if (bean.getLrc() != null) {

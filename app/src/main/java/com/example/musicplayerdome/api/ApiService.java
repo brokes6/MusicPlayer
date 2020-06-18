@@ -28,6 +28,7 @@ import com.example.musicplayerdome.main.bean.MyFmBean;
 import com.example.musicplayerdome.main.bean.PlayModeIntelligenceBean;
 import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
+import com.example.musicplayerdome.main.bean.RecommendedVideoBean;
 import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 import com.example.musicplayerdome.personal.bean.UserDetailBean;
@@ -159,6 +160,9 @@ public interface ApiService {
 
     @GET("playlist/subscribe")//收藏/取消收藏歌单
     Observable<CollectionListBean> CollectionMusicList(@Query("t") int t, @Query("id") long id);
+
+    @GET("video/timeline/recommend")//获取推荐视频
+    Observable<RecommendedVideoBean> getRecommendedVideos();
 
     @GET("artist/album")//获取歌手专辑
     Observable<SingerAblumSearchBean> getSingerAlbum(@Query("id") long id);

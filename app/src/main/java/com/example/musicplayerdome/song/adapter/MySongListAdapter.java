@@ -146,7 +146,7 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
         });
 
         ivSongDetail.setOnClickListener(v -> {
-            SongDetailDialog songDetailDialog = new SongDetailDialog(mContext,songInfo);
+            SongDetailDialog songDetailDialog = new SongDetailDialog(mContext,songInfo,Long.valueOf(songInfo.getSongId()));
             songDetailDialog.setCanceledOnTouchOutside(true);
             songDetailDialog.show();
         });

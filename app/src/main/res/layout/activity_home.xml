@@ -11,19 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".main.view.HomeActivityMusic">
+
     <LinearLayout
         android:id="@+id/mainL"
         android:layout_above="@+id/bottom_controller"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/red"
         android:orientation="vertical">
     <LinearLayout
         android:id="@+id/tabBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:gravity="center"
         android:orientation="horizontal">
         <ImageView

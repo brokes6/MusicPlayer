@@ -48,9 +48,10 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
     private String singerPicUrl;
     private View view;
 
-    public SongDetailDialog(@NonNull Context context,SongInfo songInfo) {
+    public SongDetailDialog(@NonNull Context context,SongInfo songInfo,long id) {
         super(context, R.style.my_dialog);
         this.context = context;
+        songId = id;
         msongInfo = songInfo;
         initView();
         init();
@@ -90,7 +91,6 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
         tvSongName.setText("歌名："+ msongInfo.getSongName());
         mdSinger.setText("歌手：" + singerName);
         tvSinger.setText(singerName);
-        songId = Long.parseLong(msongInfo.getSongId());
     }
 
     @Override
@@ -102,6 +102,10 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
                 break;
             case R.id.md_commend:
                 intent.setClass(mContext, CommentActivity.class);
+                intent.putExtra(CommentActivity.ID, songId);
+                intent.putExtra(CommentActivity.NAME, msongInfo.getSongName());
+                intent.putExtra(CommentActivity.ARTIST, singerName);
+                intent.putExtra(CommentActivity.COVER,msongInfo.getSongCover());
                 intent.putExtra(CommentActivity.FROM, CommentActivity.SONG_COMMENT);
                 mContext.startActivity(intent);
                 dismiss();

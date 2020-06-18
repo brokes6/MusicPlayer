@@ -62,7 +62,7 @@
                             android:layout_width="110dp"
                             android:layout_height="110dp"
                             android:scaleType="centerCrop"
-                            rc:rciv_radius="15dp" />
+                            rc:rciv_radius="5dp" />
 
                         <TextView
                             android:id="@+id/XTitle"
@@ -136,10 +136,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_5"
+                    android:layout_height="10dp"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/bg_dailyrecommend"
-                    app:layout_collapseMode="pin" />
+                    android:background="@drawable/bg_dailyrecommend" />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -197,18 +196,11 @@
                     app:rb_borderColor="@color/selector_tag_color" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_gap"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:layout_below="@id/rl_playall_top"
-                android:background="#f0f0f0" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/tv_gap" />
+                android:layout_below="@id/rl_playall_top" />
         </RelativeLayout>
 
         <com.example.musicplayerdome.rewrite.BottomSongPlayBar

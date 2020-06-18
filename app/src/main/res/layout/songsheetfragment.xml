@@ -11,25 +11,25 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
         tools:context=".main.view.SongSheetActivityMusic">
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:background="#3A3A3A"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:elevation="0dp">
-            <LinearLayout
+            <RelativeLayout
                 app:layout_scrollFlags="scroll|snap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:orientation="vertical">
-
+                android:paddingBottom="10dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -181,10 +181,11 @@
 
                     </LinearLayout>
                 </RelativeLayout>
-            </LinearLayout>
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
+                android:layout_gravity="bottom"
                 android:background="@drawable/file_back_shape" />
         </com.google.android.material.appbar.AppBarLayout>
         <androidx.core.widget.NestedScrollView

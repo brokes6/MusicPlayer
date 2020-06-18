@@ -144,7 +144,7 @@ public class UserDetailBean {
          * sCount : 0
          */
 
-        private int userId;
+        private long userId;
         private int accountStatus;
         private int djStatus;
         private int province;
@@ -184,11 +184,11 @@ public class UserDetailBean {
         private int sCount;
         private List<?> artistIdentity;
 
-        public int getUserId() {
+        public long getUserId() {
             return userId;
         }
 
-        public void setUserId(int userId) {
+        public void setUserId(long userId) {
             this.userId = userId;
         }
 

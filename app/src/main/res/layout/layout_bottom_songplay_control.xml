@@ -11,7 +11,7 @@
         android:id="@+id/tv_gap"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
-        android:background="#f0f0f0" />
+        android:background="#E3E0E0" />
 
     <RelativeLayout
         android:id="@+id/top"
@@ -28,6 +28,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/dp_5"
             android:src="@drawable/shape_record"
+            android:scaleType="centerCrop"
             app:type="circle"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,7 +54,7 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:ellipsize="marquee"
                 android:scrollHorizontally="true"
-                android:textSize="18sp"
+                android:textSize="17sp"
                 android:textColor="#333333"/>
 
             <TextView

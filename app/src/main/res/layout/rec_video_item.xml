@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <cn.jzvd.JzvdStd
+    android:id="@+id/R_jz_video"
+    android:layout_width="match_parent"
+    android:layout_height="240dp" />
+
+    <LinearLayout
+        android:id="@+id/R_Singer_details"
+        android:layout_below="@+id/R_jz_video"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/R_video_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginRight="5dp"
+            android:textColor="#2C2B2B" />
+        <com.android.liuzhuang.rcimageview.CircleImageView
+            android:id="@+id/R_videouser_img"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_centerVertical="true" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/R_GridLine"
+        android:layout_below="@+id/R_Singer_details"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CCCACA"/>
+    <LinearLayout
+        android:id="@+id/R_user"
+        android:layout_below="@+id/R_GridLine"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center|left">
+
+        <com.android.liuzhuang.rcimageview.CircleImageView
+            android:id="@+id/R_user_img"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40" />
+
+        <TextView
+            android:id="@+id/R_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginLeft="5dp"
+            android:text=" "
+            android:textColor="#2C2B2B" />
+    </LinearLayout>
+    <TextView
+        android:layout_below="@+id/R_user"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#EAEAEA"/>
+</RelativeLayout>

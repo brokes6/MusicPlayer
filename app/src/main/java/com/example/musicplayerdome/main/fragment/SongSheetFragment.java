@@ -259,7 +259,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
     @Override
     public void onGetUserDetailFails(String e) {
-
+        Log.e(TAG, "获取用户信息错误"+e );
     }
 
     @Override

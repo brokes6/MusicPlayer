@@ -32,6 +32,7 @@ import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.databinding.ActivityHomeBinding;
 import com.example.musicplayerdome.main.fragment.HomeFragment;
+import com.example.musicplayerdome.main.fragment.VideoFragment;
 import com.example.musicplayerdome.main.fragment.YuncunFragment;
 import com.example.musicplayerdome.main.fragment.SongSheetFragment;
 import com.example.musicplayerdome.login.bean.LoginBean;
@@ -84,6 +85,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         fragmentList.add(new SongSheetFragment());
         fragmentList.add(new HomeFragment());
         fragmentList.add(new YuncunFragment());
+        fragmentList.add(new VideoFragment());
         mPagerAdapter.init(fragmentList);
     }
     @Override
@@ -93,6 +95,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
 
         initSidebar(loginBean);
         initApadter();
+        Log.e(TAG, "initData: ??????"+loginBean.getAccount().getId() );
         mPresenter.getLikeList(loginBean.getAccount().getId());
     }
     private void initView(){
@@ -121,7 +124,6 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
     }
 
     private final int A3A3 = 0xFF3A3A3A, While = 0xFFFFFF, red = 0xFFdb2b1c;
-    private int text;
     private void initApadter(){
         viewpager.setAdapter(mPagerAdapter);
         viewpager.setCurrentItem(1);
@@ -133,7 +135,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 setSelectTextBoldAndBig(tab);
-                if (tab.getText().equals("云 村")){
+                if (tab.getText().equals("云 村") || tab.getText().equals("视 频")){
                     ImmersionBar.with(HomeActivityMusic.this).statusBarDarkFont(true).init();
                     ivSearch.setImageResource(R.drawable.shape_search_gray);
                     icNav.setImageResource(R.drawable.shape_drawer_gray);
@@ -167,9 +169,9 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
                     evaluate = (Integer) evaluator.evaluate(positionOffset, While, While); // 根据positionOffset和第2页~第3页的颜色转换范围取颜色值
                     ImmersionBar.with(HomeActivityMusic.this).statusBarDarkFont(true);
                 } else {
-                    evaluate = red; // 最终第3页的颜色
+                    evaluate = While; // 最终第3页的颜色
                 }
-                tablayoutReal.setBackgroundColor(evaluate);// 切换底部导航栏和toolbar的颜色。
+                tabBackground.setBackgroundColor(evaluate);// 切换底部导航栏和toolbar的颜色。
                 mainL.setBackgroundColor(evaluate);//整体activity的颜色
             }
 
@@ -190,7 +192,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         textView.setScaleY(1.5f);
         textView.setScaleX(1.5f);
         textView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        if (tab.getText().equals("云 村")){
+        if (tab.getText().equals("云 村") || tab.getText().equals("视 频")){
             textView.setTextColor(Color.parseColor("#000000"));
         }else{
             textView.setTextColor(Color.parseColor("#FFFDFD"));
