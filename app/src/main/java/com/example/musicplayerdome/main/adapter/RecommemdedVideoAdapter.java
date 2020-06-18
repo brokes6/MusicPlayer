@@ -52,7 +52,7 @@ public class RecommemdedVideoAdapter extends BaseRecyclerAdapter<RecommendedVide
 
             username.setText(item.getDatas().get(position).getVData().getCreator().getNickname());
             Glide.with(mcontext).load(item.getDatas().get(position).getVData().getCreator().getAvatarUrl()).into(userimg);
-            
+
         }
     }
 }
