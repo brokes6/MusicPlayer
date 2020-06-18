@@ -6,7 +6,7 @@ public class RecommendedVideoBean {
     private int code;
     private String msg;
     private boolean hasmore;
-    private List<DatasData> datas;
+    public List<DatasData> datas;
 
     public int getCode() {
         return code;
@@ -32,7 +32,7 @@ public class RecommendedVideoBean {
         this.hasmore = hasmore;
     }
 
-    public List<DatasData>  getDatas() {
+    public List<DatasData> getDatas() {
         return datas;
     }
 
@@ -40,11 +40,11 @@ public class RecommendedVideoBean {
         this.datas = datas;
     }
 
-    private class DatasData{
+    public class DatasData{
         private int type;
         private String alg;
         private boolean displayed;
-        private VData data;
+        public VData data;
 
         public int getType() {
             return type;
@@ -78,7 +78,7 @@ public class RecommendedVideoBean {
             this.data = data;
         }
 
-        private class VData{
+        public class VData{
             private String alg;
             private String scm;
             private String threadId;
@@ -89,8 +89,8 @@ public class RecommendedVideoBean {
             private String description;
             private int commentCount;
             private int shareCount;
-            private creatorData creator;
-            private urlInfoData urlInfo;
+            public creatorData creator;
+            public urlInfoData urlInfo;
             private long vid;
 
             public String getAlg() {
@@ -197,7 +197,7 @@ public class RecommendedVideoBean {
                 this.vid = vid;
             }
 
-            private class creatorData{
+            public class creatorData{
                 private String nickname;
                 private String signature;
                 private String avatarUrl;
@@ -235,7 +235,7 @@ public class RecommendedVideoBean {
                     this.avatarUrl = avatarUrl;
                 }
             }
-            private class urlInfoData{
+            public class urlInfoData{
                 private String id;
                 private String url;
                 private int size;

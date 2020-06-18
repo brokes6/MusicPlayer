@@ -8,11 +8,16 @@ import androidx.annotation.NonNull;
 
 import com.android.liuzhuang.rcimageview.CircleImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
+import com.example.musicplayerdome.main.bean.PlaylistBean;
 import com.example.musicplayerdome.main.bean.RecommendedVideoBean;
 import com.example.musicplayerdome.util.JzViewOutlineProvider;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
@@ -43,16 +48,18 @@ public class RecommemdedVideoAdapter extends BaseRecyclerAdapter<RecommendedVide
         vidoeima = holder.findViewById(R.id.R_videouser_img);
         userimg = holder.findViewById(R.id.R_user_img);
         if (item!=null){
-            String url = item.getDatas().get(position).getVData().getUrlInfo().getUrl();
-            String name = item.getDatas().get(position).getVData().getTitle();
-            jzVideo.setUp(url,name);
-            Glide.with(mcontext).load(item.getDatas().get(position).getVData().getCoverUrl()).into(jzVideo.posterImageView);
-
-            videoname.setText(name);
-
-            username.setText(item.getDatas().get(position).getVData().getCreator().getNickname());
-            Glide.with(mcontext).load(item.getDatas().get(position).getVData().getCreator().getAvatarUrl()).into(userimg);
-
+            setVideoInfo(item,position);
         }
+    }
+    public void setVideoInfo(RecommendedVideoBean item,int position) {
+        String url = item.getDatas().get(position).getVData().getUrlInfo().getUrl();
+        String name = item.getDatas().get(position).getVData().getTitle();
+        jzVideo.setUp(url,name);
+        Glide.with(mcontext).load(item.getDatas().get(position).getVData().getCoverUrl()).into(jzVideo.posterImageView);
+
+        videoname.setText(name);
+
+        username.setText(item.getDatas().get(position).getVData().getCreator().getNickname());
+        Glide.with(mcontext).load(item.getDatas().get(position).getVData().getCreator().getAvatarUrl()).into(userimg);
     }
 }
