@@ -3,7 +3,6 @@ package com.example.musicplayerdome.main.adapter;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,21 +10,23 @@ import androidx.annotation.NonNull;
 
 import com.android.liuzhuang.rcimageview.CircleImageView;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
-import com.example.musicplayerdome.main.bean.PlaylistBean;
+import com.example.musicplayerdome.api.ApiEngine;
+import com.example.musicplayerdome.api.ApiService;
 import com.example.musicplayerdome.main.bean.RecommendedVideoBean;
+import com.example.musicplayerdome.search.bean.VideoUrlBean;
 import com.example.musicplayerdome.util.JzViewOutlineProvider;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
-public class RecommemdedVideoAdapter extends BaseRecyclerAdapter<RecommendedVideoBean.DatasData> {
+public class GroupVideoAdapter extends BaseRecyclerAdapter<RecommendedVideoBean.DatasData> {
     private static final String TAG = "RecommemdedVideoAdapter";
     private Context mcontext;
     private JzvdStd jzVideo;
@@ -33,7 +34,9 @@ public class RecommemdedVideoAdapter extends BaseRecyclerAdapter<RecommendedVide
     private CircleImageView userimg;
     private ImageView icon_comment;
     private RecommemdedVideoItemClickListener listener;
-    public RecommemdedVideoAdapter(Context context){
+    private String name;
+    private RecommendedVideoBean.DatasData datas;
+    public GroupVideoAdapter(Context context){
         mcontext = context;
     }
     @Override
@@ -55,24 +58,50 @@ public class RecommemdedVideoAdapter extends BaseRecyclerAdapter<RecommendedVide
         userimg = holder.findViewById(R.id.R_user_img);
         icon_comment = holder.findViewById(R.id.iv_item_icon_comment);
         if (item!=null){
-            setVideoInfo(item,position);
+            datas = item;
+            getUrl(item.getVData().getVid());
             onSetListClickListener(listener,position);
         }
     }
-    public void setVideoInfo(RecommendedVideoBean.DatasData item,int position) {
-        if (item.getVData()!=null){
-            if(item.getVData().getUrlInfo().getSize() >0){
-                jzVideo.setUp(item.getVData().getUrlInfo().getUrl(),item.getVData().getTitle());
-
-            }
-            String name = item.getVData().getTitle();
+    public void setVideoInfo(RecommendedVideoBean.DatasData item,VideoUrlBean Bean) {
+            jzVideo.setUp(Bean.getUrls().get(0).getUrl(),item.getVData().getTitle());
             Glide.with(mcontext).load(item.getVData().getCoverUrl()).into(jzVideo.posterImageView);
 
-            videoname.setText(name);
+            videoname.setText( item.getVData().getTitle());
             comment_count.setText(""+item.getVData().getCommentCount());
             username.setText(item.getVData().getCreator().getNickname());
             Glide.with(mcontext).load(item.getVData().getCreator().getAvatarUrl()).into(userimg);
-        }
+
+    }
+
+    private void getUrl(String id){
+        ApiService service = ApiEngine.getInstance().getApiService();
+        service.getVideoData(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<VideoUrlBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(VideoUrlBean videoUrlBean) {
+                        Log.e(TAG, "onNext: 播放地址为:"+ videoUrlBean.getUrls().get(0).getUrl());
+                        setVideoInfo(datas,videoUrlBean);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: 获取地址失败"+e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     public void onSetListClickListener(RecommemdedVideoItemClickListener listener, int i) {

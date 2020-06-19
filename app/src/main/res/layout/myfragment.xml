@@ -11,19 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F3F3F3">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#DFDADA"
-        android:orientation="vertical"
-        tools:context=".main.fragment.YuncunFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#F3F3F3"
             android:layout_margin="5dp"/>
 
-    </LinearLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </layout>

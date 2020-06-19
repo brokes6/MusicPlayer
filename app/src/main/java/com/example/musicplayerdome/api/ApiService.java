@@ -164,6 +164,9 @@ public interface ApiService {
     @GET("video/timeline/recommend")//获取推荐视频
     Observable<RecommendedVideoBean> getRecommendedVideos();
 
+    @GET("video/group")//获取视频标签/分类下的视频
+    Observable<RecommendedVideoBean> getGroupVideos(@Query("id") long id);
+
     @GET("artist/album")//获取歌手专辑
     Observable<SingerAblumSearchBean> getSingerAlbum(@Query("id") long id);
 

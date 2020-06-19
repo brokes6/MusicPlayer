@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <cn.jzvd.JzvdStd
-    android:id="@+id/R_jz_video"
-    android:layout_width="match_parent"
-    android:layout_height="240dp" />
+        android:id="@+id/R_jz_video"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
 
     <LinearLayout
         android:id="@+id/R_Singer_details"
         android:layout_below="@+id/R_jz_video"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -26,22 +31,21 @@
             android:textSize="16sp"
             android:layout_marginRight="5dp"
             android:textColor="#2C2B2B" />
-        <com.android.liuzhuang.rcimageview.CircleImageView
-            android:id="@+id/R_videouser_img"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
-            android:layout_centerVertical="true" />
     </LinearLayout>
     <TextView
         android:id="@+id/R_GridLine"
         android:layout_below="@+id/R_Singer_details"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:background="#CCCACA"/>
     <LinearLayout
         android:id="@+id/R_user"
         android:layout_below="@+id/R_GridLine"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -60,10 +64,60 @@
             android:layout_marginLeft="5dp"
             android:text=" "
             android:textColor="#2C2B2B" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center">
+            <ImageView
+                android:id="@+id/iv_item_gedan_comment_zan"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/iv_item_icon_comment"
+                android:src="@drawable/shape_comment_unlike" />
+
+            <TextView
+                android:id="@+id/tv_item_video_praised_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/iv_item_gedan_comment_zan"
+                android:layout_alignTop="@+id/iv_item_gedan_comment_zan"
+                android:layout_marginLeft="15dp"
+                android:text="1889"
+                android:textSize="8sp" />
+
+            <ImageView
+                android:id="@+id/iv_item_icon_comment"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="25dp"
+                android:layout_toLeftOf="@+id/viewpager_item_video_list_button"
+                android:src="@mipmap/comment" />
+
+            <TextView
+                android:id="@+id/tv_item_video_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/iv_item_icon_comment"
+                android:layout_alignTop="@+id/iv_item_icon_comment"
+                android:layout_marginLeft="15dp"
+                android:text="1889"
+                android:textSize="8sp" />
+
+            <ImageView
+                android:id="@+id/viewpager_item_video_list_button"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:focusable="true"
+                android:src="@mipmap/more_vertical" />
+        </RelativeLayout>
     </LinearLayout>
     <TextView
         android:layout_below="@+id/R_user"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="#EAEAEA"/>
+        android:background="#1111"
+        android:layout_marginTop="5dp"
+        android:layout_height="10dp" />
 </RelativeLayout>

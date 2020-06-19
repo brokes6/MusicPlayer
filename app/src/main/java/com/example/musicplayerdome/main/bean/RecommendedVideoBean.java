@@ -91,7 +91,7 @@ public class RecommendedVideoBean {
             private int shareCount;
             public creatorData creator;
             public urlInfoData urlInfo;
-            private long vid;
+            private String vid;
 
             public String getAlg() {
                 return alg;
@@ -189,11 +189,11 @@ public class RecommendedVideoBean {
                 this.urlInfo = urlInfo;
             }
 
-            public long getVid() {
+            public String getVid() {
                 return vid;
             }
 
-            public void setVid(long vid) {
+            public void setVid(String vid) {
                 this.vid = vid;
             }
 

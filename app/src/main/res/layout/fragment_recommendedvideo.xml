@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
     </data>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/R_SwipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,6 +19,8 @@
             android:id="@+id/R_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"/>
+            android:layout_marginTop="10dp"/>
+
     </RelativeLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </layout>

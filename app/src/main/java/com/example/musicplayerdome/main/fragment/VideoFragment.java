@@ -29,6 +29,7 @@ public class VideoFragment extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_video,container,false);
         mPagerAdapter = new MultiFragmentPagerAdapter(getActivity().getSupportFragmentManager());
         fragmentList.add(new RecommendedVideoFtagment());
+        fragmentList.add(new UnionTranscendenceFragment());
         mPagerAdapter.init(fragmentList);
         return binding.getRoot();
     }
