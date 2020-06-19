@@ -33,9 +33,7 @@ public class GroupVideoAdapter extends BaseRecyclerAdapter<RecommendedVideoBean.
     private TextView videoname,username,comment_count;
     private CircleImageView userimg;
     private ImageView icon_comment;
-    private RecommemdedVideoItemClickListener listener;
-    private String name;
-    private RecommendedVideoBean.DatasData datas;
+    private GroupVideoItemClickListener listener;
     public GroupVideoAdapter(Context context){
         mcontext = context;
     }
@@ -58,8 +56,7 @@ public class GroupVideoAdapter extends BaseRecyclerAdapter<RecommendedVideoBean.
         userimg = holder.findViewById(R.id.R_user_img);
         icon_comment = holder.findViewById(R.id.iv_item_icon_comment);
         if (item!=null){
-            datas = item;
-            getUrl(item.getVData().getVid());
+            getUrl(item.getVData().getVid(),item);
             onSetListClickListener(listener,position);
         }
     }
@@ -74,7 +71,7 @@ public class GroupVideoAdapter extends BaseRecyclerAdapter<RecommendedVideoBean.
 
     }
 
-    private void getUrl(String id){
+    private void getUrl(String id,RecommendedVideoBean.DatasData Datas){
         ApiService service = ApiEngine.getInstance().getApiService();
         service.getVideoData(id)
                 .subscribeOn(Schedulers.io())
@@ -87,8 +84,7 @@ public class GroupVideoAdapter extends BaseRecyclerAdapter<RecommendedVideoBean.
 
                     @Override
                     public void onNext(VideoUrlBean videoUrlBean) {
-                        Log.e(TAG, "onNext: 播放地址为:"+ videoUrlBean.getUrls().get(0).getUrl());
-                        setVideoInfo(datas,videoUrlBean);
+                        setVideoInfo(Datas,videoUrlBean);
 
                     }
 
@@ -104,7 +100,7 @@ public class GroupVideoAdapter extends BaseRecyclerAdapter<RecommendedVideoBean.
                 });
     }
 
-    public void onSetListClickListener(RecommemdedVideoItemClickListener listener, int i) {
+    public void onSetListClickListener(GroupVideoItemClickListener listener, int i) {
         icon_comment.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onPlayListItemClick(i);
@@ -112,11 +108,11 @@ public class GroupVideoAdapter extends BaseRecyclerAdapter<RecommendedVideoBean.
         });
     }
 
-    public interface RecommemdedVideoItemClickListener {
+    public interface GroupVideoItemClickListener {
         void onPlayListItemClick(int position);
     }
 
-    public void setListener(RecommemdedVideoItemClickListener listener) {
+    public void setListener(GroupVideoItemClickListener listener) {
         this.listener = listener;
     }
 }

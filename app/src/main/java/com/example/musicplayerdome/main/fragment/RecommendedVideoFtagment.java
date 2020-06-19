@@ -22,6 +22,7 @@ import com.example.musicplayerdome.main.other.RecommendedPresenter;
 import com.example.musicplayerdome.search.bean.VideoUrlBean;
 import com.example.musicplayerdome.search.dialog.VideoReviewDialog;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
+import com.example.musicplayerdome.util.XToastUtils;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -97,6 +98,7 @@ public class RecommendedVideoFtagment extends BaseFragment<RecommendedPresenter>
     RecommemdedVideoAdapter.RecommemdedVideoItemClickListener itemClickListener = new RecommemdedVideoAdapter.RecommemdedVideoItemClickListener() {
         @Override
         public void onPlayListItemClick(int position) {
+            Log.e(TAG, "onPlayListItemClick: 当前id为"+videobean.get(position).getVData().getVid() );
             mPresenter.getVideoComment(videobean.get(position).getVData().getVid());
         }
     };
@@ -139,12 +141,13 @@ public class RecommendedVideoFtagment extends BaseFragment<RecommendedPresenter>
         //这里是请求失败的地方，会返回给你错误
         hideDialog();
         Log.e(TAG, "onRecommendedVideosFail: 获取推荐视频错误"+e );
+        XToastUtils.error(e);
     }
 
     @Override
     public void onGetVideoCommentSuccess(MusicCommentBean bean) {
+        CommentList.clear();
         CommentList.add(bean);
-
         VideoReviewDialog reviewDialog = new VideoReviewDialog(getContext(),CommentList);
         reviewDialog.setCanceledOnTouchOutside(true);
         reviewDialog.show();
