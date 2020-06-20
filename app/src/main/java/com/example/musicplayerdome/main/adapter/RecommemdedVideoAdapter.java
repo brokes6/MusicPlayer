@@ -61,7 +61,7 @@ public class RecommemdedVideoAdapter extends BaseRecyclerAdapter<RecommendedVide
     }
     public void setVideoInfo(RecommendedVideoBean.DatasData item,int position) {
         if (item.getVData()!=null){
-            if(item.getVData().getUrlInfo().getSize() >0){
+            if(item.getVData().getUrlInfo()!=null){
                 jzVideo.setUp(item.getVData().getUrlInfo().getUrl(),item.getVData().getTitle());
 
             }

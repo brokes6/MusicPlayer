@@ -50,8 +50,6 @@ public class RecommendedVideoFtagment extends BaseFragment<RecommendedPresenter>
 
     @Override
     protected void initData() {
-        //这里初始化适配器
-        //这里请求数据
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         adapter = new RecommemdedVideoAdapter(getContext());
         adapter.setListener(itemClickListener);
@@ -105,13 +103,11 @@ public class RecommendedVideoFtagment extends BaseFragment<RecommendedPresenter>
 
     @Override
     public RecommendedPresenter onCreatePresenter() {
-        //这里绑定请求接口
         return new RecommendedPresenter(this);
     }
 
     @Override
     protected void initVariables(Bundle bundle) {
-        //这个不用管，继承自带的方法
     }
 
     @Override
@@ -121,14 +117,12 @@ public class RecommendedVideoFtagment extends BaseFragment<RecommendedPresenter>
 
     @Override
     public void onRecommendedVideosSuccess(RecommendedVideoBean bean) {
-        //这里是请求成功之后返回给你结果
-        //你需要把返回的数据，用adapter.loadMore()放入适配器中
         hideDialog();
-        if (false){
-            videobean.clear();
+        if (first){
             adapter.loadMore(bean.getDatas());
             videobean.addAll(bean.getDatas());
         }else{
+            videobean.clear();
             videobean.addAll(bean.getDatas());
             adapter.refresh(bean.getDatas());
             binding.RSwipeRefresh.finishRefresh(true);
@@ -138,7 +132,6 @@ public class RecommendedVideoFtagment extends BaseFragment<RecommendedPresenter>
 
     @Override
     public void onRecommendedVideosFail(String e) {
-        //这里是请求失败的地方，会返回给你错误
         hideDialog();
         Log.e(TAG, "onRecommendedVideosFail: 获取推荐视频错误"+e );
         XToastUtils.error(e);

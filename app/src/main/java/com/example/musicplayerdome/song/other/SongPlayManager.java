@@ -7,6 +7,7 @@ import com.example.musicplayerdome.api.ApiService;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
 import com.example.musicplayerdome.search.other.KeywordsEvent;
 import com.example.musicplayerdome.song.bean.SongDetailBean;
+import com.example.musicplayerdome.util.AudioFocusManager;
 import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.XToastUtils;
@@ -43,7 +44,7 @@ import okio.BufferedSource;
  * 封装音乐播放器，因为StarrySkyJava自己就已经连接了服务，所以我们就不必再写服务了
  * 采用单例模式
  */
-public class SongPlayManager {
+public class SongPlayManager implements AudioFocusManager.AudioFocusListener{
     private static final String TAG = "SongPlayManager";
 
     private String CHECK_MUSIC_URL = "check/music";
@@ -74,6 +75,7 @@ public class SongPlayManager {
     //维护第二个哈希表，Key是SongId,value是 songDetail，如果歌曲详情已经获取，则不必再获取
     private HashMap<Long, SongDetailBean> songDetailMap;
     private boolean display = false;
+    private AudioFocusManager mAudioFocusManager;
 
     private SongPlayManager() {
         musicCanPlayMap = new HashMap<>();
@@ -84,6 +86,8 @@ public class SongPlayManager {
         songListener = new SongPlayListener();
         MusicManager.getInstance().addPlayerEventListener(songListener);
         mode = MODE_LIST_LOOP_PLAY;
+        // 初始化音频焦点管理器
+        mAudioFocusManager = new AudioFocusManager(MyApplication.getContext(), this);
     }
 
     public static SongPlayManager getInstance() {
@@ -236,6 +240,17 @@ public class SongPlayManager {
         return m.matches();
     }
 
+    private void start(){
+        if(!mAudioFocusManager.requestAudioFocus()){
+            Log.e(TAG, "requestAudioFocus失败");
+        }
+        Log.e(TAG, "requestAudioFocus成功");
+        MusicManager.getInstance().playMusic();
+        //对外发送start事件
+//        EventBus.getDefault().post(new AudioStartEvent());
+//        Log.e(TAG, "AudioStartEvent");
+    }
+
     /**
      * 停止播放
      */
@@ -244,6 +259,10 @@ public class SongPlayManager {
             Log.d(TAG, "cancel Play");
             display = false;
             MusicManager.getInstance().stopMusic();
+            //释放音频焦点
+            if(mAudioFocusManager != null){
+                mAudioFocusManager.abandonAudioFocus();
+            }
         }
     }
 
@@ -253,6 +272,10 @@ public class SongPlayManager {
     public void pauseMusic() {
         if (isPlaying()) {
             MusicManager.getInstance().pauseMusic();
+            //释放音频焦点
+            if(mAudioFocusManager != null){
+                mAudioFocusManager.abandonAudioFocus();
+            }
         }
     }
 
@@ -261,7 +284,7 @@ public class SongPlayManager {
      */
     public void playMusic() {
         if (isPaused()) {
-            MusicManager.getInstance().playMusic();
+            start();
         }
     }
 
@@ -297,7 +320,39 @@ public class SongPlayManager {
         MusicManager.getInstance().seekTo(progress);
     }
 
-        /**
+    private boolean isPausedByFocusLossTransient;
+    @Override
+    public void audioFocusGrant() {
+        Log.e(TAG, "恢复焦点");
+        MusicManager.getInstance().setVolume(1.0f);
+        if(isPausedByFocusLossTransient){
+            playMusic();
+        }
+        isPausedByFocusLossTransient = false;
+    }
+
+    @Override
+    public void audioFocusLoss() {
+        //失去焦点
+        pauseMusic();
+    }
+
+    @Override
+    public void audioFocusLossTransient() {
+        //暂时失去焦点
+        Log.e(TAG, "暂时失去焦点");
+        pauseMusic();
+        isPausedByFocusLossTransient = true;
+    }
+
+    @Override
+    public void audioFocusLossDuck() {
+        //瞬间失去焦点
+        Log.e(TAG, "瞬间失去焦点");
+        MusicManager.getInstance().setVolume(0.5f);
+    }
+
+    /**
          * 播放监听器
          */
     public class SongPlayListener implements OnPlayerEventListener {

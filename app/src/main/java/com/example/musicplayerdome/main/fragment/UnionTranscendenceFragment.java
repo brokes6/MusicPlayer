@@ -138,11 +138,11 @@ public class UnionTranscendenceFragment extends BaseFragment<RecommendedPresente
     @Override
     public void onGetGroupVideosSuccess(RecommendedVideoBean bean) {
         hideDialog();
-        if (false){
-            videobean.clear();
+        if (first){
             adapter.loadMore(bean.getDatas());
             videobean.addAll(bean.getDatas());
         }else{
+            videobean.clear();
             videobean.addAll(bean.getDatas());
             adapter.refresh(bean.getDatas());
             binding.smartrafresh.finishRefresh(true);

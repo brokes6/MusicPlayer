@@ -1,18 +1,12 @@
 package com.example.musicplayerdome;
 
 import android.app.Application;
-import android.app.PendingIntent;
-import android.content.Intent;
-
-import com.example.musicplayerdome.db.DaoMaster;
 import com.example.musicplayerdome.db.DaoSession;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.lzx.starrysky.manager.MusicManager;
 import com.lzx.starrysky.notification.NotificationConstructor;
 import com.xuexiang.xui.BuildConfig;
 import com.xuexiang.xui.XUI;
-
-import org.greenrobot.greendao.database.Database;
 
 
 /**
@@ -46,26 +40,11 @@ public class MyApplication extends Application {
 //        mDaoSession = daoMaster.newSession();
     }
     private void setNotification(){
-        int key = (int) SharedPreferencesUtil.getData("Ykey",0);
-        String lujin;
-        switch (key){
-            case 1:
-                lujin = "com.example.musicplayerdome.song.view.FMSongActivity";
-                break;
-            case 2:
-            case 0:
-            case 3:
-                lujin = "com.example.musicplayerdome.song.view.SongActivity";
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + key);
-        }
-
         MusicManager.getInstance().setNotificationConstructor(
                 new NotificationConstructor.Builder()
                         .setCreateSystemNotification(true)
                         .setNotificationCanClearBySystemBtn(false)
-                        .setTargetClass(lujin)
+                        .setTargetClass("com.example.musicplayerdome.song.view.SongActivity")
                         .bulid()
         );
     }

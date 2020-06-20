@@ -80,6 +80,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
                 .init();
+        goDialog();
         connectMusicService();
         mPagerAdapter = new MultiFragmentPagerAdapter(getSupportFragmentManager());
         fragmentList.add(new SongSheetFragment());
