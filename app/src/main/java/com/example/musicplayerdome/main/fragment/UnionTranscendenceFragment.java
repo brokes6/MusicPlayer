@@ -80,7 +80,6 @@ public class UnionTranscendenceFragment extends BaseFragment<RecommendedPresente
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 Log.e(TAG, "onRefresh: 视频开始刷新");
-                first = false;
                 mPresenter.getGroupVideos(259129);
             }
         });
@@ -139,6 +138,7 @@ public class UnionTranscendenceFragment extends BaseFragment<RecommendedPresente
     public void onGetGroupVideosSuccess(RecommendedVideoBean bean) {
         hideDialog();
         if (first){
+            first = false;
             adapter.loadMore(bean.getDatas());
             videobean.addAll(bean.getDatas());
         }else{

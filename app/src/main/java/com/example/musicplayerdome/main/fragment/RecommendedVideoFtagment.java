@@ -119,6 +119,7 @@ public class RecommendedVideoFtagment extends BaseFragment<RecommendedPresenter>
     public void onRecommendedVideosSuccess(RecommendedVideoBean bean) {
         hideDialog();
         if (first){
+            first = false;
             adapter.loadMore(bean.getDatas());
             videobean.addAll(bean.getDatas());
         }else{

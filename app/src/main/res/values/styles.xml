@@ -34,6 +34,20 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
+    <!-- 自定义dialog 淡出淡入效果-->
+    <style name="dialog_FadeIn" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 点外边可以消失  -->
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <!-- 引用淡出淡入效果  -->
+        <item name="android:windowEnterAnimation">@anim/dialog_fadein</item>
+        <item name="android:windowExitAnimation">@anim/dialog_fadeout</item>
+    </style>
+
 
     <style name="MyDialog" parent="@android:style/Theme.Holo.Dialog">
         <!-- 是否有边框 -->

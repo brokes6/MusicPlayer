@@ -65,6 +65,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     RecommendMusicAdapter recommendMusicAdapter;
     public static final String PLAYLIST_NAME = "playlistName";
     public static final String PLAYLIST_PICURL = "playlistPicUrl";
+    public static final String PLAYLIST_DESCRIPTION = "Description";
     public static final String PLAYLIST_CREATOR_NICKNAME = "playlistCreatorNickname";
     public static final String PLAYLIST_CREATOR_AVATARURL = "playlistCreatorAvatarUrl";
     public static final String PLAYLIST_ID = "playlistId";
@@ -228,6 +229,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
             Intent intent = new Intent(getActivity(), SongSheetActivityMusic.class);
             MainRecommendPlayListBean.RecommendBean bean = recommends.get(position);
             intent.putExtra(PLAYLIST_NAME, bean.getName());
+            intent.putExtra(PLAYLIST_DESCRIPTION, bean.getCreator().getSignature());
             intent.putExtra(PLAYLIST_PICURL, bean.getPicUrl());
             intent.putExtra(PLAYLIST_CREATOR_NICKNAME, bean.getCreator().getNickname());
             intent.putExtra(PLAYLIST_CREATOR_AVATARURL, bean.getCreator().getAvatarUrl());

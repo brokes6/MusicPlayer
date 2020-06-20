@@ -30,6 +30,7 @@ import com.example.musicplayerdome.databinding.ActivityPlayListBinding;
 import com.example.musicplayerdome.databinding.SongPlayListBinding;
 import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.RecommendsongBean;
+import com.example.musicplayerdome.main.dialog.SongSheetDialog;
 import com.example.musicplayerdome.song.adapter.MySongListAdapter;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.bean.BannerBean;
@@ -69,6 +70,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_CREATOR_AVATARURL;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_CREATOR_NICKNAME;
+import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_DESCRIPTION;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_ID;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_NAME;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_PICURL;
@@ -100,11 +102,14 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     public static final int COMPLETED = 0;
     LinearLayout SHComment,share;
     TextView songComment;
+    private Drawable Sbackg;
+    private String description;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == COMPLETED) {
+                Sbackg = (Drawable) msg.obj;
                 binding.background.setBackground((Drawable) msg.obj);
                 getAlphaAnimatorBg().start();
                 getAlphaAnimatorCover().start();
@@ -142,6 +147,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             playlistPicUrl = getIntent().getStringExtra(PLAYLIST_PICURL);
             Glide.with(this).load(playlistPicUrl).into(binding.XLogin);
             playlistName = getIntent().getStringExtra(PLAYLIST_NAME);
+            description = getIntent().getStringExtra(PLAYLIST_DESCRIPTION);
             binding.XTitle.setText(playlistName);
             creatorName = getIntent().getStringExtra(PLAYLIST_CREATOR_NICKNAME);
             binding.tvPlaylistName.setText(creatorName);
@@ -161,6 +167,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         songComment = findViewById(R.id.song_comment);
         share = findViewById(R.id.share);
 
+        binding.XLogin.setOnClickListener(this);
         binding.buttonPersonal.setOnClickListener(this);
         share.setOnClickListener(this);
         SHComment.setOnClickListener(this);
@@ -197,6 +204,11 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
                 break;
             case R.id.button_personal:
                 mPresenter.CollectionList(isCollection,playlistId);
+                break;
+            case R.id.XLogin:
+                SongSheetDialog songSheetDialog = new SongSheetDialog(this,playlistName,description,playlistPicUrl,Sbackg);
+                songSheetDialog.setCanceledOnTouchOutside(true);
+                songSheetDialog.show();
                 break;
         }
     }

@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_CREATOR_AVATARURL;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_CREATOR_NICKNAME;
+import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_DESCRIPTION;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_ID;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_NAME;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_PICURL;
@@ -119,6 +120,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
         public void onPlayListItemClick(int position) {
             Intent intent = new Intent(getContext(), SongSheetActivityMusic.class);
             intent.putExtra(PLAYLIST_PICURL, playlistBeans.get(position).getCoverImgUrl());
+            intent.putExtra(PLAYLIST_DESCRIPTION, playlistBeans.get(position).getDescription());
             intent.putExtra(PLAYLIST_NAME, playlistBeans.get(position).getName());
             intent.putExtra(PLAYLIST_CREATOR_NICKNAME, playlistBeans.get(position).getCreator().getNickname());
             intent.putExtra(PLAYLIST_CREATOR_AVATARURL, playlistBeans.get(position).getCreator().getAvatarUrl());

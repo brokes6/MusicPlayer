@@ -95,7 +95,7 @@ public class UserPlaylistBean {
         private int totalDuration;
         private int adType;
         private long trackNumberUpdateTime;
-        private Object description;
+        private String  description;
         private boolean ordered;
         private int status;
         private int subscribedCount;
@@ -291,11 +291,11 @@ public class UserPlaylistBean {
             this.trackNumberUpdateTime = trackNumberUpdateTime;
         }
 
-        public Object getDescription() {
+        public String getDescription() {
             return description;
         }
 
-        public void setDescription(Object description) {
+        public void setDescription(String description) {
             this.description = description;
         }
 
