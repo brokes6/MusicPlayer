@@ -21,6 +21,7 @@ import com.example.musicplayerdome.abstractclass.MineContract;
 import com.example.musicplayerdome.collection.view.MyCollectionActivity;
 import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
 import com.example.musicplayerdome.personal.bean.UserDetailBean;
+import com.example.musicplayerdome.personal.view.PersonalActivity;
 import com.example.musicplayerdome.song.adapter.UserPlaylistAdapter;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.databinding.SongsheetfragmentBinding;
@@ -54,6 +55,7 @@ import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_DE
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_ID;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_NAME;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_PICURL;
+import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID;
 
 /**
  * HomeActivityMusic.SongSheetFragment（Tab之一，歌单）
@@ -154,6 +156,7 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
         binding.SongLike.setOnClickListener(this);
         binding.SongFM.setOnClickListener(this);
         binding.minePlaylistMore.setOnClickListener(this);
+        binding.PersonalPage.setOnClickListener(this);
         //设置 Header式
         binding.refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
         //取消Footer
@@ -194,6 +197,11 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
                 break;
             case R.id.M_collection:
                 ActivityUtils.startActivity(MyCollectionActivity.class);
+                break;
+            case R.id.Personal_page:
+                Intent intent2 = new Intent(getContext(),PersonalActivity.class);
+                intent2.putExtra(USER_ID,uid);
+                getContext().startActivity(intent2);
                 break;
         }
     }

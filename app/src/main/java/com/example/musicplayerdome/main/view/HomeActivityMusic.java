@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.animation.ArgbEvaluator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -38,6 +39,7 @@ import com.example.musicplayerdome.main.fragment.SongSheetFragment;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
 import com.example.musicplayerdome.main.other.MainPresenter;
+import com.example.musicplayerdome.personal.view.PersonalActivity;
 import com.example.musicplayerdome.rewrite.BottomSongPlayBar;
 import com.example.musicplayerdome.search.view.SearchActivity;
 import com.example.musicplayerdome.song.other.SongPlayManager;
@@ -50,6 +52,8 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.xuexiang.xui.utils.SnackbarUtils;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID;
 
 /**
  * 也就是MainAcitiviy，主页面
@@ -96,7 +100,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
 
         initSidebar(loginBean);
         initApadter();
-        Log.e(TAG, "initData: ??????"+loginBean.getAccount().getId() );
+        Log.e(TAG, "当前用户id为："+loginBean.getAccount().getId());
         mPresenter.getLikeList(loginBean.getAccount().getId());
     }
     private void initView(){
@@ -109,6 +113,7 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         mRelativeLayout = findViewById(R.id.mrelativeLayout);
         mainL = findViewById(R.id.mainL);
 
+        Sbinding.ivAvatar.setOnClickListener(this);
         ivSearch.setOnClickListener(this);
         icNav.setOnClickListener(this);
         Sbinding.rlLogout.setOnClickListener(this);
@@ -213,6 +218,11 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
                 break;
             case R.id.iv_search:
                 ActivityUtils.startActivity(SearchActivity.class);
+                break;
+            case R.id.iv_avatar:
+                Intent intent2 = new Intent(this, PersonalActivity.class);
+                intent2.putExtra(USER_ID,loginBean.getAccount().getId());
+                startActivity(intent2);
                 break;
         }
     }

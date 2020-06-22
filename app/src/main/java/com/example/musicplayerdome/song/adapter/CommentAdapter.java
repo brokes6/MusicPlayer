@@ -1,6 +1,7 @@
 package com.example.musicplayerdome.song.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.android.liuzhuang.rcimageview.CircleImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
+import com.example.musicplayerdome.personal.view.PersonalActivity;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.util.TimeUtil;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
@@ -21,6 +23,8 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID;
 
 /**
  * 评论展示适配器
@@ -66,6 +70,14 @@ public class CommentAdapter extends BaseRecyclerAdapter<MusicCommentBean.Comment
         if (item!=null) {
             setBean(item, position);
             setListener(listener, position);
+            ivAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PersonalActivity.class);
+                    intent.putExtra(USER_ID,item.getUser().getUserId());
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
     public void setBean(MusicCommentBean.CommentsBean bean, int position) {

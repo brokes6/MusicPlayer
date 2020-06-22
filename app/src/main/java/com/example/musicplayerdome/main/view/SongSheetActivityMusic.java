@@ -31,6 +31,7 @@ import com.example.musicplayerdome.databinding.SongPlayListBinding;
 import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.dialog.SongSheetDialog;
+import com.example.musicplayerdome.personal.view.PersonalActivity;
 import com.example.musicplayerdome.song.adapter.MySongListAdapter;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.bean.BannerBean;
@@ -74,6 +75,7 @@ import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_DE
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_ID;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_NAME;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_PICURL;
+import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID;
 
 /**
  * SongSheetActivityMusic 歌单详情页面
@@ -167,6 +169,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         songComment = findViewById(R.id.song_comment);
         share = findViewById(R.id.share);
 
+        binding.userImg.setOnClickListener(this);
         binding.XLogin.setOnClickListener(this);
         binding.buttonPersonal.setOnClickListener(this);
         share.setOnClickListener(this);
@@ -209,6 +212,11 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
                 SongSheetDialog songSheetDialog = new SongSheetDialog(this,playlistName,description,playlistPicUrl,Sbackg);
                 songSheetDialog.setCanceledOnTouchOutside(true);
                 songSheetDialog.show();
+                break;
+            case R.id.user_img:
+                intent.setClass(this, PersonalActivity.class);
+                intent.putExtra(USER_ID,Sbean.getPlaylist().getUserId());
+                startActivity(intent);
                 break;
         }
     }
@@ -365,10 +373,12 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 
     }
 
+    private PlaylistDetailBean Sbean;
     @SuppressLint("SetTextI18n")
     @Override
     public void onGetPlaylistDetailSuccess(PlaylistDetailBean bean) {
         Log.d(TAG, "获取歌单成功 : " + bean);
+        Sbean = bean;
         if (bean.getPlaylist().isSubscribed()==false) {
             isCollection = 1;
             binding.buttonPersonal.setText("+收藏");

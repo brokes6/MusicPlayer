@@ -72,6 +72,7 @@
     <string name="recommend_playlist">推荐歌单</string>
     <string name="playlist_playground">歌单广场</string>
     <string name="comment">评论</string>
+    <string name="personal">个人中心</string>
     <string name="download">下载</string>
     <string name="multiselect">多选</string>
     <string name="playall">播放全部</string>

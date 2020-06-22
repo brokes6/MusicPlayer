@@ -141,6 +141,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         leftTitle.setText(resId);
     }
 
+    public void setTitleBG(String resId){
+        RelativeLayout title = findViewById(R.id.title);
+        title.setBackgroundColor(Color.parseColor(resId));
+    }
+
     public void setLeftTitleText(String titleText,String textColor) {
         TextView leftTitle = findViewById(R.id.tv_left_title);
         leftTitle.setVisibility(View.VISIBLE);

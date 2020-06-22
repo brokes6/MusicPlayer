@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:rc="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".personal.view.PersonalActivity">
+
+        <include
+            android:id="@+id/title"
+            layout="@layout/common_title"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_below="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:elevation="0dp">
+
+                        <RelativeLayout
+                            app:layout_scrollFlags="scroll|snap"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.example.musicplayerdome.rewrite.RoundImageView
+                                android:id="@+id/P_userimg"
+                                android:layout_margin="17dp"
+                                android:layout_width="110dp"
+                                android:layout_height="110dp"
+                                android:scaleType="centerCrop"
+                                app:type="circle" />
+
+                            <TextView
+                                android:id="@+id/P_username"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginLeft="17dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="20sp"
+                                android:text=""
+                                android:layout_below="@+id/P_userimg"
+                                android:letterSpacing="0.05"
+                                android:textColor="#504C4C"
+                                android:textStyle="bold" />
+
+                            <RelativeLayout
+                                android:id="@+id/P_introduce1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginLeft="17dp"
+                                android:layout_below="@id/P_username">
+
+                                <TextView
+                                    android:id="@+id/P_follows"
+                                    android:padding="3dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="16sp"
+                                    android:text=" "
+                                    android:textColor="#504C4C" />
+
+                                <TextView
+                                    android:id="@+id/P_followeds"
+                                    android:padding="3dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="16sp"
+                                    android:layout_toRightOf="@id/P_follows"
+                                    android:text=" "
+                                    android:textColor="#504C4C" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/P_introduce2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginLeft="17dp"
+                                android:layout_below="@id/P_introduce1">
+
+                                <TextView
+                                    android:id="@+id/P_Age"
+                                    android:padding="3dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15sp"
+                                    android:text=" "
+                                    android:textColor="#504C4C" />
+
+                                <TextView
+                                    android:id="@+id/P_Grade"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15sp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:layout_toRightOf="@id/P_Age"
+                                    android:background="@drawable/file_background_radius_10_gray"
+                                    android:letterSpacing="0.05"
+                                    android:textColor="#504C4C" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:background="@drawable/file_back_shape_gray">
+                </RelativeLayout>
+                <com.flyco.tablayout.SlidingTabLayout
+                    android:id="@+id/P_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp"
+                    android:background="#EDEDED"
+                    app:tl_indicator_color="#807D7D"
+                    app:tl_textsize="18sp"
+                    app:tl_tab_space_equal="false"
+                    app:tl_textBold="SELECT"
+                    app:tl_textSelectColor="#807D7D"
+                    app:tl_textUnselectColor="#7F7F7F" />
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/P_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#EDEDED"
+                    android:overScrollMode="always"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10" />
+            </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.example.musicplayerdome.rewrite.BottomSongPlayBar
+            android:id="@+id/bottom_controller"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            app:layout_behavior="@string/bottom_sheet_behavior" />
+    </RelativeLayout>
+</layout>
