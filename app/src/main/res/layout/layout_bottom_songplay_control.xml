@@ -109,5 +109,6 @@
     <TextView
         android:layout_below="@+id/top"
         android:layout_width="match_parent"
+        android:background="#fff"
         android:layout_height="5dp"/>
 </RelativeLayout>

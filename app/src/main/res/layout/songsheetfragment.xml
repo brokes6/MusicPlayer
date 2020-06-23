@@ -53,15 +53,34 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/user_vip"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/Susername"
+                        android:layout_toRightOf="@id/Suserimg"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:textSize="15sp"
+                        android:text=" "
+                        android:background="@drawable/file_background_radius_10_black"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
                         android:id="@+id/user_grade"
                         android:layout_marginTop="5dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_below="@id/Susername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        android:layout_toRightOf="@id/Suserimg"
+                        android:layout_toRightOf="@id/user_vip"
                         android:background="@drawable/file_background_radius_10_gray"
                         android:letterSpacing="0.05"
                         android:textColor="#fff" />

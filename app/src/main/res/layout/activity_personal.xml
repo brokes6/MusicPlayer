@@ -22,6 +22,7 @@
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_below="@+id/title"
+            android:layout_above="@+id/bottom_controller"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -69,19 +70,19 @@
                                     android:padding="3dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="16sp"
+                                    android:textSize="15sp"
                                     android:text=" "
-                                    android:textColor="#504C4C" />
+                                    android:textColor="#8F8D8D" />
 
                                 <TextView
                                     android:id="@+id/P_followeds"
                                     android:padding="3dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="16sp"
+                                    android:textSize="15sp"
                                     android:layout_toRightOf="@id/P_follows"
                                     android:text=" "
-                                    android:textColor="#504C4C" />
+                                    android:textColor="#8F8D8D" />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -93,20 +94,44 @@
                                 android:layout_below="@id/P_introduce1">
 
                                 <TextView
-                                    android:id="@+id/P_Age"
-                                    android:padding="3dp"
+                                    android:id="@+id/P_vip"
+                                    android:layout_marginTop="5dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:paddingTop="3dp"
+                                    android:paddingBottom="3dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
                                     android:textSize="15sp"
                                     android:text=" "
-                                    android:textColor="#504C4C" />
+                                    android:background="@drawable/file_background_radius_10_black"
+                                    android:textColor="#FFFFFF" />
+
+                                <TextView
+                                    android:id="@+id/P_Age"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@id/P_vip"
+                                    android:paddingTop="3dp"
+                                    android:paddingBottom="3dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:textSize="15sp"
+                                    android:text=" "
+                                    android:background="@drawable/file_background_radius_10_blue"
+                                    android:textColor="#FFFFFF" />
 
                                 <TextView
                                     android:id="@+id/P_Grade"
                                     android:layout_marginTop="5dp"
+                                    android:layout_marginLeft="5dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textSize="15sp"
+                                    android:paddingTop="3dp"
+                                    android:paddingBottom="3dp"
                                     android:paddingLeft="5dp"
                                     android:paddingRight="5dp"
                                     android:layout_toRightOf="@id/P_Age"
@@ -129,6 +154,7 @@
                     android:layout_height="wrap_content"
                     android:padding="7dp"
                     android:background="#EDEDED"
+                    android:layout_gravity="center"
                     app:tl_indicator_color="#807D7D"
                     app:tl_textsize="18sp"
                     app:tl_tab_space_equal="false"

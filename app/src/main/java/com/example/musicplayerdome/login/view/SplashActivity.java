@@ -54,7 +54,6 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onFinish() {
                 String authToken = SharePreferenceUtil.getInstance(SplashActivity.this).getAuthToken("");
-                Log.e(TAG, "onFinish: 获取的结果为"+authToken);
                 if (TextUtils.isEmpty(authToken)) {
                     ActivityStarter.getInstance().startLoginActivity(SplashActivity.this);
                 } else {

@@ -29,12 +29,15 @@ import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
 import com.example.musicplayerdome.personal.fragment.PersonalSheetFragment;
 import com.example.musicplayerdome.personal.other.UseridEvent;
 import com.example.musicplayerdome.search.other.KeywordsEvent;
+import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.gyf.immersionbar.ImmersionBar;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PersonalActivity extends BaseActivity<MinePresenter> implements MineContract.View {
@@ -103,6 +106,21 @@ public class PersonalActivity extends BaseActivity<MinePresenter> implements Min
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        int key = (int) SharedPreferencesUtil.getData("Ykey",0);
+        if (key!=3){
+            if (SongPlayManager.getInstance().isDisplay()) {
+                binding.bottomController.setVisibility(View.VISIBLE);
+            } else {
+                binding.bottomController.setVisibility(View.GONE);
+            }
+        }else{
+            binding.bottomController.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public void onGetUserPlaylistSuccess(UserPlaylistBean bean) {
 
     }
@@ -130,6 +148,15 @@ public class PersonalActivity extends BaseActivity<MinePresenter> implements Min
         binding.PFollows.setText("关注："+bean.getProfile().getFollows());
         binding.PFolloweds.setText("粉丝："+bean.getProfile().getFolloweds());
         binding.PGrade.setText("Lv."+bean.getLevel());
+        if (bean.getProfile().getVipType()==0){
+            binding.PVip.setText("普通用户");
+        }else{
+            binding.PVip.setText("黑胶CVIP");
+        }
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
+        date.setTime(bean.getProfile().getBirthday());
+        binding.PAge.setText(sdf.format(date));
     }
 
     @Override

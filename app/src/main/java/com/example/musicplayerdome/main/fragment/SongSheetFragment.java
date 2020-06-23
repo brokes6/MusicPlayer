@@ -115,6 +115,11 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
         if (bean.getProfile().getNickname() != null) {
             binding.Susername.setText(bean.getProfile().getNickname());
         }
+        if (bean.getProfile().getVipType()==0){
+            binding.userVip.setText("普通用户");
+        }else{
+            binding.userVip.setText("黑胶CVIP");
+        }
     }
 
     UserPlaylistAdapter.OnPlayListItemClickListener listener = new UserPlaylistAdapter.OnPlayListItemClickListener() {
