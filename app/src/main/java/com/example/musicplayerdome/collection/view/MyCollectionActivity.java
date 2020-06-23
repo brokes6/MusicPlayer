@@ -34,6 +34,8 @@ public class MyCollectionActivity extends BaseActivity<CollectionPresenter> impl
         ImmersionBar.with(this)
                 .statusBarColor(R.color.red)
                 .statusBarDarkFont(false)
+                .navigationBarColor(R.color.white)
+                .navigationBarDarkIcon(true)
                 .init();
 
         goDialog();

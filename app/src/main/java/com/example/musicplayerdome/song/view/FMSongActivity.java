@@ -47,6 +47,7 @@ import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.example.musicplayerdome.util.TimeUtil;
 import com.example.musicplayerdome.util.VolumeChangeObserver;
 import com.example.musicplayerdome.util.XToastUtils;
+import com.gyf.immersionbar.BarHide;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.manager.MusicManager;
 import com.lzx.starrysky.model.SongInfo;
@@ -117,6 +118,7 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
+                .hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
                 .init();
         goDialog();
     }

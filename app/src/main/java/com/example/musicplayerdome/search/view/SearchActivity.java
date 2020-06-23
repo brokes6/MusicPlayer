@@ -71,6 +71,8 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         ImmersionBar.with(this)
                 .statusBarColor(R.color.red)
                 .statusBarDarkFont(false)
+                .navigationBarColor(R.color.white)
+                .navigationBarDarkIcon(true)
                 .init();
         goDialog();
     }

@@ -18,6 +18,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -122,11 +123,15 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_play_list);
+        //之前的老布局
 //        binding = DataBindingUtil.setContentView(this,R.layout.song_play_list);
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
+                .navigationBarColor(R.color.white)
+                .navigationBarDarkIcon(true)
                 .init();
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         goDialog();
     }
 

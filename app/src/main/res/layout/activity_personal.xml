@@ -137,7 +137,7 @@
                                     android:layout_toRightOf="@id/P_Age"
                                     android:background="@drawable/file_background_radius_10_gray"
                                     android:letterSpacing="0.05"
-                                    android:textColor="#504C4C" />
+                                    android:textColor="#FFFFFF" />
                             </RelativeLayout>
                         </RelativeLayout>
 

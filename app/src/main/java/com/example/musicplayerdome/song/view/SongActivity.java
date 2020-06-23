@@ -55,6 +55,7 @@ import com.example.musicplayerdome.util.TimeUtil;
 import com.example.musicplayerdome.util.VolumeChangeObserver;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.gyf.immersionbar.BarHide;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.manager.MusicManager;
 import com.lzx.starrysky.model.SongInfo;
@@ -142,6 +143,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
+                .hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
                 .init();
         goDialog();
     }
