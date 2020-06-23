@@ -1,6 +1,8 @@
 package com.example.musicplayerdome.yuncun.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -10,11 +12,14 @@ import com.android.liuzhuang.rcimageview.RoundCornerImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
+import com.example.musicplayerdome.personal.view.PersonalActivity;
 import com.example.musicplayerdome.rewrite.RoundImageView;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 import yuncun.bean.YuncunReviewBean;
+
+import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID;
 
 /**
  * 云村瀑布流适配器
@@ -47,6 +52,14 @@ public class YuncunAdapter extends BaseRecyclerAdapter<YuncunReviewBean.UserData
         if (item!=null){
             setData(position,item);
             onSetListClickListener(listener,position);
+            user_img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mcontext, PersonalActivity.class);
+                    intent.putExtra(USER_ID,item.getSimpleUserInfo().getUserId());
+                    mcontext.startActivity(intent);
+                }
+            });
         }
     }
 

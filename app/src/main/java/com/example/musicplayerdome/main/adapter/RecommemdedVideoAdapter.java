@@ -1,6 +1,7 @@
 package com.example.musicplayerdome.main.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.main.bean.PlaylistBean;
 import com.example.musicplayerdome.main.bean.RecommendedVideoBean;
+import com.example.musicplayerdome.personal.view.PersonalActivity;
 import com.example.musicplayerdome.util.JzViewOutlineProvider;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
@@ -24,6 +26,8 @@ import java.util.List;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+
+import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID;
 
 public class RecommemdedVideoAdapter extends BaseRecyclerAdapter<RecommendedVideoBean.DatasData> {
     private static final String TAG = "RecommemdedVideoAdapter";
@@ -57,10 +61,18 @@ public class RecommemdedVideoAdapter extends BaseRecyclerAdapter<RecommendedVide
         if (item!=null){
             setVideoInfo(item,position);
             onSetListClickListener(listener,position);
+            userimg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mcontext, PersonalActivity.class);
+                    intent.putExtra(USER_ID,item.getVData().getCreator().getUserId());
+                    mcontext.startActivity(intent);
+                }
+            });
         }
     }
     public void setVideoInfo(RecommendedVideoBean.DatasData item,int position) {
-        if (item.getVData()!=null){
+        if (item.getType()==1){
             if(item.getVData().getUrlInfo()!=null){
                 jzVideo.setUp(item.getVData().getUrlInfo().getUrl(),item.getVData().getTitle());
 

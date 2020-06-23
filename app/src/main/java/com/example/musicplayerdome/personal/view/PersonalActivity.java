@@ -225,4 +225,10 @@ public class PersonalActivity extends BaseActivity<MinePresenter> implements Min
     public void onGetMyFMFail(String e) {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

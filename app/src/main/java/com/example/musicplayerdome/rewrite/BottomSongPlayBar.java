@@ -15,6 +15,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.MyApplication;
 import com.example.musicplayerdome.R;
+import com.example.musicplayerdome.api.ApiEngine;
+import com.example.musicplayerdome.api.ApiService;
+import com.example.musicplayerdome.song.bean.LikeMusicBean;
 import com.example.musicplayerdome.song.other.MusicPauseEvent;
 import com.example.musicplayerdome.song.other.MusicStartEvent;
 import com.example.musicplayerdome.song.other.SongPlayManager;
@@ -25,11 +28,17 @@ import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.song.dialog.SongListDialog;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
+import com.example.musicplayerdome.util.XToastUtils;
 import com.lzx.starrysky.model.SongInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 界面底部的歌曲遥控器
@@ -129,6 +138,31 @@ public class BottomSongPlayBar extends RelativeLayout {
         });
         iv_Like.setOnClickListener(v -> {
             iv_Like.setImageResource(R.drawable.shape_like_white);
+//            ApiService service = ApiEngine.getInstance().getApiService();
+//            service.likeMusice(SongPlayManager.getInstance().getsongID())
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Observer<LikeMusicBean>() {
+//                        @Override
+//                        public void onSubscribe(Disposable d) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onNext(LikeMusicBean likeMusicBean) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onError(Throwable e) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onComplete() {
+//
+//                        }
+//                    });
         });
         songlsit.setOnClickListener(v -> {
             songListDialog = new SongListDialog(mContext);

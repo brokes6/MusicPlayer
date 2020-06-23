@@ -716,4 +716,10 @@ public class SongPlayManager implements AudioFocusManager.AudioFocusListener{
     public int getCurrentSongIndex() {
         return currentSongIndex;
     }
+    /**
+     * 获取当前正在播放的歌曲的id
+     */
+//    public long getsongID(){
+//        return songInfo.getSongId();
+//    }
 }

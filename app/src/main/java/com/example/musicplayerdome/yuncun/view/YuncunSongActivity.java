@@ -21,6 +21,7 @@ import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.base.BasePresenter;
 import com.example.musicplayerdome.databinding.ActivityYuncunSongBinding;
 import com.example.musicplayerdome.main.bean.LikeListBean;
+import com.example.musicplayerdome.personal.view.PersonalActivity;
 import com.example.musicplayerdome.song.bean.CommentLikeBean;
 import com.example.musicplayerdome.song.bean.LikeMusicBean;
 import com.example.musicplayerdome.song.bean.LyricBean;
@@ -40,6 +41,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
+
+import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID;
 
 public class YuncunSongActivity extends BaseActivity<SongPresenter> implements SongContract.View,View.OnClickListener{
     ActivityYuncunSongBinding binding;
@@ -89,11 +92,15 @@ public class YuncunSongActivity extends BaseActivity<SongPresenter> implements S
 
     private void initView(){
         setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
+        binding.userImg.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.user_img:
+                break;
+        }
     }
 
     private void getIntentData() {
