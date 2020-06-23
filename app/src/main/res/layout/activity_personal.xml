@@ -67,12 +67,12 @@
 
                                 <TextView
                                     android:id="@+id/P_follows"
-                                    android:padding="3dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="15sp"
+                                    android:padding="3dp"
                                     android:text=" "
-                                    android:textColor="#8F8D8D" />
+                                    android:textColor="#8F8D8D"
+                                    android:textSize="15sp" />
 
                                 <TextView
                                     android:id="@+id/P_followeds"
@@ -154,10 +154,10 @@
                     android:layout_height="wrap_content"
                     android:padding="7dp"
                     android:background="#EDEDED"
-                    android:layout_gravity="center"
+                    app:tl_indicator_width_equal_title="true"
+                    app:tl_tab_space_equal="true"
                     app:tl_indicator_color="#807D7D"
                     app:tl_textsize="18sp"
-                    app:tl_tab_space_equal="false"
                     app:tl_textBold="SELECT"
                     app:tl_textSelectColor="#807D7D"
                     app:tl_textUnselectColor="#7F7F7F" />

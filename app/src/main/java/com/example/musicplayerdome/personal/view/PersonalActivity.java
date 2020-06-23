@@ -26,6 +26,7 @@ import com.example.musicplayerdome.main.other.MinePresenter;
 import com.example.musicplayerdome.main.view.HomeActivityMusic;
 import com.example.musicplayerdome.personal.bean.UserDetailBean;
 import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
+import com.example.musicplayerdome.personal.fragment.PersonalDynamicFragment;
 import com.example.musicplayerdome.personal.fragment.PersonalSheetFragment;
 import com.example.musicplayerdome.personal.other.UseridEvent;
 import com.example.musicplayerdome.search.other.KeywordsEvent;
@@ -67,6 +68,7 @@ public class PersonalActivity extends BaseActivity<MinePresenter> implements Min
         userid = getIntent().getLongExtra(USER_ID,0);
         pagerAdapter = new MultiFragmentPagerAdapter(getSupportFragmentManager());
         fragments.add(new PersonalSheetFragment(getIntent().getLongExtra(USER_ID,0)));
+        fragments.add(new PersonalDynamicFragment());
         pagerAdapter.init(fragments);
     }
 
