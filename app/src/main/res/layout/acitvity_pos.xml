@@ -80,6 +80,10 @@
                         android:textColor="#f0f0f0" />
                     <TextView
                         android:id="@+id/iv_user_detail_vip"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:layout_alignTop="@+id/tv_user_level"
                         android:layout_alignBottom="@+id/tv_user_level"
                         android:layout_below="@+id/tv_user_detail_sub"
@@ -92,6 +96,10 @@
                         android:textColor="#FFFFFF" />
                     <TextView
                         android:id="@+id/tv_user_level"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/iv_user_detail_vip"
@@ -100,7 +108,7 @@
                         android:textColor="@color/white"
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/file_background_radius_10_gray"
-                        android:text="Lv.8"
+                        android:text=""
                         android:textSize="11sp" />
 
                     <LinearLayout

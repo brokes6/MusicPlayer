@@ -63,7 +63,7 @@
                         android:paddingBottom="3dp"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        android:textSize="15sp"
+                        android:textSize="13sp"
                         android:text=" "
                         android:background="@drawable/file_background_radius_10_black"
                         android:textColor="#FFFFFF" />
@@ -75,7 +75,7 @@
                         android:layout_below="@id/Susername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="15sp"
+                        android:textSize="13sp"
                         android:paddingTop="3dp"
                         android:paddingBottom="3dp"
                         android:paddingLeft="5dp"
@@ -97,6 +97,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#fff"
+                            android:textSize="15sp"
                             android:text="进入个人中心"/>
                         <ImageView
                             android:layout_width="24dp"
@@ -127,6 +128,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#fff"
+                            android:textSize="13sp"
                             android:text="我的音乐"/>
                     </LinearLayout>
 
@@ -144,6 +146,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#fff"
+                            android:textSize="13sp"
                             android:text="我的电台"/>
                     </LinearLayout>
                     <LinearLayout
@@ -160,6 +163,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#fff"
+                            android:textSize="13sp"
                             android:text="下载记录"/>
                     </LinearLayout>
 
@@ -177,6 +181,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#fff"
+                            android:textSize="13sp"
                             android:text="关注新歌"/>
                     </LinearLayout>
 
@@ -195,6 +200,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#fff"
+                                android:textSize="13sp"
                                 android:text="我的收藏"/>
                         </LinearLayout>
 

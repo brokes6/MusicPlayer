@@ -50,6 +50,7 @@ import com.example.musicplayerdome.song.view.CommentActivity;
 import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.util.AppBarStateChangeListener;
 import com.example.musicplayerdome.util.DensityUtil;
+import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
@@ -164,7 +165,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             mPresenter.getPlaylistDetail(playlistId);
         }
         minDistance = DensityUtil.dp2px(SongSheetActivityMusic.this, 85);
-        deltaDistance = DensityUtil.dp2px(getApplication().getApplicationContext(), 300) - minDistance;
+        deltaDistance = DensityUtil.dp2px(this, 300) - minDistance;
     }
 
     private void initView(){
@@ -172,6 +173,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         songComment = findViewById(R.id.song_comment);
         share = findViewById(R.id.share);
 
+        binding.rlPlayall.setOnClickListener(this);
         binding.userImg.setOnClickListener(this);
         binding.XLogin.setOnClickListener(this);
         binding.buttonPersonal.setOnClickListener(this);
@@ -221,6 +223,10 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
                 intent.putExtra(USER_ID,Sbean.getPlaylist().getUserId());
                 startActivity(intent);
                 break;
+            case R.id.rl_playall:
+                adapter.PlayAll();
+                binding.bottomController.setVisibility(View.VISIBLE);
+                break;
         }
     }
     @Override
@@ -231,6 +237,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         } else {
             binding.bottomController.setVisibility(View.GONE);
         }
+
         binding.appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {

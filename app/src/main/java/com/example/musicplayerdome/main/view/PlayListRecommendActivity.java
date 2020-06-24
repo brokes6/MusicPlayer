@@ -27,6 +27,7 @@ import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 import com.example.musicplayerdome.main.fragment.HighQualityPlayListFragment;
 import com.example.musicplayerdome.main.other.WowPresenter;
+import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
@@ -205,5 +206,15 @@ public class PlayListRecommendActivity extends BaseActivity<WowPresenter> implem
     @Override
     public void onGetCollectionListFail(String e) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (SongPlayManager.getInstance().isDisplay()) {
+            binding.bottomController.setVisibility(View.VISIBLE);
+        } else {
+            binding.bottomController.setVisibility(View.GONE);
+        }
     }
 }

@@ -1,8 +1,7 @@
 package com.example.musicplayerdome.personal.adapter;
 
 import android.content.Context;
-import android.widget.ImageView;
-
+import com.android.liuzhuang.rcimageview.RoundCornerImageView;
 import com.bumptech.glide.Glide;
 import com.donkingliang.groupedadapter.adapter.GroupedRecyclerViewAdapter;
 import com.donkingliang.groupedadapter.holder.BaseViewHolder;
@@ -16,6 +15,7 @@ public class UserHomePagePlayListAdapter extends GroupedRecyclerViewAdapter {
     private final int TYPE_CREATE = 0;
     private final int TYPE_SUBSCRIBE = 1;
     private ArrayList<UserPlaylistEntity> mData;
+    private RoundCornerImageView songlistimg;
     UserPlaylistBean userPlaylistBean;
 
 
@@ -85,7 +85,8 @@ public class UserHomePagePlayListAdapter extends GroupedRecyclerViewAdapter {
         //歌单名
         holder.setText(R.id.tv_item_gedan_content_toptext, item.getName());
         //歌单图片
-        Glide.with(mContext).load(item.getCoverImgUrl()).into((ImageView) holder.get(R.id.iv_item_gedan_content_img));
+        songlistimg = holder.get(R.id.iv_item_gedan_content_img);
+        Glide.with(mContext).load(item.getCoverImgUrl()).into(songlistimg);
         if(groupPosition == TYPE_SUBSCRIBE){
             holder.setText(R.id.tv_item_gedan_content_bottomtext, item.getTrackCount() + "首,  by "+ item.getCreator().getNickname() +"  播放" + item.getPlayCount() + "次");
         }else if(groupPosition == TYPE_CREATE){

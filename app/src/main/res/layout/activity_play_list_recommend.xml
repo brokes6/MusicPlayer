@@ -52,10 +52,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/tv_gap"
+            android:layout_above="@+id/bottom_controller"
             android:overScrollMode="always"
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+        <com.example.musicplayerdome.rewrite.BottomSongPlayBar
+            android:id="@+id/bottom_controller"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            app:layout_behavior="@string/bottom_sheet_behavior" />
     </RelativeLayout>
 </layout>

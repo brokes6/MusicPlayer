@@ -21,12 +21,16 @@ import com.example.musicplayerdome.main.bean.MvSublistBean;
 import com.example.musicplayerdome.main.bean.MyFmBean;
 import com.example.musicplayerdome.main.bean.PlayModeIntelligenceBean;
 import com.example.musicplayerdome.main.other.MinePresenter;
+import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
 import com.example.musicplayerdome.personal.bean.UserDetailBean;
 import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
 import com.example.musicplayerdome.personal.fragment.PersonalDynamicFragment;
 import com.example.musicplayerdome.personal.fragment.PersonalSheetFragment;
 import com.example.musicplayerdome.song.other.SongPlayManager;
+import com.example.musicplayerdome.util.AppBarStateChangeListener;
+import com.example.musicplayerdome.util.DensityUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
+import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +43,8 @@ public class PersonalActivity extends BaseActivity<MinePresenter> implements Min
     private List<BaseFragment> fragments = new ArrayList<>();
     private MultiFragmentPagerAdapter pagerAdapter;
     private UserDetailBean beans;
+    int minDistance;
+    int deltaDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,17 +80,17 @@ public class PersonalActivity extends BaseActivity<MinePresenter> implements Min
         setBackBtn(getString(R.string.colorWhite));
         setLeftTitleText(R.string.personal);
         setLeftTitleTextColorWhite();
-        showDialog();
-        getIntentData();
-        setMargins(binding.toolbar,0,getStatusBarHeight(this),0,0);
-    }
 
-    private void getIntentData(){
+        showDialog();
         if (userid!=0){
             showDialog();
             mPresenter.getUserDetail(userid);
         }
+        setMargins(binding.toolbar,0,getStatusBarHeight(this),0,0);
+        minDistance = DensityUtil.dp2px(this, 85);
+        deltaDistance = DensityUtil.dp2px(this, 300) - minDistance;
     }
+
 
     @Override
     public void onClick(View v) {
@@ -94,16 +100,26 @@ public class PersonalActivity extends BaseActivity<MinePresenter> implements Min
     @Override
     protected void onResume() {
         super.onResume();
-        int key = (int) SharedPreferencesUtil.getData("Ykey",0);
-        if (key!=3){
-            if (SongPlayManager.getInstance().isDisplay()) {
-                binding.bottomController.setVisibility(View.VISIBLE);
-            } else {
-                binding.bottomController.setVisibility(View.GONE);
-            }
-        }else{
+        if (SongPlayManager.getInstance().isDisplay()) {
+            binding.bottomController.setVisibility(View.VISIBLE);
+        } else {
             binding.bottomController.setVisibility(View.GONE);
         }
+        binding.appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+
+            }
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout) {
+                float alphaPercent = (float) (binding.rlUserDetailBottom.getTop() - minDistance) / (float) deltaDistance;
+                binding.ivUserDetailBackground.setAlpha(alphaPercent);
+                binding.ivUserDetailBackgroundCover.setAlpha(alphaPercent);
+                binding.ivUserDetailAvatar.setAlpha(alphaPercent);
+                binding.tvUserDetailName.setAlpha(alphaPercent);
+            }
+        });
     }
 
     @Override

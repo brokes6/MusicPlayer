@@ -151,4 +151,9 @@ public class MySongListAdapter extends BaseRecyclerAdapter<SongInfo> {
             songDetailDialog.show();
         });
     }
+    public void PlayAll(){
+        if (list!=null){
+            SongPlayManager.getInstance().clickPlayAll(list, 0);
+        }
+    }
 }

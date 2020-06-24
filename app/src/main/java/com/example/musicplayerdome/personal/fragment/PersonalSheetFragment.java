@@ -62,7 +62,7 @@ public class PersonalSheetFragment extends BaseFragment<MinePresenter> implement
         //基本信息
         String createTime = TimeUtil.getTimeStandardOnlyYMD(mCurrentUser.getCreateTime());
         binding.tvUserDetailCreatetime.setText("村龄: " + createTime + "注册");
-        binding.tvUserDetailAge.setText("年龄：出生日期" + TimeUtil.getTimeStandardOnlyYMD(mCurrentUser.getProfile().getBirthday()));
+        binding.tvUserDetailAge.setText("年龄：" + TimeUtil.getTimeStandardOnlyYMD(mCurrentUser.getProfile().getBirthday()));
         binding.tvUserDetailArea.setText("地区：地区码" + mCurrentUser.getProfile().getProvince() + " " + mCurrentUser.getProfile().getCity());
         //听歌排行
         binding.tvUserInfoToptext.setText(mCurrentUser.getProfile().getNickname() + "的听歌排行");
@@ -143,7 +143,7 @@ public class PersonalSheetFragment extends BaseFragment<MinePresenter> implement
 
     @Override
     public void onGetUserPlaylistFail(String e) {
-        Log.e(TAG, "onGetUserPlaylistFail: ？？？？？？？？？？？？？"+e);
+        Log.e(TAG, e);
     }
 
     @Override
