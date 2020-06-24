@@ -57,8 +57,6 @@ public class CommentActivity extends BaseActivity<SongPresenter> implements Song
                 .statusBarDarkFont(false)
                 .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
                 .statusBarColor(R.color.red)
-                .navigationBarColor(R.color.white)
-                .navigationBarDarkIcon(true)
                 .init();
         goDialog();
     }

@@ -61,6 +61,8 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
+                .navigationBarDarkIcon(false)
+                .navigationBarColor(R.color.black)
                 .init();
         goDialog();
         initView();

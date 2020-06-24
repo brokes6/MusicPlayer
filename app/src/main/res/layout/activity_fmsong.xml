@@ -95,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="40dp"
-                    android:scaleType="center"
+                    android:scaleType="centerCrop"
                     rc:rciv_radius="20dp"/>
 
                 <com.example.musicplayerdome.rewrite.LyricView

@@ -128,8 +128,6 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
-                .navigationBarColor(R.color.white)
-                .navigationBarDarkIcon(true)
                 .init();
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         goDialog();

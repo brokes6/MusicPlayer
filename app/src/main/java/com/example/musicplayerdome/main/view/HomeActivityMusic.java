@@ -83,8 +83,6 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
-                .navigationBarColor(R.color.white)
-                .navigationBarDarkIcon(true)
                 .init();
         goDialog();
         connectMusicService();

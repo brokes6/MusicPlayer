@@ -69,8 +69,6 @@ public class SearchResultActivity extends BaseActivity<SearchPresenter> implemen
         ImmersionBar.with(this)
                 .statusBarColor(R.color.red)
                 .statusBarDarkFont(false)
-                .navigationBarColor(R.color.white)
-                .navigationBarDarkIcon(true)
                 .init();
         initView();
         pagerAdapter = new MultiFragmentPagerAdapter(getSupportFragmentManager());

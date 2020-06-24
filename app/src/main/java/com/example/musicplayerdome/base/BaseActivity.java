@@ -19,6 +19,7 @@ import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.rewrite.SearchEditText;
 import com.example.musicplayerdome.util.LoadingsDialog;
 import com.example.musicplayerdome.util.LocaleManageUtil;
+import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.manager.MediaSessionConnection;
 import com.lzx.starrysky.model.SongInfo;
 
@@ -50,6 +51,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         if (onCreatePresenter() != null) {
             mPresenter = onCreatePresenter();
         }
+        //将导航栏颜色改为白色
+        ImmersionBar.with(this)
+                .navigationBarColor(R.color.white)
+                .navigationBarDarkIcon(true)
+                .init();
         mContext = this;
         onCreateView(savedInstanceState);
         initModule();
