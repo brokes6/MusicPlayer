@@ -5,17 +5,18 @@
 采用了NeteaseCloudMusicApi（ https://github.com/Binaryify/NeteaseCloudMusicApi ）<br>
 
 效果图如下：<br>
-![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/01.jpg)
-![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/02.jpg)
-![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/03.jpg)
-![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/04.jpg)
-![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/05.jpg)
-![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/07.jpg)
-![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/08.jpg)
-![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/09.jpg)
-![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/10.jpg)
-![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/11.jpg)
-![image](https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/12.jpg)
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/01.jpg" width="420" height="980" />
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/02.jpg" width="420" height="980" />
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/03.jpg" width="420" height="980" />
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/04.jpg" width="420" height="980" />
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/05.jpg" width="420" height="980" />
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/06.jpg" width="420" height="980" />
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/07.jpg" width="420" height="980" />
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/08.jpg" width="420" height="980" />
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/09.jpg" width="420" height="980" />
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/10.jpg" width="420" height="980" />
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/11.jpg" width="420" height="980" />
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/12.jpg" width="420" height="980" />
 <br>
 还要更多效果就不展示了（有点放不下了）<br>
 
