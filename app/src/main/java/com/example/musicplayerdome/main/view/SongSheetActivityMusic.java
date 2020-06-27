@@ -45,6 +45,7 @@ import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 import com.example.musicplayerdome.main.other.WowPresenter;
+import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.view.CommentActivity;
 import com.example.musicplayerdome.song.view.SongActivity;
@@ -89,8 +90,6 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 //    SongPlayListBinding binding;
     private static final String TAG = "SongSheetActivity";
     private MySongListAdapter adapter;
-    private List<PlaylistDetailBean.PlaylistBean.TracksBean> beanList = new ArrayList<>();
-    private List<SongInfo> songInfos = new ArrayList<>();
     private long playlistId;
     private boolean go = false;
     private String creatorUrl;
@@ -108,6 +107,14 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     TextView songComment;
     private Drawable Sbackg;
     private String description;
+    //🐕的一笔
+    private List<SongDetailBean.SongsBean> beanList = new ArrayList<>();
+    private List<PlaylistDetailBean.PlaylistBean.TrackIdsBean> songidList = new ArrayList<>();
+    private List<SongInfo> songInfos = new ArrayList<>();
+    private List<Integer> songid = new ArrayList<>();
+    String songids = "";
+    private Boolean isload = false;
+    private PlaylistDetailBean Sbean;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -161,7 +168,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             Glide.with(this).load(creatorUrl).into(binding.userImg);
             playlistId = getIntent().getLongExtra(PLAYLIST_ID, 0);
             calculateColors(playlistPicUrl);
-
+            Log.e(TAG, "initData: 当前歌单id为"+ playlistId);
             mPresenter.getPlaylistDetail(playlistId);
         }
         minDistance = DensityUtil.dp2px(SongSheetActivityMusic.this, 85);
@@ -189,7 +196,8 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 Log.e(TAG, "onRefresh: 歌单开始刷新");
-                mPresenter.getPlaylistDetailAgain(playlistId);
+                isload = true;
+                mPresenter.getPlaylistDetail(playlistId);
             }
         });
         setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
@@ -384,7 +392,6 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 
     }
 
-    private PlaylistDetailBean Sbean;
     @SuppressLint("SetTextI18n")
     @Override
     public void onGetPlaylistDetailSuccess(PlaylistDetailBean bean) {
@@ -398,61 +405,25 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             binding.buttonPersonal.setText("-取消收藏");
         }
         Glide.with(this).load(bean.getPlaylist().getCreator().getAvatarUrl()).into(binding.userImg);
-        songInfos.clear();
-        beanList.addAll(bean.getPlaylist().getTracks());
-        for (int i = 0; i < beanList.size(); i++) {
-            SongInfo beanInfo = new SongInfo();
-            beanInfo.setArtist(beanList.get(i).getAr().get(0).getName());
-            beanInfo.setSongName(beanList.get(i).getName());
-            beanInfo.setSongCover(beanList.get(i).getAl().getPicUrl());
-            beanInfo.setSongId(String.valueOf(beanList.get(i).getId()));
-            beanInfo.setDuration(beanList.get(i).getDt());
-            beanInfo.setSongUrl(SONG_URL + beanList.get(i).getId() + ".mp3");
-            beanInfo.setArtistId(String.valueOf(beanList.get(i).getAr().get(0).getId()));
-            beanInfo.setArtistKey(beanList.get(i).getAl().getPicUrl());
-            songInfos.add(beanInfo);
-        }
-        Log.e(TAG, "当前歌曲id为"+ bean.getPlaylist().getId());
         songComment.setText(""+bean.getPlaylist().getCommentCount());
-        adapter.setList(songInfos);
-        adapter.loadMore(songInfos);
-        hideDialog();
+        songids = "";
+        songidList.addAll(bean.getPlaylist().getTrackIds());
+        for (int i = 0; i < songidList.size(); i++) {
+            songid.add(songidList.get(i).getId());
+            if (i==songidList.size()-1){
+                songids = songids + songidList.get(i).getId();
+            }else{
+                songids = songids + songidList.get(i).getId()+",";
+            }
+        }
+        Log.e(TAG, "真的🐕还要我这样获取，输出所有id:"+ songids);
+        mPresenter.getSongDetailAll(songids);
     }
 
     @Override
     public void onGetPlaylistDetailFail(String e) {
         hideDialog();
         XToastUtils.error("网络请求失败，请检查网络再试");
-    }
-
-    @Override
-    public void onGetPlaylistDetailAgainSuccess(PlaylistDetailBean bean) {
-        List<PlaylistDetailBean.PlaylistBean.TracksBean> beanList = new ArrayList<>();
-        List<SongInfo> songInfos = new ArrayList<>();
-
-        beanList.addAll(bean.getPlaylist().getTracks());
-        songInfos.clear();
-        for (int i = 0; i < beanList.size(); i++) {
-            SongInfo beanInfo = new SongInfo();
-            beanInfo.setArtist(beanList.get(i).getAr().get(0).getName());
-            beanInfo.setSongName(beanList.get(i).getName());
-            beanInfo.setSongCover(beanList.get(i).getAl().getPicUrl());
-            beanInfo.setSongId(String.valueOf(beanList.get(i).getId()));
-            beanInfo.setDuration(beanList.get(i).getDt());
-            beanInfo.setSongUrl(SONG_URL + beanList.get(i).getId() + ".mp3");
-            beanInfo.setArtistId(String.valueOf(beanList.get(i).getAr().get(0).getId()));
-            beanInfo.setArtistKey(beanList.get(i).getAl().getPicUrl());
-            songInfos.add(beanInfo);
-        }
-        Log.e(TAG, "歌单刷新成功");
-        adapter.refresh(songInfos);
-        binding.refreshLayout.finishRefresh(true);
-    }
-
-    @Override
-    public void onGetPlaylistDetailAgainFail(String e) {
-        XToastUtils.error("刷新失败，请检查网络再试");
-        binding.refreshLayout.finishRefresh(true);
     }
 
     @Override
@@ -500,6 +471,40 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 
     @Override
     public void onGetCollectionListFail(String e) {
+        XToastUtils.error(e);
+    }
+
+    @Override
+    public void onGetSongDetailSuccess(SongDetailBean bean) {
+        hideDialog();
+        songInfos.clear();
+        beanList.clear();
+        beanList.addAll(bean.getSongs());
+        for (int i = 0; i < beanList.size(); i++) {
+            SongInfo beanInfo = new SongInfo();
+            beanInfo.setArtist(beanList.get(i).getAr().get(0).getName());
+            beanInfo.setSongName(beanList.get(i).getName());
+            beanInfo.setSongCover(beanList.get(i).getAl().getPicUrl());
+            beanInfo.setSongId(String.valueOf(beanList.get(i).getId()));
+            beanInfo.setDuration(beanList.get(i).getDt());
+            beanInfo.setSongUrl(SONG_URL + beanList.get(i).getId() + ".mp3");
+            beanInfo.setArtistId(String.valueOf(beanList.get(i).getAr().get(0).getId()));
+            beanInfo.setArtistKey(beanList.get(i).getAl().getPicUrl());
+            songInfos.add(beanInfo);
+        }
+        if (isload){
+            adapter.setList(songInfos);
+            adapter.refresh(songInfos);
+            Log.e(TAG, "歌单刷新成功");
+            binding.refreshLayout.finishRefresh(true);
+        }else{
+            adapter.setList(songInfos);
+            adapter.loadMore(songInfos);
+        }
+    }
+
+    @Override
+    public void onGetSongDetailFail(String e) {
         XToastUtils.error(e);
     }
 

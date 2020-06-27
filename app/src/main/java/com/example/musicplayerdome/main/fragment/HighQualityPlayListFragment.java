@@ -30,6 +30,7 @@ import com.example.musicplayerdome.main.other.WowPresenter;
 import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
 import com.example.musicplayerdome.rewrite.PlayListCover;
 import com.example.musicplayerdome.rewrite.RikkaPlayListPager;
+import com.example.musicplayerdome.song.bean.SongDetailBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -181,15 +182,6 @@ public class HighQualityPlayListFragment extends BaseFragment<WowPresenter> impl
 
     }
 
-    @Override
-    public void onGetPlaylistDetailAgainSuccess(PlaylistDetailBean bean) {
-
-    }
-
-    @Override
-    public void onGetPlaylistDetailAgainFail(String e) {
-
-    }
 
     @Override
     public void onGetMusicCanPlaySuccess(MusicCanPlayBean bean) {
@@ -269,6 +261,16 @@ public class HighQualityPlayListFragment extends BaseFragment<WowPresenter> impl
 
     @Override
     public void onGetCollectionListFail(String e) {
+
+    }
+
+    @Override
+    public void onGetSongDetailSuccess(SongDetailBean bean) {
+
+    }
+
+    @Override
+    public void onGetSongDetailFail(String e) {
 
     }
 }

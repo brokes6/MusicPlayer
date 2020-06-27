@@ -14,6 +14,7 @@ import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
+import com.example.musicplayerdome.song.bean.SongDetailBean;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -26,6 +27,34 @@ public class WowPresenter extends WowContract.Presenter {
     public WowPresenter(WowContract.View view) {
         this.mView = view;
         this.mModel = new WowModel();
+    }
+
+
+    @Override
+    public void getSongDetailAll(String idlist) {
+      mModel.getSongDetailAll(idlist).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SongDetailBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(SongDetailBean songDetailBean) {
+                        mView.onGetSongDetailSuccess(songDetailBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onGetSongDetailFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 
@@ -256,32 +285,6 @@ public class WowPresenter extends WowContract.Presenter {
                 });
     }
 
-    @Override
-    public void getPlaylistDetailAgain(long id) {
-        mModel.getPlaylistDetail(id).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<PlaylistDetailBean>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(PlaylistDetailBean playlistDetailBean) {
-                        mView.onGetPlaylistDetailAgainSuccess(playlistDetailBean);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mView.onGetPlaylistDetailAgainFail(e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
 
     @Override
     public void getMusicCanPlay(long id) {

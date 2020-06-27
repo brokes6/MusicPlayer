@@ -13,10 +13,16 @@ import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
+import com.example.musicplayerdome.song.bean.SongDetailBean;
 
 import io.reactivex.Observable;
 
 public class WowModel implements WowContract.Model {
+    @Override
+    public Observable<SongDetailBean> getSongDetailAll(String idlist) {
+        return ApiEngine.getInstance().getApiService().getSongDetailAll(idlist);
+    }
+
     @Override
     public Observable<BannerBean> getBanner() {
         return ApiEngine.getInstance().getApiService().getBanner("2");
@@ -49,11 +55,6 @@ public class WowModel implements WowContract.Model {
 
     @Override
     public Observable<PlaylistDetailBean> getPlaylistDetail(long id) {
-        return ApiEngine.getInstance().getApiService().getPlaylistDetail(id);
-    }
-
-    @Override
-    public Observable<PlaylistDetailBean> getPlaylistDetailAgain(long id) {
         return ApiEngine.getInstance().getApiService().getPlaylistDetail(id);
     }
 

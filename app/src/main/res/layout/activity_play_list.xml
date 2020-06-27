@@ -12,9 +12,13 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_controller"
         tools:context=".main.view.SongSheetActivityMusic">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -155,7 +159,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#fff"
-            android:layout_above="@id/bottom_controller"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <RelativeLayout
@@ -210,7 +213,7 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/rl_playall_top" />
         </RelativeLayout>
-
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
         <com.example.musicplayerdome.rewrite.BottomSongPlayBar
             android:id="@+id/bottom_controller"
             android:visibility="gone"
@@ -219,6 +222,6 @@
             android:layout_alignParentBottom="true"
             android:background="#ffffff"
             app:layout_behavior="@string/bottom_sheet_behavior" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </RelativeLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </layout>

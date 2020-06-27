@@ -182,6 +182,9 @@ public interface ApiService {
     @GET("song/detail")//获取歌曲详情
     Observable<SongDetailBean> getSongDetail(@Query("ids") long ids);
 
+    @GET("song/detail")//获取歌曲详情
+    Observable<SongDetailBean> getSongDetailAll(@Query("ids") String idlist);
+
     @GET("like")//喜欢音乐
     Observable<LikeMusicBean> likeMusice(@Query("id") long id);
 

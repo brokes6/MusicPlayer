@@ -120,8 +120,10 @@ public class PersonalSheetFragment extends BaseFragment<MinePresenter> implement
         //收藏的歌单的数量
         int collectPlayListSize = size - subIndex;
         if (bean.getPlaylist().size()>5){
+            Log.e(TAG, "onGetUserPlaylistSuccess: ,,,,,,,,,,,,,,"+subIndex );
             playlistEntities.add(new UserPlaylistEntity("(" +createPlaylistSize +")", "更多歌单", bean.getPlaylist().subList(1, 4)));
-            playlistEntities.add(new UserPlaylistEntity("(" +collectPlayListSize +")", "更多歌单", bean.getPlaylist().subList(subIndex, subIndex + 3)));
+//            playlistEntities.add(new UserPlaylistEntity("(" +collectPlayListSize +")", "更多歌单", bean.getPlaylist().subList(subIndex, subIndex + 3)));
+            playlistEntities.add(new UserPlaylistEntity("(" +collectPlayListSize +")", "更多歌单", bean.getPlaylist().subList(4, 4 + 3)));
         }else{
             playlistEntities.add(new UserPlaylistEntity("(" +createPlaylistSize +")", "更多歌单", bean.getPlaylist()));
             playlistEntities.add(new UserPlaylistEntity("(" +collectPlayListSize +")", "更多歌单", bean.getPlaylist()));

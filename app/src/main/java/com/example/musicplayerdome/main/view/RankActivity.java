@@ -28,6 +28,7 @@ import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 import com.example.musicplayerdome.main.other.WowPresenter;
+import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
@@ -196,16 +197,6 @@ public class RankActivity extends BaseActivity<WowPresenter> implements WowContr
     }
 
     @Override
-    public void onGetPlaylistDetailAgainSuccess(PlaylistDetailBean bean) {
-
-    }
-
-    @Override
-    public void onGetPlaylistDetailAgainFail(String e) {
-
-    }
-
-    @Override
     public void onGetMusicCanPlaySuccess(MusicCanPlayBean bean) {
 
     }
@@ -242,6 +233,16 @@ public class RankActivity extends BaseActivity<WowPresenter> implements WowContr
 
     @Override
     public void onGetCollectionListFail(String e) {
+
+    }
+
+    @Override
+    public void onGetSongDetailSuccess(SongDetailBean bean) {
+
+    }
+
+    @Override
+    public void onGetSongDetailFail(String e) {
 
     }
 }
