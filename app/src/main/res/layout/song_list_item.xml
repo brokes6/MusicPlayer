@@ -2,23 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:rc="http://schemas.android.com/apk/res-auto"
     android:id="@+id/home_playlist"
-    android:layout_width="130dp"
+    android:layout_width="115dp"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:orientation="vertical"
     android:gravity="left">
     <com.android.liuzhuang.rcimageview.RoundCornerImageView
         android:id="@+id/song_img"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
         android:scaleType="centerCrop"
-        rc:rciv_radius="15dp"/>
+        rc:rciv_radius="7dp"/>
     <TextView
         android:id="@+id/song_text"
-        android:layout_width="130dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#323131"
         android:padding="5dp"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:maxLines="2"
         android:text=""/>
 </LinearLayout>

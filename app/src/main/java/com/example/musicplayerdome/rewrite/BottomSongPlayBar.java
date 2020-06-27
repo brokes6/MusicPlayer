@@ -221,7 +221,10 @@ public class BottomSongPlayBar extends RelativeLayout {
         tvSongName.setText(bean.getSongName());
         tvSongSinger.setText(bean.getArtist());
         if (!TextUtils.isEmpty(bean.getSongCover())) {
-            Glide.with(MyApplication.getContext()).load(bean.getSongCover()).into(ivCover);
+            Glide.with(MyApplication.getContext())
+                    .load(bean.getSongCover())
+                    .placeholder(R.drawable.shape_record)
+                    .into(ivCover);
         }
         switch (key){
             case 1:

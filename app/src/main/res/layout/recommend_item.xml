@@ -10,7 +10,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:scaleType="centerCrop"
-        rc:rciv_radius="15dp"/>
+        rc:rciv_radius="7dp"/>
     <TextView
         android:id="@+id/rec_text"
         android:layout_toRightOf="@+id/rec_img"

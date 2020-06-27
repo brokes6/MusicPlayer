@@ -254,7 +254,7 @@
                         android:layout_width="130dp"
                         android:layout_height="160dp"
                         android:scaleType="centerCrop"
-                        rc:rciv_radius="15dp"/>
+                        rc:rciv_radius="7dp"/>
                     <RelativeLayout
                         android:layout_width="130dp"
                         android:layout_height="160dp">
@@ -293,7 +293,7 @@
                         android:layout_width="130dp"
                         android:layout_height="160dp"
                         android:scaleType="centerCrop"
-                        rc:rciv_radius="15dp"/>
+                        rc:rciv_radius="7dp"/>
                     <RelativeLayout
                         android:layout_width="130dp"
                         android:layout_height="160dp">
