@@ -76,6 +76,11 @@ public class SingerInfoSearchFragment extends BaseFragment<SingerPresenter> impl
         }
     }
 
+    @Override
+    protected void initView() {
+
+    }
+
     SimiSingerAdapter.OnSimiSingerClickListener listener = position -> {
         ToastUtils.showShort(position);
     };

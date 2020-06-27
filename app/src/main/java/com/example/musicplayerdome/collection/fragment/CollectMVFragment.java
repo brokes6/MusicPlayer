@@ -46,6 +46,11 @@ public class CollectMVFragment extends BaseFragment<CollectionPresenter> impleme
     }
 
     @Override
+    protected void initView() {
+
+    }
+
+    @Override
     public CollectionPresenter onCreatePresenter() {
         return new CollectionPresenter(this);
     }

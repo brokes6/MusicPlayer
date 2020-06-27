@@ -80,7 +80,6 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.songsheetfragment,container,false);
-        initView();
         return binding.getRoot();
     }
 
@@ -154,8 +153,8 @@ public class SongSheetFragment extends BaseFragment<MinePresenter> implements Vi
 
     }
 
-
-    private void initView(){
+    @Override
+    protected void initView(){
         binding.myMusic.setOnClickListener(this);
         binding.MCollection.setOnClickListener(this);
         binding.SongLike.setOnClickListener(this);

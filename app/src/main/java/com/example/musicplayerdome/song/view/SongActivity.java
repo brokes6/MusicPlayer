@@ -97,7 +97,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMusicStartEvent(MusicStartEvent event) {
-        Log.d(TAG, "onMusicStartEvent");
+        Log.e(TAG, "Song:onMusicStartEvent接到通知");
         SongInfo songInfo = event.getSongInfo();
         if (!songInfo.getSongId().equals(currentSongInfo.getSongId())) {
             //说明该界面下，切歌了，则要重新设置一遍
@@ -224,6 +224,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     private void getIntentData() {
         Intent intent = getIntent();
         currentSongInfo = intent.getParcelableExtra(SONG_INFO);
+        SharedPreferencesUtil.putData("Ykey",2);
     }
 
     /**
@@ -615,7 +616,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     public void onGetLyricSuccess(LyricBean bean) {
         hideDialog();
         Log.e(TAG, "onGetLyricSuccess : " + bean);
-        SharedPreferencesUtil.putData("Ykey",2);
         if (bean.getLrc() != null) {
             if (bean.getTlyric().getLyric() != null) {
                 binding.lrc.loadLrc(bean.getLrc().getLyric(), bean.getTlyric().getLyric());

@@ -54,11 +54,19 @@ public class PersonalSheetFragment extends BaseFragment<MinePresenter> implement
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.delegate_user_info,container,false);
-        initViews();
         return binding.getRoot();
     }
 
-    private void initViews(){
+    @Override
+    protected void initData() {
+        if (mCurrentUser!=null){
+            showDialog();
+            mPresenter.getUserPlaylist(mCurrentUser.getProfile().getUserId());
+        }
+    }
+
+    @Override
+    protected void initView() {
         //基本信息
         String createTime = TimeUtil.getTimeStandardOnlyYMD(mCurrentUser.getCreateTime());
         binding.tvUserDetailCreatetime.setText("村龄: " + createTime + "注册");
@@ -68,14 +76,6 @@ public class PersonalSheetFragment extends BaseFragment<MinePresenter> implement
         binding.tvUserInfoToptext.setText(mCurrentUser.getProfile().getNickname() + "的听歌排行");
         binding.tvUserInfoBottomtext.setText("累计听歌" + mCurrentUser.getListenSongs() + "首");
         binding.tvUserInfoToplike.setText(mCurrentUser.getProfile().getNickname() + "喜欢的音乐");
-    }
-
-    @Override
-    protected void initData() {
-        if (mCurrentUser!=null){
-            showDialog();
-            mPresenter.getUserPlaylist(mCurrentUser.getProfile().getUserId());
-        }
     }
 
     @Override
@@ -117,10 +117,15 @@ public class PersonalSheetFragment extends BaseFragment<MinePresenter> implement
         }
         //创建的歌单数量
         int createPlaylistSize = subIndex -1 ;
-        playlistEntities.add(new UserPlaylistEntity("(" +createPlaylistSize +")", "更多歌单", bean.getPlaylist().subList(1, 4)));
         //收藏的歌单的数量
         int collectPlayListSize = size - subIndex;
-        playlistEntities.add(new UserPlaylistEntity("(" +collectPlayListSize +")", "更多歌单", bean.getPlaylist().subList(subIndex, subIndex + 3)));
+        if (bean.getPlaylist().size()>5){
+            playlistEntities.add(new UserPlaylistEntity("(" +createPlaylistSize +")", "更多歌单", bean.getPlaylist().subList(1, 4)));
+            playlistEntities.add(new UserPlaylistEntity("(" +collectPlayListSize +")", "更多歌单", bean.getPlaylist().subList(subIndex, subIndex + 3)));
+        }else{
+            playlistEntities.add(new UserPlaylistEntity("(" +createPlaylistSize +")", "更多歌单", bean.getPlaylist()));
+            playlistEntities.add(new UserPlaylistEntity("(" +collectPlayListSize +")", "更多歌单", bean.getPlaylist()));
+        }
 
         mPlayListAdapter = new UserHomePagePlayListAdapter(playlistEntities, getContext());
         //子布局点击事件 歌单详情

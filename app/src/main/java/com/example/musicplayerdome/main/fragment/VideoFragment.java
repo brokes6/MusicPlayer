@@ -43,6 +43,11 @@ public class VideoFragment extends BaseFragment {
     }
 
     @Override
+    protected void initView() {
+
+    }
+
+    @Override
     public BasePresenter onCreatePresenter() {
         return null;
     }

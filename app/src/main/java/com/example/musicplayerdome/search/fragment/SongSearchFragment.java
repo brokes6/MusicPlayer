@@ -101,6 +101,11 @@ public class SongSearchFragment extends BaseFragment<SearchPresenter> implements
     }
 
     @Override
+    protected void initView() {
+
+    }
+
+    @Override
     public SearchPresenter onCreatePresenter() {
         return new SearchPresenter(this);
     }

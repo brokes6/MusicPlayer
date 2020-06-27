@@ -19,21 +19,25 @@ import com.example.musicplayerdome.util.LoadingsDialog;
 
 /**
  * 考虑是用懒加载来加载Fragment
- * Created By Rikka on 2019/7/14
+ * Created By fuxinbo on 2020/5/14
  */
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements View.OnClickListener {
     private static final String TAG = "BaseFragment";
 
     public static final String SONG_URL = "http://music.163.com/song/media/outer/url?id=";
 
+    //网络请求接口
     protected P mPresenter;
 
+    //Loading加载类
     protected LoadingsDialog mDialogs;
 
     protected Activity activity;
 
+    //fragment标题，用于Tab的标题
     public String fragmentTitle;
 
+    //判断是否隐藏
     private boolean isFragmentVisible;
 
     //View是否加载完成
@@ -63,6 +67,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         isFirstLoad = true;
         isPrepared = true;
         View view = initView(inflater, container, savedInstanceState);
+        initView();
         lazyLoad();
         return view;
     }
@@ -113,7 +118,15 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         }
     }
 
+    /**
+     * 初始化数据方法
+     */
     protected abstract void initData();
+
+    /**
+     * 初始化控件
+     */
+    protected abstract void initView();
 
     /**
      * ViewPager联合使用
@@ -129,11 +142,17 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         }
     }
 
+    /**
+     * 显示fragment，顺便刷新数据
+     */
     protected void onVisible() {
         isFragmentVisible = true;
         lazyLoad();
     }
 
+    /**
+     * 隐藏fragment
+     */
     protected void onInvisible() {
         isFragmentVisible = false;
     }
@@ -165,6 +184,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      */
     protected abstract void initVariables(Bundle bundle);
 
+    /**
+     * 对Loading进行初始化
+     */
     private void createDialog() {
         if (mDialogs == null){
             mDialogs = LoadingsDialog.getInstance(getContext());
@@ -201,10 +223,18 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         }
     }
 
+    /**
+     * 设置fragment的标题文字
+     * @param title
+     */
     public void setFragmentTitle(String title) {
         fragmentTitle = title;
     }
 
+    /**
+     * 获取fragment的标题文字
+     * @return
+     */
     public String getTitle() {
         return fragmentTitle;
     }

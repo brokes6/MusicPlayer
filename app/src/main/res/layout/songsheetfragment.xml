@@ -238,14 +238,16 @@
                     android:layout_height="@dimen/dp_24"
                     android:src="@mipmap/more_vertical"/>
             </LinearLayout>
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:id="@+id/Song_Like"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content">
                     <com.android.liuzhuang.rcimageview.RoundCornerImageView
                         android:id="@+id/Song_Like_img"
@@ -282,7 +284,9 @@
                     android:id="@+id/Song_FM"
                     android:layout_toRightOf="@+id/Song_Like"
                     android:layout_marginLeft="10dp"
-                    android:layout_width="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content">
                     <com.android.liuzhuang.rcimageview.RoundCornerImageView
                         android:id="@+id/my_song_img"
@@ -323,8 +327,33 @@
                             android:text="你的私人库曲"/>
                     </RelativeLayout>
                 </RelativeLayout>
-
-            </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/Song_More"
+                    android:layout_toRightOf="@+id/Song_FM"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="130dp"
+                    android:layout_height="160dp"
+                    android:background="@drawable/file_background_radius_15_whiteash">
+                    <ImageView
+                        android:id="@+id/Song_More_img"
+                        android:layout_centerInParent="true"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/more_and_more" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_below="@+id/Song_More_img"
+                        android:layout_marginTop="10dp"
+                        android:textColor="#707070"
+                        android:text="更多"/>
+                </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

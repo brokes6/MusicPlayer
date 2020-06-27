@@ -78,6 +78,11 @@ public class SingerSongSearchFragment extends BaseFragment<SingerPresenter> impl
     }
 
     @Override
+    protected void initView() {
+
+    }
+
+    @Override
     public SingerPresenter onCreatePresenter() {
         return new SingerPresenter(this);
     }

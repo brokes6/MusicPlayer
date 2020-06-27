@@ -30,6 +30,11 @@ public class PersonalDynamicFragment extends BaseFragment {
     }
 
     @Override
+    protected void initView() {
+
+    }
+
+    @Override
     public BasePresenter onCreatePresenter() {
         return null;
     }

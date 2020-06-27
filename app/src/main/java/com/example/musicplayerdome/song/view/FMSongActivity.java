@@ -90,7 +90,7 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMusicStartEvent(MusicStartEvent event) {
-        Log.d(TAG, "onMusicStartEvent");
+        Log.e(TAG, "FM：onMusicStartEvent接到通知");
         SongInfo songInfo = event.getSongInfo();
         if (!songInfo.getSongId().equals(currentSongInfo.getSongId())) {
             //说明该界面下，切歌了，则要重新设置一遍
@@ -107,7 +107,6 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMusicPauseEvent(MusicPauseEvent event) {
-        Log.d(TAG, "onMusicPauseEvent");
         checkMusicPlaying();
     }
 
@@ -195,6 +194,7 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
     private void getIntentData() {
         Intent intent = getIntent();
         currentSongInfo = intent.getParcelableExtra(SONG_INFO);
+        SharedPreferencesUtil.putData("Ykey",1);
     }
 
     /**
@@ -501,8 +501,6 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
 
     @Override
     public void onGetLyricSuccess(LyricBean bean) {
-        Log.e(TAG, "onGetLyricSuccess : " + bean);
-        SharedPreferencesUtil.putData("Ykey",1);
         if (bean.getLrc() != null) {
             if (bean.getTlyric().getLyric() != null) {
                 binding.lrc.loadLrc(bean.getLrc().getLyric(), bean.getTlyric().getLyric());

@@ -83,12 +83,12 @@ public class FeedSearchFragment extends BaseFragment<SearchPresenter> implements
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recyclerview, container, false);
-        initView();
         EventBus.getDefault().register(this);
         return binding.getRoot();
     }
 
-    private void initView(){
+    @Override
+    protected void initView(){
         adapter = new FeedAdapter(getContext());
         adapter.setType(1);
         adapter.setKeywords(keywords == null ? "" : keywords);

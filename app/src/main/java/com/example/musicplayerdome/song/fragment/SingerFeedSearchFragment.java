@@ -82,6 +82,14 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
         binding.rv.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rv.setAdapter(adapter);
 
+        if (singerName != null) {
+            showDialog();
+            mPresenter.getSongMvData(singId);
+        }
+    }
+
+    @Override
+    protected void initView() {
         //设置 Header式
         binding.refreshLayout.setEnableRefresh(false);
         //取消Footer
@@ -97,11 +105,6 @@ public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> impl
                 mPresenter.LoadMoreSongMvData(singId,offset);
             }
         });
-
-        if (singerName != null) {
-            showDialog();
-            mPresenter.getSongMvData(singId);
-        }
     }
 
     private SongMvAdapter.OnSimiSingerClickListener listClickListener = position -> {

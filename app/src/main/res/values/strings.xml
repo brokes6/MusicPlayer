@@ -116,8 +116,8 @@
     <string name="sim_singer">相似歌手</string>
     <string name="singer_desc">歌手介绍</string>
     <string name="about_ta">关于TA</string>
-    <string name="hot_comment">精彩评论</string>
-    <string name="new_comment">最新评论</string>
+    <string name="hot_comment">精彩评论:</string>
+    <string name="new_comment">最新评论:</string>
     <string name="local_music">本地音乐</string>
     <string name="recent_play">最近播放</string>
     <string name="my_radio">我的电台</string>

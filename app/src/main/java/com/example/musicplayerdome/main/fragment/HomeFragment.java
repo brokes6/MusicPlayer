@@ -84,17 +84,11 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false);
-        initView();
         return binding.getRoot();
     }
 
     @Override
     protected void initData() {
-        recommends.clear();
-        mPresenter.getBanner();
-        mPresenter.getRecommendPlayList();
-        mPresenter.getRecommendsong();
-
         songListAdapter = new SongListAdapter(getContext());
         songListAdapter.setType(1);
         LinearLayoutManager i = new LinearLayoutManager(getContext());
@@ -109,7 +103,12 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
         binding.recommendMusic.setLayoutManager(i1);
         binding.recommendMusic.setAdapter(recommendMusicAdapter);
         recommendMusicAdapter.setListener(listener);
+
         showDialog();
+        recommends.clear();
+        mPresenter.getBanner();
+        mPresenter.getRecommendPlayList();
+        mPresenter.getRecommendsong();
     }
 
     @Override
@@ -141,7 +140,8 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
 
     }
 
-    private void initView(){
+    @Override
+    protected void initView(){
         binding.hRank.setOnClickListener(this);
         binding.hDailyRecommend.setOnClickListener(this);
         binding.songSheet.setOnClickListener(this);
@@ -183,14 +183,10 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
             Log.e(TAG, "轮播图开始刷新");
             banners.clear();
             bannerImageList.clear();
-            banners.addAll(bean.getBanners());
-            loadImageToList();
-            initBanner(bannerImageList);
-        }else{
+        }
         banners.addAll(bean.getBanners());
         loadImageToList();
         initBanner(bannerImageList);
-        }
     }
 
     //将图片装到BannerList中

@@ -57,7 +57,6 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.myfragment,container,false);
-        initView();
         return binding.getRoot();
     }
 
@@ -85,7 +84,8 @@ public class YuncunFragment extends BaseFragment<MvPresenter> implements MvContr
         showDialog();
     }
 
-    public void initView(){
+    @Override
+    protected void initView(){
         //设置 Header式
         binding.refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
         //取消Footer

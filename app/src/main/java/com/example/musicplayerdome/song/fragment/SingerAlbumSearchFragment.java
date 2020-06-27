@@ -79,6 +79,11 @@ public class SingerAlbumSearchFragment extends BaseFragment<SingerPresenter> imp
         }
     }
 
+    @Override
+    protected void initView() {
+
+    }
+
     AlbumAdapter.OnAlbumClickListener listener = new AlbumAdapter.OnAlbumClickListener() {
         @Override
         public void onAlbumClick(int position) {

@@ -38,5 +38,14 @@
                 android:text="@string/login_phone_number"
                 android:textColor="#Db2C1F" />
         </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="同意《用户协议》和《隐私政策》《儿童隐私政策》"
+            android:textColor="@android:color/white"
+            android:textSize="11sp" />
     </RelativeLayout>
 </layout>

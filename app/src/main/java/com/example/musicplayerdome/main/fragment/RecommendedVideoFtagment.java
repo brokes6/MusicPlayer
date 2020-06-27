@@ -72,7 +72,12 @@ public class RecommendedVideoFtagment extends BaseFragment<RecommendedPresenter>
                 }
             }
         });
+        showDialog();
+        mPresenter.getRecommendedVideos();
 
+    }
+    @Override
+    protected void initView() {
         //设置 Header式
         binding.RSwipeRefresh.setRefreshHeader(new MaterialHeader(getContext()));
         //取消Footer
@@ -87,10 +92,6 @@ public class RecommendedVideoFtagment extends BaseFragment<RecommendedPresenter>
                 mPresenter.getRecommendedVideos();
             }
         });
-
-        showDialog();
-        mPresenter.getRecommendedVideos();
-
     }
 
     RecommemdedVideoAdapter.RecommemdedVideoItemClickListener itemClickListener = new RecommemdedVideoAdapter.RecommemdedVideoItemClickListener() {

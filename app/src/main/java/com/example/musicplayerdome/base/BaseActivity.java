@@ -37,6 +37,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected LoadingsDialog mDialogs;
 
     public Context mContext;
+
     private SongInfo bottomSongInfo;
 
     @Override
@@ -46,12 +47,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         if (onCreatePresenter() != null) {
             mPresenter = onCreatePresenter();
         }
-        //将导航栏颜色改为白色
+        //将导航栏颜色改为白色，按键设为灰色
         ImmersionBar.with(this)
                 .navigationBarColor(R.color.white)
                 .navigationBarDarkIcon(true)
@@ -85,7 +85,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onDestroy();
     }
 
-    //
+    /**
+     * 对Loading进行初始化
+     */
     public void goDialog(){
         if (mDialogs == null) {
             mDialogs = LoadingsDialog.getInstance(this);
@@ -128,6 +130,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         MediaSessionConnection.getInstance().disconnect();
     }
 
+
+    /**
+     * 对标题栏的返回图标修颜色
+     * @param color
+     */
     public void setBackBtn(String color) {
         ImageView backBtn = findViewById(R.id.iv_back);
         backBtn.setVisibility(View.VISIBLE);
@@ -141,17 +148,30 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         });
     }
 
+    /**
+     * 设置标题栏的文字
+     * @param resId
+     */
     public void setLeftTitleText(int resId) {
         TextView leftTitle = findViewById(R.id.tv_left_title);
         leftTitle.setVisibility(View.VISIBLE);
         leftTitle.setText(resId);
     }
 
+    /**
+     * 设置标题栏背景颜色
+     * @param resId
+     */
     public void setTitleBG(String resId){
         RelativeLayout title = findViewById(R.id.title);
         title.setBackgroundColor(Color.parseColor(resId));
     }
 
+    /**
+     * 设置标题栏的文字和颜色
+     * @param titleText
+     * @param textColor
+     */
     public void setLeftTitleText(String titleText,String textColor) {
         TextView leftTitle = findViewById(R.id.tv_left_title);
         leftTitle.setVisibility(View.VISIBLE);
@@ -159,33 +179,58 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         leftTitle.setTextColor(Color.parseColor(textColor));
     }
 
+    /**
+     * 设置标题栏的文字是否隐藏
+     */
     public void setLeftTitleTextGone() {
         TextView leftTitle = findViewById(R.id.tv_left_title);
         leftTitle.setVisibility(View.GONE);
     }
 
+    /**
+     * 将标题栏的文字设置位默认白色
+     */
     public void setLeftTitleTextColorWhite() {
         TextView leftTitle = findViewById(R.id.tv_left_title);
         leftTitle.setTextColor(Color.parseColor("#ffffff"));
     }
 
+    /**
+     * 设置标题栏文字的透明度
+     * @param alpha
+     */
     public void setLeftTitleAlpha(float alpha) {
         TextView leftTitle = findViewById(R.id.tv_left_title);
         leftTitle.setVisibility(View.VISIBLE);
         leftTitle.setAlpha(alpha);
     }
 
+    /**
+     * 将标题栏的搜索图标显示出来
+     * 和输入框一同使用
+     */
     public void setRightSearchButton() {
         TextView btnSearch = findViewById(R.id.btn_search);
         btnSearch.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * 将搜索框显示出来，并设置颜色
+     * @param textColor
+     */
     public void setEditText(String textColor) {
         SearchEditText etSearch = findViewById(R.id.et_search);
         etSearch.setVisibility(View.VISIBLE);
         etSearch.setEditTextColor(textColor);
     }
 
+    /**
+     * 将标题栏的样式改为 音乐样式
+     * 设置音乐名称
+     * 设置音乐作者
+     * @param songName
+     * @param singerName
+     */
     public void setSongInfo(String songName, String singerName) {
         RelativeLayout rlSong = findViewById(R.id.rl_song_info);
         rlSong.setVisibility(View.VISIBLE);

@@ -101,8 +101,8 @@
                         android:paddingLeft="10dp"
                         android:background="@color/white"
                         android:paddingTop="5dp"
-                        android:layout_marginTop="@dimen/dp_7"
-                        android:text="评论区"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:text="评论区:"
                         android:textColor="#303233"
                         android:textSize="@dimen/sp_17"
                         android:textStyle="bold" />
@@ -112,6 +112,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#fff"
+                        android:paddingTop="5dp"
                         android:layout_below="@id/tv_hot_comment"/>
 
 

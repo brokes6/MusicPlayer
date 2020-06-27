@@ -45,6 +45,11 @@ public class CollectSingersFragment extends BaseFragment<CollectionPresenter> im
     }
 
     @Override
+    protected void initView() {
+
+    }
+
+    @Override
     public CollectionPresenter onCreatePresenter() {
         return new CollectionPresenter(this);
     }

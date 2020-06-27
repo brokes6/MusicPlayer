@@ -73,6 +73,11 @@ public class HighQualityPlayListFragment extends BaseFragment<WowPresenter> impl
         mPresenter.getHighQuality(21, 0);
     }
 
+    @Override
+    protected void initView() {
+
+    }
+
     private HighPlayListAdapter.OnTopListClickListener listener = position -> {
         if (playlist != null || !playlist.isEmpty()) {
             Intent intent = new Intent(getActivity(), SongSheetActivityMusic.class);

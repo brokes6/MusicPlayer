@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 设置填充颜色 -->
+    <solid android:color="@color/red" />
+
+    <!-- 设置几何图形四个角的弧度 -->
+    <corners android:radius="20dp"/>
+
+    <padding android:top="3dp" android:bottom="3dp" android:left="5dp" android:right="5dp"/>
+
+</shape>

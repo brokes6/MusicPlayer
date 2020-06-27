@@ -32,8 +32,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login);
+        goDialog();
     }
     private void initView(){
+        setMargins(binding.title,0,getStatusBarHeight(this),0,0);
         binding.btnLogin.setOnClickListener(this);
         binding.register.setOnClickListener(this);
         binding.forgetPwd.setOnClickListener(this);

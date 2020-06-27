@@ -70,6 +70,11 @@ public class UnionTranscendenceFragment extends BaseFragment<RecommendedPresente
                 }
             }
         });
+        showDialog();
+        mPresenter.getGroupVideos(259129);
+    }
+    @Override
+    protected void initView() {
         //设置 Header式
         binding.smartrafresh.setRefreshHeader(new MaterialHeader(getContext()));
         //取消Footer
@@ -83,9 +88,6 @@ public class UnionTranscendenceFragment extends BaseFragment<RecommendedPresente
                 mPresenter.getGroupVideos(259129);
             }
         });
-
-        showDialog();
-        mPresenter.getGroupVideos(259129);
     }
 
     GroupVideoAdapter.GroupVideoItemClickListener listener = new GroupVideoAdapter.GroupVideoItemClickListener() {

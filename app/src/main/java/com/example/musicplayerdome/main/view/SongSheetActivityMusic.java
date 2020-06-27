@@ -224,6 +224,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
                 startActivity(intent);
                 break;
             case R.id.rl_playall:
+                SharedPreferencesUtil.putData("Ykey",2);
                 adapter.PlayAll();
                 binding.bottomController.setVisibility(View.VISIBLE);
                 break;
