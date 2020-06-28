@@ -58,7 +58,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
                 .init();
         mContext = this;
         onCreateView(savedInstanceState);
+        goDialog();
         initModule();
+        initView();
         initData();
     }
 
@@ -103,6 +105,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected abstract void initModule();
 
     protected abstract void initData();
+
+    protected abstract void initView();
 
 
     public void startActivity(Class<? extends AppCompatActivity> target, Bundle bundle, boolean finish) {

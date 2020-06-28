@@ -18,7 +18,6 @@ import com.example.musicplayerdome.databinding.FragmentUnionTranscendenceBinding
 import com.example.musicplayerdome.main.adapter.GroupVideoAdapter;
 import com.example.musicplayerdome.main.bean.RecommendedVideoBean;
 import com.example.musicplayerdome.main.other.RecommendedPresenter;
-import com.example.musicplayerdome.search.bean.VideoUrlBean;
 import com.example.musicplayerdome.search.dialog.VideoReviewDialog;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.util.XToastUtils;
@@ -133,7 +132,7 @@ public class UnionTranscendenceFragment extends BaseFragment<RecommendedPresente
 
     @Override
     public void onGetVideoCommentFail(String e) {
-
+        XToastUtils.error("网络请求失败，请检查网络再试");
     }
 
     @Override
@@ -154,7 +153,7 @@ public class UnionTranscendenceFragment extends BaseFragment<RecommendedPresente
     @Override
     public void onGetGroupVideosFail(String e) {
         hideDialog();
-        XToastUtils.error(e);
+        XToastUtils.error("网络请求失败，请检查网络再试");
     }
 
 }

@@ -44,6 +44,11 @@ public class SplashActivity extends BaseActivity {
         startCountDownTime();
     }
 
+    @Override
+    protected void initView() {
+
+    }
+
     private void startCountDownTime() {
         countDownTimer = new CountDownTimer(2000, 1000) {
             @Override

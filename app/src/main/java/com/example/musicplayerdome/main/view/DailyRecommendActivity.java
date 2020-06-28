@@ -1,11 +1,8 @@
 package com.example.musicplayerdome.main.view;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -71,7 +68,6 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
                 .init();
-        goDialog();
     }
 
 
@@ -88,8 +84,6 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
 
     @Override
     protected void initData() {
-        setLeftTitleText(R.string.day_recommend);
-        setBackBtn(getString(R.string.colorWhite));
         dailyList.clear();
 
         songAdapter = new MySongListAdapter(this);
@@ -97,20 +91,6 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
         binding.rvDailyrecommend.setLayoutManager(new LinearLayoutManager(this));
         binding.rvDailyrecommend.setAdapter(songAdapter);
 
-        String coverUrl = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(this).getUserInfo(""), LoginBean.class).getProfile().getBackgroundUrl();
-        if (coverUrl != null) {
-            Glide.with(this)
-                    .load(coverUrl)
-                    .transition(new DrawableTransitionOptions().crossFade())
-                    .into(binding.ivBackgroundCover);
-            Glide.with(this)
-                    .load(coverUrl)
-                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 1)))
-                    .transition(new DrawableTransitionOptions().crossFade())
-                    .into(binding.ivBackground);
-        }
-        binding.tvDay.setText(TimeUtil.getDay(System.currentTimeMillis()));
-        binding.tvMonth.setText("/" + TimeUtil.getMonth(System.currentTimeMillis()));
         long updateTime = SharePreferenceUtil.getInstance(this).getDailyUpdateTime();
         Log.d(TAG, "上次日推更新时间： " + TimeUtil.getTimeStandard(updateTime));
         //上次更新日推时间小于当天7点，则更新日推
@@ -129,6 +109,28 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
                 mPresenter.getDailyRecommend();
             }
         }
+    }
+
+    @Override
+    protected void initView() {
+        setLeftTitleText(R.string.day_recommend);
+        setBackBtn(getString(R.string.colorWhite));
+
+        String coverUrl = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(this).getUserInfo(""), LoginBean.class).getProfile().getBackgroundUrl();
+        if (coverUrl != null) {
+            Glide.with(this)
+                    .load(coverUrl)
+                    .transition(new DrawableTransitionOptions().crossFade())
+                    .into(binding.ivBackgroundCover);
+            Glide.with(this)
+                    .load(coverUrl)
+                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 1)))
+                    .transition(new DrawableTransitionOptions().crossFade())
+                    .into(binding.ivBackground);
+        }
+        binding.tvDay.setText(TimeUtil.getDay(System.currentTimeMillis()));
+        binding.tvMonth.setText("/" + TimeUtil.getMonth(System.currentTimeMillis()));
+
         minDistance = DensityUtil.dp2px(DailyRecommendActivity.this, 85);
         deltaDistance = DensityUtil.dp2px(DailyRecommendActivity.this, 200) - minDistance;
     }

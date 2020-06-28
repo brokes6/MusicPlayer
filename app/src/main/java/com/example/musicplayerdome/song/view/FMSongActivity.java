@@ -1,11 +1,9 @@
 package com.example.musicplayerdome.song.view;
 
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -13,9 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
 import androidx.databinding.DataBindingUtil;
 import com.bumptech.glide.Glide;
@@ -25,7 +21,6 @@ import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SongContract;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.databinding.ActivityFmsongBinding;
-import com.example.musicplayerdome.databinding.ActivitySongBinding;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
 import com.example.musicplayerdome.song.other.SongPlayManager;
@@ -38,10 +33,8 @@ import com.example.musicplayerdome.song.bean.LyricBean;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.bean.PlayListCommentBean;
 import com.example.musicplayerdome.song.bean.SongDetailBean;
-import com.example.musicplayerdome.song.dialog.SongDetailDialog;
 import com.example.musicplayerdome.song.dialog.SongListDialog;
 import com.example.musicplayerdome.util.GsonUtil;
-import com.example.musicplayerdome.util.JzViewOutlineProvider;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.example.musicplayerdome.util.TimeUtil;
@@ -67,25 +60,22 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 import static com.example.musicplayerdome.main.view.SongSheetActivityMusic.COMPLETED;
 
 
-public class FMSongActivity extends BaseActivity<SongPresenter> implements SongContract.View, VolumeChangeObserver.VolumeChangeListener,View.OnClickListener{
+public class FMSongActivity extends BaseActivity<SongPresenter> implements SongContract.View, VolumeChangeObserver.VolumeChangeListener{
     private static final String TAG = "FMSongActivity";
 
     public static final String SONG_INFO = "songInfo";
-    AudioManager mAudioManager;
+    private AudioManager mAudioManager;
     private SongInfo currentSongInfo;
     private long ids;
     private SongDetailBean songDetail;
     private TimerTaskManager mTimerTask;
     private boolean isLike = false;
     private int playMode;
-    private ObjectAnimator rotateAnimator;
-    private ObjectAnimator alphaAnimator;
+    private ObjectAnimator rotateAnimator,alphaAnimator;
     private boolean isShowLyrics = false;
     private LyricBean lyricBean;
     ActivityFmsongBinding binding;
     private VolumeChangeObserver mVolumeChangeObserver;
-    private SongListDialog songListDialog;
-    private List<SongInfo> songList = new ArrayList<>();
     private int Mvid;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -119,7 +109,6 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
                 .statusBarDarkFont(false)
                 .hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
                 .init();
-        goDialog();
     }
 
     @Override
@@ -135,7 +124,6 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
     @Override
     protected void initData() {
         showDialog();
-        initView();
         getIntentData();
         initAudioManager();
         setBackBtn(getString(R.string.colorWhite));
@@ -145,15 +133,15 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
 
         checkMusicState();
     }
-    private void initView(){
+
+    @Override
+    protected void initView(){
         binding.rlCenter.setOnClickListener(this);
         binding.ivPlay.setOnClickListener(this);
         binding.ivLike.setOnClickListener(this);
         binding.ivNext.setOnClickListener(this);
         binding.actAudioVolumeControl.setOnSeekBarChangeListener(new SeekBarChangeVolumeControl());
         setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
-//        binding.playerVideo.setOutlineProvider(new JzViewOutlineProvider(30));
-//        binding.playerVideo.setClipToOutline(true);
     }
 
     /**

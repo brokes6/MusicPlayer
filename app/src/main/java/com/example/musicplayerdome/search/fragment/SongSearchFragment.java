@@ -29,6 +29,7 @@ import com.example.musicplayerdome.search.other.SearchPresenter;
 import com.example.musicplayerdome.search.view.SearchResultActivity;
 import com.example.musicplayerdome.song.adapter.MySongListAdapter;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
+import com.example.musicplayerdome.util.XToastUtils;
 import com.lzx.starrysky.model.SongInfo;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,8 +45,7 @@ import java.util.List;
  */
 public class SongSearchFragment extends BaseFragment<SearchPresenter> implements SearchContract.View{
     private static final String TAG = "SongSearchFragment";
-    FragmentSearchSongBinding binding;
-    private String type;
+    private FragmentSearchSongBinding binding;
     private String keywords;
     private int searchType = 1;
     private MySongListAdapter adapter;
@@ -67,7 +67,6 @@ public class SongSearchFragment extends BaseFragment<SearchPresenter> implements
                 if (((SearchResultActivity) getActivity()).getPosition() == 1) {
                     needRefresh = false;
                     keywords = event.getKeyword();
-//                    showDialog();
                 }
             }
             showDialog();
@@ -94,10 +93,6 @@ public class SongSearchFragment extends BaseFragment<SearchPresenter> implements
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         binding.rvSongSearch.setLayoutManager(manager);
         binding.rvSongSearch.setAdapter(adapter);
-        if (keywords != null) {
-            showDialog();
-//            mPresenter.getSongSearch(keywords, searchType);
-        }
     }
 
     @Override
@@ -178,7 +173,7 @@ public class SongSearchFragment extends BaseFragment<SearchPresenter> implements
 
     @Override
     public void onGetSongSearchFail(String e) {
-
+        XToastUtils.error("网络请求失败，请检查网络再试");
     }
 
     @Override

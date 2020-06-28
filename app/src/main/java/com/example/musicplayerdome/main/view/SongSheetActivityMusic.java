@@ -15,20 +15,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.WowContract;
 import com.example.musicplayerdome.databinding.ActivityPlayListBinding;
-import com.example.musicplayerdome.databinding.SongPlayListBinding;
 import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.dialog.SongSheetDialog;
@@ -37,7 +33,6 @@ import com.example.musicplayerdome.song.adapter.MySongListAdapter;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.bean.BannerBean;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
-import com.example.musicplayerdome.databinding.SongSheetBinding;
 import com.example.musicplayerdome.main.bean.DailyRecommendBean;
 import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
@@ -47,8 +42,6 @@ import com.example.musicplayerdome.main.bean.TopListBean;
 import com.example.musicplayerdome.main.other.WowPresenter;
 import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.song.other.SongPlayManager;
-import com.example.musicplayerdome.song.view.CommentActivity;
-import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.util.AppBarStateChangeListener;
 import com.example.musicplayerdome.util.DensityUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
@@ -70,8 +63,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.glide.transformations.BlurTransformation;
-
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_CREATOR_AVATARURL;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_CREATOR_NICKNAME;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_DESCRIPTION;
@@ -84,35 +75,24 @@ import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID
  * SongSheetActivityMusic 歌单详情页面
  * 展示歌单里的歌曲
  */
-public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implements View.OnClickListener, WowContract.View{
-//    SongSheetBinding binding;
-    ActivityPlayListBinding binding;
-//    SongPlayListBinding binding;
+public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implements WowContract.View{
+    private ActivityPlayListBinding binding;
     private static final String TAG = "SongSheetActivity";
     private MySongListAdapter adapter;
     private long playlistId;
-    private boolean go = false;
-    private String creatorUrl;
-    private String playlistName;
-    private String playlistPicUrl;
-    private String creatorName;
-    int minDistance;
-    int deltaDistance;
-    int isCollection = 1;
-    private ObjectAnimator alphaAnimator;
-    private ObjectAnimator coverAlphaAnimator;
+    private String creatorUrl,playlistName,playlistPicUrl,creatorName,description,songids = "";
+    int minDistance,deltaDistance,isCollection = 1;
+    private ObjectAnimator alphaAnimator,coverAlphaAnimator;
     //计算完成后发送的Handler msg
     public static final int COMPLETED = 0;
-    LinearLayout SHComment,share;
-    TextView songComment;
+    private LinearLayout SHComment,share;
+    private TextView songComment;
     private Drawable Sbackg;
-    private String description;
     //🐕的一笔
     private List<SongDetailBean.SongsBean> beanList = new ArrayList<>();
     private List<PlaylistDetailBean.PlaylistBean.TrackIdsBean> songidList = new ArrayList<>();
     private List<SongInfo> songInfos = new ArrayList<>();
     private List<Integer> songid = new ArrayList<>();
-    String songids = "";
     private Boolean isload = false;
     private PlaylistDetailBean Sbean;
     @SuppressLint("HandlerLeak")
@@ -131,19 +111,14 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_play_list);
-        //之前的老布局
-//        binding = DataBindingUtil.setContentView(this,R.layout.song_play_list);
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
                 .init();
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        goDialog();
     }
 
     @Override
     protected void initData() {
-        initView();
         setBackBtn(getString(R.string.colorWhite));
         setLeftTitleTextColorWhite();
         setLeftTitleText(R.string.playlist);
@@ -155,8 +130,8 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         binding.recyclerView.setLayoutManager(lm);
         binding.recyclerView.setAdapter(adapter);
 
-        showDialog();
         if (getIntent() != null) {
+            showDialog();
             playlistPicUrl = getIntent().getStringExtra(PLAYLIST_PICURL);
             Glide.with(this).load(playlistPicUrl).into(binding.XLogin);
             playlistName = getIntent().getStringExtra(PLAYLIST_NAME);
@@ -171,11 +146,10 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             Log.e(TAG, "initData: 当前歌单id为"+ playlistId);
             mPresenter.getPlaylistDetail(playlistId);
         }
-        minDistance = DensityUtil.dp2px(SongSheetActivityMusic.this, 85);
-        deltaDistance = DensityUtil.dp2px(this, 300) - minDistance;
     }
 
-    private void initView(){
+    @Override
+    protected void initView(){
         SHComment = findViewById(R.id.SH_comment);
         songComment = findViewById(R.id.song_comment);
         share = findViewById(R.id.share);
@@ -201,6 +175,8 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             }
         });
         setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
+        minDistance = DensityUtil.dp2px(SongSheetActivityMusic.this, 85);
+        deltaDistance = DensityUtil.dp2px(this, 300) - minDistance;
     }
 
     @Override
@@ -416,7 +392,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
                 songids = songids + songidList.get(i).getId()+",";
             }
         }
-        Log.e(TAG, "真的🐕还要我这样获取，输出所有id:"+ songids);
+        Log.e(TAG, "真的🐕，输出所有id:"+ songids);
         mPresenter.getSongDetailAll(songids);
     }
 

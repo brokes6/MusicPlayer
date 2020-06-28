@@ -24,6 +24,7 @@ import com.example.musicplayerdome.util.LoadingsDialog;
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements View.OnClickListener {
     private static final String TAG = "BaseFragment";
 
+    //音乐播放地址，后直接接音乐id
     public static final String SONG_URL = "http://music.163.com/song/media/outer/url?id=";
 
     //网络请求接口

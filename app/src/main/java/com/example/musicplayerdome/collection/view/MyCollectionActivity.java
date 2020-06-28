@@ -36,7 +36,6 @@ public class MyCollectionActivity extends BaseActivity<CollectionPresenter> impl
                 .statusBarDarkFont(false)
                 .init();
 
-        goDialog();
         pagerAdapter = new MultiFragmentPagerAdapter(getSupportFragmentManager());
         fragments.add(new CollectSingersFragment());
         fragments.add(new CollectMVFragment());
@@ -63,6 +62,11 @@ public class MyCollectionActivity extends BaseActivity<CollectionPresenter> impl
         binding.vpContainer.setOffscreenPageLimit(2);
         binding.vpContainer.setCurrentItem(0);
         binding.tabType.setViewPager(binding.vpContainer);
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @Override

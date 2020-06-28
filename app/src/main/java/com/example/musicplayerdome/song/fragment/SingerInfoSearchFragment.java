@@ -6,10 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.blankj.utilcode.util.ToastUtils;
 import com.example.musicplayerdome.R;
@@ -25,7 +23,6 @@ import com.example.musicplayerdome.song.adapter.SimiSingerAdapter;
 import com.example.musicplayerdome.song.bean.SongMvBean;
 import com.example.musicplayerdome.song.other.SingIdEvent;
 import com.example.musicplayerdome.song.other.SingerPresenter;
-import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.XToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -37,13 +34,12 @@ import java.util.List;
  * 歌手详细信息Fragment
  * Created By Rikka on 2019/8/17
  */
-public class SingerInfoSearchFragment extends BaseFragment<SingerPresenter> implements SingerContract.View,View.OnClickListener {
+public class SingerInfoSearchFragment extends BaseFragment<SingerPresenter> implements SingerContract.View {
     private static final String TAG = "SingerInfoSearchFragmen";
     LayoutSingerInfoBinding binding;
     private long singerId = -1;
     private SimiSingerAdapter adapter;
     private List<SimiSingerBean.ArtistsBean> simiList = new ArrayList<>();
-    private SingerDescriptionBean descBean;
 
     public SingerInfoSearchFragment() {
         setFragmentTitle("歌手信息");
@@ -99,14 +95,7 @@ public class SingerInfoSearchFragment extends BaseFragment<SingerPresenter> impl
     public void onClick(View v) {
         Intent intent = new Intent();
         switch (v.getId()) {
-//            case R.id.singer_info_detail:
-//                intent.setClass(getActivity(), SingerInfoDetailActivity.class);
-//                if (simiList.size() != 0) {
-//                    String infoDetail = GsonUtil.toJson(descBean);
-//                    intent.putExtra(SingerInfoDetailActivity.INFO_DETAIL, infoDetail);
-//                    getActivity().startActivity(intent);
-//                }
-//                break;
+
         }
     }
 
@@ -144,8 +133,6 @@ public class SingerInfoSearchFragment extends BaseFragment<SingerPresenter> impl
     public void onGetSingerDescSuccess(SingerDescriptionBean bean) {
         hideDialog();
         Log.d(TAG, "onGetSingerDescSuccess :" + bean);
-        descBean = bean;
-
         binding.tvDesc.setText(bean.getBriefDesc());
     }
 

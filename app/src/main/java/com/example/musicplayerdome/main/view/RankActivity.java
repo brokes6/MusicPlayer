@@ -1,16 +1,12 @@
 package com.example.musicplayerdome.main.view;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.WowContract;
@@ -60,7 +56,6 @@ public class RankActivity extends BaseActivity<WowPresenter> implements WowContr
                 .statusBarColor(R.color.red)
                 .statusBarDarkFont(false)
                 .init();
-        goDialog();
     }
 
     @Override
@@ -75,8 +70,6 @@ public class RankActivity extends BaseActivity<WowPresenter> implements WowContr
 
     @Override
     protected void initData() {
-        setBackBtn(getString(R.string.colorWhite));
-        setLeftTitleText(getString(R.string.rank), getString(R.string.colorWhite));
         list.clear();
         adapter = new RankAdapter(this);
         adapter.setListener(listener);
@@ -85,6 +78,12 @@ public class RankActivity extends BaseActivity<WowPresenter> implements WowContr
         binding.rvToplist.setAdapter(adapter);
         showDialog();
         mPresenter.getTopList();
+    }
+
+    @Override
+    protected void initView() {
+        setBackBtn(getString(R.string.colorWhite));
+        setLeftTitleText(getString(R.string.rank), getString(R.string.colorWhite));
     }
 
     private RankAdapter.OnTopListClickListener listener = position -> {

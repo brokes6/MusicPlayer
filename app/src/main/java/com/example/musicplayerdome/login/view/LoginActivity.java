@@ -22,7 +22,7 @@ import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View,View.OnClickListener {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
     private static final String TAG = "LoginActivity";
     ActivityLoginBinding binding;
     String phoneNumber;
@@ -32,9 +32,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_login);
-        goDialog();
     }
-    private void initView(){
+
+    @Override
+    protected void initView(){
         setMargins(binding.title,0,getStatusBarHeight(this),0,0);
         binding.btnLogin.setOnClickListener(this);
         binding.register.setOnClickListener(this);
@@ -60,7 +61,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             phoneNumber = SharePreferenceUtil.getInstance(this).getAccountNum();
             binding.etPhone.setText(phoneNumber);
         }
-        initView();
     }
 
     @Override

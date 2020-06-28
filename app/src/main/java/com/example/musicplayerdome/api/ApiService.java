@@ -31,6 +31,7 @@ import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.RecommendedVideoBean;
 import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
+import com.example.musicplayerdome.personal.bean.FollowUserBean;
 import com.example.musicplayerdome.personal.bean.UserDetailBean;
 import com.example.musicplayerdome.personal.bean.UserEventBean;
 import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
@@ -187,6 +188,9 @@ public interface ApiService {
 
     @GET("like")//喜欢音乐
     Observable<LikeMusicBean> likeMusice(@Query("id") long id);
+
+    @GET("follow")//关注/取消关注用户
+    Observable<FollowUserBean> followUser(@Query("id") long id, @Query("t") int t);
 
     @GET("like")//不喜欢音乐
     Observable<LikeMusicBean> NolikeMusic(@Query("like") boolean y,@Query("id") long id);

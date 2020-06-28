@@ -1,20 +1,12 @@
 package com.example.musicplayerdome.search.view;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.example.musicplayerdome.R;
@@ -66,13 +58,11 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_search);
-        initView();
 
         ImmersionBar.with(this)
                 .statusBarColor(R.color.red)
                 .statusBarDarkFont(false)
                 .init();
-        goDialog();
     }
 
     @Override
@@ -96,10 +86,13 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
         binding.rvHotsearch.setLayoutManager(manager);
         binding.rvHotsearch.setAdapter(adapter);
         adapter.setListener(searchListener);
+
         showDialog();
         mPresenter.getHotSearchDetail();
     }
-    private void initView(){
+
+    @Override
+    protected void initView(){
         etSearch = findViewById(R.id.et_search);
         etSearch.requestFocus();
         btn_search = findViewById(R.id.btn_search);
@@ -215,8 +208,6 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
     public void onGetHotSearchDetailSuccess(HotSearchDetailBean bean) {
         hideDialog();
         searchDetailBean = bean;
-//        List<HotSearchDetailBean> adapterList = new ArrayList<>();
-//        adapterList.add(searchDetailBean);
         adapter.loadMore(bean.getData());
     }
 

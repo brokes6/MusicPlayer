@@ -14,12 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.RecommendedContract;
 import com.example.musicplayerdome.base.BaseFragment;
-import com.example.musicplayerdome.base.BasePresenter;
 import com.example.musicplayerdome.databinding.FragmentRecommendedvideoBinding;
 import com.example.musicplayerdome.main.adapter.RecommemdedVideoAdapter;
 import com.example.musicplayerdome.main.bean.RecommendedVideoBean;
 import com.example.musicplayerdome.main.other.RecommendedPresenter;
-import com.example.musicplayerdome.search.bean.VideoUrlBean;
 import com.example.musicplayerdome.search.dialog.VideoReviewDialog;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.util.XToastUtils;
@@ -135,8 +133,8 @@ public class RecommendedVideoFtagment extends BaseFragment<RecommendedPresenter>
     @Override
     public void onRecommendedVideosFail(String e) {
         hideDialog();
-        Log.e(TAG, "onRecommendedVideosFail: 获取推荐视频错误"+e );
-        XToastUtils.error(e);
+        Log.e(TAG, "获取推荐视频错误"+e );
+        XToastUtils.error("网络请求失败，请检查网络再试");
     }
 
     @Override

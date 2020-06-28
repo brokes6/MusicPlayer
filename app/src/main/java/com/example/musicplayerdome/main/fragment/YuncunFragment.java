@@ -2,14 +2,12 @@ package com.example.musicplayerdome.main.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -20,9 +18,7 @@ import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.databinding.MyfragmentBinding;
 import com.example.musicplayerdome.main.bean.MvSublistBean;
 import com.example.musicplayerdome.main.other.MvPresenter;
-import com.example.musicplayerdome.main.other.WowPresenter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
-import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.util.DisplayUtil;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.example.musicplayerdome.yuncun.adapter.YuncunAdapter;
@@ -33,7 +29,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import yuncun.bean.YuncunReviewBean;

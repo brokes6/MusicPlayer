@@ -33,6 +33,7 @@ import com.example.musicplayerdome.search.view.VideoActivity;
 import com.example.musicplayerdome.song.adapter.FeedAdapter;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
 import com.example.musicplayerdome.song.view.SongMvActivity;
+import com.example.musicplayerdome.util.XToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -48,7 +49,6 @@ import java.util.List;
 public class FeedSearchFragment extends BaseFragment<SearchPresenter> implements SearchContract.View{
     private static final String TAG = "FeedSearchFragment";
     FragmentRecyclerviewBinding binding;
-    private String type;
     private String keywords;
     private List<FeedSearchBean.ResultBean.VideosBean> videoList = new ArrayList<>();
     private List<MvBean> mvList = new ArrayList<>();
@@ -71,7 +71,6 @@ public class FeedSearchFragment extends BaseFragment<SearchPresenter> implements
                 if (((SearchResultActivity) getActivity()).getPosition() == 2) {
                     needRefresh = false;
                     keywords = event.getKeyword();
-//                    showDialog();
                 }
             }
             showDialog();
@@ -108,8 +107,6 @@ public class FeedSearchFragment extends BaseFragment<SearchPresenter> implements
         binding.refreshLayout.setEnableLoadMore(false);
 
         if (keywords != null) {
-//            showDialog();
-//            mPresenter.getFeedSearch(keywords, searchType);
         }
     }
 
@@ -213,7 +210,7 @@ public class FeedSearchFragment extends BaseFragment<SearchPresenter> implements
 
     @Override
     public void onGetFeedSearchFail(String e) {
-
+        XToastUtils.error("网络请求失败，请检查网络再试");
     }
 
     @Override

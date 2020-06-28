@@ -65,17 +65,19 @@
                                 android:text=""
                                 android:textColor="#232323"
                                 android:textSize="@dimen/sp_15" />
-                            <TextView
+
+                            <com.xuexiang.xui.widget.button.roundbutton.RoundButton
                                 android:id="@+id/tv_Signin"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                style="@style/RoundButton.Auto"
                                 android:layout_alignParentRight="true"
+                                android:padding="5dp"
                                 android:layout_marginRight="10dp"
-                                android:layout_marginTop="15dp"
-                                android:background="@drawable/file_background_radius_10_red"
-                                android:text="签 到"
-                                android:textColor="#FFFFFF"
-                                android:textSize="@dimen/sp_15" />
+                                android:layout_marginTop="10dp"
+                                android:text="签到"
+                                app:rb_radius="15dp"
+                                android:textColor="@color/xui_default_round_btn_white_text"
+                                app:rb_backgroundColor="@color/selector_tag_color"
+                                app:rb_borderColor="@color/selector_tag_color" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

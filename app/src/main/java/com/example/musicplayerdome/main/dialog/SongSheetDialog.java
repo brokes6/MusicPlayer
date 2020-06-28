@@ -31,7 +31,6 @@ public class SongSheetDialog extends Dialog implements View.OnClickListener{
     private TextView Stitle,Sintroduce;
     private String title,introduce,cover;
     private Drawable Sbg;
-    private ObjectAnimator alphaAnimator;
     private ObjectAnimator coverAlphaAnimator;
     public SongSheetDialog(@NonNull Context context, String title, String introduce, String cover, Drawable Sbg) {
         super(context, R.style.dialog_FadeIn);

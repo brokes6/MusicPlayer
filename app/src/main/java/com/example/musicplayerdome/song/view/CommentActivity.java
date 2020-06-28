@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.R;
@@ -58,7 +56,6 @@ public class CommentActivity extends BaseActivity<SongPresenter> implements Song
                 .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
                 .statusBarColor(R.color.red)
                 .init();
-        goDialog();
     }
 
     @Override
@@ -98,6 +95,11 @@ public class CommentActivity extends BaseActivity<SongPresenter> implements Song
                 mPresenter.getPlaylistComment(id);
                 break;
         }
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
 

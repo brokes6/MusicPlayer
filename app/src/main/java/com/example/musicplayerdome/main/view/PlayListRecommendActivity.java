@@ -1,13 +1,9 @@
 package com.example.musicplayerdome.main.view;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.WowContract;
@@ -53,10 +49,8 @@ public class PlayListRecommendActivity extends BaseActivity<WowPresenter> implem
                 .statusBarDarkFont(false)
                 .init();
 
-        goDialog();
         pagerAdapter = new MultiFragmentPagerAdapter(getSupportFragmentManager());
         fragments.add(new HighQualityPlayListFragment());
-//        fragments.add(new PlayListFragment("ACG"));
         pagerAdapter.init(fragments);
     }
 
@@ -72,15 +66,18 @@ public class PlayListRecommendActivity extends BaseActivity<WowPresenter> implem
 
     @Override
     protected void initData() {
-        setBackBtn(getString(R.string.colorWhite));
-        setLeftTitleText(getString(R.string.playlist_playground), getString(R.string.colorWhite));
-        setMargins(binding.rlTitle,0,getStatusBarHeight(this)-5,0,0);
-
         binding.vpContainer.setAdapter(pagerAdapter);
         binding.vpContainer.setOffscreenPageLimit(6);
         binding.vpContainer.setCurrentItem(0);
         pagerAdapter.getItem(0).setUserVisibleHint(true);
         binding.tabType.setViewPager(binding.vpContainer);
+    }
+
+    @Override
+    protected void initView() {
+        setBackBtn(getString(R.string.colorWhite));
+        setLeftTitleText(getString(R.string.playlist_playground), getString(R.string.colorWhite));
+        setMargins(binding.rlTitle,0,getStatusBarHeight(this)-5,0,0);
     }
 
     @Override

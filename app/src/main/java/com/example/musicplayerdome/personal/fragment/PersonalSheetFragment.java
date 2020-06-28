@@ -40,7 +40,7 @@ import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_ID
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_NAME;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_PICURL;
 
-public class PersonalSheetFragment extends BaseFragment<MinePresenter> implements View.OnClickListener, MineContract.View {
+public class PersonalSheetFragment extends BaseFragment<MinePresenter> implements MineContract.View {
     private static final String TAG = "PersonalSheetFragment";
     DelegateUserInfoBinding binding;
     private List<UserPlaylistBean.PlaylistBean> playlistBeans = new ArrayList<>();
@@ -119,11 +119,11 @@ public class PersonalSheetFragment extends BaseFragment<MinePresenter> implement
         int createPlaylistSize = subIndex -1 ;
         //收藏的歌单的数量
         int collectPlayListSize = size - subIndex;
-        if (bean.getPlaylist().size()>5){
+        if (bean.getPlaylist().size()>subIndex && bean.getPlaylist().size()>5){
             Log.e(TAG, "onGetUserPlaylistSuccess: ,,,,,,,,,,,,,,"+subIndex );
             playlistEntities.add(new UserPlaylistEntity("(" +createPlaylistSize +")", "更多歌单", bean.getPlaylist().subList(1, 4)));
-//            playlistEntities.add(new UserPlaylistEntity("(" +collectPlayListSize +")", "更多歌单", bean.getPlaylist().subList(subIndex, subIndex + 3)));
-            playlistEntities.add(new UserPlaylistEntity("(" +collectPlayListSize +")", "更多歌单", bean.getPlaylist().subList(4, 4 + 3)));
+            playlistEntities.add(new UserPlaylistEntity("(" +collectPlayListSize +")", "更多歌单", bean.getPlaylist().subList(subIndex, subIndex + 3)));
+//            playlistEntities.add(new UserPlaylistEntity("(" +collectPlayListSize +")", "更多歌单", bean.getPlaylist().subList(4, 4 + 3)));
         }else{
             playlistEntities.add(new UserPlaylistEntity("(" +createPlaylistSize +")", "更多歌单", bean.getPlaylist()));
             playlistEntities.add(new UserPlaylistEntity("(" +collectPlayListSize +")", "更多歌单", bean.getPlaylist()));

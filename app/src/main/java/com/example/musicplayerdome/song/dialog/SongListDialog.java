@@ -48,10 +48,10 @@ public class SongListDialog extends Dialog implements SongContract.View,View.OnC
     private MusicListAdapter adapter;
     private List<SongInfo> songList = new ArrayList<>();
     private View view;
-    MaxHeightRecyclerView recyclerView;
-    TextView tvPlayMode;
-    ImageView ivPlayMode,iv_trash_can;
-    RelativeLayout rl_play_mode;
+    private MaxHeightRecyclerView recyclerView;
+    private TextView tvPlayMode;
+    private ImageView ivPlayMode,iv_trash_can;
+    private RelativeLayout rl_play_mode;
 
     public SongListDialog(Context context) {
         super(context, R.style.my_dialog);

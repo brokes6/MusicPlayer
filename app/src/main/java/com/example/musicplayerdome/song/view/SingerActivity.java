@@ -1,11 +1,7 @@
 package com.example.musicplayerdome.song.view;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import androidx.databinding.DataBindingUtil;
 import com.bumptech.glide.Glide;
@@ -58,7 +54,6 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
     protected void onCreateView(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_singer);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        goDialog();
 
         pagerAdapter = new MultiFragmentPagerAdapter(getSupportFragmentManager());
         fragments.add(new SingerSongSearchFragment());
@@ -79,7 +74,6 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
 
     @Override
     protected void initData() {
-        showDialog();
         //到时候不使用这个方法，换一个方法（下次来改）
         setBackBtn(getString(R.string.colorWhite));
 
@@ -106,8 +100,14 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
             minDistance = DensityUtil.dp2px(SingerActivity.this, 85);
             deltaDistance = DensityUtil.dp2px(SingerActivity.this, 250) - minDistance;
 
+            showDialog();
             mPresenter.getSingerHotSong(singId);
         }
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @Override

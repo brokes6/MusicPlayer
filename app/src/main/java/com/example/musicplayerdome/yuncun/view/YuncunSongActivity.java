@@ -1,27 +1,20 @@
 package com.example.musicplayerdome.yuncun.view;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SongContract;
 import com.example.musicplayerdome.base.BaseActivity;
-import com.example.musicplayerdome.base.BasePresenter;
 import com.example.musicplayerdome.databinding.ActivityYuncunSongBinding;
 import com.example.musicplayerdome.main.bean.LikeListBean;
-import com.example.musicplayerdome.personal.view.PersonalActivity;
 import com.example.musicplayerdome.song.bean.CommentLikeBean;
 import com.example.musicplayerdome.song.bean.LikeMusicBean;
 import com.example.musicplayerdome.song.bean.LyricBean;
@@ -33,16 +26,11 @@ import com.example.musicplayerdome.song.other.MusicStartEvent;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.other.SongPresenter;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
-import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.model.SongInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import jp.wasabeef.glide.transformations.BlurTransformation;
-
-import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID;
 
 public class YuncunSongActivity extends BaseActivity<SongPresenter> implements SongContract.View,View.OnClickListener{
     ActivityYuncunSongBinding binding;
@@ -53,7 +41,6 @@ public class YuncunSongActivity extends BaseActivity<SongPresenter> implements S
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMusicStartEvent(MusicStartEvent event) {
         Log.d(TAG, "onMusicStartEvent");
-        SongInfo songInfo = event.getSongInfo();
         checkMusicPlaying();
     }
 
@@ -68,7 +55,6 @@ public class YuncunSongActivity extends BaseActivity<SongPresenter> implements S
         binding = DataBindingUtil.setContentView(this,R.layout.activity_yuncun_song);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        goDialog();
     }
 
     @Override
@@ -84,13 +70,13 @@ public class YuncunSongActivity extends BaseActivity<SongPresenter> implements S
     @Override
     protected void initData() {
         showDialog();
-        initView();
         getIntentData();
         setBackBtn(getString(R.string.colorWhite));
         setSongDetailBean();
     }
 
-    private void initView(){
+    @Override
+    protected void initView(){
         setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
         binding.userImg.setOnClickListener(this);
     }

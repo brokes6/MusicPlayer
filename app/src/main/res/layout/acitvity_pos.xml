@@ -53,7 +53,6 @@
                     android:layout_height="match_parent"
                     app:layout_collapseMode="parallax">
 
-
                     <com.example.musicplayerdome.rewrite.RoundImageView
                         android:id="@+id/iv_user_detail_avatar"
                         android:layout_marginLeft="20dp"
@@ -168,7 +167,7 @@
                         android:id="@+id/tv_user_detail_send_msg"
                         android:layout_width="80dp"
                         android:layout_height="30dp"
-                        android:layout_alignTop="@+id/ll_user_detail_follow"
+                        android:layout_alignBottom="@+id/iv_user_detail_vip"
                         android:layout_marginRight="20dp"
                         android:textColor="@color/white"
                         android:textSize="11sp"

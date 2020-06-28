@@ -11,24 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/rl_title"
+        <include
+            android:id="@+id/title"
+            layout="@layout/common_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_55"
-            android:background="@color/white">
-
-            <include
-                android:id="@+id/title"
-                layout="@layout/common_title"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_45" />
-        </RelativeLayout>
+            android:layout_height="@dimen/dp_55" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:overScrollMode="always"
             android:scrollbars="none">
 
@@ -51,17 +43,13 @@
                     rc:rciv_radius="15dp"
                     android:layout_centerVertical="true" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@id/iv_cover">
-
                     <TextView
                         android:id="@+id/tv_music_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_10"
+                        android:layout_toEndOf="@id/iv_cover"
+                        android:layout_alignTop="@+id/iv_cover"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="#303233"
@@ -71,6 +59,7 @@
                         android:id="@+id/tv_artist"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/iv_cover"
                         android:layout_below="@id/tv_music_name"
                         android:layout_marginStart="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_5"
@@ -78,20 +67,12 @@
                         android:maxLines="1"
                         android:textColor="#2196f3"
                         android:textSize="@dimen/sp_13" />
-                </RelativeLayout>
             </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/rl_song_info"
                     android:orientation="vertical">
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tv_gap_hot_comment"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="@dimen/dp_10"-->
-<!--                        android:layout_below="@id/rl_song_info"-->
-<!--                        android:background="#EAEAEA" />-->
 
                     <TextView
                         android:id="@+id/tv_hot_comment"

@@ -2,7 +2,6 @@ package com.example.musicplayerdome.song.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,52 +10,39 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SingerContract;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.databinding.FragmentRecyclerviewBinding;
-import com.example.musicplayerdome.main.adapter.SongListAdapter;
 import com.example.musicplayerdome.search.bean.FeedSearchBean;
 import com.example.musicplayerdome.search.bean.MvBean;
 import com.example.musicplayerdome.search.bean.SimiSingerBean;
 import com.example.musicplayerdome.search.bean.SingerAblumSearchBean;
 import com.example.musicplayerdome.search.bean.SingerDescriptionBean;
 import com.example.musicplayerdome.search.bean.SingerSongSearchBean;
-import com.example.musicplayerdome.song.adapter.FeedAdapter;
 import com.example.musicplayerdome.song.adapter.SongMvAdapter;
 import com.example.musicplayerdome.song.bean.SongMvBean;
 import com.example.musicplayerdome.song.other.SingIdEvent;
 import com.example.musicplayerdome.song.other.SingerPresenter;
 import com.example.musicplayerdome.song.view.SongMvActivity;
-import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> implements SingerContract.View {
     private static final String TAG = "SingerFeedSearchFragmen";
     FragmentRecyclerviewBinding binding;
-    private String type;
-    private String keywords;
-    private List<FeedSearchBean.ResultBean.VideosBean> videoList = new ArrayList<>();
-    private List<MvBean> mvList = new ArrayList<>();
     private SongMvAdapter adapter;
     private SongMvBean songMvBean;
-    private int searchType = 1014;
+    private int searchType = 1014,offset = 0;
     private String singerName;
     private long singId;
-    private int offset = 0;
 
     public SingerFeedSearchFragment() {
         setFragmentTitle("相关视频");

@@ -17,7 +17,7 @@ import com.example.musicplayerdome.util.ScreenUtils;
 import com.example.musicplayerdome.util.XToastUtils;
 
 
-public class SelectLoginActivity extends BaseActivity implements View.OnClickListener{
+public class SelectLoginActivity extends BaseActivity{
     private static final String TAG = "SelectLoginActivity";
     ActivitySelectLoginBinding binding;
 
@@ -35,6 +35,11 @@ public class SelectLoginActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void initData() {
+
+    }
+
+    @Override
+    protected void initView() {
 
     }
 

@@ -2,14 +2,11 @@ package com.example.musicplayerdome.search.view;
 
 import androidx.databinding.DataBindingUtil;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.R;
@@ -48,8 +45,8 @@ import cn.jzvd.JzvdStd;
  */
 public class VideoActivity extends BaseActivity<SearchPresenter> implements SearchContract.View,View.OnClickListener {
     private static final String TAG = "VideoActivity";
-    ActivityVideoBinding binding;
-    String title,coverUrl,vid,userName;
+    private ActivityVideoBinding binding;
+    private String title,coverUrl,vid,userName;
     private List<MusicCommentBean> CommentList = new ArrayList<>();
     private boolean isLike = false;
 
@@ -64,8 +61,6 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
                 .navigationBarDarkIcon(false)
                 .navigationBarColor(R.color.black)
                 .init();
-        goDialog();
-        initView();
     }
 
     @Override
@@ -78,7 +73,8 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
 
     }
 
-    private void initView(){
+    @Override
+    protected void initView(){
         binding.VComment.setOnClickListener(this);
         binding.VShare.setOnClickListener(this);
 
@@ -110,11 +106,6 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
             userName = intent.getStringExtra("userName");
             setSongInfo(title,userName);
             Glide.with(this).load(coverUrl).into(binding.jzVideo.posterImageView);
-//            Glide.with(this)
-//                    .load(coverUrl)
-//                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 25)))
-//                    .transition(new DrawableTransitionOptions().crossFade(1500))
-//                    .into(binding.VImg);
 
             mPresenter.getVideoData(vid);
             mPresenter.getVideoDetails(vid);

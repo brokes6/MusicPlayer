@@ -2,7 +2,6 @@ package com.example.musicplayerdome.main.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.databinding.DataBindingUtil;
@@ -53,7 +52,6 @@ public class SongSheetComment extends BaseActivity<SongPresenter> implements Son
                 .fitsSystemWindows(true)  //使用该属性,必须指定状态栏颜色
                 .statusBarColor(R.color.white)
                 .init();
-        goDialog();
     }
 
     @Override
@@ -68,14 +66,6 @@ public class SongSheetComment extends BaseActivity<SongPresenter> implements Son
 
     @Override
     protected void initData() {
-        setBackBtn(getString(R.string.colorBlack));
-
-        Intent intent = getIntent();
-        id = intent.getLongExtra(ID, 0);
-        Glide.with(this).load(intent.getStringExtra(COVER)).into(binding.ivCover);
-        binding.tvMusicName.setText(intent.getStringExtra(NAME));
-        binding.tvArtist.setText("by."+intent.getStringExtra(ARTIST));
-
         binding.rvHotComment.setLayoutManager(new LinearLayoutManager(this));
         binding.rvNewComment.setLayoutManager(new LinearLayoutManager(this));
         hotAdapter = new CommentAdapter(this);
@@ -85,6 +75,18 @@ public class SongSheetComment extends BaseActivity<SongPresenter> implements Son
 
         showDialog();
         mPresenter.getPlaylistComment(id);
+    }
+
+    @Override
+    protected void initView() {
+        setBackBtn(getString(R.string.colorBlack));
+        setTitleBG(getString(R.string.colorWhite));
+
+        Intent intent = getIntent();
+        id = intent.getLongExtra(ID, 0);
+        Glide.with(this).load(intent.getStringExtra(COVER)).into(binding.ivCover);
+        binding.tvMusicName.setText(intent.getStringExtra(NAME));
+        binding.tvArtist.setText("by."+intent.getStringExtra(ARTIST));
     }
 
     @Override

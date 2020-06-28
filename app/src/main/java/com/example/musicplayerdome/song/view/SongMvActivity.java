@@ -18,7 +18,6 @@ import com.example.musicplayerdome.song.adapter.CommentAdapter;
 import com.example.musicplayerdome.song.bean.CollectionMVBean;
 import com.example.musicplayerdome.song.bean.MVDetailBean;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
-import com.example.musicplayerdome.song.bean.SongMvBean;
 import com.example.musicplayerdome.song.bean.SongMvDataBean;
 import com.example.musicplayerdome.song.other.MvPersenter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
@@ -34,7 +33,7 @@ import java.util.List;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
-public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvContract.View,View.OnClickListener{
+public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvContract.View{
     private static final String TAG = "SongMvActivity";
     ActivitySongMvBinding binding;
     public static final String MVSONG_INFO = "mvsongInfo";
@@ -55,8 +54,6 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
                 .statusBarDarkFont(false)
                 .hideBar(BarHide.FLAG_HIDE_STATUS_BAR)
                 .init();
-        goDialog();
-        initView();
     }
 
     @Override
@@ -79,7 +76,8 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     }
 
     //初始化视频播放器
-    private void initView(){
+    @Override
+    protected void initView(){
         //不保存播放进度
         Jzvd.SAVE_PROGRESS = false;
         //自动播放

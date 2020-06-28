@@ -42,8 +42,6 @@ import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.util.XToastUtils;
-import com.example.musicplayerdome.yuncun.adapter.YuncunAdapter;
-import com.example.musicplayerdome.yuncun.view.YuncunSongActivity;
 import com.lzx.starrysky.model.SongInfo;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -146,6 +144,8 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
         binding.hRank.setOnClickListener(this);
         binding.hDailyRecommend.setOnClickListener(this);
         binding.songSheet.setOnClickListener(this);
+        binding.hRadioStation.setOnClickListener(this);
+        binding.hLiveBroadcast.setOnClickListener(this);
 
         //设置 Header式
         binding.refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
@@ -181,7 +181,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     @Override
     public void onGetBannerSuccess(BannerBean bean) {
         if (bannerImageList.size()>0){
-            Log.e(TAG, "轮播图开始刷新");
+            Log.e(TAG, "轮播图刷新成功");
             banners.clear();
             bannerImageList.clear();
         }
@@ -372,6 +372,10 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
                 break;
             case R.id.song_sheet:
                 ActivityUtils.startActivity(PlayListRecommendActivity.class);
+                break;
+            case R.id.h_radio_station:
+            case R.id.h_live_broadcast:
+                XToastUtils.info("此功能暂未制作");
                 break;
         }
     }

@@ -1,6 +1,5 @@
 package com.example.musicplayerdome.personal.view;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
@@ -10,6 +9,8 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.MineContract;
+import com.example.musicplayerdome.api.ApiEngine;
+import com.example.musicplayerdome.api.ApiService;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.databinding.AcitvityPosBinding;
@@ -21,7 +22,7 @@ import com.example.musicplayerdome.main.bean.MvSublistBean;
 import com.example.musicplayerdome.main.bean.MyFmBean;
 import com.example.musicplayerdome.main.bean.PlayModeIntelligenceBean;
 import com.example.musicplayerdome.main.other.MinePresenter;
-import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
+import com.example.musicplayerdome.personal.bean.FollowUserBean;
 import com.example.musicplayerdome.personal.bean.UserDetailBean;
 import com.example.musicplayerdome.personal.bean.UserPlaylistBean;
 import com.example.musicplayerdome.personal.fragment.PersonalDynamicFragment;
@@ -29,22 +30,27 @@ import com.example.musicplayerdome.personal.fragment.PersonalSheetFragment;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.AppBarStateChangeListener;
 import com.example.musicplayerdome.util.DensityUtil;
-import com.example.musicplayerdome.util.SharedPreferencesUtil;
+import com.example.musicplayerdome.util.XToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 public class PersonalActivity extends BaseActivity<MinePresenter> implements MineContract.View {
     private static final String TAG = "PersonalActivity";
-    AcitvityPosBinding binding;
+    private AcitvityPosBinding binding;
     public static final String USER_ID = "user_id";
     private long userid;
     private List<BaseFragment> fragments = new ArrayList<>();
     private MultiFragmentPagerAdapter pagerAdapter;
     private UserDetailBean beans;
-    int minDistance;
-    int deltaDistance;
+    private int minDistance,deltaDistance;
+    private boolean isFollowed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +67,6 @@ public class PersonalActivity extends BaseActivity<MinePresenter> implements Min
                 .statusBarDarkFont(false)
                 .init();
 
-        goDialog();
         userid = getIntent().getLongExtra(USER_ID,0);
     }
 
@@ -77,15 +82,21 @@ public class PersonalActivity extends BaseActivity<MinePresenter> implements Min
 
     @Override
     protected void initData() {
-        setBackBtn(getString(R.string.colorWhite));
-        setLeftTitleText(R.string.personal);
-        setLeftTitleTextColorWhite();
-
-        showDialog();
         if (userid!=0){
             showDialog();
             mPresenter.getUserDetail(userid);
         }
+    }
+
+    @Override
+    protected void initView() {
+        setBackBtn(getString(R.string.colorWhite));
+        setLeftTitleText(R.string.personal);
+        setLeftTitleTextColorWhite();
+
+        binding.llUserDetailFollow.setOnClickListener(this);
+        binding.flUserDetailFollowed.setOnClickListener(this);
+
         setMargins(binding.toolbar,0,getStatusBarHeight(this),0,0);
         minDistance = DensityUtil.dp2px(this, 85);
         deltaDistance = DensityUtil.dp2px(this, 300) - minDistance;
@@ -94,7 +105,50 @@ public class PersonalActivity extends BaseActivity<MinePresenter> implements Min
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ll_user_detail_follow:
+                followUser(userid,1);
+                break;
+            case R.id.fl_user_detail_followed:
+                XToastUtils.info("暂时不可取消关注");
+                break;
+        }
+    }
 
+    private void followUser(long id,int t){
+        ApiService service = ApiEngine.getInstance().getApiService();
+        service.followUser(id,t)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<FollowUserBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(FollowUserBean followUserBean) {
+                        XToastUtils.success(followUserBean.getFollowContent());
+                        isFollowed = followUserBean.getUser().getFollowed();
+                        if(isFollowed){
+                            binding.flUserDetailFollowed.setVisibility(View.VISIBLE);
+                            binding.llUserDetailFollow.setVisibility(View.GONE);
+                        }else{
+                            binding.flUserDetailFollowed.setVisibility(View.GONE);
+                            binding.llUserDetailFollow.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        XToastUtils.error(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override
@@ -164,10 +218,13 @@ public class PersonalActivity extends BaseActivity<MinePresenter> implements Min
         int follower = bean.getProfile().getFollows();
         binding.tvUserDetailSub.setText("关注 " + follower + "  粉丝 " + followed);
         //显示关注或者已关注
-        boolean isFollowed = bean.getProfile().isFollowed();
+        isFollowed = bean.getProfile().isFollowed();
+        Log.e(TAG, "onGetUserDetailSuccess: 当前用户是否关注"+ isFollowed);
         if(isFollowed){
             binding.flUserDetailFollowed.setVisibility(View.VISIBLE);
+            binding.llUserDetailFollow.setVisibility(View.GONE);
         }else{
+            binding.flUserDetailFollowed.setVisibility(View.GONE);
             binding.llUserDetailFollow.setVisibility(View.VISIBLE);
         }
         if (bean.getProfile().getVipType()==0){

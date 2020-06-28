@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ToastUtils;
-import com.example.musicplayerdome.MyApplication;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SingerContract;
 import com.example.musicplayerdome.base.BaseFragment;

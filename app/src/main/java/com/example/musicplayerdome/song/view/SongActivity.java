@@ -5,24 +5,17 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
-
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
@@ -32,10 +25,6 @@ import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.databinding.ActivitySongBinding;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
-import com.example.musicplayerdome.rewrite.MaxHeightRecyclerView;
-import com.example.musicplayerdome.search.other.KeywordsEvent;
-import com.example.musicplayerdome.search.view.SearchResultActivity;
-import com.example.musicplayerdome.song.adapter.MusicListAdapter;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.other.MusicPauseEvent;
 import com.example.musicplayerdome.song.other.MusicStartEvent;
@@ -54,7 +43,6 @@ import com.example.musicplayerdome.util.SharedPreferencesUtil;
 import com.example.musicplayerdome.util.TimeUtil;
 import com.example.musicplayerdome.util.VolumeChangeObserver;
 import com.example.musicplayerdome.util.XToastUtils;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.gyf.immersionbar.BarHide;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lzx.starrysky.manager.MusicManager;
@@ -86,14 +74,12 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     private TimerTaskManager mTimerTask;
     private boolean isLike = false;
     private int playMode;
-    private ObjectAnimator rotateAnimator;
-    private ObjectAnimator alphaAnimator;
+    private ObjectAnimator rotateAnimator,alphaAnimator;
     private boolean isShowLyrics = false;
     private LyricBean lyricBean;
     ActivitySongBinding binding;
     private VolumeChangeObserver mVolumeChangeObserver;
     private SongListDialog songListDialog;
-    private List<SongInfo> songList = new ArrayList<>();
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMusicStartEvent(MusicStartEvent event) {
@@ -145,7 +131,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                 .statusBarDarkFont(false)
                 .hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
                 .init();
-        goDialog();
     }
 
     @Override
@@ -161,7 +146,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     @Override
     protected void initData() {
         showDialog();
-        initView();
         getIntentData();
         initAudioManager();
         setBackBtn(getString(R.string.colorWhite));
@@ -171,7 +155,9 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
         checkMusicState();
     }
-    private void initView(){
+
+    @Override
+    protected void initView(){
         binding.rlCenter.setOnClickListener(this);
         binding.ivPlay.setOnClickListener(this);
         binding.ivLike.setOnClickListener(this);

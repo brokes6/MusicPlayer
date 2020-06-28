@@ -9,14 +9,12 @@ import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SingerContract;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.databinding.FragmentSingerHotSongBinding;
-import com.example.musicplayerdome.main.adapter.SongListAdapter;
 import com.example.musicplayerdome.search.bean.FeedSearchBean;
 import com.example.musicplayerdome.search.bean.SimiSingerBean;
 import com.example.musicplayerdome.search.bean.SingerAblumSearchBean;
@@ -42,7 +40,6 @@ public class SingerSongSearchFragment extends BaseFragment<SingerPresenter> impl
     private static final String TAG = "SingerSongSearchFragmen";
     FragmentSingerHotSongBinding binding;
     private long singerId = -1;
-    private String type;
     private MySongListAdapter adapter;
     private List<SingerSongSearchBean.HotSongsBean> hotSongList = new ArrayList<>();
     private List<SongInfo> songInfos = new ArrayList<>();

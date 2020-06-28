@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -44,9 +43,6 @@ import com.lzx.starrysky.model.SongInfo;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.xuexiang.xui.widget.popupwindow.easypopup.EasyPopup;
-import com.xuexiang.xui.widget.popupwindow.easypopup.HorizontalGravity;
-import com.xuexiang.xui.widget.popupwindow.easypopup.VerticalGravity;
 import java.util.ArrayList;
 import java.util.List;
 import static com.example.musicplayerdome.main.fragment.HomeFragment.PLAYLIST_CREATOR_AVATARURL;
@@ -61,11 +57,10 @@ import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID
  * HomeActivityMusic.SongSheetFragment（Tab之一，歌单）
  * 展示用户的歌单，私人FM
  */
-public class SongSheetFragment extends BaseFragment<MinePresenter> implements View.OnClickListener, MineContract.View{
+public class SongSheetFragment extends BaseFragment<MinePresenter> implements MineContract.View{
     SongsheetfragmentBinding binding;
     private static final String TAG = "SongSheetFragment";
     private UserPlaylistAdapter adapter;
-    private EasyPopup mCirclePop;
     private LoginBean loginBean;
     private long uid;
     private List<UserPlaylistBean.PlaylistBean> playlistBeans = new ArrayList<>();

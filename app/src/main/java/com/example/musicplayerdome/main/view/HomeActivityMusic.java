@@ -5,9 +5,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.ArgbEvaluator;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -15,10 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -31,7 +27,6 @@ import com.example.musicplayerdome.databinding.SidebarMainBinding;
 import com.example.musicplayerdome.main.adapter.MultiFragmentPagerAdapter;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.base.BaseFragment;
-import com.example.musicplayerdome.databinding.ActivityHomeBinding;
 import com.example.musicplayerdome.main.fragment.HomeFragment;
 import com.example.musicplayerdome.main.fragment.VideoFragment;
 import com.example.musicplayerdome.main.fragment.YuncunFragment;
@@ -59,10 +54,9 @@ import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID
  * 也就是MainAcitiviy，主页面
  * 分为3个Tab，展示3个不同页面
  */
-public class HomeActivityMusic extends BaseActivity<MainPresenter> implements View.OnClickListener, MainContract.View{
+public class HomeActivityMusic extends BaseActivity<MainPresenter> implements MainContract.View{
     private static final String TAG = "HomeActivity";
-//    ActivityHomeBinding binding;
-    SidebarMainBinding Sbinding;
+    private SidebarMainBinding Sbinding;
     private List<BaseFragment> fragmentList = new ArrayList<>();
     private MultiFragmentPagerAdapter mPagerAdapter;
     private long firstTime = 0;
@@ -71,20 +65,16 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
     private BottomSongPlayBar bottomController;
     private TabLayout tablayoutReal;
     private LinearLayout tabBackground,mainL;
-    private RelativeLayout mRelativeLayout;
     //用户信息
     private LoginBean loginBean;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         Sbinding = DataBindingUtil.setContentView(this,R.layout.sidebar_main);
-//        binding = DataBindingUtil.setContentView(this,R.layout.activity_home);
-        initView();
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
                 .init();
-        goDialog();
         connectMusicService();
         mPagerAdapter = new MultiFragmentPagerAdapter(getSupportFragmentManager());
         fragmentList.add(new SongSheetFragment());
@@ -103,14 +93,15 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Vi
         Log.e(TAG, "当前用户id为："+loginBean.getAccount().getId());
         mPresenter.getLikeList(loginBean.getAccount().getId());
     }
-    private void initView(){
+
+    @Override
+    protected void initView(){
         icNav = findViewById(R.id.ic_nav);
         ivSearch = findViewById(R.id.iv_search);
         viewpager = findViewById(R.id.viewpager);
         bottomController = findViewById(R.id.bottom_controller);
         tablayoutReal = findViewById(R.id.tablayoutReal);
         tabBackground = findViewById(R.id.tabBackground);
-        mRelativeLayout = findViewById(R.id.mrelativeLayout);
         mainL = findViewById(R.id.mainL);
 
         Sbinding.ivAvatar.setOnClickListener(this);

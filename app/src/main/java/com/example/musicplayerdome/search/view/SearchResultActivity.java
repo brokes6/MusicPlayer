@@ -2,13 +2,10 @@ package com.example.musicplayerdome.search.view;
 
 import androidx.databinding.DataBindingUtil;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.musicplayerdome.R;
@@ -36,7 +33,6 @@ import com.example.musicplayerdome.search.fragment.SongSearchFragment;
 import com.example.musicplayerdome.search.other.KeywordsEvent;
 import com.example.musicplayerdome.search.other.SearchPresenter;
 import com.example.musicplayerdome.song.bean.MusicCommentBean;
-import com.example.musicplayerdome.song.fragment.SingerFeedSearchFragment;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.ClickUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
@@ -70,11 +66,9 @@ public class SearchResultActivity extends BaseActivity<SearchPresenter> implemen
                 .statusBarColor(R.color.red)
                 .statusBarDarkFont(false)
                 .init();
-        initView();
         pagerAdapter = new MultiFragmentPagerAdapter(getSupportFragmentManager());
         fragments.add(new SongSearchFragment());
         fragments.add(new FeedSearchFragment());
-//        fragments.add(new SingerSearchFragment());
         pagerAdapter.init(fragments);
     }
 
@@ -88,7 +82,8 @@ public class SearchResultActivity extends BaseActivity<SearchPresenter> implemen
 
     }
 
-    private void initView(){
+    @Override
+    protected void initView(){
         etSearch = findViewById(R.id.et_search);
         btn_search = findViewById(R.id.btn_search);
 

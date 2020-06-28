@@ -29,17 +29,18 @@ import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.song.view.CommentActivity;
 import com.example.musicplayerdome.song.view.SingerActivity;
 import com.example.musicplayerdome.song.view.SongActivity;
+import com.example.musicplayerdome.util.XToastUtils;
 import com.lzx.starrysky.model.SongInfo;
 
 public class SongDetailDialog extends Dialog implements SongContract.View,View.OnClickListener{
     private static final String TAG = "SongDetailDialog";
     private Context context;
     private Activity mContext;
-    ImageView ivCover;
-    TextView tvSongName;
-    TextView tvSinger;
-    MusicDrawerItemView mdSinger,md_commend,md_singer;
-    View sview;
+    private ImageView ivCover;
+    private TextView tvSongName;
+    private TextView tvSinger;
+    private MusicDrawerItemView mdSinger,md_commend,md_singer,md_nextplay,md_collect,md_download,md_share,md_video;
+    private View sview;
     //SongActivity来的
     private long songId;
     private SongInfo msongInfo;
@@ -61,14 +62,25 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
         mContext = (Activity) context;
         view = mContext.getLayoutInflater().inflate(R.layout.activity_song_detail, null);
         ivCover = view.findViewById(R.id.iv_cover);
+        md_nextplay = view.findViewById(R.id.md_nextplay);
+        md_collect = view.findViewById(R.id.md_collect);
+        md_download = view.findViewById(R.id.md_download);
+        md_share = view.findViewById(R.id.md_share);
+        md_video = view.findViewById(R.id.md_video);
         md_singer = view.findViewById(R.id.md_singer);
         md_commend = view.findViewById(R.id.md_commend);
         tvSongName = view.findViewById(R.id.tv_songname);
         tvSinger = view.findViewById(R.id.tv_singer);
         mdSinger = view.findViewById(R.id.md_singer);
         sview = view.findViewById(R.id.sview);
+
+        md_nextplay.setOnClickListener(this);
+        md_download.setOnClickListener(this);
+        md_share.setOnClickListener(this);
+        md_video.setOnClickListener(this);
         md_singer.setOnClickListener(this);
         md_commend.setOnClickListener(this);
+        md_collect.setOnClickListener(this);
         sview.setOnClickListener(this);
 
         setContentView(view);
@@ -117,6 +129,13 @@ public class SongDetailDialog extends Dialog implements SongContract.View,View.O
                 intent.putExtra(SingerActivity.SINGER_PICURL, singerPicUrl);
                 mContext.startActivity(intent);
                 dismiss();
+                break;
+            case R.id.md_nextplay:
+            case R.id.md_collect:
+            case R.id.md_download:
+            case R.id.md_share:
+            case R.id.md_video:
+                XToastUtils.info("抱歉,目前只能查看评论和歌手");
                 break;
         }
     }
