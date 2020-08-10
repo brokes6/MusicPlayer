@@ -14,8 +14,8 @@
         <item name="android:windowExitAnimation">@anim/timepicker_anim_out_bottom</item>
     </style>
 
+    <!-- 自定义自己的主题样式 -->
     <style name="AppThemes" parent="XUITheme.Phone">
-        <!-- 自定义自己的主题样式 -->
         <item name="colorPrimary">@color/menu_white_normal</item>
         <item name="colorPrimaryDark">@color/menu_white_normal</item>
         <item name="colorAccent">@color/red</item>
@@ -29,9 +29,7 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@style/popupAnimation</item>
-
-        <!-- 点外边可以消失  -->
-        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item><!-- 点外边可以消失  -->
     </style>
 
     <!-- 自定义dialog 淡出淡入效果-->
@@ -41,30 +39,24 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <!-- 点外边可以消失  -->
-        <item name="android:windowCloseOnTouchOutside">true</item>
-        <!-- 引用淡出淡入效果  -->
-        <item name="android:windowEnterAnimation">@anim/dialog_fadein</item>
+        <item name="android:windowCloseOnTouchOutside">true</item> <!-- 点外边可以消失  -->
+        <item name="android:windowEnterAnimation">@anim/dialog_fadein</item>     <!-- 引用淡出淡入效果  -->
         <item name="android:windowExitAnimation">@anim/dialog_fadeout</item>
     </style>
 
 
+    <!--自定义dialog-->
     <style name="MyDialog" parent="@android:style/Theme.Holo.Dialog">
-        <!-- 是否有边框 -->
-        <item name="android:windowFrame">@null</item>
-        <!--是否在悬浮Activity之上  -->
-        <item name="android:windowIsFloating">true</item>
-        <!--标题  -->
-        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item><!-- 是否有边框 -->
+        <item name="android:windowIsFloating">true</item><!--是否在悬浮Activity之上  -->
+        <item name="android:windowNoTitle">true</item>  <!--标题  -->
         <!--阴影  -->
         <item name="android:windowIsTranslucent">true</item><!--半透明-->
-        <!-- 进入和退出的动画 -->
-        <item name="android:windowAnimationStyle">@style/mystyle</item>
-
-        <!-- 点外边可以消失  -->
-        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowAnimationStyle">@style/mystyle</item>    <!-- 进入和退出的动画 -->
+        <item name="android:windowCloseOnTouchOutside">true</item><!-- 点外边可以消失  -->
     </style>
 
+    <!--淡出淡入动画效果-->
     <style name="mystyle" parent="android:Animation">
     <item name="android:windowEnterAnimation">@anim/timepicker_anim_enter_bottom</item>
     <item name="android:windowExitAnimation">@anim/timepicker_anim_out_bottom</item>
@@ -97,7 +89,7 @@
         <item name="android:textSize">@dimen/sp_15</item>
     </style>
 
-<!--    Loading-->
+    <!--Loading-->
     <style name="TransparentDialog" parent="@android:style/Theme.Holo.Light.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>

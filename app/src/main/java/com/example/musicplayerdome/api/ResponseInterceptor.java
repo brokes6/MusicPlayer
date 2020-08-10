@@ -16,6 +16,9 @@ import okhttp3.ResponseBody;
 import okio.Buffer;
 import okio.BufferedSource;
 
+/**
+ * 网络请求类
+ */
 class ResponseInterceptor implements Interceptor {
     private static final String TAG = "ResponseInterceptor";
 

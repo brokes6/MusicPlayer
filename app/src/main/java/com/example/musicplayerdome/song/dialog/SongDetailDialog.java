@@ -32,6 +32,10 @@ import com.example.musicplayerdome.song.view.SongActivity;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.lzx.starrysky.model.SongInfo;
 
+/**
+ * Created by fuxinbo on 2020.5.4
+ * 音频功能弹窗列表
+ */
 public class SongDetailDialog extends Dialog implements SongContract.View,View.OnClickListener{
     private static final String TAG = "SongDetailDialog";
     private Context context;

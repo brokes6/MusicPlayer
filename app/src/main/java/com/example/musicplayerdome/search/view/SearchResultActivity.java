@@ -78,11 +78,6 @@ public class SearchResultActivity extends BaseActivity<SearchPresenter> implemen
     }
 
     @Override
-    protected void initModule() {
-
-    }
-
-    @Override
     protected void initView(){
         etSearch = findViewById(R.id.et_search);
         btn_search = findViewById(R.id.btn_search);

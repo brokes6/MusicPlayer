@@ -78,6 +78,7 @@ public interface ApiService {
     //别人的腾讯服务器
     String BASE_URL = "http:///62.234.57.125:3000";
 
+
     @GET("login/cellphone")
     Observable<LoginBean> login(@Query("phone") String phone, @Query("password") String password);
 

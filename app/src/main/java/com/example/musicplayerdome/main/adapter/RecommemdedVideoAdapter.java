@@ -29,6 +29,9 @@ import cn.jzvd.JzvdStd;
 
 import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID;
 
+/**
+ * 推荐视频
+ */
 public class RecommemdedVideoAdapter extends BaseRecyclerAdapter<RecommendedVideoBean.DatasData> {
     private static final String TAG = "RecommemdedVideoAdapter";
     private Context mcontext;

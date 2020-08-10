@@ -71,11 +71,6 @@ public class SearchActivity extends BaseActivity<SearchPresenter> implements Sea
     }
 
     @Override
-    protected void initModule() {
-
-    }
-
-    @Override
     protected void initData() {
         setBackBtn(getString(R.string.colorWhite));
         setEditText(getString(R.string.colorTransWithe));

@@ -56,7 +56,7 @@ public class SongListAdapter extends BaseRecyclerAdapter<PlaylistBean> {
         textView = holder.findViewById(R.id.song_text);
         if (item!=null){
             setPlayListInfo(mContext, item);
-            onSetListClickListener(listener, position);
+            onSetListClickListener(listener, position,imageView,textView);
         }
     }
 
@@ -68,17 +68,17 @@ public class SongListAdapter extends BaseRecyclerAdapter<PlaylistBean> {
         textView.setText(bean.getPlaylistName());
     }
 
-    public void onSetListClickListener(OnPlayListClickListener listener, int position) {
+    public void onSetListClickListener(OnPlayListClickListener listener, int position,RoundCornerImageView imageView,TextView textView) {
         linearLayout.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onClickListener(position);
+                listener.onClickListener(position,imageView,textView);
             }
         });
     }
 
 
     public interface OnPlayListClickListener {
-        void onClickListener(int position);
+        void onClickListener(int position,RoundCornerImageView imageView,TextView textView);
     }
 
     public void setListener(OnPlayListClickListener listener) {

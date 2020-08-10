@@ -148,7 +148,6 @@ public class LyricView extends View {
      * 加载双语歌词
      */
     public void loadLrc(String mainLrcText, String secondLrcText) {
-        Log.d(TAG,"mainLrcText : "+mainLrcText+" ");
         reset();
 
         String[] lrc = new String[2];

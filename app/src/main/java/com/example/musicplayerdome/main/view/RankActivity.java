@@ -64,11 +64,6 @@ public class RankActivity extends BaseActivity<WowPresenter> implements WowContr
     }
 
     @Override
-    protected void initModule() {
-        setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
-    }
-
-    @Override
     protected void initData() {
         list.clear();
         adapter = new RankAdapter(this);
@@ -84,6 +79,7 @@ public class RankActivity extends BaseActivity<WowPresenter> implements WowContr
     protected void initView() {
         setBackBtn(getString(R.string.colorWhite));
         setLeftTitleText(getString(R.string.rank), getString(R.string.colorWhite));
+        setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
     }
 
     private RankAdapter.OnTopListClickListener listener = position -> {

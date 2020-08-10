@@ -27,7 +27,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+/**
+ * 圆角图片
+ * 可设置圆角度数
+ */
 public class RoundImageView extends ImageView {
     public static final int GET_DATA_SUCCESS = 1;
     public static final int NETWORK_ERROR = 2;

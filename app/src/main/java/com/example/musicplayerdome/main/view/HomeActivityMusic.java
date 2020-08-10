@@ -205,6 +205,9 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Ma
                 break;
             case R.id.rl_logout:
                 showDialog();
+                if (SongPlayManager.getInstance().isPlaying()) {
+                    SongPlayManager.getInstance().cancelPlay();
+                }
                 mPresenter.logout();
                 break;
             case R.id.iv_search:
@@ -272,12 +275,6 @@ public class HomeActivityMusic extends BaseActivity<MainPresenter> implements Ma
     protected MainPresenter onCreatePresenter() {
         return new MainPresenter(this);
     }
-
-    @Override
-    protected void initModule() {
-
-    }
-
 
     @Override
     public void onBackPressed() {

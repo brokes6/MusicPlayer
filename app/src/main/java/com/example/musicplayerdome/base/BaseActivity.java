@@ -59,7 +59,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         mContext = this;
         onCreateView(savedInstanceState);
         goDialog();
-        initModule();
         initView();
         initData();
     }
@@ -101,8 +100,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected abstract void onCreateView(Bundle savedInstanceState);
 
     protected abstract P onCreatePresenter();
-
-    protected abstract void initModule();
 
     protected abstract void initData();
 

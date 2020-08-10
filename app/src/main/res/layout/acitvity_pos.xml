@@ -181,13 +181,12 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
+                    app:contentInsetStart="0dp"
                     app:layout_collapseMode="pin">
 
                     <include
                         android:id="@+id/title"
-                        layout="@layout/common_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        layout="@layout/common_title" />
                 </androidx.appcompat.widget.Toolbar>
 
                 <RelativeLayout

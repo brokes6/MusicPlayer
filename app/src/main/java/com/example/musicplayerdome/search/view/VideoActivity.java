@@ -69,11 +69,6 @@ public class VideoActivity extends BaseActivity<SearchPresenter> implements Sear
     }
 
     @Override
-    protected void initModule() {
-
-    }
-
-    @Override
     protected void initView(){
         binding.VComment.setOnClickListener(this);
         binding.VShare.setOnClickListener(this);

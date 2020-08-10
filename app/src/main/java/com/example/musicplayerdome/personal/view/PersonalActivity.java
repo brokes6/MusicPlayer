@@ -41,6 +41,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * 用户的个人界面
+ * 分为主页和动态
+ */
 public class PersonalActivity extends BaseActivity<MinePresenter> implements MineContract.View {
     private static final String TAG = "PersonalActivity";
     private AcitvityPosBinding binding;
@@ -73,11 +77,6 @@ public class PersonalActivity extends BaseActivity<MinePresenter> implements Min
     @Override
     protected MinePresenter onCreatePresenter() {
         return new MinePresenter(this);
-    }
-
-    @Override
-    protected void initModule() {
-
     }
 
     @Override

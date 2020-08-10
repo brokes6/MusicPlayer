@@ -16,7 +16,9 @@ import com.example.musicplayerdome.util.ClickUtil;
 import com.example.musicplayerdome.util.ScreenUtils;
 import com.example.musicplayerdome.util.XToastUtils;
 
-
+/**
+ * 选择登录方式页面
+ */
 public class SelectLoginActivity extends BaseActivity{
     private static final String TAG = "SelectLoginActivity";
     ActivitySelectLoginBinding binding;
@@ -40,11 +42,6 @@ public class SelectLoginActivity extends BaseActivity{
 
     @Override
     protected void initView() {
-
-    }
-
-    @Override
-    protected void initModule() {
         binding.btnPhoneLogin.setOnClickListener(this);
     }
 
@@ -77,8 +74,8 @@ public class SelectLoginActivity extends BaseActivity{
 
     /**
      * 退出应用
-     *
-     * @param timeInterval 设置第二次点击退出的时间间隔
+     * 判断第二次点击退出的时间间隔
+     * @param timeInterval
      */
     private void exitApp(long timeInterval) {
         if (System.currentTimeMillis() - firstTime >= timeInterval) {

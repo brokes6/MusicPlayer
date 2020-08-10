@@ -117,11 +117,6 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
     }
 
     @Override
-    protected void initModule() {
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
     protected void initData() {
         showDialog();
         getIntentData();
@@ -136,6 +131,8 @@ public class FMSongActivity extends BaseActivity<SongPresenter> implements SongC
 
     @Override
     protected void initView(){
+        EventBus.getDefault().register(this);
+
         binding.rlCenter.setOnClickListener(this);
         binding.ivPlay.setOnClickListener(this);
         binding.ivLike.setOnClickListener(this);

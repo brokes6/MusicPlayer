@@ -60,11 +60,6 @@ public class PlayListRecommendActivity extends BaseActivity<WowPresenter> implem
     }
 
     @Override
-    protected void initModule() {
-
-    }
-
-    @Override
     protected void initData() {
         binding.vpContainer.setAdapter(pagerAdapter);
         binding.vpContainer.setOffscreenPageLimit(6);

@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * 歌手详细信息Fragment
- * Created By Rikka on 2019/8/17
+ * Created By xxx on 2019/8/17
  */
 public class SingerInfoSearchFragment extends BaseFragment<SingerPresenter> implements SingerContract.View {
     private static final String TAG = "SingerInfoSearchFragmen";

@@ -21,6 +21,9 @@ import com.android.liuzhuang.rcimageview.RoundCornerImageView;
 import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.R;
 
+/**
+ * 歌单详情dialog，用来展示歌单详情文字和图片
+ */
 public class SongSheetDialog extends Dialog implements View.OnClickListener{
     private Context mcontext;
     private Activity Context;

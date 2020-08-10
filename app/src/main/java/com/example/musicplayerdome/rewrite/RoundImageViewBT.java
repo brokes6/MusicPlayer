@@ -27,7 +27,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-
+/**
+ * 圆形图片外加边框
+ */
 public class RoundImageViewBT extends ImageView {
     public static final int GET_DATA_SUCCESS = 1;
     public static final int NETWORK_ERROR = 2;

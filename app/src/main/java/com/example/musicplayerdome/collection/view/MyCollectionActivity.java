@@ -22,6 +22,10 @@ import com.gyf.immersionbar.ImmersionBar;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 收藏页面
+ * 包括了我收藏的歌手，收藏的视频
+ */
 public class MyCollectionActivity extends BaseActivity<CollectionPresenter> implements CollectionContract.View {
     ActivityMyCollectionBinding binding;
     private List<BaseFragment> fragments = new ArrayList<>();
@@ -45,11 +49,6 @@ public class MyCollectionActivity extends BaseActivity<CollectionPresenter> impl
     @Override
     protected CollectionPresenter onCreatePresenter() {
         return new CollectionPresenter(this);
-    }
-
-    @Override
-    protected void initModule() {
-
     }
 
     @Override

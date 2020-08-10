@@ -60,11 +60,6 @@ public class SongSheetComment extends BaseActivity<SongPresenter> implements Son
     }
 
     @Override
-    protected void initModule() {
-
-    }
-
-    @Override
     protected void initData() {
         binding.rvHotComment.setLayoutManager(new LinearLayoutManager(this));
         binding.rvNewComment.setLayoutManager(new LinearLayoutManager(this));

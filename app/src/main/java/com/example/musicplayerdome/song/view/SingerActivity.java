@@ -69,10 +69,6 @@ public class SingerActivity extends BaseActivity<SingerPresenter> implements Sin
     }
 
     @Override
-    protected void initModule() {
-    }
-
-    @Override
     protected void initData() {
         //到时候不使用这个方法，换一个方法（下次来改）
         setBackBtn(getString(R.string.colorWhite));

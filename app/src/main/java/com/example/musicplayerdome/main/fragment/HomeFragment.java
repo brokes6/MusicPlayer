@@ -3,41 +3,42 @@ package com.example.musicplayerdome.main.fragment;
 import android.content.Intent;
 import android.graphics.Outline;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.blankj.utilcode.util.ActivityUtils;
+import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.WowContract;
-import com.example.musicplayerdome.main.bean.CollectionListBean;
-import com.example.musicplayerdome.main.bean.RecommendsongBean;
-import com.example.musicplayerdome.main.view.PlayListRecommendActivity;
-import com.example.musicplayerdome.main.view.RankActivity;
-import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
 import com.example.musicplayerdome.base.BaseFragment;
 import com.example.musicplayerdome.bean.BannerBean;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
+import com.example.musicplayerdome.databinding.FragmentHomeBinding;
+import com.example.musicplayerdome.main.adapter.RecommendMusicAdapter;
+import com.example.musicplayerdome.main.adapter.SongListAdapter;
+import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.DailyRecommendBean;
 import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.PlaylistBean;
 import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
+import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
 import com.example.musicplayerdome.main.other.WowPresenter;
 import com.example.musicplayerdome.main.view.DailyRecommendActivity;
+import com.example.musicplayerdome.main.view.PlayListRecommendActivity;
+import com.example.musicplayerdome.main.view.RankActivity;
+import com.example.musicplayerdome.main.view.SongSheetActivityMusic;
 import com.example.musicplayerdome.rewrite.GlideImageLoader;
-import com.example.musicplayerdome.R;
-import com.example.musicplayerdome.main.adapter.RecommendMusicAdapter;
-import com.example.musicplayerdome.main.adapter.SongListAdapter;
-import com.example.musicplayerdome.databinding.FragmentHomeBinding;
 import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.song.view.SongActivity;
@@ -220,10 +221,14 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
         songListAdapter.setListener(listClickListener);
         songListAdapter.loadMore(list);
     }
-    private SongListAdapter.OnPlayListClickListener listClickListener = position -> {
+    private SongListAdapter.OnPlayListClickListener listClickListener = (position,imageView,textView) -> {
         if (recommends != null && !recommends.isEmpty()) {
             //进入歌单详情页面
-            Intent intent = new Intent(getActivity(), SongSheetActivityMusic.class);
+            Intent intent = new Intent(getContext(), SongSheetActivityMusic.class);
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    getActivity(),
+                    new Pair<View,String>(imageView,"testImg"),
+                    new Pair<View,String>(textView,"testText"));
             MainRecommendPlayListBean.RecommendBean bean = recommends.get(position);
             intent.putExtra(PLAYLIST_NAME, bean.getName());
             intent.putExtra(PLAYLIST_DESCRIPTION, bean.getCreator().getSignature());
@@ -231,9 +236,10 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
             intent.putExtra(PLAYLIST_CREATOR_NICKNAME, bean.getCreator().getNickname());
             intent.putExtra(PLAYLIST_CREATOR_AVATARURL, bean.getCreator().getAvatarUrl());
             intent.putExtra(PLAYLIST_ID, bean.getId());
-            startActivity(intent);
+            startActivity(intent,options.toBundle());
         }
     };
+
 
     @Override
     public void onGetRecommendPlayListFail(String e) {

@@ -17,13 +17,25 @@
             android:id="@+id/title"
             layout="@layout/common_title"></include>
 
+        <TextView
+            android:id="@+id/jia86"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_40"
+            android:layout_marginLeft="30dp"
+            android:layout_below="@id/title"
+            android:textSize="16sp"
+            android:textColor="#4A4949"
+            android:text="+86"/>
+
         <EditText
             android:id="@+id/et_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/title"
             android:layout_marginTop="@dimen/dp_30"
-            android:layout_marginStart="@dimen/dp_30"
+            android:layout_toRightOf="@+id/jia86"
+            android:layout_marginStart="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_30"
             android:textSize="16sp"
             android:hint="@string/input_phone"

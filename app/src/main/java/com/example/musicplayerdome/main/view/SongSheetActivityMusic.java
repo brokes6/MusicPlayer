@@ -1,9 +1,5 @@
 package com.example.musicplayerdome.main.view;
 
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -21,25 +17,29 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.bumptech.glide.Glide;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.WowContract;
-import com.example.musicplayerdome.databinding.ActivityPlayListBinding;
-import com.example.musicplayerdome.main.bean.CollectionListBean;
-import com.example.musicplayerdome.main.bean.RecommendsongBean;
-import com.example.musicplayerdome.main.dialog.SongSheetDialog;
-import com.example.musicplayerdome.personal.view.PersonalActivity;
-import com.example.musicplayerdome.song.adapter.MySongListAdapter;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.bean.BannerBean;
 import com.example.musicplayerdome.bean.MusicCanPlayBean;
+import com.example.musicplayerdome.databinding.ActivityPlayListBinding;
+import com.example.musicplayerdome.main.bean.CollectionListBean;
 import com.example.musicplayerdome.main.bean.DailyRecommendBean;
 import com.example.musicplayerdome.main.bean.HighQualityPlayListBean;
 import com.example.musicplayerdome.main.bean.MainRecommendPlayListBean;
 import com.example.musicplayerdome.main.bean.PlaylistDetailBean;
 import com.example.musicplayerdome.main.bean.RecommendPlayListBean;
+import com.example.musicplayerdome.main.bean.RecommendsongBean;
 import com.example.musicplayerdome.main.bean.TopListBean;
+import com.example.musicplayerdome.main.dialog.SongSheetDialog;
 import com.example.musicplayerdome.main.other.WowPresenter;
+import com.example.musicplayerdome.personal.view.PersonalActivity;
+import com.example.musicplayerdome.song.adapter.MySongListAdapter;
 import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.song.other.SongPlayManager;
 import com.example.musicplayerdome.util.AppBarStateChangeListener;
@@ -490,12 +490,12 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     }
 
     @Override
-    protected void initModule() {
-
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onBackPressed() {
+        supportFinishAfterTransition();
     }
 }

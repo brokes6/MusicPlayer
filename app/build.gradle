@@ -73,10 +73,6 @@ dependencies {
     //Apputils
     implementation 'com.blankj:utilcode:1.22.0'
 
-    //图片上传
-//    implementation group: 'com.nostra13.universalimageloader', name: 'universal-image-loader', version: '1.9.5'
-//    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
-
     //屏幕适配
     implementation 'me.jessyan:autosize:1.1.2'
 

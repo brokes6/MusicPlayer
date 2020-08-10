@@ -15,7 +15,9 @@ import com.example.musicplayerdome.util.ActivityStarter;
 import com.example.musicplayerdome.util.ScreenUtils;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
 
-
+/**
+ * 启动页
+ */
 public class SplashActivity extends BaseActivity {
     private static final String TAG = "SplashActivity";
     private CountDownTimer countDownTimer;
@@ -83,12 +85,6 @@ public class SplashActivity extends BaseActivity {
             countDownTimer = null;
         }
     }
-
-    @Override
-    protected void initModule() {
-
-    }
-
 
     @Override
     public void onClick(View v) {

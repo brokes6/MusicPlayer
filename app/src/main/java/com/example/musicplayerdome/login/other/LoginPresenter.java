@@ -38,7 +38,7 @@ public class LoginPresenter extends LoginContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e(TAG, "登录onError : " + e.toString());
+                        Log.e(TAG, "登录请求错误 : 请检查api文件夹中的ApiService的BASE_URL地址是否正确，如果是使用本地服务，请确保在同一个wift（不能是手机端的热点）下");
                         mView.onLoginFail(e.getMessage());
                     }
 

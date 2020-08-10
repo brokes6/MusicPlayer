@@ -35,6 +35,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 歌手相关视频
+ */
 public class SingerFeedSearchFragment extends BaseFragment<SingerPresenter> implements SingerContract.View {
     private static final String TAG = "SingerFeedSearchFragmen";
     FragmentRecyclerviewBinding binding;

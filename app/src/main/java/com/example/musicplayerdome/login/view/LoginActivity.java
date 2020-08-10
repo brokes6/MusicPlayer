@@ -22,6 +22,10 @@ import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 
+/**
+ * 登录界面
+ * 只能手机号登录
+ */
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
     private static final String TAG = "LoginActivity";
     ActivityLoginBinding binding;
@@ -37,6 +41,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void initView(){
         setMargins(binding.title,0,getStatusBarHeight(this),0,0);
+        binding.btnLogin.setOnClickListener(this);
+        binding.register.setOnClickListener(this);
+        binding.forgetPwd.setOnClickListener(this);
         binding.btnLogin.setOnClickListener(this);
         binding.register.setOnClickListener(this);
         binding.forgetPwd.setOnClickListener(this);
@@ -61,13 +68,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             phoneNumber = SharePreferenceUtil.getInstance(this).getAccountNum();
             binding.etPhone.setText(phoneNumber);
         }
-    }
-
-    @Override
-    protected void initModule() {
-        binding.btnLogin.setOnClickListener(this);
-        binding.register.setOnClickListener(this);
-        binding.forgetPwd.setOnClickListener(this);
     }
 
     @Override

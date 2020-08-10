@@ -64,10 +64,6 @@ public class CommentActivity extends BaseActivity<SongPresenter> implements Song
     }
 
     @Override
-    protected void initModule() {
-    }
-
-    @Override
     protected void initData() {
         setBackBtn(getString(R.string.colorWhite));
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--圆角图片-->
     <declare-styleable name="RoundImageView">
         <attr name="type" format="enum">
             <enum name="circle" value="1"/>
@@ -7,16 +8,18 @@
         </attr>
         <attr name="radius" format="dimension"/>ssss
     </declare-styleable>
+    <!--功能菜单-->
     <declare-styleable name="MusicDrawerItemView">
         <attr name="item_icon" format="reference" />
         <attr name="item_name" format="reference" />
         <attr name="is_show_gap" format="boolean" />
     </declare-styleable>
-    //专辑封面
+    <!-- 专辑封面-->
     <declare-styleable name="RikkaRoundRectView">
         <attr name="roundRatio" format="float" />
     </declare-styleable>
 
+    <!--歌词-->
     <declare-styleable name="LyricView">
         <attr name="text_size" format="dimension"/>
         <attr name="text_divider" format="dimension"/>

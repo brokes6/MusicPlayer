@@ -75,11 +75,20 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     private boolean isLike = false;
     private int playMode;
     private ObjectAnimator rotateAnimator,alphaAnimator;
-    private boolean isShowLyrics = false;
     private LyricBean lyricBean;
     ActivitySongBinding binding;
     private VolumeChangeObserver mVolumeChangeObserver;
     private SongListDialog songListDialog;
+//    @SuppressLint("HandlerLeak")
+//    private Handler handler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            if (msg.what == COMPLETED) {
+//                binding.ivBg.setBackground((Drawable) msg.obj);
+//                getAlphaAnimator().start();
+//            }
+//        }
+//    };
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMusicStartEvent(MusicStartEvent event) {
@@ -139,11 +148,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     }
 
     @Override
-    protected void initModule() {
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
     protected void initData() {
         showDialog();
         getIntentData();
@@ -158,6 +162,8 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     @Override
     protected void initView(){
+        EventBus.getDefault().register(this);
+
         binding.rlCenter.setOnClickListener(this);
         binding.ivPlay.setOnClickListener(this);
         binding.ivLike.setOnClickListener(this);
@@ -334,7 +340,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.rl_center:
-                isShowLyrics = true;
                 showLyrics(true);
                 break;
             case R.id.iv_play:
@@ -502,17 +507,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
             alphaAnimator = null;
         }
     }
-
-    @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what == COMPLETED) {
-                binding.ivBg.setBackground((Drawable) msg.obj);
-                getAlphaAnimator().start();
-            }
-        }
-    };
 
 
     @Override

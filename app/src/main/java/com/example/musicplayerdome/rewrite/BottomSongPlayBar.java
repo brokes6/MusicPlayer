@@ -43,7 +43,8 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 界面底部的歌曲遥控器
  * 用EventBus来控制它
- * Created By Rikka on 2019/7/22
+ * 分为两种模式（1.普通音乐，2.FM私人音乐）
+ * Created By fuxinbo on 2020/5/22
  */
 public class BottomSongPlayBar extends RelativeLayout {
     private static final String TAG = "BottomSongPlayBar";

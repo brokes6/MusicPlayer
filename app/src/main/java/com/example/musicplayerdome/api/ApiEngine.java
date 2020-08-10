@@ -1,5 +1,7 @@
 package com.example.musicplayerdome.api;
 
+import android.util.Log;
+
 import com.example.musicplayerdome.MyApplication;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
@@ -20,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created By Rikka on 2019/7/12
  */
 public class ApiEngine {
+    private static final String TAG = "ApiEngine";
     private volatile static ApiEngine apiEngine;
     private Retrofit retrofit;
 
@@ -49,6 +52,9 @@ public class ApiEngine {
                 .build();
 
         Gson gson = new Gson();
+        if (ApiService.BASE_URL==""){
+            Log.e(TAG, "ApiEngine: 请检查api文件夹中的ApiService的BASE_URL地址是否正确，如果是使用本地服务，请确保在同一个wift（不能是手机端的热点）下" );
+        }
         //开启retrofit
         retrofit = new Retrofit.Builder()
                 //指定主url

@@ -62,11 +62,6 @@ public class SongMvActivity extends BaseActivity<MvPersenter> implements SongMvC
     }
 
     @Override
-    protected void initModule() {
-
-    }
-
-    @Override
     protected void initData() {
         showDialog();
         getMvIntent();

@@ -77,12 +77,6 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
     }
 
     @Override
-    protected void initModule() {
-        binding.rlPlayall.setOnClickListener(this);
-        setMargins(binding.toolbar,0,getStatusBarHeight(this),0,0);
-    }
-
-    @Override
     protected void initData() {
         dailyList.clear();
 
@@ -115,6 +109,7 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
     protected void initView() {
         setLeftTitleText(R.string.day_recommend);
         setBackBtn(getString(R.string.colorWhite));
+        binding.rlPlayall.setOnClickListener(this);
 
         String coverUrl = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(this).getUserInfo(""), LoginBean.class).getProfile().getBackgroundUrl();
         if (coverUrl != null) {
@@ -131,6 +126,7 @@ public class DailyRecommendActivity extends BaseActivity<WowPresenter> implement
         binding.tvDay.setText(TimeUtil.getDay(System.currentTimeMillis()));
         binding.tvMonth.setText("/" + TimeUtil.getMonth(System.currentTimeMillis()));
 
+        setMargins(binding.toolbar,0,getStatusBarHeight(this),0,0);
         minDistance = DensityUtil.dp2px(DailyRecommendActivity.this, 85);
         deltaDistance = DensityUtil.dp2px(DailyRecommendActivity.this, 200) - minDistance;
     }

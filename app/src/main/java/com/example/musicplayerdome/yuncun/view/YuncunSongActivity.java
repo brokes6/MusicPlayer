@@ -63,11 +63,6 @@ public class YuncunSongActivity extends BaseActivity<SongPresenter> implements S
     }
 
     @Override
-    protected void initModule() {
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
     protected void initData() {
         showDialog();
         getIntentData();
@@ -77,6 +72,8 @@ public class YuncunSongActivity extends BaseActivity<SongPresenter> implements S
 
     @Override
     protected void initView(){
+        EventBus.getDefault().register(this);
+
         setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
         binding.userImg.setOnClickListener(this);
     }

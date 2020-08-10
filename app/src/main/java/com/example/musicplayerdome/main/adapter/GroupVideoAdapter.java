@@ -26,6 +26,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * 推荐视频中的 超然联盟
+ */
 public class GroupVideoAdapter extends BaseRecyclerAdapter<RecommendedVideoBean.DatasData> {
     private static final String TAG = "RecommemdedVideoAdapter";
     private Context mcontext;

@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by xxx on 2020.5.4
+ * Created by fuxinbo on 2020.5.4
  * 音频播列表弹窗
  */
 public class SongListDialog extends Dialog implements SongContract.View,View.OnClickListener{
