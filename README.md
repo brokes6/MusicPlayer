@@ -5,7 +5,7 @@
 采用了NeteaseCloudMusicApi（ https://github.com/Binaryify/NeteaseCloudMusicApi ）<br>
 
 效果图如下：<br>
-<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/01.jpg" width="320" height="680" />
+<img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/01.gif" width="350" height="710" />
 <img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/02.jpg" width="320" height="680" />
 <img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/03.jpg" width="320" height="680" />
 <img src="https://github.com/brokes6/MusicPlayerDome/blob/master/app/src/DomePicture/04.jpg" width="320" height="680" />
