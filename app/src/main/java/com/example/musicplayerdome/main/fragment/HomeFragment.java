@@ -221,6 +221,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
         songListAdapter.setListener(listClickListener);
         songListAdapter.loadMore(list);
     }
+
     private SongListAdapter.OnPlayListClickListener listClickListener = (position,imageView,textView) -> {
         if (recommends != null && !recommends.isEmpty()) {
             //进入歌单详情页面
@@ -244,6 +245,7 @@ public class HomeFragment extends BaseFragment<WowPresenter> implements WowContr
     @Override
     public void onGetRecommendPlayListFail(String e) {
         hideDialog();
+        Log.e(TAG, "onGetRecommendPlayListFail: 获取歌单错误为===》"+e );
         XToastUtils.error("网络请求失败，请检查网络再试");
     }
 

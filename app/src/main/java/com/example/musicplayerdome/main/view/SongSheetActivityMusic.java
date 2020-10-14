@@ -75,17 +75,17 @@ import static com.example.musicplayerdome.personal.view.PersonalActivity.USER_ID
  * SongSheetActivityMusic 歌单详情页面
  * 展示歌单里的歌曲
  */
-public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implements WowContract.View{
+public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implements WowContract.View {
     private ActivityPlayListBinding binding;
     private static final String TAG = "SongSheetActivity";
     private MySongListAdapter adapter;
     private long playlistId;
-    private String creatorUrl,playlistName,playlistPicUrl,creatorName,description,songids = "";
-    int minDistance,deltaDistance,isCollection = 1;
-    private ObjectAnimator alphaAnimator,coverAlphaAnimator;
+    private String creatorUrl, playlistName, playlistPicUrl, creatorName, description, songids = "";
+    int minDistance, deltaDistance, isCollection = 1;
+    private ObjectAnimator alphaAnimator, coverAlphaAnimator;
     //计算完成后发送的Handler msg
     public static final int COMPLETED = 0;
-    private LinearLayout SHComment,share;
+    private LinearLayout SHComment, share;
     private TextView songComment;
     private Drawable Sbackg;
     //🐕的一笔
@@ -109,8 +109,13 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     };
 
     @Override
+    protected WowPresenter onCreatePresenter() {
+        return new WowPresenter(this);
+    }
+
+    @Override
     protected void onCreateView(Bundle savedInstanceState) {
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_play_list);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_play_list);
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
@@ -143,13 +148,13 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             Glide.with(this).load(creatorUrl).into(binding.userImg);
             playlistId = getIntent().getLongExtra(PLAYLIST_ID, 0);
             calculateColors(playlistPicUrl);
-            Log.e(TAG, "initData: 当前歌单id为"+ playlistId);
+            Log.e(TAG, "initData: 当前歌单id为" + playlistId);
             mPresenter.getPlaylistDetail(playlistId);
         }
     }
 
     @Override
-    protected void initView(){
+    protected void initView() {
         SHComment = findViewById(R.id.SH_comment);
         songComment = findViewById(R.id.song_comment);
         share = findViewById(R.id.share);
@@ -174,7 +179,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
                 mPresenter.getPlaylistDetail(playlistId);
             }
         });
-        setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
+        setMargins(binding.rlTitle, 0, getStatusBarHeight(this), 0, 0);
         minDistance = DensityUtil.dp2px(SongSheetActivityMusic.this, 85);
         deltaDistance = DensityUtil.dp2px(this, 300) - minDistance;
     }
@@ -182,7 +187,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.SH_comment:
                 intent.setClass(this, SongSheetComment.class);
                 intent.putExtra(SongSheetComment.ID, playlistId);
@@ -195,25 +200,26 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
                 showSimpleBottomSheetGrid();
                 break;
             case R.id.button_personal:
-                mPresenter.CollectionList(isCollection,playlistId);
+                mPresenter.CollectionList(isCollection, playlistId);
                 break;
             case R.id.XLogin:
-                SongSheetDialog songSheetDialog = new SongSheetDialog(this,playlistName,description,playlistPicUrl,Sbackg);
+                SongSheetDialog songSheetDialog = new SongSheetDialog(this, playlistName, description, playlistPicUrl, Sbackg);
                 songSheetDialog.setCanceledOnTouchOutside(true);
                 songSheetDialog.show();
                 break;
             case R.id.user_img:
                 intent.setClass(this, PersonalActivity.class);
-                intent.putExtra(USER_ID,Sbean.getPlaylist().getUserId());
+                intent.putExtra(USER_ID, Sbean.getPlaylist().getUserId());
                 startActivity(intent);
                 break;
             case R.id.rl_playall:
-                SharedPreferencesUtil.putData("Ykey",2);
+                SharedPreferencesUtil.putData("Ykey", 2);
                 adapter.PlayAll();
                 binding.bottomController.setVisibility(View.VISIBLE);
                 break;
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -240,6 +246,7 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             }
         });
     }
+
     //底部弹出选择列表
     private void showSimpleBottomSheetGrid() {
         BottomSheet.BottomGridSheetBuilder builder = new BottomSheet.BottomGridSheetBuilder(this);
@@ -373,26 +380,25 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
     public void onGetPlaylistDetailSuccess(PlaylistDetailBean bean) {
         Log.d(TAG, "获取歌单成功 : " + bean);
         Sbean = bean;
-        if (bean.getPlaylist().isSubscribed()==false) {
+        if (bean.getPlaylist().isSubscribed() == false) {
             isCollection = 1;
             binding.buttonPersonal.setText("+收藏");
-        }else{
+        } else {
             isCollection = 2;
             binding.buttonPersonal.setText("-取消收藏");
         }
         Glide.with(this).load(bean.getPlaylist().getCreator().getAvatarUrl()).into(binding.userImg);
-        songComment.setText(""+bean.getPlaylist().getCommentCount());
+        songComment.setText("" + bean.getPlaylist().getCommentCount());
         songids = "";
         songidList.addAll(bean.getPlaylist().getTrackIds());
         for (int i = 0; i < songidList.size(); i++) {
             songid.add(songidList.get(i).getId());
-            if (i==songidList.size()-1){
+            if (i == songidList.size() - 1) {
                 songids = songids + songidList.get(i).getId();
-            }else{
-                songids = songids + songidList.get(i).getId()+",";
+            } else {
+                songids = songids + songidList.get(i).getId() + ",";
             }
         }
-        Log.e(TAG, "真的🐕，输出所有id:"+ songids);
         mPresenter.getSongDetailAll(songids);
     }
 
@@ -434,11 +440,11 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
 
     @Override
     public void onGetCollectionListSuccess(CollectionListBean bean) {
-        if (isCollection==1){
+        if (isCollection == 1) {
             isCollection = 2;
             binding.buttonPersonal.setText("已收藏");
             XToastUtils.success("收藏成功");
-        }else{
+        } else {
             isCollection = 1;
             binding.buttonPersonal.setText("收藏");
             XToastUtils.success("取消收藏成功");
@@ -468,12 +474,12 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
             beanInfo.setArtistKey(beanList.get(i).getAl().getPicUrl());
             songInfos.add(beanInfo);
         }
-        if (isload){
+        if (isload) {
             adapter.setList(songInfos);
             adapter.refresh(songInfos);
             Log.e(TAG, "歌单刷新成功");
             binding.refreshLayout.finishRefresh(true);
-        }else{
+        } else {
             adapter.setList(songInfos);
             adapter.loadMore(songInfos);
         }
@@ -484,10 +490,6 @@ public class SongSheetActivityMusic extends BaseActivity<WowPresenter> implement
         XToastUtils.error(e);
     }
 
-    @Override
-    protected WowPresenter onCreatePresenter() {
-        return new WowPresenter(this);
-    }
 
     @Override
     protected void onDestroy() {

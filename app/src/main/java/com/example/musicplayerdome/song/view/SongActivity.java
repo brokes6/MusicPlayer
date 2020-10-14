@@ -5,6 +5,10 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -15,20 +19,24 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.SeekBar;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.palette.graphics.Palette;
+
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.abstractclass.SongContract;
 import com.example.musicplayerdome.base.BaseActivity;
 import com.example.musicplayerdome.databinding.ActivitySongBinding;
 import com.example.musicplayerdome.login.bean.LoginBean;
 import com.example.musicplayerdome.main.bean.LikeListBean;
-import com.example.musicplayerdome.song.other.SongPlayManager;
-import com.example.musicplayerdome.song.other.MusicPauseEvent;
-import com.example.musicplayerdome.song.other.MusicStartEvent;
-import com.example.musicplayerdome.song.other.SongPresenter;
 import com.example.musicplayerdome.song.bean.CommentLikeBean;
 import com.example.musicplayerdome.song.bean.LikeMusicBean;
 import com.example.musicplayerdome.song.bean.LyricBean;
@@ -37,6 +45,10 @@ import com.example.musicplayerdome.song.bean.PlayListCommentBean;
 import com.example.musicplayerdome.song.bean.SongDetailBean;
 import com.example.musicplayerdome.song.dialog.SongDetailDialog;
 import com.example.musicplayerdome.song.dialog.SongListDialog;
+import com.example.musicplayerdome.song.other.MusicPauseEvent;
+import com.example.musicplayerdome.song.other.MusicStartEvent;
+import com.example.musicplayerdome.song.other.SongPlayManager;
+import com.example.musicplayerdome.song.other.SongPresenter;
 import com.example.musicplayerdome.util.GsonUtil;
 import com.example.musicplayerdome.util.SharePreferenceUtil;
 import com.example.musicplayerdome.util.SharedPreferencesUtil;
@@ -53,6 +65,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -63,7 +82,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 import static com.example.musicplayerdome.main.view.SongSheetActivityMusic.COMPLETED;
 
 
-public class SongActivity extends BaseActivity<SongPresenter> implements SongContract.View, VolumeChangeObserver.VolumeChangeListener,View.OnClickListener{
+public class SongActivity extends BaseActivity<SongPresenter> implements SongContract.View, VolumeChangeObserver.VolumeChangeListener, View.OnClickListener {
     private static final String TAG = "SongActivity";
 
     public static final String SONG_INFO = "songInfo";
@@ -74,21 +93,21 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     private TimerTaskManager mTimerTask;
     private boolean isLike = false;
     private int playMode;
-    private ObjectAnimator rotateAnimator,alphaAnimator;
+    private ObjectAnimator rotateAnimator, alphaAnimator;
     private LyricBean lyricBean;
     ActivitySongBinding binding;
     private VolumeChangeObserver mVolumeChangeObserver;
     private SongListDialog songListDialog;
-//    @SuppressLint("HandlerLeak")
-//    private Handler handler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            if (msg.what == COMPLETED) {
-//                binding.ivBg.setBackground((Drawable) msg.obj);
-//                getAlphaAnimator().start();
-//            }
-//        }
-//    };
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == COMPLETED) {
+                binding.ivBg.setBackground((Drawable) msg.obj);
+                getAlphaAnimatorBg().start();
+            }
+        }
+    };
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMusicStartEvent(MusicStartEvent event) {
@@ -119,7 +138,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                     lyricBean = null;
                 }
                 checkMusicState();
-            }else {
+            } else {
 
             }
         }
@@ -133,7 +152,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_song);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_song);
 
         ImmersionBar.with(this)
                 .transparentStatusBar()
@@ -161,7 +180,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     }
 
     @Override
-    protected void initView(){
+    protected void initView() {
         EventBus.getDefault().register(this);
 
         binding.rlCenter.setOnClickListener(this);
@@ -175,7 +194,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         binding.ivNext.setOnClickListener(this);
         binding.ivList.setOnClickListener(this);
         binding.actAudioVolumeControl.setOnSeekBarChangeListener(new SeekBarChangeVolumeControl());
-        setMargins(binding.rlTitle,0,getStatusBarHeight(this),0,0);
+        setMargins(binding.rlTitle, 0, getStatusBarHeight(this), 0, 0);
     }
 
     /**
@@ -216,7 +235,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     private void getIntentData() {
         Intent intent = getIntent();
         currentSongInfo = intent.getParcelableExtra(SONG_INFO);
-        SharedPreferencesUtil.putData("Ykey",2);
+        SharedPreferencesUtil.putData("Ykey", 2);
     }
 
     /**
@@ -300,6 +319,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     /**
      * 控制封面旋转
+     *
      * @return
      */
     private ObjectAnimator getRotateAnimator() {
@@ -324,15 +344,74 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     private void setSongDetailBean(SongDetailBean songDetail) {
         String coverUrl = songDetail.getSongs().get(0).getAl().getPicUrl();
+
+        calculateColors(coverUrl);
+
         Glide.with(this)
                 .load(coverUrl)
                 .placeholder(R.drawable.shape_record)
                 .into(binding.ivRecord);
-        Glide.with(this)
-                .load(coverUrl)
-                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 12)))
-                .transition(new DrawableTransitionOptions().crossFade(1500))
-                .into(binding.ivBg);
+
+//        Glide.with(this)
+//                .load(coverUrl)
+//                .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 3)).override(300, 400))
+//                .transition(new DrawableTransitionOptions().crossFade(1500))
+//                .into(binding.ivBg);
+//        getAlphaAnimatorBg().start();
+
+        Glide.with(this).asBitmap().load(coverUrl)
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        Palette palette = Palette.generate(resource);
+                        int vibrant = palette.getLightVibrantColor(0x000000);
+                        binding.dimpleView.setStrokeColor(vibrant);
+                    }
+                });
+        hideDialog();
+    }
+
+    private ObjectAnimator getAlphaAnimatorBg() {
+        if (alphaAnimator == null) {
+            alphaAnimator = ObjectAnimator.ofFloat(binding.ivBg, "alpha", 0f, 0.5f);
+            alphaAnimator.setDuration(1500);
+            alphaAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        }
+        return alphaAnimator;
+    }
+
+    /**
+     * 该方法用url申请一个图片bitmap，并将其压缩成原图1/300，计算上半部分和下半部分颜色RGB平均值
+     * 两个RGB去作为渐变色的两个点
+     * 还要开子线程去计算...
+     */
+    public void calculateColors(String url) {
+        new Thread(() -> {
+            try {
+                //渐变色的两个颜色
+                URL fileUrl;
+                Bitmap bitmap;
+                fileUrl = new URL(url);
+                HttpURLConnection conn = (HttpURLConnection) fileUrl.openConnection();
+                conn.setDoInput(true);
+                conn.connect();
+                InputStream is = conn.getInputStream();
+                BitmapFactory.Options opt = new BitmapFactory.Options();
+                opt.inSampleSize = 270;
+                bitmap = BitmapFactory.decodeStream(is, new Rect(), opt);
+
+                Message msg = Message.obtain();
+                msg.what = COMPLETED;
+                msg.obj = new BitmapDrawable(bitmap);
+                handler.sendMessage(msg);
+
+                is.close();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     @Override
@@ -375,7 +454,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                 startActivity(intent);
                 break;
             case R.id.iv_info:
-                SongDetailDialog songDetailDialog = new SongDetailDialog(mContext,currentSongInfo,songDetail.getSongs().get(0).getId());
+                SongDetailDialog songDetailDialog = new SongDetailDialog(mContext, currentSongInfo, songDetail.getSongs().get(0).getId());
                 songDetailDialog.setCanceledOnTouchOutside(true);
                 songDetailDialog.show();
                 break;
@@ -415,14 +494,14 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     /**
      * 初始化音量控制器
      */
-    private void initAudioManager(){
+    private void initAudioManager() {
         //实例化对象并设置监听器
         mVolumeChangeObserver = new VolumeChangeObserver(this);
         mVolumeChangeObserver.setVolumeChangeListener(this);
         int initVolume = mVolumeChangeObserver.getCurrentMusicVolume();
         Log.e(TAG, "initVolume = " + initVolume);
         //音量控制,初始化定义
-        if (mAudioManager==null){
+        if (mAudioManager == null) {
             mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         }
         //设置音量控制器的进度为当前音量
@@ -432,7 +511,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     @Override
     public void onVolumeChanged(int volume) {
-        Log.e(TAG, "onVolumeChanged: 当前音量为"+volume);
+        Log.e(TAG, "onVolumeChanged: 当前音量为" + volume);
         binding.actAudioVolumeControl.setProgress(volume);
     }
 
@@ -449,14 +528,14 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
     }
 
     /**
-     *音量控制器
+     * 音量控制器
      * 滑动监听
      */
     class SeekBarChangeVolumeControl implements SeekBar.OnSeekBarChangeListener {
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if(fromUser){
+            if (fromUser) {
                 mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
             }
         }
@@ -474,12 +553,14 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     //根据isShowLyrics来判断是否展示歌词
     private void showLyrics(boolean isShowLyrics) {
-        if (isShowLyrics == true){
+        if (isShowLyrics == true) {
+            binding.dimpleView.setVisibility(View.GONE);
             binding.ivRecord.setVisibility(View.GONE);
             binding.PropsColumnS.setVisibility(View.GONE);
             binding.lrc.setVisibility(View.VISIBLE);
             binding.volume.setVisibility(View.VISIBLE);
-        }else{
+        } else {
+            binding.dimpleView.setVisibility(View.VISIBLE);
             binding.ivRecord.setVisibility(View.VISIBLE);
             binding.PropsColumnS.setVisibility(View.VISIBLE);
             binding.lrc.setVisibility(View.GONE);
@@ -511,7 +592,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
 
     @Override
     public void onGetSongDetailSuccess(SongDetailBean bean) {
-        hideDialog();
         songDetail = bean;
         setSongDetailBean(songDetail);
         SongPlayManager.getInstance().putSongDetail(songDetail);
@@ -615,7 +695,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                 SongPlayManager.getInstance().playMusic();
             } else if (SongPlayManager.getInstance().isIdle()) {
                 SongPlayManager.getInstance().clickASong(currentSongInfo);
-            }else{
+            } else {
             }
             return true;
         });

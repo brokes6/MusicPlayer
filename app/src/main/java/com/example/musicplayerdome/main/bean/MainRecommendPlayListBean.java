@@ -72,7 +72,7 @@ public class MainRecommendPlayListBean {
         private String name;
         private String copywriter;
         private String picUrl;
-        private int playcount;
+        private long playcount;
         private long createTime;
         private CreatorBean creator;
         private int trackCount;
@@ -119,11 +119,11 @@ public class MainRecommendPlayListBean {
             this.picUrl = picUrl;
         }
 
-        public int getPlaycount() {
+        public long getPlaycount() {
             return playcount;
         }
 
-        public void setPlaycount(int playcount) {
+        public void setPlaycount(long playcount) {
             this.playcount = playcount;
         }
 

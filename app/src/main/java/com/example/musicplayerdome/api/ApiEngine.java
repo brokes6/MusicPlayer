@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * 网络请求工具
- * Created By Rikka on 2019/7/12
+ * Created By fxb on 2019/7/12
  */
 public class ApiEngine {
     private static final String TAG = "ApiEngine";
@@ -52,8 +52,8 @@ public class ApiEngine {
                 .build();
 
         Gson gson = new Gson();
-        if (ApiService.BASE_URL==""){
-            Log.e(TAG, "ApiEngine: 请检查api文件夹中的ApiService的BASE_URL地址是否正确，如果是使用本地服务，请确保在同一个wift（不能是手机端的热点）下" );
+        if (ApiService.BASE_URL==null){
+            throw new IllegalArgumentException("请检查api文件夹中的ApiService的BASE_URL地址是否正确，如果是使用本地服务，请确保在同一个WLAN（不能是手机端的热点）下");
         }
         //开启retrofit
         retrofit = new Retrofit.Builder()
