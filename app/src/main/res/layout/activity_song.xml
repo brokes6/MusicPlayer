@@ -106,7 +106,8 @@
                     android:id="@+id/dimpleView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:particlesNum="2000"/>
+                    app:particlesNum="2000"
+                    app:particlesDiffusionRadius="350"/>
 
                 <com.example.musicplayerdome.rewrite.RoundImageViewBT
                     android:id="@+id/iv_record"

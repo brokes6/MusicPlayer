@@ -364,7 +364,7 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         Palette palette = Palette.generate(resource);
-                        int vibrant = palette.getLightVibrantColor(0x000000);
+                        int vibrant = palette.getVibrantColor(0x000000);
                         binding.dimpleView.setStrokeColor(vibrant);
                     }
                 });
