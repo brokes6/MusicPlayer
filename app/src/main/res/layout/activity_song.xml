@@ -13,11 +13,11 @@
         android:layout_height="match_parent"
         tools:context=".song.view.SongActivity">
 
-<!--        <ImageView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@drawable/bg_default_song"-->
-<!--            android:scaleType="fitXY" />-->
+        <!--        <ImageView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:background="@drawable/bg_default_song"-->
+        <!--            android:scaleType="fitXY" />-->
 
         <ImageView
             android:id="@+id/iv_bg"
@@ -32,17 +32,17 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            app:layout_collapseMode="parallax"
+            android:alpha="0.3"
             android:background="#000000"
-            android:alpha="0.2"/>
+            android:scaleType="centerCrop"
+            app:layout_collapseMode="parallax" />
 
-<!--        <ImageView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:alpha="0.65"-->
-<!--            android:background="@drawable/bg_default_song2"-->
-<!--            android:scaleType="fitXY" />-->
+        <!--        <ImageView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:alpha="0.65"-->
+        <!--            android:background="@drawable/bg_default_song2"-->
+        <!--            android:scaleType="fitXY" />-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -106,15 +106,16 @@
                     android:id="@+id/dimpleView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:particlesNum="2000"
-                    app:particlesDiffusionRadius="350"/>
+                    app:particlesDiffusionRadius="395"
+                    app:particlesNum="1500"
+                    app:strokeOffSet="50" />
 
                 <com.example.musicplayerdome.rewrite.RoundImageViewBT
                     android:id="@+id/iv_record"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:layout_margin="95dp"
+                    android:layout_margin="60dp"
                     android:layout_marginTop="40dp"
                     android:animateLayoutChanges="true"
                     android:scaleType="fitXY"
@@ -158,16 +159,16 @@
 
                     <ImageView
                         android:id="@+id/iv_like"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_marginRight="55dp"
                         android:padding="@dimen/dp_5"
                         android:src="@drawable/shape_not_like" />
 
                     <ImageView
                         android:id="@+id/iv_download"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_marginRight="55dp"
                         android:padding="@dimen/dp_2"
                         android:src="@drawable/shape_download_white" />
@@ -181,8 +182,8 @@
 
                     <ImageView
                         android:id="@+id/iv_info"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:padding="@dimen/dp_2"
                         android:src="@drawable/shape_infomation" />
                 </LinearLayout>
@@ -233,6 +234,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_70"
                 android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_5"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/dp_30"
@@ -279,8 +281,8 @@
 
                     <ImageView
                         android:id="@+id/iv_play"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:src="@drawable/shape_play_white" />
                 </LinearLayout>
 

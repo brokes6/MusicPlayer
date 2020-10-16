@@ -3,7 +3,6 @@ package com.example.musicplayerdome.rewrite;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,6 +15,7 @@ import com.example.musicplayerdome.MyApplication;
 import com.example.musicplayerdome.R;
 import com.example.musicplayerdome.util.DensityUtil;
 import com.google.android.material.appbar.AppBarLayout;
+import com.xuexiang.xui.widget.button.roundbutton.RoundButton;
 
 public class SingerAppBarBehavior extends AppBarLayout.Behavior {
     private static final String TAG = "SingerAppBarBehavior";
@@ -27,6 +27,7 @@ public class SingerAppBarBehavior extends AppBarLayout.Behavior {
 
     private ImageView mImageView, mImageViewCover;
     private TextView tvName;
+    private RoundButton buttonPersonal;
     //记录AppbarLayout原始高度
     private int mAppbarHeight;
     //记录ImageView原始高度
@@ -63,6 +64,7 @@ public class SingerAppBarBehavior extends AppBarLayout.Behavior {
         mAppbarHeight = abl.getHeight();
         mImageView = abl.findViewById(R.id.iv_singer);
         mImageViewCover = abl.findViewById(R.id.iv_singer_cover);
+        buttonPersonal = abl.findViewById(R.id.button_personal);
         rlTop = abl.findViewById(R.id.rl_top);
         tvName = abl.findViewById(R.id.tv_name);
         if (mImageView != null) {
@@ -127,13 +129,14 @@ public class SingerAppBarBehavior extends AppBarLayout.Behavior {
         mTotalDy += -dy;
         mTotalDy = Math.min(mTotalDy, MAX_ZOOM_HEIGHT);
         mScaleValue = Math.max(1f, 1f + mTotalDy / MAX_ZOOM_HEIGHT * MAX_SCALE);
-        ViewCompat.setScaleX(mImageView, mScaleValue);
-        ViewCompat.setScaleY(mImageView, mScaleValue);
-        ViewCompat.setScaleX(mImageViewCover, mScaleValue);
-        ViewCompat.setScaleY(mImageViewCover, mScaleValue);
+        mImageView.setScaleX(mScaleValue);
+        mImageView.setScaleY(mScaleValue);
+        mImageViewCover.setScaleX(mScaleValue);
+        mImageViewCover.setScaleY(mScaleValue);
         mCurrentBottom = mAppbarHeight + (int) (mImageViewHeight / 2 * (mScaleValue - 1));
-        ViewCompat.setTranslationY(rlTop, (int) (mImageViewHeight / 2 * (mScaleValue - 1)));
-        ViewCompat.setTranslationY(tvName, (int) (mImageViewHeight / 2 * (mScaleValue - 1)));
+        rlTop.setTranslationY((int) (mImageViewHeight / 2 * (mScaleValue - 1)));
+        tvName.setTranslationY((int) (mImageViewHeight / 2 * (mScaleValue - 1)));
+        buttonPersonal.setTranslationY((int) (mImageViewHeight / 2 * (mScaleValue - 1)));
         abl.setBottom(mCurrentBottom);
     }
 
@@ -185,23 +188,25 @@ public class SingerAppBarBehavior extends AppBarLayout.Behavior {
                 valueAnimator = ValueAnimator.ofFloat(mScaleValue, 1f).setDuration(220);
                 valueAnimator.addUpdateListener(animation -> {
                     float value = (float) animation.getAnimatedValue();
-                    ViewCompat.setScaleX(mImageView, value);
-                    ViewCompat.setScaleY(mImageView, value);
-                    ViewCompat.setScaleX(mImageViewCover, value);
-                    ViewCompat.setScaleY(mImageViewCover, value);
+                    mImageView.setScaleX(value);
+                    mImageView.setScaleY(value);
+                    mImageViewCover.setScaleX(value);
+                    mImageViewCover.setScaleY(value);
                     int bottom = (int) (mCurrentBottom - (mCurrentBottom - mAppbarHeight) * animation.getAnimatedFraction());
-                    ViewCompat.setTranslationY(rlTop, bottom - mAppbarHeight);
-                    ViewCompat.setTranslationY(tvName, bottom - mAppbarHeight);
+                    rlTop.setTranslationY(bottom - mAppbarHeight);
+                    tvName.setTranslationY(bottom - mAppbarHeight);
+                    buttonPersonal.setTranslationY(bottom - mAppbarHeight);
                     abl.setBottom(bottom);
                 });
                 valueAnimator.start();
             } else {
-                ViewCompat.setScaleX(mImageView, 1f);
-                ViewCompat.setScaleY(mImageView, 1f);
-                ViewCompat.setScaleX(mImageViewCover, 1f);
-                ViewCompat.setScaleY(mImageViewCover, 1f);
-                ViewCompat.setTranslationY(rlTop, 0);
-                ViewCompat.setTranslationY(tvName, 0);
+                mImageView.setScaleX(1f);
+                mImageView.setScaleY(1f);
+                mImageViewCover.setScaleX(1f);
+                mImageViewCover.setScaleY(1f);
+                rlTop.setTranslationY(0);
+                tvName.setTranslationY(0);
+                buttonPersonal.setTranslationY(0);
                 abl.setBottom(mAppbarHeight);
             }
         }

@@ -157,7 +157,6 @@ public class SongActivity extends BaseActivity<SongPresenter> implements SongCon
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
-                .hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
                 .init();
     }
 
