@@ -3,7 +3,7 @@
 模仿网易云音乐（个人练习 制作的音乐播放器）<br>
 完成API大多数功能，可正常使用<br>
 采用了NeteaseCloudMusicApi（ https://github.com/Binaryify/NeteaseCloudMusicApi ）<br>
-###### 现在正在模仿B站，之后会更新成最新版本的ui<br>
+###### 目前因为其他原因，停止制作，后续可能会用Kotlin重构一遍<br>
 #### 完成的页面：
 ```
 1. 主页
